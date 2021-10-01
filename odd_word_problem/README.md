@@ -1,3 +1,5 @@
+FIX: so that it reads from an input text file
+
 Description
 You are promised an input stream consisting of English letters and punctuations.
 
