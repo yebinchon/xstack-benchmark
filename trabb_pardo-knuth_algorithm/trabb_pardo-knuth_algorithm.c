@@ -2,14 +2,14 @@
 #include<stdio.h>
 
 int main (void) {
-  double inputs[11], check = 400, result;
+  double /*inputs[11],*/ check = 400, result;
   int i;
 
-  printf ("\nPlease enter 11 numbers :");
+//  for (i = 0; i < 11; i++) {
+//    scanf ("%lf", &inputs[i]);
+//  }
+  double inputs[11] = {4, 5, 10, 9, 6, 11, 39, 2, 12, 98, 14};
 
-  for (i = 0; i < 11; i++) {
-    scanf ("%lf", &inputs[i]);
-  }
 
   printf ("\n\n\nEvaluating f(x) = |x|^0.5 + 5x^3 for the given inputs :");
 

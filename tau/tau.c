@@ -22,9 +22,12 @@ unsigned int divisor_count(unsigned int n) {
   return total;
 }
 
-int main(void) {
-  const unsigned int limit = 100;
+int main(int argc, char**argv) {
+  const unsigned int limit;
   unsigned int n;
+
+  if(argc == 1) limit = 100;
+  else limit = atoi(argv[1]);
 
   printf("Count of divisors for the first %d positive integers:\n", limit);
   for (n = 1; n <= limit; ++n) {

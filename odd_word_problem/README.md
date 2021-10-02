@@ -1,3 +1,5 @@
+RECURSIVE
+
 FIX: so that it reads from an input text file
 
 Description
