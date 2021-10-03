@@ -1,3 +1,6 @@
+Two small while loops in series nested in a for loop.
+
+
 Use your language's random number generator to create a function/method/subroutine/... randN that returns a one or a zero, but with one occurring, on average, 1 out of N times, where N is an integer from the range 3 to 6 inclusive.
 Create a function unbiased that uses only randN as its source of randomness to become an unbiased generator of random ones and zeroes.
 For N over its range, generate and show counts of the outputs of randN and unbiased(randN).

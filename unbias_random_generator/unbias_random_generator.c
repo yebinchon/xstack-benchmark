@@ -14,16 +14,15 @@ int unbiased(int bias) {
   return a;
 }
 
-int main(void) {
+int main(int argc, char**argv) {
   int b, n = 10000, cb, cu, i;
-  for (b = 3; b <= 6; b++) {
-    for (i = cb = cu = 0; i < n; i++) {
-      cb += biased(b);
-      cu += unbiased(b);
-    }
-    printf("bias %d: %5.3f%% vs %5.3f%%\n", b,
-        100. * cb / n, 100. * cu / n);
+  b = atoi(argv[1]);
+  for (i = cb = cu = 0; i < n; i++) {
+    cb += biased(b);
+    cu += unbiased(b);
   }
+  printf("bias %d: %5.3f%% vs %5.3f%%\n", b,
+      100. * cb / n, 100. * cu / n);
 
   return 0;
 }
