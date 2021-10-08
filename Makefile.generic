@@ -13,10 +13,10 @@ ${BMARK}_mem2reg.cbe.c: ${BMARK}_mem2reg.ll
 
 ${BMARK}.exe: ${BMARK}.ll
 	llc -filetype=obj $< -o ${BMARK}.o
-	clang ${BMARK}.o -o $@
+	clang ${LINK_FLAGS} ${BMARK}.o -o $@
 
 ${BMARK}.cbe.exe: ${BMARK}.cbe.c
-	clang $< -o $@
+	clang $< ${LINK_FLAGS} -o $@
 
 ${BMARK}_mem2reg.cbe.exe: ${BMARK}_mem2reg.cbe.c
-	clang $< -o $@
+	clang $< ${LINK_FLAGS} -o $@
