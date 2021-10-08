@@ -20,3 +20,6 @@ ${BMARK}.cbe.exe: ${BMARK}.cbe.c
 
 ${BMARK}_mem2reg.cbe.exe: ${BMARK}_mem2reg.cbe.c
 	clang $< ${LINK_FLAGS} -o $@
+
+clean:
+	rm -rf *.ll *.cbe.c *.exe
