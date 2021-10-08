@@ -1,0 +1,22 @@
+
+%.ll: %.c
+	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
+
+${BMARK}_mem2reg.ll: ${BMARK}.ll
+	opt -mem2reg $< -S -o $@
+
+${BMARK}.cbe.c: ${BMARK}.ll
+	llvm-cbe $<
+
+${BMARK}_mem2reg.cbe.c: ${BMARK}_mem2reg.ll
+	llvm-cbe $<
+
+${BMARK}.exe: ${BMARK}.ll
+	llc -filetype=obj $< -o ${BMARK}.o
+	clang ${BMARK}.o -o $@
+
+${BMARK}.cbe.exe: ${BMARK}.cbe.c
+	clang $< -o $@
+
+${BMARK}_mem2reg.cbe.exe: ${BMARK}_mem2reg.cbe.c
+	clang $< -o $@
