@@ -1,23 +1,4 @@
-# C compiler
-CC = clang
-FLAGS =
+BMARK=vizualize_a_tree
+LINK_FLAGS=-lm
+include ../Makefile.generic
 
-SRC = $(shell ls *.c)
-OBJ = $(SRC:.c=.o)
-HDR = $(shell ls *h)
-
-TARGET = $(SRC:.c=)
-
-$(TARGET): $(OBJ)
-	$(CC) $(OBJ) $(FLAGS) -lc -o $@
-
-%.o : %.c
-	$(CC) -c $<
-
-$(OBJ) : $(HDR)
-
-all : $(TARGET)
-
-clean:
-	rm -f $(OBJ) $(TARGET)
-	
