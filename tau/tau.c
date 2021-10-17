@@ -23,7 +23,7 @@ unsigned int divisor_count(unsigned int n) {
 }
 
 int main(int argc, char**argv) {
-  const unsigned int limit;
+  unsigned int limit;
   unsigned int n;
 
   if(argc == 1) limit = 100;
