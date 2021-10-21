@@ -21,5 +21,12 @@ ${BMARK}.cbe.exe: ${BMARK}.cbe.c
 ${BMARK}_mem2reg.cbe.exe: ${BMARK}_mem2reg.cbe.c
 	clang $< ${LINK_FLAGS} -o $@
 
+check_correctness: ${BMARK}_mem2reg.cbe.exe ${BMARK}.cbe.exe ${BMARK}.exe
+	./${BMARK}.exe > ${BMARK}.out
+	./${BMARK}.cbe.exe > ${BMARK}.cbe.out
+	./${BMARK}_mem2reg.cbe.exe > ${BMARK}_mem2reg.cbe.out
+	diff ${BMARK}.out ${BMARK}.cbe.out
+	diff ${BMARK}.out ${BMARK}_mem2reg.cbe.out
+
 clean:
-	rm -rf *.ll *.cbe.c *.exe *.o
+	rm -rf *.out *.ll *.cbe.c *.exe *.o

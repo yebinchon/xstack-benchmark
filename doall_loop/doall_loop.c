@@ -7,6 +7,7 @@ int main(){
       sum+=x[i];
   }
 
-  return sum;
+  printf("%d\n", sum);
+  return 0;
 }
 
