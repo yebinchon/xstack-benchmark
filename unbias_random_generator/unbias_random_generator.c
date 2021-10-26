@@ -16,7 +16,7 @@ int unbiased(int bias) {
 
 int main(int argc, char**argv) {
   int b, n = 10000, cb, cu, i;
-  b = atoi(argv[1]);
+  b = 10;
   for (i = cb = cu = 0; i < n; i++) {
     cb += biased(b);
     cu += unbiased(b);
