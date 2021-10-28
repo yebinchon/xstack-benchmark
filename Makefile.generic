@@ -7,10 +7,10 @@ ${BMARK}_mem2reg.ll: ${BMARK}.ll
 	opt -mem2reg $< -S -o $@
 
 ${BMARK}_mem2reg_opt.ll: ${BMARK}.ll
-	opt -load ${cbe-lib}/CBENodeSplitting.so -hello -mem2reg $< -o $@  > /dev/null
+	opt -load ${cbe-lib}/CBENodeSplitting.so -node-splitting -mem2reg $< -o $@  > /dev/null
 
 ${BMARK}_opt.ll: ${BMARK}.ll
-	opt -load ${cbe-lib}/CBENodeSplitting.so -hello $< -o $@ > /dev/null
+	opt -load ${cbe-lib}/CBENodeSplitting.so -node-splitting $< -o $@ > /dev/null
 
 ${BMARK}_mem2reg.cbe.c: ${BMARK}_mem2reg_opt.ll
 	llvm-cbe $<
