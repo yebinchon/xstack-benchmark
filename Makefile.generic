@@ -1,36 +1,31 @@
-cbe-lib=/u/zujunt/xstack-installs/llvm-objects-debug/lib
-
 %.ll: %.c
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
 
 ${BMARK}_mem2reg.ll: ${BMARK}.ll
 	opt -mem2reg $< -S -o $@
 
-${BMARK}_mem2reg_opt.ll: ${BMARK}.ll
-	opt -load ${cbe-lib}/CBENodeSplitting.so -node-splitting -mem2reg $< -o $@  > /dev/null
-
-${BMARK}_opt.ll: ${BMARK}.ll
-	opt -load ${cbe-lib}/CBENodeSplitting.so -node-splitting $< -o $@ > /dev/null
-
-${BMARK}_mem2reg.cbe.c: ${BMARK}_mem2reg_opt.ll
+${BMARK}.cbe.c: ${BMARK}.ll
 	llvm-cbe $<
 
-%.cbe.c: %.ll
+${BMARK}_mem2reg.cbe.c: ${BMARK}_mem2reg.ll
 	llvm-cbe $<
 
 ${BMARK}.exe: ${BMARK}.ll
 	llc -filetype=obj $< -o ${BMARK}.o
 	clang ${LINK_FLAGS} ${BMARK}.o -o $@
 
-%.cbe.exe: %.cbe.c
+${BMARK}.cbe.exe: ${BMARK}.cbe.c
 	clang $< ${LINK_FLAGS} -o $@
 
-check_correctness: ${BMARK}_mem2reg_opt.cbe.exe ${BMARK}_opt.cbe.exe ${BMARK}.exe
+${BMARK}_mem2reg.cbe.exe: ${BMARK}_mem2reg.cbe.c
+	clang $< ${LINK_FLAGS} -o $@
+
+check_correctness: ${BMARK}_mem2reg.cbe.exe ${BMARK}.cbe.exe ${BMARK}.exe
 	./${BMARK}.exe > ${BMARK}.out
-	./${BMARK}_opt.cbe.exe > ${BMARK}_opt.cbe.out
-	./${BMARK}_mem2reg_opt.cbe.exe > ${BMARK}_mem2reg_opt.cbe.out
-	diff ${BMARK}.out ${BMARK}_opt.cbe.out
-	diff ${BMARK}.out ${BMARK}_mem2reg_opt.cbe.out
+	./${BMARK}.cbe.exe > ${BMARK}.cbe.out
+	./${BMARK}_mem2reg.cbe.exe > ${BMARK}_mem2reg.cbe.out
+	diff ${BMARK}.out ${BMARK}.cbe.out
+	diff ${BMARK}.out ${BMARK}_mem2reg.cbe.out
 
 clean:
 	rm -rf *.out *.ll *.cbe.c *.exe *.o
