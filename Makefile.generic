@@ -2,10 +2,12 @@
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
 
 ${BMARK}_mem2reg.ll: ${BMARK}.ll
-	opt -mem2reg $< -S -o $@
+	opt -mem2reg -loop-simplify $< -S -o $@
 
 ${BMARK}.cbe.c: ${BMARK}.ll
-	llvm-cbe $<
+	opt -loop-simplify $< -o ${BMARK}.bc
+	llvm-cbe ${BMARK}.bc
+	llvm-dis ${BMARK}.bc #just for debugging
 
 ${BMARK}_mem2reg.cbe.c: ${BMARK}_mem2reg.ll
 	llvm-cbe $<
@@ -28,4 +30,4 @@ check_correctness: ${BMARK}_mem2reg.cbe.exe ${BMARK}.cbe.exe ${BMARK}.exe
 	diff ${BMARK}.out ${BMARK}_mem2reg.cbe.out
 
 clean:
-	rm -rf *.out *.ll *.cbe.c *.exe *.o
+	rm -rf *.bc *.out *.ll *.cbe.c *.exe *.o
