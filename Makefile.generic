@@ -1,11 +1,12 @@
 %.ll: %.c
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
+	opt -loop-simplify $@ -S -o $@
 
 ${BMARK}_mem2reg.ll: ${BMARK}.ll
-	opt -mem2reg -loop-simplify $< -S -o $@
+	opt -mem2reg $< -S -o $@
 
 ${BMARK}.cbe.c: ${BMARK}.ll
-	opt -loop-simplify $< -o ${BMARK}.bc
+	opt $< -o ${BMARK}.bc
 	llvm-cbe ${BMARK}.bc
 	llvm-dis ${BMARK}.bc #just for debugging
 
