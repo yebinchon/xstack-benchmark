@@ -5,7 +5,7 @@
 char *split(char *str);
 
 int main(void) {
-  char input[13] = "gHHH5YY++///\\";
+  char input[14] = "gHHH5YY++///\\";
   printf("%s\n", split(input));
 
   return 0;
@@ -16,6 +16,7 @@ char *split(char *str) {
   char *result = malloc(3*strlen(str));
   char *counter = result;
 
+  printf("%zu\n", strlen(str));
   for(char *c = str; *c; c++) {
     if(*c != last) {
       strcpy(counter, ", ");
