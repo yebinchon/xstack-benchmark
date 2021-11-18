@@ -15,13 +15,13 @@ ${BMARK}_mem2reg.cbe.c: ${BMARK}_mem2reg.ll
 
 ${BMARK}.exe: ${BMARK}.ll
 	llc -filetype=obj $< -o ${BMARK}.o
-	clang -O3 ${LINK_FLAGS} ${BMARK}.o -o $@
+	clang -g -O3 ${LINK_FLAGS} ${BMARK}.o -o $@
 
 ${BMARK}.cbe.exe: ${BMARK}.cbe.c
-	clang -O3 $< ${LINK_FLAGS} -o $@
+	clang -g -O3 $< ${LINK_FLAGS} -o $@
 
 ${BMARK}_mem2reg.cbe.exe: ${BMARK}_mem2reg.cbe.c
-	clang -O3 $< ${LINK_FLAGS} -o $@
+	clang -g -O3 $< ${LINK_FLAGS} -o $@
 
 check_correctness: ${BMARK}_mem2reg.cbe.exe ${BMARK}.cbe.exe ${BMARK}.exe
 	./${BMARK}.exe > ${BMARK}.out
