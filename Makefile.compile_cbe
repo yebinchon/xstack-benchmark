@@ -1,0 +1,51 @@
+install-prefix=~/xstack-installs
+llvm-install-dir=${install-prefix}/llvm-install-debug
+JOBS=20
+CC=gcc
+CXX=g++
+all: llvm-objects-debug noelle-objects-debug llvm-cbe
+.PHONY: llvm-objects-debug
+
+CONFIG_LLVM_DEBUG   = -G "Unix Makefiles" \
+									    -DCMAKE_BUILD_TYPE="Debug" \
+									    -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;openmp" \
+									    -DLLVM_TARGETS_TO_BUILD="X86" \
+									    -DLLVM_ENABLE_ASSERTIONS=ON \
+									    -DLLVM_ABI_BREAKING_CHECKS=FORCE_OFF \
+									    -DCMAKE_INSTALL_PREFIX=${llvm-install-dir} \
+									    -DCMAKE_CXX_STANDARD="17"
+
+llvm-project:
+	mkdir -p ${install-prefix} && \
+	cd ${install-prefix} && \
+	git clone --single-branch --branch release/10.x https://github.com/SusanTan/llvm-project.git
+
+noelle:
+	cd ${install-prefix} && \
+	git clone git@github.com:scampanoni/noelle.git noelle
+
+llvm-objects-debug:
+	cd ${install-prefix} && \
+	mkdir -p llvm-objects-debug && \
+	mkdir -p llvm-install-debug && \
+	cd llvm-objects-debug && \
+	cmake ${CONFIG_LLVM_DEBUG} ../llvm-project/llvm/ &&	\
+	make -j${JOBS} &&		\
+	make install
+
+noelle-objects-debug: 
+	cd ${install-prefix} && \
+	export PDG_INSTALL_DIR=${install-prefix}/noelle-install-debug && \
+	export PATH=${llvm-install-dir}/bin/:${PATH} && \
+	export LLVM_CMAKE_DIR=${llvm-install-dir}/lib/cmake/llvm && \
+	make -C noelle clean && \
+	make -C noelle all
+
+llvm-cbe:
+	cd ${install-prefix}/llvm-project/llvm/projects && \
+	rm -rf llvm-cbe && \
+	git clone https://github.com/SusanTan/llvm-cbe.git && \
+	cd ${install-prefix}/llvm-objects-debug && \
+	cmake ${CONFIG_LLVM_DEBUG} ../llvm-project/llvm/ &&	\
+	make llvm-cbe -j20
+	
