@@ -1,0 +1,9 @@
+ROSETTA_BASE_DIR := $(shell pwd)
+
+DIRS := $(wildcard */) 
+
+all:
+	for dir in $(DIRS) ; do cd $(DIRS) && make &&  cd ../ ; done	
+
+clean:
+	for dir in $(DIRS) ; do cd $(DIRS) && make clean && cd ../ ; done
