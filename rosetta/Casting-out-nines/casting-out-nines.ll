@@ -1,4 +1,4 @@
-; ModuleID = 'casting-out-nines.c'
+; ModuleID = 'casting-out-nines.ll'
 source_filename = "casting-out-nines.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -52,37 +52,37 @@ for.body:                                         ; preds = %for.cond
   %sub3 = sub nsw i32 %7, 1, !dbg !42
   %rem4 = srem i32 %mul, %sub3, !dbg !43
   %cmp5 = icmp eq i32 %rem, %rem4, !dbg !44
-  br i1 %cmp5, label %if.then, label %if.end, !dbg !45, !cf.info !46
+  br i1 %cmp5, label %if.then, label %if.end, !dbg !45
 
 if.then:                                          ; preds = %for.body
-  %8 = load i32, i32* %c2, align 4, !dbg !47
-  %inc7 = add nsw i32 %8, 1, !dbg !47
-  store i32 %inc7, i32* %c2, align 4, !dbg !47
-  %9 = load i32, i32* %k, align 4, !dbg !49
-  %call8 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i64 0, i64 0), i32 %9), !dbg !50
-  br label %if.end, !dbg !51
+  %8 = load i32, i32* %c2, align 4, !dbg !46
+  %inc7 = add nsw i32 %8, 1, !dbg !46
+  store i32 %inc7, i32* %c2, align 4, !dbg !46
+  %9 = load i32, i32* %k, align 4, !dbg !48
+  %call8 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str, i64 0, i64 0), i32 %9), !dbg !49
+  br label %if.end, !dbg !50
 
 if.end:                                           ; preds = %if.then, %for.body
-  br label %for.inc, !dbg !52
+  br label %for.inc, !dbg !51
 
 for.inc:                                          ; preds = %if.end
-  %10 = load i32, i32* %k, align 4, !dbg !53
-  %inc9 = add nsw i32 %10, 1, !dbg !53
-  store i32 %inc9, i32* %k, align 4, !dbg !53
-  br label %for.cond, !dbg !54, !llvm.loop !55
+  %10 = load i32, i32* %k, align 4, !dbg !52
+  %inc9 = add nsw i32 %10, 1, !dbg !52
+  store i32 %inc9, i32* %k, align 4, !dbg !52
+  br label %for.cond, !dbg !53, !llvm.loop !54
 
 for.end:                                          ; preds = %for.cond
-  %11 = load i32, i32* %c2, align 4, !dbg !57
-  %12 = load i32, i32* %c1, align 4, !dbg !58
-  %13 = load i32, i32* %c2, align 4, !dbg !59
-  %conv10 = sitofp i32 %13 to double, !dbg !59
-  %mul11 = fmul double 1.000000e+02, %conv10, !dbg !60
-  %14 = load i32, i32* %c1, align 4, !dbg !61
-  %conv12 = sitofp i32 %14 to double, !dbg !61
-  %div = fdiv double %mul11, %conv12, !dbg !62
-  %sub13 = fsub double 1.000000e+02, %div, !dbg !63
-  %call14 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([52 x i8], [52 x i8]* @.str.1, i64 0, i64 0), i32 %11, i32 %12, double %sub13), !dbg !64
-  ret i32 0, !dbg !65
+  %11 = load i32, i32* %c2, align 4, !dbg !56
+  %12 = load i32, i32* %c1, align 4, !dbg !57
+  %13 = load i32, i32* %c2, align 4, !dbg !58
+  %conv10 = sitofp i32 %13 to double, !dbg !58
+  %mul11 = fmul double 1.000000e+02, %conv10, !dbg !59
+  %14 = load i32, i32* %c1, align 4, !dbg !60
+  %conv12 = sitofp i32 %14 to double, !dbg !60
+  %div = fdiv double %mul11, %conv12, !dbg !61
+  %sub13 = fsub double 1.000000e+02, %div, !dbg !62
+  %call14 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([52 x i8], [52 x i8]* @.str.1, i64 0, i64 0), i32 %11, i32 %12, double %sub13), !dbg !63
+  ret i32 0, !dbg !64
 }
 
 ; Function Attrs: nounwind readnone speculatable willreturn
@@ -103,13 +103,13 @@ attributes #4 = { nounwind }
 !llvm.module.flags = !{!3, !4, !5}
 !llvm.ident = !{!6}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
 !1 = !DIFile(filename: "casting-out-nines.c", directory: "/scratch/yc0769/xstack_benchmark/rosetta/Casting-out-nines")
 !2 = !{}
 !3 = !{i32 7, !"Dwarf Version", i32 4}
 !4 = !{i32 2, !"Debug Info Version", i32 3}
 !5 = !{i32 1, !"wchar_size", i32 4}
-!6 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)"}
+!6 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)"}
 !7 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 4, type: !8, scopeLine: 4, spFlags: DISPFlagDefinition, unit: !0, retainedNodes: !2)
 !8 = !DISubroutineType(types: !9)
 !9 = !{!10}
@@ -149,23 +149,22 @@ attributes #4 = { nounwind }
 !43 = !DILocation(line: 13, column: 39, scope: !34)
 !44 = !DILocation(line: 13, column: 28, scope: !34)
 !45 = !DILocation(line: 13, column: 13, scope: !32)
-!46 = !{!"if"}
-!47 = !DILocation(line: 14, column: 15, scope: !48)
-!48 = distinct !DILexicalBlock(scope: !34, file: !1, line: 13, column: 53)
-!49 = !DILocation(line: 15, column: 27, scope: !48)
-!50 = !DILocation(line: 15, column: 13, scope: !48)
-!51 = !DILocation(line: 16, column: 9, scope: !48)
-!52 = !DILocation(line: 17, column: 5, scope: !32)
-!53 = !DILocation(line: 11, column: 36, scope: !26)
-!54 = !DILocation(line: 11, column: 5, scope: !26)
-!55 = distinct !{!55, !30, !56}
-!56 = !DILocation(line: 17, column: 5, scope: !23)
-!57 = !DILocation(line: 19, column: 69, scope: !7)
-!58 = !DILocation(line: 19, column: 73, scope: !7)
-!59 = !DILocation(line: 19, column: 93, scope: !7)
-!60 = !DILocation(line: 19, column: 91, scope: !7)
-!61 = !DILocation(line: 19, column: 98, scope: !7)
-!62 = !DILocation(line: 19, column: 96, scope: !7)
-!63 = !DILocation(line: 19, column: 83, scope: !7)
-!64 = !DILocation(line: 19, column: 5, scope: !7)
-!65 = !DILocation(line: 20, column: 5, scope: !7)
+!46 = !DILocation(line: 14, column: 15, scope: !47)
+!47 = distinct !DILexicalBlock(scope: !34, file: !1, line: 13, column: 53)
+!48 = !DILocation(line: 15, column: 27, scope: !47)
+!49 = !DILocation(line: 15, column: 13, scope: !47)
+!50 = !DILocation(line: 16, column: 9, scope: !47)
+!51 = !DILocation(line: 17, column: 5, scope: !32)
+!52 = !DILocation(line: 11, column: 36, scope: !26)
+!53 = !DILocation(line: 11, column: 5, scope: !26)
+!54 = distinct !{!54, !30, !55}
+!55 = !DILocation(line: 17, column: 5, scope: !23)
+!56 = !DILocation(line: 19, column: 69, scope: !7)
+!57 = !DILocation(line: 19, column: 73, scope: !7)
+!58 = !DILocation(line: 19, column: 93, scope: !7)
+!59 = !DILocation(line: 19, column: 91, scope: !7)
+!60 = !DILocation(line: 19, column: 98, scope: !7)
+!61 = !DILocation(line: 19, column: 96, scope: !7)
+!62 = !DILocation(line: 19, column: 83, scope: !7)
+!63 = !DILocation(line: 19, column: 5, scope: !7)
+!64 = !DILocation(line: 20, column: 5, scope: !7)

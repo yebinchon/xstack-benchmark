@@ -267,154 +267,154 @@ for.body31:                                       ; preds = %for.cond28
   %dec = add nsw i32 %10, -1, !dbg !174
   store i32 %dec, i32* %arrayidx33, align 4, !dbg !174
   %tobool34 = icmp ne i32 %10, 0, !dbg !174
-  br i1 %tobool34, label %if.end, label %if.then, !dbg !175, !cf.info !176
+  br i1 %tobool34, label %if.end, label %if.then, !dbg !175
 
 if.then:                                          ; preds = %for.body31
-  %idxprom35 = sext i32 %i.1 to i64, !dbg !177
-  %arrayidx36 = getelementptr inbounds i32, i32* %coins, i64 %idxprom35, !dbg !177
-  %11 = load i32, i32* %arrayidx36, align 4, !dbg !177
-  %sub37 = sub nsw i32 %11, 1, !dbg !178
-  %idxprom38 = sext i32 %i.1 to i64, !dbg !179
-  %arrayidx39 = getelementptr inbounds i32, i32* %2, i64 %idxprom38, !dbg !179
-  store i32 %sub37, i32* %arrayidx39, align 4, !dbg !180
-  br label %if.end, !dbg !179
+  %idxprom35 = sext i32 %i.1 to i64, !dbg !176
+  %arrayidx36 = getelementptr inbounds i32, i32* %coins, i64 %idxprom35, !dbg !176
+  %11 = load i32, i32* %arrayidx36, align 4, !dbg !176
+  %sub37 = sub nsw i32 %11, 1, !dbg !177
+  %idxprom38 = sext i32 %i.1 to i64, !dbg !178
+  %arrayidx39 = getelementptr inbounds i32, i32* %2, i64 %idxprom38, !dbg !178
+  store i32 %sub37, i32* %arrayidx39, align 4, !dbg !179
+  br label %if.end, !dbg !178
 
 if.end:                                           ; preds = %if.then, %for.body31
   br label %for.inc40, !dbg !174
 
 for.inc40:                                        ; preds = %if.end
-  %inc41 = add nsw i32 %i.1, 1, !dbg !181
+  %inc41 = add nsw i32 %i.1, 1, !dbg !180
   call void @llvm.dbg.value(metadata i32 %inc41, metadata !132, metadata !DIExpression()), !dbg !109
-  br label %for.cond28, !dbg !182, !llvm.loop !183
+  br label %for.cond28, !dbg !181, !llvm.loop !182
 
 for.end42:                                        ; preds = %for.cond28
-  call void @llvm.dbg.declare(metadata %struct.i128* %c, metadata !185, metadata !DIExpression()), !dbg !186
-  %arrayidx43 = getelementptr inbounds %struct.i128*, %struct.i128** %1, i64 0, !dbg !187
-  %12 = load %struct.i128*, %struct.i128** %arrayidx43, align 8, !dbg !187
-  %arrayidx44 = getelementptr inbounds i32, i32* %2, i64 0, !dbg !188
-  %13 = load i32, i32* %arrayidx44, align 4, !dbg !188
-  %idxprom45 = sext i32 %13 to i64, !dbg !187
-  %arrayidx46 = getelementptr inbounds %struct.i128, %struct.i128* %12, i64 %idxprom45, !dbg !187
-  %14 = bitcast %struct.i128* %c to i8*, !dbg !187
-  %15 = bitcast %struct.i128* %arrayidx46 to i8*, !dbg !187
-  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 8 %14, i8* align 8 %15, i64 16, i1 false), !dbg !187
+  call void @llvm.dbg.declare(metadata %struct.i128* %c, metadata !184, metadata !DIExpression()), !dbg !185
+  %arrayidx43 = getelementptr inbounds %struct.i128*, %struct.i128** %1, i64 0, !dbg !186
+  %12 = load %struct.i128*, %struct.i128** %arrayidx43, align 8, !dbg !186
+  %arrayidx44 = getelementptr inbounds i32, i32* %2, i64 0, !dbg !187
+  %13 = load i32, i32* %arrayidx44, align 4, !dbg !187
+  %idxprom45 = sext i32 %13 to i64, !dbg !186
+  %arrayidx46 = getelementptr inbounds %struct.i128, %struct.i128* %12, i64 %idxprom45, !dbg !186
+  %14 = bitcast %struct.i128* %c to i8*, !dbg !186
+  %15 = bitcast %struct.i128* %arrayidx46 to i8*, !dbg !186
+  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 8 %14, i8* align 8 %15, i64 16, i1 false), !dbg !186
   call void @llvm.dbg.value(metadata i32 1, metadata !132, metadata !DIExpression()), !dbg !109
-  br label %for.cond47, !dbg !189
+  br label %for.cond47, !dbg !188
 
 for.cond47:                                       ; preds = %for.inc75, %for.end42
-  %i.2 = phi i32 [ 1, %for.end42 ], [ %inc76, %for.inc75 ], !dbg !191
+  %i.2 = phi i32 [ 1, %for.end42 ], [ %inc76, %for.inc75 ], !dbg !190
   call void @llvm.dbg.value(metadata i32 %i.2, metadata !132, metadata !DIExpression()), !dbg !109
-  %cmp48 = icmp slt i32 %i.2, %n.0, !dbg !192
-  br i1 %cmp48, label %for.body50, label %for.end77, !dbg !194
+  %cmp48 = icmp slt i32 %i.2, %n.0, !dbg !191
+  br i1 %cmp48, label %for.body50, label %for.end77, !dbg !193
 
 for.body50:                                       ; preds = %for.cond47
-  %idxprom51 = sext i32 %i.2 to i64, !dbg !195
-  %arrayidx52 = getelementptr inbounds %struct.i128*, %struct.i128** %1, i64 %idxprom51, !dbg !195
-  %16 = load %struct.i128*, %struct.i128** %arrayidx52, align 8, !dbg !195
-  %idxprom53 = sext i32 %i.2 to i64, !dbg !197
-  %arrayidx54 = getelementptr inbounds i32, i32* %2, i64 %idxprom53, !dbg !197
-  %17 = load i32, i32* %arrayidx54, align 4, !dbg !197
-  %idx.ext = sext i32 %17 to i64, !dbg !198
-  %add.ptr = getelementptr inbounds %struct.i128, %struct.i128* %16, i64 %idx.ext, !dbg !198
-  call void @llvm.dbg.value(metadata %struct.i128* %add.ptr, metadata !199, metadata !DIExpression()), !dbg !200
-  %x55 = getelementptr inbounds %struct.i128, %struct.i128* %c, i32 0, i32 0, !dbg !201
-  %arrayidx56 = getelementptr inbounds [2 x i64], [2 x i64]* %x55, i64 0, i64 0, !dbg !202
-  %18 = load i64, i64* %arrayidx56, align 8, !dbg !202
-  %x57 = getelementptr inbounds %struct.i128, %struct.i128* %add.ptr, i32 0, i32 0, !dbg !203
-  %arrayidx58 = getelementptr inbounds [2 x i64], [2 x i64]* %x57, i64 0, i64 0, !dbg !204
-  %19 = load i64, i64* %arrayidx58, align 8, !dbg !205
-  %add = add i64 %19, %18, !dbg !205
-  store i64 %add, i64* %arrayidx58, align 8, !dbg !205
-  %x59 = getelementptr inbounds %struct.i128, %struct.i128* %c, i32 0, i32 0, !dbg !206
-  %arrayidx60 = getelementptr inbounds [2 x i64], [2 x i64]* %x59, i64 0, i64 1, !dbg !207
-  %20 = load i64, i64* %arrayidx60, align 8, !dbg !207
-  %x61 = getelementptr inbounds %struct.i128, %struct.i128* %add.ptr, i32 0, i32 0, !dbg !208
-  %arrayidx62 = getelementptr inbounds [2 x i64], [2 x i64]* %x61, i64 0, i64 1, !dbg !209
-  %21 = load i64, i64* %arrayidx62, align 8, !dbg !210
-  %add63 = add i64 %21, %20, !dbg !210
-  store i64 %add63, i64* %arrayidx62, align 8, !dbg !210
-  %x64 = getelementptr inbounds %struct.i128, %struct.i128* %add.ptr, i32 0, i32 0, !dbg !211
-  %arrayidx65 = getelementptr inbounds [2 x i64], [2 x i64]* %x64, i64 0, i64 0, !dbg !213
-  %22 = load i64, i64* %arrayidx65, align 8, !dbg !213
-  %x66 = getelementptr inbounds %struct.i128, %struct.i128* %c, i32 0, i32 0, !dbg !214
-  %arrayidx67 = getelementptr inbounds [2 x i64], [2 x i64]* %x66, i64 0, i64 0, !dbg !215
-  %23 = load i64, i64* %arrayidx67, align 8, !dbg !215
-  %cmp68 = icmp ult i64 %22, %23, !dbg !216
-  br i1 %cmp68, label %if.then70, label %if.end74, !dbg !217, !cf.info !176
+  %idxprom51 = sext i32 %i.2 to i64, !dbg !194
+  %arrayidx52 = getelementptr inbounds %struct.i128*, %struct.i128** %1, i64 %idxprom51, !dbg !194
+  %16 = load %struct.i128*, %struct.i128** %arrayidx52, align 8, !dbg !194
+  %idxprom53 = sext i32 %i.2 to i64, !dbg !196
+  %arrayidx54 = getelementptr inbounds i32, i32* %2, i64 %idxprom53, !dbg !196
+  %17 = load i32, i32* %arrayidx54, align 4, !dbg !196
+  %idx.ext = sext i32 %17 to i64, !dbg !197
+  %add.ptr = getelementptr inbounds %struct.i128, %struct.i128* %16, i64 %idx.ext, !dbg !197
+  call void @llvm.dbg.value(metadata %struct.i128* %add.ptr, metadata !198, metadata !DIExpression()), !dbg !199
+  %x55 = getelementptr inbounds %struct.i128, %struct.i128* %c, i32 0, i32 0, !dbg !200
+  %arrayidx56 = getelementptr inbounds [2 x i64], [2 x i64]* %x55, i64 0, i64 0, !dbg !201
+  %18 = load i64, i64* %arrayidx56, align 8, !dbg !201
+  %x57 = getelementptr inbounds %struct.i128, %struct.i128* %add.ptr, i32 0, i32 0, !dbg !202
+  %arrayidx58 = getelementptr inbounds [2 x i64], [2 x i64]* %x57, i64 0, i64 0, !dbg !203
+  %19 = load i64, i64* %arrayidx58, align 8, !dbg !204
+  %add = add i64 %19, %18, !dbg !204
+  store i64 %add, i64* %arrayidx58, align 8, !dbg !204
+  %x59 = getelementptr inbounds %struct.i128, %struct.i128* %c, i32 0, i32 0, !dbg !205
+  %arrayidx60 = getelementptr inbounds [2 x i64], [2 x i64]* %x59, i64 0, i64 1, !dbg !206
+  %20 = load i64, i64* %arrayidx60, align 8, !dbg !206
+  %x61 = getelementptr inbounds %struct.i128, %struct.i128* %add.ptr, i32 0, i32 0, !dbg !207
+  %arrayidx62 = getelementptr inbounds [2 x i64], [2 x i64]* %x61, i64 0, i64 1, !dbg !208
+  %21 = load i64, i64* %arrayidx62, align 8, !dbg !209
+  %add63 = add i64 %21, %20, !dbg !209
+  store i64 %add63, i64* %arrayidx62, align 8, !dbg !209
+  %x64 = getelementptr inbounds %struct.i128, %struct.i128* %add.ptr, i32 0, i32 0, !dbg !210
+  %arrayidx65 = getelementptr inbounds [2 x i64], [2 x i64]* %x64, i64 0, i64 0, !dbg !212
+  %22 = load i64, i64* %arrayidx65, align 8, !dbg !212
+  %x66 = getelementptr inbounds %struct.i128, %struct.i128* %c, i32 0, i32 0, !dbg !213
+  %arrayidx67 = getelementptr inbounds [2 x i64], [2 x i64]* %x66, i64 0, i64 0, !dbg !214
+  %23 = load i64, i64* %arrayidx67, align 8, !dbg !214
+  %cmp68 = icmp ult i64 %22, %23, !dbg !215
+  br i1 %cmp68, label %if.then70, label %if.end74, !dbg !216
 
 if.then70:                                        ; preds = %for.body50
-  %x71 = getelementptr inbounds %struct.i128, %struct.i128* %add.ptr, i32 0, i32 0, !dbg !218
-  %arrayidx72 = getelementptr inbounds [2 x i64], [2 x i64]* %x71, i64 0, i64 1, !dbg !219
-  %24 = load i64, i64* %arrayidx72, align 8, !dbg !220
-  %inc73 = add i64 %24, 1, !dbg !220
-  store i64 %inc73, i64* %arrayidx72, align 8, !dbg !220
-  br label %if.end74, !dbg !219
+  %x71 = getelementptr inbounds %struct.i128, %struct.i128* %add.ptr, i32 0, i32 0, !dbg !217
+  %arrayidx72 = getelementptr inbounds [2 x i64], [2 x i64]* %x71, i64 0, i64 1, !dbg !218
+  %24 = load i64, i64* %arrayidx72, align 8, !dbg !219
+  %inc73 = add i64 %24, 1, !dbg !219
+  store i64 %inc73, i64* %arrayidx72, align 8, !dbg !219
+  br label %if.end74, !dbg !218
 
 if.end74:                                         ; preds = %if.then70, %for.body50
-  %25 = bitcast %struct.i128* %c to i8*, !dbg !221
-  %26 = bitcast %struct.i128* %add.ptr to i8*, !dbg !221
-  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 8 %25, i8* align 8 %26, i64 16, i1 false), !dbg !221
-  br label %for.inc75, !dbg !222
+  %25 = bitcast %struct.i128* %c to i8*, !dbg !220
+  %26 = bitcast %struct.i128* %add.ptr to i8*, !dbg !220
+  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 8 %25, i8* align 8 %26, i64 16, i1 false), !dbg !220
+  br label %for.inc75, !dbg !221
 
 for.inc75:                                        ; preds = %if.end74
-  %inc76 = add nsw i32 %i.2, 1, !dbg !223
+  %inc76 = add nsw i32 %i.2, 1, !dbg !222
   call void @llvm.dbg.value(metadata i32 %inc76, metadata !132, metadata !DIExpression()), !dbg !109
-  br label %for.cond47, !dbg !224, !llvm.loop !225
+  br label %for.cond47, !dbg !223, !llvm.loop !224
 
 for.end77:                                        ; preds = %for.cond47
-  br label %for.inc78, !dbg !227
+  br label %for.inc78, !dbg !226
 
 for.inc78:                                        ; preds = %for.end77
-  %inc79 = add nsw i32 %k.0, 1, !dbg !228
+  %inc79 = add nsw i32 %k.0, 1, !dbg !227
   call void @llvm.dbg.value(metadata i32 %inc79, metadata !158, metadata !DIExpression()), !dbg !109
-  br label %for.cond24, !dbg !229, !llvm.loop !230
+  br label %for.cond24, !dbg !228, !llvm.loop !229
 
 for.end80:                                        ; preds = %for.cond24
-  call void @llvm.dbg.declare(metadata %struct.i128* %retval, metadata !232, metadata !DIExpression()), !dbg !233
-  %sub81 = sub nsw i32 %n.0, 1, !dbg !234
-  %idxprom82 = sext i32 %sub81 to i64, !dbg !235
-  %arrayidx83 = getelementptr inbounds %struct.i128*, %struct.i128** %1, i64 %idxprom82, !dbg !235
-  %27 = load %struct.i128*, %struct.i128** %arrayidx83, align 8, !dbg !235
-  %sub84 = sub nsw i32 %n.0, 1, !dbg !236
-  %idxprom85 = sext i32 %sub84 to i64, !dbg !237
-  %arrayidx86 = getelementptr inbounds i32, i32* %2, i64 %idxprom85, !dbg !237
-  %28 = load i32, i32* %arrayidx86, align 4, !dbg !237
-  %idxprom87 = sext i32 %28 to i64, !dbg !235
-  %arrayidx88 = getelementptr inbounds %struct.i128, %struct.i128* %27, i64 %idxprom87, !dbg !235
-  %29 = bitcast %struct.i128* %retval to i8*, !dbg !235
-  %30 = bitcast %struct.i128* %arrayidx88 to i8*, !dbg !235
-  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 8 %29, i8* align 8 %30, i64 16, i1 false), !dbg !235
+  call void @llvm.dbg.declare(metadata %struct.i128* %retval, metadata !231, metadata !DIExpression()), !dbg !232
+  %sub81 = sub nsw i32 %n.0, 1, !dbg !233
+  %idxprom82 = sext i32 %sub81 to i64, !dbg !234
+  %arrayidx83 = getelementptr inbounds %struct.i128*, %struct.i128** %1, i64 %idxprom82, !dbg !234
+  %27 = load %struct.i128*, %struct.i128** %arrayidx83, align 8, !dbg !234
+  %sub84 = sub nsw i32 %n.0, 1, !dbg !235
+  %idxprom85 = sext i32 %sub84 to i64, !dbg !236
+  %arrayidx86 = getelementptr inbounds i32, i32* %2, i64 %idxprom85, !dbg !236
+  %28 = load i32, i32* %arrayidx86, align 4, !dbg !236
+  %idxprom87 = sext i32 %28 to i64, !dbg !234
+  %arrayidx88 = getelementptr inbounds %struct.i128, %struct.i128* %27, i64 %idxprom87, !dbg !234
+  %29 = bitcast %struct.i128* %retval to i8*, !dbg !234
+  %30 = bitcast %struct.i128* %arrayidx88 to i8*, !dbg !234
+  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 8 %29, i8* align 8 %30, i64 16, i1 false), !dbg !234
   call void @llvm.dbg.value(metadata i32 0, metadata !132, metadata !DIExpression()), !dbg !109
-  br label %for.cond89, !dbg !238
+  br label %for.cond89, !dbg !237
 
 for.cond89:                                       ; preds = %for.inc95, %for.end80
-  %i.3 = phi i32 [ 0, %for.end80 ], [ %inc96, %for.inc95 ], !dbg !240
+  %i.3 = phi i32 [ 0, %for.end80 ], [ %inc96, %for.inc95 ], !dbg !239
   call void @llvm.dbg.value(metadata i32 %i.3, metadata !132, metadata !DIExpression()), !dbg !109
-  %cmp90 = icmp slt i32 %i.3, %n.0, !dbg !241
-  br i1 %cmp90, label %for.body92, label %for.end97, !dbg !243
+  %cmp90 = icmp slt i32 %i.3, %n.0, !dbg !240
+  br i1 %cmp90, label %for.body92, label %for.end97, !dbg !242
 
 for.body92:                                       ; preds = %for.cond89
-  %idxprom93 = sext i32 %i.3 to i64, !dbg !244
-  %arrayidx94 = getelementptr inbounds %struct.i128*, %struct.i128** %1, i64 %idxprom93, !dbg !244
-  %31 = load %struct.i128*, %struct.i128** %arrayidx94, align 8, !dbg !244
-  %32 = bitcast %struct.i128* %31 to i8*, !dbg !244
-  call void @free(i8* %32) #5, !dbg !245
-  br label %for.inc95, !dbg !245
+  %idxprom93 = sext i32 %i.3 to i64, !dbg !243
+  %arrayidx94 = getelementptr inbounds %struct.i128*, %struct.i128** %1, i64 %idxprom93, !dbg !243
+  %31 = load %struct.i128*, %struct.i128** %arrayidx94, align 8, !dbg !243
+  %32 = bitcast %struct.i128* %31 to i8*, !dbg !243
+  call void @free(i8* %32) #5, !dbg !244
+  br label %for.inc95, !dbg !244
 
 for.inc95:                                        ; preds = %for.body92
-  %inc96 = add nsw i32 %i.3, 1, !dbg !246
+  %inc96 = add nsw i32 %i.3, 1, !dbg !245
   call void @llvm.dbg.value(metadata i32 %inc96, metadata !132, metadata !DIExpression()), !dbg !109
-  br label %for.cond89, !dbg !247, !llvm.loop !248
+  br label %for.cond89, !dbg !246, !llvm.loop !247
 
 for.end97:                                        ; preds = %for.cond89
-  %33 = bitcast %struct.i128** %1 to i8*, !dbg !250
-  call void @free(i8* %33) #5, !dbg !251
-  %34 = bitcast i32* %2 to i8*, !dbg !252
-  call void @free(i8* %34) #5, !dbg !253
-  %coerce.dive = getelementptr inbounds %struct.i128, %struct.i128* %retval, i32 0, i32 0, !dbg !254
-  %35 = bitcast [2 x i64]* %coerce.dive to { i64, i64 }*, !dbg !254
-  %36 = load { i64, i64 }, { i64, i64 }* %35, align 8, !dbg !254
-  ret { i64, i64 } %36, !dbg !254
+  %33 = bitcast %struct.i128** %1 to i8*, !dbg !249
+  call void @free(i8* %33) #5, !dbg !250
+  %34 = bitcast i32* %2 to i8*, !dbg !251
+  call void @free(i8* %34) #5, !dbg !252
+  %coerce.dive = getelementptr inbounds %struct.i128, %struct.i128* %retval, i32 0, i32 0, !dbg !253
+  %35 = bitcast [2 x i64]* %coerce.dive to { i64, i64 }*, !dbg !253
+  %36 = load { i64, i64 }, { i64, i64 }* %35, align 8, !dbg !253
+  ret { i64, i64 } %36, !dbg !253
 }
 
 ; Function Attrs: nounwind
@@ -430,44 +430,44 @@ declare void @llvm.memcpy.p0i8.p0i8.i64(i8* noalias nocapture writeonly, i8* noa
 declare dso_local void @free(i8*) #3
 
 ; Function Attrs: noinline nounwind uwtable
-define dso_local i32 @count2(i32 %sum, i32* %coins) #0 !dbg !255 {
+define dso_local i32 @count2(i32 %sum, i32* %coins) #0 !dbg !254 {
 entry:
-  call void @llvm.dbg.value(metadata i32 %sum, metadata !258, metadata !DIExpression()), !dbg !259
-  call void @llvm.dbg.value(metadata i32* %coins, metadata !260, metadata !DIExpression()), !dbg !259
-  %0 = load i32, i32* %coins, align 4, !dbg !261
-  %tobool = icmp ne i32 %0, 0, !dbg !261
-  br i1 %tobool, label %lor.lhs.false, label %if.then, !dbg !263, !cf.info !176
+  call void @llvm.dbg.value(metadata i32 %sum, metadata !257, metadata !DIExpression()), !dbg !258
+  call void @llvm.dbg.value(metadata i32* %coins, metadata !259, metadata !DIExpression()), !dbg !258
+  %0 = load i32, i32* %coins, align 4, !dbg !260
+  %tobool = icmp ne i32 %0, 0, !dbg !260
+  br i1 %tobool, label %lor.lhs.false, label %if.then, !dbg !262
 
 lor.lhs.false:                                    ; preds = %entry
-  %cmp = icmp slt i32 %sum, 0, !dbg !264
-  br i1 %cmp, label %if.then, label %if.end, !dbg !265, !cf.info !176
+  %cmp = icmp slt i32 %sum, 0, !dbg !263
+  br i1 %cmp, label %if.then, label %if.end, !dbg !264
 
 if.then:                                          ; preds = %lor.lhs.false, %entry
-  br label %return, !dbg !266
+  br label %return, !dbg !265
 
 if.end:                                           ; preds = %lor.lhs.false
-  %tobool1 = icmp ne i32 %sum, 0, !dbg !267
-  br i1 %tobool1, label %if.end3, label %if.then2, !dbg !269, !cf.info !176
+  %tobool1 = icmp ne i32 %sum, 0, !dbg !266
+  br i1 %tobool1, label %if.end3, label %if.then2, !dbg !268
 
 if.then2:                                         ; preds = %if.end
-  br label %return, !dbg !270
+  br label %return, !dbg !269
 
 if.end3:                                          ; preds = %if.end
-  %1 = load i32, i32* %coins, align 4, !dbg !271
-  %sub = sub nsw i32 %sum, %1, !dbg !272
-  %call = call i32 @count2(i32 %sub, i32* %coins), !dbg !273
-  %add.ptr = getelementptr inbounds i32, i32* %coins, i64 1, !dbg !274
-  %call4 = call i32 @count2(i32 %sum, i32* %add.ptr), !dbg !275
-  %add = add nsw i32 %call, %call4, !dbg !276
-  br label %return, !dbg !277
+  %1 = load i32, i32* %coins, align 4, !dbg !270
+  %sub = sub nsw i32 %sum, %1, !dbg !271
+  %call = call i32 @count2(i32 %sub, i32* %coins), !dbg !272
+  %add.ptr = getelementptr inbounds i32, i32* %coins, i64 1, !dbg !273
+  %call4 = call i32 @count2(i32 %sum, i32* %add.ptr), !dbg !274
+  %add = add nsw i32 %call, %call4, !dbg !275
+  br label %return, !dbg !276
 
 return:                                           ; preds = %if.end3, %if.then2, %if.then
-  %retval.0 = phi i32 [ 0, %if.then ], [ %add, %if.end3 ], [ 1, %if.then2 ], !dbg !259
-  ret i32 %retval.0, !dbg !278
+  %retval.0 = phi i32 [ 0, %if.then ], [ %add, %if.end3 ], [ 1, %if.then2 ], !dbg !258
+  ret i32 %retval.0, !dbg !277
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define dso_local i32 @main() #0 !dbg !279 {
+define dso_local i32 @main() #0 !dbg !278 {
 entry:
   %us_coins = alloca [7 x i32], align 16
   %eu_coins = alloca [9 x i32], align 16
@@ -480,159 +480,159 @@ entry:
   %agg.tmp22 = alloca %struct.i128, align 8
   %agg.tmp26 = alloca %struct.i128, align 8
   %agg.tmp30 = alloca %struct.i128, align 8
-  call void @llvm.dbg.declare(metadata [7 x i32]* %us_coins, metadata !282, metadata !DIExpression()), !dbg !286
-  %0 = bitcast [7 x i32]* %us_coins to i8*, !dbg !286
-  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 16 %0, i8* align 16 bitcast ([7 x i32]* @__const.main.us_coins to i8*), i64 28, i1 false), !dbg !286
-  call void @llvm.dbg.declare(metadata [9 x i32]* %eu_coins, metadata !287, metadata !DIExpression()), !dbg !291
-  %1 = bitcast [9 x i32]* %eu_coins to i8*, !dbg !291
-  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 16 %1, i8* align 16 bitcast ([9 x i32]* @__const.main.eu_coins to i8*), i64 36, i1 false), !dbg !291
-  %arraydecay = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !292
-  %add.ptr = getelementptr inbounds i32, i32* %arraydecay, i64 2, !dbg !293
-  %call = call { i64, i64 } @count(i32 100, i32* %add.ptr), !dbg !294
-  %coerce.dive = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp, i32 0, i32 0, !dbg !294
-  %2 = bitcast [2 x i64]* %coerce.dive to { i64, i64 }*, !dbg !294
-  %3 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %2, i32 0, i32 0, !dbg !294
-  %4 = extractvalue { i64, i64 } %call, 0, !dbg !294
-  store i64 %4, i64* %3, align 8, !dbg !294
-  %5 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %2, i32 0, i32 1, !dbg !294
-  %6 = extractvalue { i64, i64 } %call, 1, !dbg !294
-  store i64 %6, i64* %5, align 8, !dbg !294
-  %7 = bitcast %struct.i128* %agg.tmp to { i64, i64 }*, !dbg !295
-  %8 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %7, i32 0, i32 0, !dbg !295
-  %9 = load i64, i64* %8, align 8, !dbg !295
-  %10 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %7, i32 0, i32 1, !dbg !295
-  %11 = load i64, i64* %10, align 8, !dbg !295
-  call void @show(i64 %9, i64 %11), !dbg !295
-  %arraydecay2 = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !296
-  %call3 = call { i64, i64 } @count(i32 1000, i32* %arraydecay2), !dbg !297
-  %coerce.dive4 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp1, i32 0, i32 0, !dbg !297
-  %12 = bitcast [2 x i64]* %coerce.dive4 to { i64, i64 }*, !dbg !297
-  %13 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %12, i32 0, i32 0, !dbg !297
-  %14 = extractvalue { i64, i64 } %call3, 0, !dbg !297
-  store i64 %14, i64* %13, align 8, !dbg !297
-  %15 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %12, i32 0, i32 1, !dbg !297
-  %16 = extractvalue { i64, i64 } %call3, 1, !dbg !297
-  store i64 %16, i64* %15, align 8, !dbg !297
-  %17 = bitcast %struct.i128* %agg.tmp1 to { i64, i64 }*, !dbg !298
-  %18 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %17, i32 0, i32 0, !dbg !298
-  %19 = load i64, i64* %18, align 8, !dbg !298
-  %20 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %17, i32 0, i32 1, !dbg !298
-  %21 = load i64, i64* %20, align 8, !dbg !298
-  call void @show(i64 %19, i64 %21), !dbg !298
-  %arraydecay6 = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !299
-  %call7 = call { i64, i64 } @count(i32 100000, i32* %arraydecay6), !dbg !300
-  %coerce.dive8 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp5, i32 0, i32 0, !dbg !300
-  %22 = bitcast [2 x i64]* %coerce.dive8 to { i64, i64 }*, !dbg !300
-  %23 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %22, i32 0, i32 0, !dbg !300
-  %24 = extractvalue { i64, i64 } %call7, 0, !dbg !300
-  store i64 %24, i64* %23, align 8, !dbg !300
-  %25 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %22, i32 0, i32 1, !dbg !300
-  %26 = extractvalue { i64, i64 } %call7, 1, !dbg !300
-  store i64 %26, i64* %25, align 8, !dbg !300
-  %27 = bitcast %struct.i128* %agg.tmp5 to { i64, i64 }*, !dbg !301
-  %28 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %27, i32 0, i32 0, !dbg !301
-  %29 = load i64, i64* %28, align 8, !dbg !301
-  %30 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %27, i32 0, i32 1, !dbg !301
-  %31 = load i64, i64* %30, align 8, !dbg !301
-  call void @show(i64 %29, i64 %31), !dbg !301
-  %arraydecay10 = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !302
-  %call11 = call { i64, i64 } @count(i32 1000000, i32* %arraydecay10), !dbg !303
-  %coerce.dive12 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp9, i32 0, i32 0, !dbg !303
-  %32 = bitcast [2 x i64]* %coerce.dive12 to { i64, i64 }*, !dbg !303
-  %33 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %32, i32 0, i32 0, !dbg !303
-  %34 = extractvalue { i64, i64 } %call11, 0, !dbg !303
-  store i64 %34, i64* %33, align 8, !dbg !303
-  %35 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %32, i32 0, i32 1, !dbg !303
-  %36 = extractvalue { i64, i64 } %call11, 1, !dbg !303
-  store i64 %36, i64* %35, align 8, !dbg !303
-  %37 = bitcast %struct.i128* %agg.tmp9 to { i64, i64 }*, !dbg !304
-  %38 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %37, i32 0, i32 0, !dbg !304
-  %39 = load i64, i64* %38, align 8, !dbg !304
-  %40 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %37, i32 0, i32 1, !dbg !304
-  %41 = load i64, i64* %40, align 8, !dbg !304
-  call void @show(i64 %39, i64 %41), !dbg !304
-  %arraydecay14 = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !305
-  %call15 = call { i64, i64 } @count(i32 10000000, i32* %arraydecay14), !dbg !306
-  %coerce.dive16 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp13, i32 0, i32 0, !dbg !306
-  %42 = bitcast [2 x i64]* %coerce.dive16 to { i64, i64 }*, !dbg !306
-  %43 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %42, i32 0, i32 0, !dbg !306
-  %44 = extractvalue { i64, i64 } %call15, 0, !dbg !306
-  store i64 %44, i64* %43, align 8, !dbg !306
-  %45 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %42, i32 0, i32 1, !dbg !306
-  %46 = extractvalue { i64, i64 } %call15, 1, !dbg !306
-  store i64 %46, i64* %45, align 8, !dbg !306
-  %47 = bitcast %struct.i128* %agg.tmp13 to { i64, i64 }*, !dbg !307
-  %48 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %47, i32 0, i32 0, !dbg !307
-  %49 = load i64, i64* %48, align 8, !dbg !307
-  %50 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %47, i32 0, i32 1, !dbg !307
-  %51 = load i64, i64* %50, align 8, !dbg !307
-  call void @show(i64 %49, i64 %51), !dbg !307
-  %call17 = call i32 @putchar(i32 10), !dbg !308
-  %arraydecay19 = getelementptr inbounds [9 x i32], [9 x i32]* %eu_coins, i64 0, i64 0, !dbg !309
-  %call20 = call { i64, i64 } @count(i32 100, i32* %arraydecay19), !dbg !310
-  %coerce.dive21 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp18, i32 0, i32 0, !dbg !310
-  %52 = bitcast [2 x i64]* %coerce.dive21 to { i64, i64 }*, !dbg !310
-  %53 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %52, i32 0, i32 0, !dbg !310
-  %54 = extractvalue { i64, i64 } %call20, 0, !dbg !310
-  store i64 %54, i64* %53, align 8, !dbg !310
-  %55 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %52, i32 0, i32 1, !dbg !310
-  %56 = extractvalue { i64, i64 } %call20, 1, !dbg !310
-  store i64 %56, i64* %55, align 8, !dbg !310
-  %57 = bitcast %struct.i128* %agg.tmp18 to { i64, i64 }*, !dbg !311
-  %58 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %57, i32 0, i32 0, !dbg !311
-  %59 = load i64, i64* %58, align 8, !dbg !311
-  %60 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %57, i32 0, i32 1, !dbg !311
-  %61 = load i64, i64* %60, align 8, !dbg !311
-  call void @show(i64 %59, i64 %61), !dbg !311
-  %arraydecay23 = getelementptr inbounds [9 x i32], [9 x i32]* %eu_coins, i64 0, i64 0, !dbg !312
-  %call24 = call { i64, i64 } @count(i32 100000, i32* %arraydecay23), !dbg !313
-  %coerce.dive25 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp22, i32 0, i32 0, !dbg !313
-  %62 = bitcast [2 x i64]* %coerce.dive25 to { i64, i64 }*, !dbg !313
-  %63 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %62, i32 0, i32 0, !dbg !313
-  %64 = extractvalue { i64, i64 } %call24, 0, !dbg !313
-  store i64 %64, i64* %63, align 8, !dbg !313
-  %65 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %62, i32 0, i32 1, !dbg !313
-  %66 = extractvalue { i64, i64 } %call24, 1, !dbg !313
-  store i64 %66, i64* %65, align 8, !dbg !313
-  %67 = bitcast %struct.i128* %agg.tmp22 to { i64, i64 }*, !dbg !314
-  %68 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %67, i32 0, i32 0, !dbg !314
-  %69 = load i64, i64* %68, align 8, !dbg !314
-  %70 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %67, i32 0, i32 1, !dbg !314
-  %71 = load i64, i64* %70, align 8, !dbg !314
-  call void @show(i64 %69, i64 %71), !dbg !314
-  %arraydecay27 = getelementptr inbounds [9 x i32], [9 x i32]* %eu_coins, i64 0, i64 0, !dbg !315
-  %call28 = call { i64, i64 } @count(i32 1000000, i32* %arraydecay27), !dbg !316
-  %coerce.dive29 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp26, i32 0, i32 0, !dbg !316
-  %72 = bitcast [2 x i64]* %coerce.dive29 to { i64, i64 }*, !dbg !316
-  %73 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %72, i32 0, i32 0, !dbg !316
-  %74 = extractvalue { i64, i64 } %call28, 0, !dbg !316
-  store i64 %74, i64* %73, align 8, !dbg !316
-  %75 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %72, i32 0, i32 1, !dbg !316
-  %76 = extractvalue { i64, i64 } %call28, 1, !dbg !316
-  store i64 %76, i64* %75, align 8, !dbg !316
-  %77 = bitcast %struct.i128* %agg.tmp26 to { i64, i64 }*, !dbg !317
-  %78 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %77, i32 0, i32 0, !dbg !317
-  %79 = load i64, i64* %78, align 8, !dbg !317
-  %80 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %77, i32 0, i32 1, !dbg !317
-  %81 = load i64, i64* %80, align 8, !dbg !317
-  call void @show(i64 %79, i64 %81), !dbg !317
-  %arraydecay31 = getelementptr inbounds [9 x i32], [9 x i32]* %eu_coins, i64 0, i64 0, !dbg !318
-  %call32 = call { i64, i64 } @count(i32 10000000, i32* %arraydecay31), !dbg !319
-  %coerce.dive33 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp30, i32 0, i32 0, !dbg !319
-  %82 = bitcast [2 x i64]* %coerce.dive33 to { i64, i64 }*, !dbg !319
-  %83 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %82, i32 0, i32 0, !dbg !319
-  %84 = extractvalue { i64, i64 } %call32, 0, !dbg !319
-  store i64 %84, i64* %83, align 8, !dbg !319
-  %85 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %82, i32 0, i32 1, !dbg !319
-  %86 = extractvalue { i64, i64 } %call32, 1, !dbg !319
-  store i64 %86, i64* %85, align 8, !dbg !319
-  %87 = bitcast %struct.i128* %agg.tmp30 to { i64, i64 }*, !dbg !320
-  %88 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %87, i32 0, i32 0, !dbg !320
-  %89 = load i64, i64* %88, align 8, !dbg !320
-  %90 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %87, i32 0, i32 1, !dbg !320
-  %91 = load i64, i64* %90, align 8, !dbg !320
-  call void @show(i64 %89, i64 %91), !dbg !320
-  ret i32 0, !dbg !321
+  call void @llvm.dbg.declare(metadata [7 x i32]* %us_coins, metadata !281, metadata !DIExpression()), !dbg !285
+  %0 = bitcast [7 x i32]* %us_coins to i8*, !dbg !285
+  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 16 %0, i8* align 16 bitcast ([7 x i32]* @__const.main.us_coins to i8*), i64 28, i1 false), !dbg !285
+  call void @llvm.dbg.declare(metadata [9 x i32]* %eu_coins, metadata !286, metadata !DIExpression()), !dbg !290
+  %1 = bitcast [9 x i32]* %eu_coins to i8*, !dbg !290
+  call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 16 %1, i8* align 16 bitcast ([9 x i32]* @__const.main.eu_coins to i8*), i64 36, i1 false), !dbg !290
+  %arraydecay = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !291
+  %add.ptr = getelementptr inbounds i32, i32* %arraydecay, i64 2, !dbg !292
+  %call = call { i64, i64 } @count(i32 100, i32* %add.ptr), !dbg !293
+  %coerce.dive = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp, i32 0, i32 0, !dbg !293
+  %2 = bitcast [2 x i64]* %coerce.dive to { i64, i64 }*, !dbg !293
+  %3 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %2, i32 0, i32 0, !dbg !293
+  %4 = extractvalue { i64, i64 } %call, 0, !dbg !293
+  store i64 %4, i64* %3, align 8, !dbg !293
+  %5 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %2, i32 0, i32 1, !dbg !293
+  %6 = extractvalue { i64, i64 } %call, 1, !dbg !293
+  store i64 %6, i64* %5, align 8, !dbg !293
+  %7 = bitcast %struct.i128* %agg.tmp to { i64, i64 }*, !dbg !294
+  %8 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %7, i32 0, i32 0, !dbg !294
+  %9 = load i64, i64* %8, align 8, !dbg !294
+  %10 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %7, i32 0, i32 1, !dbg !294
+  %11 = load i64, i64* %10, align 8, !dbg !294
+  call void @show(i64 %9, i64 %11), !dbg !294
+  %arraydecay2 = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !295
+  %call3 = call { i64, i64 } @count(i32 1000, i32* %arraydecay2), !dbg !296
+  %coerce.dive4 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp1, i32 0, i32 0, !dbg !296
+  %12 = bitcast [2 x i64]* %coerce.dive4 to { i64, i64 }*, !dbg !296
+  %13 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %12, i32 0, i32 0, !dbg !296
+  %14 = extractvalue { i64, i64 } %call3, 0, !dbg !296
+  store i64 %14, i64* %13, align 8, !dbg !296
+  %15 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %12, i32 0, i32 1, !dbg !296
+  %16 = extractvalue { i64, i64 } %call3, 1, !dbg !296
+  store i64 %16, i64* %15, align 8, !dbg !296
+  %17 = bitcast %struct.i128* %agg.tmp1 to { i64, i64 }*, !dbg !297
+  %18 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %17, i32 0, i32 0, !dbg !297
+  %19 = load i64, i64* %18, align 8, !dbg !297
+  %20 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %17, i32 0, i32 1, !dbg !297
+  %21 = load i64, i64* %20, align 8, !dbg !297
+  call void @show(i64 %19, i64 %21), !dbg !297
+  %arraydecay6 = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !298
+  %call7 = call { i64, i64 } @count(i32 100000, i32* %arraydecay6), !dbg !299
+  %coerce.dive8 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp5, i32 0, i32 0, !dbg !299
+  %22 = bitcast [2 x i64]* %coerce.dive8 to { i64, i64 }*, !dbg !299
+  %23 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %22, i32 0, i32 0, !dbg !299
+  %24 = extractvalue { i64, i64 } %call7, 0, !dbg !299
+  store i64 %24, i64* %23, align 8, !dbg !299
+  %25 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %22, i32 0, i32 1, !dbg !299
+  %26 = extractvalue { i64, i64 } %call7, 1, !dbg !299
+  store i64 %26, i64* %25, align 8, !dbg !299
+  %27 = bitcast %struct.i128* %agg.tmp5 to { i64, i64 }*, !dbg !300
+  %28 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %27, i32 0, i32 0, !dbg !300
+  %29 = load i64, i64* %28, align 8, !dbg !300
+  %30 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %27, i32 0, i32 1, !dbg !300
+  %31 = load i64, i64* %30, align 8, !dbg !300
+  call void @show(i64 %29, i64 %31), !dbg !300
+  %arraydecay10 = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !301
+  %call11 = call { i64, i64 } @count(i32 1000000, i32* %arraydecay10), !dbg !302
+  %coerce.dive12 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp9, i32 0, i32 0, !dbg !302
+  %32 = bitcast [2 x i64]* %coerce.dive12 to { i64, i64 }*, !dbg !302
+  %33 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %32, i32 0, i32 0, !dbg !302
+  %34 = extractvalue { i64, i64 } %call11, 0, !dbg !302
+  store i64 %34, i64* %33, align 8, !dbg !302
+  %35 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %32, i32 0, i32 1, !dbg !302
+  %36 = extractvalue { i64, i64 } %call11, 1, !dbg !302
+  store i64 %36, i64* %35, align 8, !dbg !302
+  %37 = bitcast %struct.i128* %agg.tmp9 to { i64, i64 }*, !dbg !303
+  %38 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %37, i32 0, i32 0, !dbg !303
+  %39 = load i64, i64* %38, align 8, !dbg !303
+  %40 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %37, i32 0, i32 1, !dbg !303
+  %41 = load i64, i64* %40, align 8, !dbg !303
+  call void @show(i64 %39, i64 %41), !dbg !303
+  %arraydecay14 = getelementptr inbounds [7 x i32], [7 x i32]* %us_coins, i64 0, i64 0, !dbg !304
+  %call15 = call { i64, i64 } @count(i32 10000000, i32* %arraydecay14), !dbg !305
+  %coerce.dive16 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp13, i32 0, i32 0, !dbg !305
+  %42 = bitcast [2 x i64]* %coerce.dive16 to { i64, i64 }*, !dbg !305
+  %43 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %42, i32 0, i32 0, !dbg !305
+  %44 = extractvalue { i64, i64 } %call15, 0, !dbg !305
+  store i64 %44, i64* %43, align 8, !dbg !305
+  %45 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %42, i32 0, i32 1, !dbg !305
+  %46 = extractvalue { i64, i64 } %call15, 1, !dbg !305
+  store i64 %46, i64* %45, align 8, !dbg !305
+  %47 = bitcast %struct.i128* %agg.tmp13 to { i64, i64 }*, !dbg !306
+  %48 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %47, i32 0, i32 0, !dbg !306
+  %49 = load i64, i64* %48, align 8, !dbg !306
+  %50 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %47, i32 0, i32 1, !dbg !306
+  %51 = load i64, i64* %50, align 8, !dbg !306
+  call void @show(i64 %49, i64 %51), !dbg !306
+  %call17 = call i32 @putchar(i32 10), !dbg !307
+  %arraydecay19 = getelementptr inbounds [9 x i32], [9 x i32]* %eu_coins, i64 0, i64 0, !dbg !308
+  %call20 = call { i64, i64 } @count(i32 100, i32* %arraydecay19), !dbg !309
+  %coerce.dive21 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp18, i32 0, i32 0, !dbg !309
+  %52 = bitcast [2 x i64]* %coerce.dive21 to { i64, i64 }*, !dbg !309
+  %53 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %52, i32 0, i32 0, !dbg !309
+  %54 = extractvalue { i64, i64 } %call20, 0, !dbg !309
+  store i64 %54, i64* %53, align 8, !dbg !309
+  %55 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %52, i32 0, i32 1, !dbg !309
+  %56 = extractvalue { i64, i64 } %call20, 1, !dbg !309
+  store i64 %56, i64* %55, align 8, !dbg !309
+  %57 = bitcast %struct.i128* %agg.tmp18 to { i64, i64 }*, !dbg !310
+  %58 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %57, i32 0, i32 0, !dbg !310
+  %59 = load i64, i64* %58, align 8, !dbg !310
+  %60 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %57, i32 0, i32 1, !dbg !310
+  %61 = load i64, i64* %60, align 8, !dbg !310
+  call void @show(i64 %59, i64 %61), !dbg !310
+  %arraydecay23 = getelementptr inbounds [9 x i32], [9 x i32]* %eu_coins, i64 0, i64 0, !dbg !311
+  %call24 = call { i64, i64 } @count(i32 100000, i32* %arraydecay23), !dbg !312
+  %coerce.dive25 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp22, i32 0, i32 0, !dbg !312
+  %62 = bitcast [2 x i64]* %coerce.dive25 to { i64, i64 }*, !dbg !312
+  %63 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %62, i32 0, i32 0, !dbg !312
+  %64 = extractvalue { i64, i64 } %call24, 0, !dbg !312
+  store i64 %64, i64* %63, align 8, !dbg !312
+  %65 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %62, i32 0, i32 1, !dbg !312
+  %66 = extractvalue { i64, i64 } %call24, 1, !dbg !312
+  store i64 %66, i64* %65, align 8, !dbg !312
+  %67 = bitcast %struct.i128* %agg.tmp22 to { i64, i64 }*, !dbg !313
+  %68 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %67, i32 0, i32 0, !dbg !313
+  %69 = load i64, i64* %68, align 8, !dbg !313
+  %70 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %67, i32 0, i32 1, !dbg !313
+  %71 = load i64, i64* %70, align 8, !dbg !313
+  call void @show(i64 %69, i64 %71), !dbg !313
+  %arraydecay27 = getelementptr inbounds [9 x i32], [9 x i32]* %eu_coins, i64 0, i64 0, !dbg !314
+  %call28 = call { i64, i64 } @count(i32 1000000, i32* %arraydecay27), !dbg !315
+  %coerce.dive29 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp26, i32 0, i32 0, !dbg !315
+  %72 = bitcast [2 x i64]* %coerce.dive29 to { i64, i64 }*, !dbg !315
+  %73 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %72, i32 0, i32 0, !dbg !315
+  %74 = extractvalue { i64, i64 } %call28, 0, !dbg !315
+  store i64 %74, i64* %73, align 8, !dbg !315
+  %75 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %72, i32 0, i32 1, !dbg !315
+  %76 = extractvalue { i64, i64 } %call28, 1, !dbg !315
+  store i64 %76, i64* %75, align 8, !dbg !315
+  %77 = bitcast %struct.i128* %agg.tmp26 to { i64, i64 }*, !dbg !316
+  %78 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %77, i32 0, i32 0, !dbg !316
+  %79 = load i64, i64* %78, align 8, !dbg !316
+  %80 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %77, i32 0, i32 1, !dbg !316
+  %81 = load i64, i64* %80, align 8, !dbg !316
+  call void @show(i64 %79, i64 %81), !dbg !316
+  %arraydecay31 = getelementptr inbounds [9 x i32], [9 x i32]* %eu_coins, i64 0, i64 0, !dbg !317
+  %call32 = call { i64, i64 } @count(i32 10000000, i32* %arraydecay31), !dbg !318
+  %coerce.dive33 = getelementptr inbounds %struct.i128, %struct.i128* %agg.tmp30, i32 0, i32 0, !dbg !318
+  %82 = bitcast [2 x i64]* %coerce.dive33 to { i64, i64 }*, !dbg !318
+  %83 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %82, i32 0, i32 0, !dbg !318
+  %84 = extractvalue { i64, i64 } %call32, 0, !dbg !318
+  store i64 %84, i64* %83, align 8, !dbg !318
+  %85 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %82, i32 0, i32 1, !dbg !318
+  %86 = extractvalue { i64, i64 } %call32, 1, !dbg !318
+  store i64 %86, i64* %85, align 8, !dbg !318
+  %87 = bitcast %struct.i128* %agg.tmp30 to { i64, i64 }*, !dbg !319
+  %88 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %87, i32 0, i32 0, !dbg !319
+  %89 = load i64, i64* %88, align 8, !dbg !319
+  %90 = getelementptr inbounds { i64, i64 }, { i64, i64 }* %87, i32 0, i32 1, !dbg !319
+  %91 = load i64, i64* %90, align 8, !dbg !319
+  call void @show(i64 %89, i64 %91), !dbg !319
+  ret i32 0, !dbg !320
 }
 
 ; Function Attrs: nounwind readnone speculatable willreturn
@@ -649,13 +649,13 @@ attributes #5 = { nounwind }
 !llvm.module.flags = !{!3, !4, !5}
 !llvm.ident = !{!6}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
 !1 = !DIFile(filename: "count-the-coins-1.c", directory: "/scratch/yc0769/xstack_benchmark/rosetta/Count-the-coins")
 !2 = !{}
 !3 = !{i32 7, !"Dwarf Version", i32 4}
 !4 = !{i32 2, !"Debug Info Version", i32 3}
 !5 = !{i32 1, !"wchar_size", i32 4}
-!6 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)"}
+!6 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)"}
 !7 = distinct !DISubprogram(name: "show", scope: !1, file: !1, line: 10, type: !8, scopeLine: 10, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !0, retainedNodes: !2)
 !8 = !DISubroutineType(types: !9)
 !9 = !{null, !10}
@@ -825,149 +825,148 @@ attributes #5 = { nounwind }
 !173 = distinct !DILexicalBlock(scope: !170, file: !1, line: 47, column: 8)
 !174 = !DILocation(line: 47, column: 15, scope: !173)
 !175 = !DILocation(line: 47, column: 8, scope: !170)
-!176 = !{!"if"}
-!177 = !DILocation(line: 47, column: 28, scope: !173)
-!178 = !DILocation(line: 47, column: 37, scope: !173)
-!179 = !DILocation(line: 47, column: 19, scope: !173)
-!180 = !DILocation(line: 47, column: 26, scope: !173)
-!181 = !DILocation(line: 46, column: 23, scope: !170)
-!182 = !DILocation(line: 46, column: 3, scope: !170)
-!183 = distinct !{!183, !171, !184}
-!184 = !DILocation(line: 47, column: 39, scope: !166)
-!185 = !DILocalVariable(name: "c", scope: !167, file: !1, line: 49, type: !10)
-!186 = !DILocation(line: 49, column: 8, scope: !167)
-!187 = !DILocation(line: 49, column: 12, scope: !167)
-!188 = !DILocation(line: 49, column: 18, scope: !167)
-!189 = !DILocation(line: 51, column: 8, scope: !190)
-!190 = distinct !DILexicalBlock(scope: !167, file: !1, line: 51, column: 3)
-!191 = !DILocation(line: 0, scope: !190)
-!192 = !DILocation(line: 51, column: 17, scope: !193)
-!193 = distinct !DILexicalBlock(scope: !190, file: !1, line: 51, column: 3)
-!194 = !DILocation(line: 51, column: 3, scope: !190)
-!195 = !DILocation(line: 52, column: 14, scope: !196)
-!196 = distinct !DILexicalBlock(scope: !193, file: !1, line: 51, column: 27)
-!197 = !DILocation(line: 52, column: 21, scope: !196)
-!198 = !DILocation(line: 52, column: 19, scope: !196)
-!199 = !DILocalVariable(name: "p", scope: !196, file: !1, line: 52, type: !127)
-!200 = !DILocation(line: 0, scope: !196)
-!201 = !DILocation(line: 55, column: 17, scope: !196)
-!202 = !DILocation(line: 55, column: 15, scope: !196)
-!203 = !DILocation(line: 55, column: 7, scope: !196)
-!204 = !DILocation(line: 55, column: 4, scope: !196)
-!205 = !DILocation(line: 55, column: 12, scope: !196)
-!206 = !DILocation(line: 56, column: 17, scope: !196)
-!207 = !DILocation(line: 56, column: 15, scope: !196)
-!208 = !DILocation(line: 56, column: 7, scope: !196)
-!209 = !DILocation(line: 56, column: 4, scope: !196)
-!210 = !DILocation(line: 56, column: 12, scope: !196)
-!211 = !DILocation(line: 57, column: 11, scope: !212)
-!212 = distinct !DILexicalBlock(scope: !196, file: !1, line: 57, column: 8)
-!213 = !DILocation(line: 57, column: 8, scope: !212)
-!214 = !DILocation(line: 57, column: 20, scope: !212)
-!215 = !DILocation(line: 57, column: 18, scope: !212)
-!216 = !DILocation(line: 57, column: 16, scope: !212)
-!217 = !DILocation(line: 57, column: 8, scope: !196)
-!218 = !DILocation(line: 58, column: 8, scope: !212)
-!219 = !DILocation(line: 58, column: 5, scope: !212)
-!220 = !DILocation(line: 58, column: 13, scope: !212)
-!221 = !DILocation(line: 59, column: 8, scope: !196)
-!222 = !DILocation(line: 60, column: 3, scope: !196)
-!223 = !DILocation(line: 51, column: 23, scope: !193)
-!224 = !DILocation(line: 51, column: 3, scope: !193)
-!225 = distinct !{!225, !194, !226}
-!226 = !DILocation(line: 60, column: 3, scope: !190)
-!227 = !DILocation(line: 61, column: 2, scope: !167)
-!228 = !DILocation(line: 45, column: 25, scope: !163)
-!229 = !DILocation(line: 45, column: 2, scope: !163)
-!230 = distinct !{!230, !164, !231}
-!231 = !DILocation(line: 61, column: 2, scope: !160)
-!232 = !DILocalVariable(name: "r", scope: !104, file: !1, line: 63, type: !10)
-!233 = !DILocation(line: 63, column: 7, scope: !104)
-!234 = !DILocation(line: 63, column: 15, scope: !104)
-!235 = !DILocation(line: 63, column: 11, scope: !104)
-!236 = !DILocation(line: 63, column: 25, scope: !104)
-!237 = !DILocation(line: 63, column: 20, scope: !104)
-!238 = !DILocation(line: 65, column: 7, scope: !239)
-!239 = distinct !DILexicalBlock(scope: !104, file: !1, line: 65, column: 2)
-!240 = !DILocation(line: 0, scope: !239)
-!241 = !DILocation(line: 65, column: 16, scope: !242)
-!242 = distinct !DILexicalBlock(scope: !239, file: !1, line: 65, column: 2)
-!243 = !DILocation(line: 65, column: 2, scope: !239)
-!244 = !DILocation(line: 65, column: 31, scope: !242)
-!245 = !DILocation(line: 65, column: 26, scope: !242)
-!246 = !DILocation(line: 65, column: 22, scope: !242)
-!247 = !DILocation(line: 65, column: 2, scope: !242)
-!248 = distinct !{!248, !243, !249}
-!249 = !DILocation(line: 65, column: 35, scope: !239)
-!250 = !DILocation(line: 66, column: 7, scope: !104)
-!251 = !DILocation(line: 66, column: 2, scope: !104)
-!252 = !DILocation(line: 67, column: 7, scope: !104)
-!253 = !DILocation(line: 67, column: 2, scope: !104)
-!254 = !DILocation(line: 69, column: 2, scope: !104)
-!255 = distinct !DISubprogram(name: "count2", scope: !1, file: !1, line: 73, type: !256, scopeLine: 74, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !0, retainedNodes: !2)
-!256 = !DISubroutineType(types: !257)
-!257 = !{!44, !44, !107}
-!258 = !DILocalVariable(name: "sum", arg: 1, scope: !255, file: !1, line: 73, type: !44)
-!259 = !DILocation(line: 0, scope: !255)
-!260 = !DILocalVariable(name: "coins", arg: 2, scope: !255, file: !1, line: 73, type: !107)
-!261 = !DILocation(line: 75, column: 7, scope: !262)
-!262 = distinct !DILexicalBlock(scope: !255, file: !1, line: 75, column: 6)
-!263 = !DILocation(line: 75, column: 14, scope: !262)
-!264 = !DILocation(line: 75, column: 21, scope: !262)
-!265 = !DILocation(line: 75, column: 6, scope: !255)
-!266 = !DILocation(line: 75, column: 26, scope: !262)
-!267 = !DILocation(line: 76, column: 7, scope: !268)
-!268 = distinct !DILexicalBlock(scope: !255, file: !1, line: 76, column: 6)
-!269 = !DILocation(line: 76, column: 6, scope: !255)
-!270 = !DILocation(line: 76, column: 12, scope: !268)
-!271 = !DILocation(line: 77, column: 22, scope: !255)
-!272 = !DILocation(line: 77, column: 20, scope: !255)
-!273 = !DILocation(line: 77, column: 9, scope: !255)
-!274 = !DILocation(line: 77, column: 57, scope: !255)
-!275 = !DILocation(line: 77, column: 39, scope: !255)
-!276 = !DILocation(line: 77, column: 37, scope: !255)
-!277 = !DILocation(line: 77, column: 2, scope: !255)
-!278 = !DILocation(line: 78, column: 1, scope: !255)
-!279 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 80, type: !280, scopeLine: 81, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !0, retainedNodes: !2)
-!280 = !DISubroutineType(types: !281)
-!281 = !{!44}
-!282 = !DILocalVariable(name: "us_coins", scope: !279, file: !1, line: 82, type: !283)
-!283 = !DICompositeType(tag: DW_TAG_array_type, baseType: !44, size: 224, elements: !284)
-!284 = !{!285}
-!285 = !DISubrange(count: 7)
-!286 = !DILocation(line: 82, column: 6, scope: !279)
-!287 = !DILocalVariable(name: "eu_coins", scope: !279, file: !1, line: 83, type: !288)
-!288 = !DICompositeType(tag: DW_TAG_array_type, baseType: !44, size: 288, elements: !289)
-!289 = !{!290}
-!290 = !DISubrange(count: 9)
-!291 = !DILocation(line: 83, column: 6, scope: !279)
-!292 = !DILocation(line: 85, column: 21, scope: !279)
-!293 = !DILocation(line: 85, column: 30, scope: !279)
-!294 = !DILocation(line: 85, column: 7, scope: !279)
-!295 = !DILocation(line: 85, column: 2, scope: !279)
-!296 = !DILocation(line: 86, column: 21, scope: !279)
-!297 = !DILocation(line: 86, column: 7, scope: !279)
-!298 = !DILocation(line: 86, column: 2, scope: !279)
-!299 = !DILocation(line: 88, column: 27, scope: !279)
-!300 = !DILocation(line: 88, column: 7, scope: !279)
-!301 = !DILocation(line: 88, column: 2, scope: !279)
-!302 = !DILocation(line: 89, column: 27, scope: !279)
-!303 = !DILocation(line: 89, column: 7, scope: !279)
-!304 = !DILocation(line: 89, column: 2, scope: !279)
-!305 = !DILocation(line: 90, column: 27, scope: !279)
-!306 = !DILocation(line: 90, column: 7, scope: !279)
-!307 = !DILocation(line: 90, column: 2, scope: !279)
-!308 = !DILocation(line: 92, column: 2, scope: !279)
-!309 = !DILocation(line: 94, column: 27, scope: !279)
-!310 = !DILocation(line: 94, column: 7, scope: !279)
-!311 = !DILocation(line: 94, column: 2, scope: !279)
-!312 = !DILocation(line: 95, column: 27, scope: !279)
-!313 = !DILocation(line: 95, column: 7, scope: !279)
-!314 = !DILocation(line: 95, column: 2, scope: !279)
-!315 = !DILocation(line: 96, column: 27, scope: !279)
-!316 = !DILocation(line: 96, column: 7, scope: !279)
-!317 = !DILocation(line: 96, column: 2, scope: !279)
-!318 = !DILocation(line: 97, column: 27, scope: !279)
-!319 = !DILocation(line: 97, column: 7, scope: !279)
-!320 = !DILocation(line: 97, column: 2, scope: !279)
-!321 = !DILocation(line: 99, column: 2, scope: !279)
+!176 = !DILocation(line: 47, column: 28, scope: !173)
+!177 = !DILocation(line: 47, column: 37, scope: !173)
+!178 = !DILocation(line: 47, column: 19, scope: !173)
+!179 = !DILocation(line: 47, column: 26, scope: !173)
+!180 = !DILocation(line: 46, column: 23, scope: !170)
+!181 = !DILocation(line: 46, column: 3, scope: !170)
+!182 = distinct !{!182, !171, !183}
+!183 = !DILocation(line: 47, column: 39, scope: !166)
+!184 = !DILocalVariable(name: "c", scope: !167, file: !1, line: 49, type: !10)
+!185 = !DILocation(line: 49, column: 8, scope: !167)
+!186 = !DILocation(line: 49, column: 12, scope: !167)
+!187 = !DILocation(line: 49, column: 18, scope: !167)
+!188 = !DILocation(line: 51, column: 8, scope: !189)
+!189 = distinct !DILexicalBlock(scope: !167, file: !1, line: 51, column: 3)
+!190 = !DILocation(line: 0, scope: !189)
+!191 = !DILocation(line: 51, column: 17, scope: !192)
+!192 = distinct !DILexicalBlock(scope: !189, file: !1, line: 51, column: 3)
+!193 = !DILocation(line: 51, column: 3, scope: !189)
+!194 = !DILocation(line: 52, column: 14, scope: !195)
+!195 = distinct !DILexicalBlock(scope: !192, file: !1, line: 51, column: 27)
+!196 = !DILocation(line: 52, column: 21, scope: !195)
+!197 = !DILocation(line: 52, column: 19, scope: !195)
+!198 = !DILocalVariable(name: "p", scope: !195, file: !1, line: 52, type: !127)
+!199 = !DILocation(line: 0, scope: !195)
+!200 = !DILocation(line: 55, column: 17, scope: !195)
+!201 = !DILocation(line: 55, column: 15, scope: !195)
+!202 = !DILocation(line: 55, column: 7, scope: !195)
+!203 = !DILocation(line: 55, column: 4, scope: !195)
+!204 = !DILocation(line: 55, column: 12, scope: !195)
+!205 = !DILocation(line: 56, column: 17, scope: !195)
+!206 = !DILocation(line: 56, column: 15, scope: !195)
+!207 = !DILocation(line: 56, column: 7, scope: !195)
+!208 = !DILocation(line: 56, column: 4, scope: !195)
+!209 = !DILocation(line: 56, column: 12, scope: !195)
+!210 = !DILocation(line: 57, column: 11, scope: !211)
+!211 = distinct !DILexicalBlock(scope: !195, file: !1, line: 57, column: 8)
+!212 = !DILocation(line: 57, column: 8, scope: !211)
+!213 = !DILocation(line: 57, column: 20, scope: !211)
+!214 = !DILocation(line: 57, column: 18, scope: !211)
+!215 = !DILocation(line: 57, column: 16, scope: !211)
+!216 = !DILocation(line: 57, column: 8, scope: !195)
+!217 = !DILocation(line: 58, column: 8, scope: !211)
+!218 = !DILocation(line: 58, column: 5, scope: !211)
+!219 = !DILocation(line: 58, column: 13, scope: !211)
+!220 = !DILocation(line: 59, column: 8, scope: !195)
+!221 = !DILocation(line: 60, column: 3, scope: !195)
+!222 = !DILocation(line: 51, column: 23, scope: !192)
+!223 = !DILocation(line: 51, column: 3, scope: !192)
+!224 = distinct !{!224, !193, !225}
+!225 = !DILocation(line: 60, column: 3, scope: !189)
+!226 = !DILocation(line: 61, column: 2, scope: !167)
+!227 = !DILocation(line: 45, column: 25, scope: !163)
+!228 = !DILocation(line: 45, column: 2, scope: !163)
+!229 = distinct !{!229, !164, !230}
+!230 = !DILocation(line: 61, column: 2, scope: !160)
+!231 = !DILocalVariable(name: "r", scope: !104, file: !1, line: 63, type: !10)
+!232 = !DILocation(line: 63, column: 7, scope: !104)
+!233 = !DILocation(line: 63, column: 15, scope: !104)
+!234 = !DILocation(line: 63, column: 11, scope: !104)
+!235 = !DILocation(line: 63, column: 25, scope: !104)
+!236 = !DILocation(line: 63, column: 20, scope: !104)
+!237 = !DILocation(line: 65, column: 7, scope: !238)
+!238 = distinct !DILexicalBlock(scope: !104, file: !1, line: 65, column: 2)
+!239 = !DILocation(line: 0, scope: !238)
+!240 = !DILocation(line: 65, column: 16, scope: !241)
+!241 = distinct !DILexicalBlock(scope: !238, file: !1, line: 65, column: 2)
+!242 = !DILocation(line: 65, column: 2, scope: !238)
+!243 = !DILocation(line: 65, column: 31, scope: !241)
+!244 = !DILocation(line: 65, column: 26, scope: !241)
+!245 = !DILocation(line: 65, column: 22, scope: !241)
+!246 = !DILocation(line: 65, column: 2, scope: !241)
+!247 = distinct !{!247, !242, !248}
+!248 = !DILocation(line: 65, column: 35, scope: !238)
+!249 = !DILocation(line: 66, column: 7, scope: !104)
+!250 = !DILocation(line: 66, column: 2, scope: !104)
+!251 = !DILocation(line: 67, column: 7, scope: !104)
+!252 = !DILocation(line: 67, column: 2, scope: !104)
+!253 = !DILocation(line: 69, column: 2, scope: !104)
+!254 = distinct !DISubprogram(name: "count2", scope: !1, file: !1, line: 73, type: !255, scopeLine: 74, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !0, retainedNodes: !2)
+!255 = !DISubroutineType(types: !256)
+!256 = !{!44, !44, !107}
+!257 = !DILocalVariable(name: "sum", arg: 1, scope: !254, file: !1, line: 73, type: !44)
+!258 = !DILocation(line: 0, scope: !254)
+!259 = !DILocalVariable(name: "coins", arg: 2, scope: !254, file: !1, line: 73, type: !107)
+!260 = !DILocation(line: 75, column: 7, scope: !261)
+!261 = distinct !DILexicalBlock(scope: !254, file: !1, line: 75, column: 6)
+!262 = !DILocation(line: 75, column: 14, scope: !261)
+!263 = !DILocation(line: 75, column: 21, scope: !261)
+!264 = !DILocation(line: 75, column: 6, scope: !254)
+!265 = !DILocation(line: 75, column: 26, scope: !261)
+!266 = !DILocation(line: 76, column: 7, scope: !267)
+!267 = distinct !DILexicalBlock(scope: !254, file: !1, line: 76, column: 6)
+!268 = !DILocation(line: 76, column: 6, scope: !254)
+!269 = !DILocation(line: 76, column: 12, scope: !267)
+!270 = !DILocation(line: 77, column: 22, scope: !254)
+!271 = !DILocation(line: 77, column: 20, scope: !254)
+!272 = !DILocation(line: 77, column: 9, scope: !254)
+!273 = !DILocation(line: 77, column: 57, scope: !254)
+!274 = !DILocation(line: 77, column: 39, scope: !254)
+!275 = !DILocation(line: 77, column: 37, scope: !254)
+!276 = !DILocation(line: 77, column: 2, scope: !254)
+!277 = !DILocation(line: 78, column: 1, scope: !254)
+!278 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 80, type: !279, scopeLine: 81, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !0, retainedNodes: !2)
+!279 = !DISubroutineType(types: !280)
+!280 = !{!44}
+!281 = !DILocalVariable(name: "us_coins", scope: !278, file: !1, line: 82, type: !282)
+!282 = !DICompositeType(tag: DW_TAG_array_type, baseType: !44, size: 224, elements: !283)
+!283 = !{!284}
+!284 = !DISubrange(count: 7)
+!285 = !DILocation(line: 82, column: 6, scope: !278)
+!286 = !DILocalVariable(name: "eu_coins", scope: !278, file: !1, line: 83, type: !287)
+!287 = !DICompositeType(tag: DW_TAG_array_type, baseType: !44, size: 288, elements: !288)
+!288 = !{!289}
+!289 = !DISubrange(count: 9)
+!290 = !DILocation(line: 83, column: 6, scope: !278)
+!291 = !DILocation(line: 85, column: 21, scope: !278)
+!292 = !DILocation(line: 85, column: 30, scope: !278)
+!293 = !DILocation(line: 85, column: 7, scope: !278)
+!294 = !DILocation(line: 85, column: 2, scope: !278)
+!295 = !DILocation(line: 86, column: 21, scope: !278)
+!296 = !DILocation(line: 86, column: 7, scope: !278)
+!297 = !DILocation(line: 86, column: 2, scope: !278)
+!298 = !DILocation(line: 88, column: 27, scope: !278)
+!299 = !DILocation(line: 88, column: 7, scope: !278)
+!300 = !DILocation(line: 88, column: 2, scope: !278)
+!301 = !DILocation(line: 89, column: 27, scope: !278)
+!302 = !DILocation(line: 89, column: 7, scope: !278)
+!303 = !DILocation(line: 89, column: 2, scope: !278)
+!304 = !DILocation(line: 90, column: 27, scope: !278)
+!305 = !DILocation(line: 90, column: 7, scope: !278)
+!306 = !DILocation(line: 90, column: 2, scope: !278)
+!307 = !DILocation(line: 92, column: 2, scope: !278)
+!308 = !DILocation(line: 94, column: 27, scope: !278)
+!309 = !DILocation(line: 94, column: 7, scope: !278)
+!310 = !DILocation(line: 94, column: 2, scope: !278)
+!311 = !DILocation(line: 95, column: 27, scope: !278)
+!312 = !DILocation(line: 95, column: 7, scope: !278)
+!313 = !DILocation(line: 95, column: 2, scope: !278)
+!314 = !DILocation(line: 96, column: 27, scope: !278)
+!315 = !DILocation(line: 96, column: 7, scope: !278)
+!316 = !DILocation(line: 96, column: 2, scope: !278)
+!317 = !DILocation(line: 97, column: 27, scope: !278)
+!318 = !DILocation(line: 97, column: 7, scope: !278)
+!319 = !DILocation(line: 97, column: 2, scope: !278)
+!320 = !DILocation(line: 99, column: 2, scope: !278)

@@ -1,4 +1,4 @@
-; ModuleID = 'almost-prime.c'
+; ModuleID = 'almost-prime.ll'
 source_filename = "almost-prime.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -121,37 +121,37 @@ for.body3:                                        ; preds = %for.cond1
   %4 = load i32, i32* %k, align 4, !dbg !83
   %call4 = call i32 @kprime(i32 %3, i32 %4), !dbg !84
   %tobool = icmp ne i32 %call4, 0, !dbg !84
-  br i1 %tobool, label %if.then, label %if.end, !dbg !85, !cf.info !86
+  br i1 %tobool, label %if.then, label %if.end, !dbg !85
 
 if.then:                                          ; preds = %for.body3
-  %5 = load i32, i32* %i, align 4, !dbg !87
-  %call5 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.1, i64 0, i64 0), i32 %5), !dbg !89
-  %6 = load i32, i32* %c, align 4, !dbg !90
-  %inc = add nsw i32 %6, 1, !dbg !90
-  store i32 %inc, i32* %c, align 4, !dbg !90
-  br label %if.end, !dbg !91
+  %5 = load i32, i32* %i, align 4, !dbg !86
+  %call5 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.1, i64 0, i64 0), i32 %5), !dbg !88
+  %6 = load i32, i32* %c, align 4, !dbg !89
+  %inc = add nsw i32 %6, 1, !dbg !89
+  store i32 %inc, i32* %c, align 4, !dbg !89
+  br label %if.end, !dbg !90
 
 if.end:                                           ; preds = %if.then, %for.body3
-  br label %for.inc, !dbg !92
+  br label %for.inc, !dbg !91
 
 for.inc:                                          ; preds = %if.end
-  %7 = load i32, i32* %i, align 4, !dbg !93
-  %inc6 = add nsw i32 %7, 1, !dbg !93
-  store i32 %inc6, i32* %i, align 4, !dbg !93
-  br label %for.cond1, !dbg !94, !llvm.loop !95
+  %7 = load i32, i32* %i, align 4, !dbg !92
+  %inc6 = add nsw i32 %7, 1, !dbg !92
+  store i32 %inc6, i32* %i, align 4, !dbg !92
+  br label %for.cond1, !dbg !93, !llvm.loop !94
 
 for.end:                                          ; preds = %for.cond1
-  %call7 = call i32 @putchar(i32 10), !dbg !97
-  br label %for.inc8, !dbg !98
+  %call7 = call i32 @putchar(i32 10), !dbg !96
+  br label %for.inc8, !dbg !97
 
 for.inc8:                                         ; preds = %for.end
-  %8 = load i32, i32* %k, align 4, !dbg !99
-  %inc9 = add nsw i32 %8, 1, !dbg !99
-  store i32 %inc9, i32* %k, align 4, !dbg !99
-  br label %for.cond, !dbg !100, !llvm.loop !101
+  %8 = load i32, i32* %k, align 4, !dbg !98
+  %inc9 = add nsw i32 %8, 1, !dbg !98
+  store i32 %inc9, i32* %k, align 4, !dbg !98
+  br label %for.cond, !dbg !99, !llvm.loop !100
 
 for.end10:                                        ; preds = %for.cond
-  ret i32 0, !dbg !103
+  ret i32 0, !dbg !102
 }
 
 declare dso_local i32 @printf(i8*, ...) #2
@@ -166,13 +166,13 @@ attributes #2 = { "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-
 !llvm.module.flags = !{!3, !4, !5}
 !llvm.ident = !{!6}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
 !1 = !DIFile(filename: "almost-prime.c", directory: "/scratch/yc0769/xstack_benchmark/rosetta/Almost-prime")
 !2 = !{}
 !3 = !{i32 7, !"Dwarf Version", i32 4}
 !4 = !{i32 2, !"Debug Info Version", i32 3}
 !5 = !{i32 1, !"wchar_size", i32 4}
-!6 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)"}
+!6 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)"}
 !7 = distinct !DISubprogram(name: "kprime", scope: !1, file: !1, line: 3, type: !8, scopeLine: 4, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !0, retainedNodes: !2)
 !8 = !DISubroutineType(types: !9)
 !9 = !{!10, !10, !10}
@@ -252,21 +252,20 @@ attributes #2 = { "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-
 !83 = !DILocation(line: 21, column: 18, scope: !82)
 !84 = !DILocation(line: 21, column: 8, scope: !82)
 !85 = !DILocation(line: 21, column: 8, scope: !78)
-!86 = !{!"if"}
-!87 = !DILocation(line: 22, column: 19, scope: !88)
-!88 = distinct !DILexicalBlock(scope: !82, file: !1, line: 21, column: 22)
-!89 = !DILocation(line: 22, column: 5, scope: !88)
-!90 = !DILocation(line: 23, column: 6, scope: !88)
-!91 = !DILocation(line: 24, column: 4, scope: !88)
-!92 = !DILocation(line: 21, column: 19, scope: !82)
-!93 = !DILocation(line: 20, column: 31, scope: !78)
-!94 = !DILocation(line: 20, column: 3, scope: !78)
-!95 = distinct !{!95, !80, !96}
-!96 = !DILocation(line: 24, column: 4, scope: !74)
-!97 = !DILocation(line: 26, column: 3, scope: !71)
-!98 = !DILocation(line: 27, column: 2, scope: !71)
-!99 = !DILocation(line: 17, column: 23, scope: !67)
-!100 = !DILocation(line: 17, column: 2, scope: !67)
-!101 = distinct !{!101, !69, !102}
-!102 = !DILocation(line: 27, column: 2, scope: !64)
-!103 = !DILocation(line: 29, column: 2, scope: !54)
+!86 = !DILocation(line: 22, column: 19, scope: !87)
+!87 = distinct !DILexicalBlock(scope: !82, file: !1, line: 21, column: 22)
+!88 = !DILocation(line: 22, column: 5, scope: !87)
+!89 = !DILocation(line: 23, column: 6, scope: !87)
+!90 = !DILocation(line: 24, column: 4, scope: !87)
+!91 = !DILocation(line: 21, column: 19, scope: !82)
+!92 = !DILocation(line: 20, column: 31, scope: !78)
+!93 = !DILocation(line: 20, column: 3, scope: !78)
+!94 = distinct !{!94, !80, !95}
+!95 = !DILocation(line: 24, column: 4, scope: !74)
+!96 = !DILocation(line: 26, column: 3, scope: !71)
+!97 = !DILocation(line: 27, column: 2, scope: !71)
+!98 = !DILocation(line: 17, column: 23, scope: !67)
+!99 = !DILocation(line: 17, column: 2, scope: !67)
+!100 = distinct !{!100, !69, !101}
+!101 = !DILocation(line: 27, column: 2, scope: !64)
+!102 = !DILocation(line: 29, column: 2, scope: !54)

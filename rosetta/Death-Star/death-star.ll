@@ -1,4 +1,4 @@
-; ModuleID = 'death-star.c'
+; ModuleID = 'death-star.ll'
 source_filename = "death-star.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -175,40 +175,40 @@ entry:
   store double %sub5, double* %zsq, align 8, !dbg !121
   %14 = load double, double* %zsq, align 8, !dbg !122
   %cmp = fcmp olt double %14, 0.000000e+00, !dbg !124
-  br i1 %cmp, label %if.then, label %if.end, !dbg !125, !cf.info !126
+  br i1 %cmp, label %if.then, label %if.end, !dbg !125
 
 if.then:                                          ; preds = %entry
-  store i32 0, i32* %retval, align 4, !dbg !127
-  br label %return, !dbg !127
+  store i32 0, i32* %retval, align 4, !dbg !126
+  br label %return, !dbg !126
 
 if.end:                                           ; preds = %entry
-  %15 = load double, double* %zsq, align 8, !dbg !128
-  %call = call double @sqrt(double %15) #4, !dbg !129
-  store double %call, double* %zsq, align 8, !dbg !130
-  %16 = load %struct.sphere_t*, %struct.sphere_t** %sph.addr, align 8, !dbg !131
-  %cz = getelementptr inbounds %struct.sphere_t, %struct.sphere_t* %16, i32 0, i32 2, !dbg !132
-  %17 = load double, double* %cz, align 8, !dbg !132
-  %18 = load double, double* %zsq, align 8, !dbg !133
-  %sub6 = fsub double %17, %18, !dbg !134
-  %19 = load double*, double** %z1.addr, align 8, !dbg !135
-  store double %sub6, double* %19, align 8, !dbg !136
-  %20 = load %struct.sphere_t*, %struct.sphere_t** %sph.addr, align 8, !dbg !137
-  %cz7 = getelementptr inbounds %struct.sphere_t, %struct.sphere_t* %20, i32 0, i32 2, !dbg !138
-  %21 = load double, double* %cz7, align 8, !dbg !138
-  %22 = load double, double* %zsq, align 8, !dbg !139
-  %add8 = fadd double %21, %22, !dbg !140
-  %23 = load double*, double** %z2.addr, align 8, !dbg !141
-  store double %add8, double* %23, align 8, !dbg !142
-  store i32 1, i32* %retval, align 4, !dbg !143
-  br label %return, !dbg !143
+  %15 = load double, double* %zsq, align 8, !dbg !127
+  %call = call double @sqrt(double %15) #4, !dbg !128
+  store double %call, double* %zsq, align 8, !dbg !129
+  %16 = load %struct.sphere_t*, %struct.sphere_t** %sph.addr, align 8, !dbg !130
+  %cz = getelementptr inbounds %struct.sphere_t, %struct.sphere_t* %16, i32 0, i32 2, !dbg !131
+  %17 = load double, double* %cz, align 8, !dbg !131
+  %18 = load double, double* %zsq, align 8, !dbg !132
+  %sub6 = fsub double %17, %18, !dbg !133
+  %19 = load double*, double** %z1.addr, align 8, !dbg !134
+  store double %sub6, double* %19, align 8, !dbg !135
+  %20 = load %struct.sphere_t*, %struct.sphere_t** %sph.addr, align 8, !dbg !136
+  %cz7 = getelementptr inbounds %struct.sphere_t, %struct.sphere_t* %20, i32 0, i32 2, !dbg !137
+  %21 = load double, double* %cz7, align 8, !dbg !137
+  %22 = load double, double* %zsq, align 8, !dbg !138
+  %add8 = fadd double %21, %22, !dbg !139
+  %23 = load double*, double** %z2.addr, align 8, !dbg !140
+  store double %add8, double* %23, align 8, !dbg !141
+  store i32 1, i32* %retval, align 4, !dbg !142
+  br label %return, !dbg !142
 
 return:                                           ; preds = %if.end, %if.then
-  %24 = load i32, i32* %retval, align 4, !dbg !144
-  ret i32 %24, !dbg !144
+  %24 = load i32, i32* %retval, align 4, !dbg !143
+  ret i32 %24, !dbg !143
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define dso_local void @draw_sphere(double %k, double %ambient) #0 !dbg !145 {
+define dso_local void @draw_sphere(double %k, double %ambient) #0 !dbg !144 {
 entry:
   %k.addr = alloca double, align 8
   %ambient.addr = alloca double, align 8
@@ -225,127 +225,127 @@ entry:
   %zs1 = alloca double, align 8
   %zs2 = alloca double, align 8
   store double %k, double* %k.addr, align 8
-  call void @llvm.dbg.declare(metadata double* %k.addr, metadata !148, metadata !DIExpression()), !dbg !149
+  call void @llvm.dbg.declare(metadata double* %k.addr, metadata !147, metadata !DIExpression()), !dbg !148
   store double %ambient, double* %ambient.addr, align 8
-  call void @llvm.dbg.declare(metadata double* %ambient.addr, metadata !150, metadata !DIExpression()), !dbg !151
-  call void @llvm.dbg.declare(metadata i32* %i, metadata !152, metadata !DIExpression()), !dbg !153
-  call void @llvm.dbg.declare(metadata i32* %j, metadata !154, metadata !DIExpression()), !dbg !155
-  call void @llvm.dbg.declare(metadata i32* %intensity, metadata !156, metadata !DIExpression()), !dbg !157
-  call void @llvm.dbg.declare(metadata i32* %hit_result, metadata !158, metadata !DIExpression()), !dbg !159
-  call void @llvm.dbg.declare(metadata double* %b, metadata !160, metadata !DIExpression()), !dbg !161
-  call void @llvm.dbg.declare(metadata [3 x double]* %vec, metadata !162, metadata !DIExpression()), !dbg !163
-  call void @llvm.dbg.declare(metadata double* %x, metadata !164, metadata !DIExpression()), !dbg !165
-  call void @llvm.dbg.declare(metadata double* %y, metadata !166, metadata !DIExpression()), !dbg !167
-  call void @llvm.dbg.declare(metadata double* %zb1, metadata !168, metadata !DIExpression()), !dbg !169
-  call void @llvm.dbg.declare(metadata double* %zb2, metadata !170, metadata !DIExpression()), !dbg !171
-  call void @llvm.dbg.declare(metadata double* %zs1, metadata !172, metadata !DIExpression()), !dbg !173
-  call void @llvm.dbg.declare(metadata double* %zs2, metadata !174, metadata !DIExpression()), !dbg !175
-  %0 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 1), align 8, !dbg !176
-  %1 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 3), align 8, !dbg !178
-  %sub = fsub double %0, %1, !dbg !179
-  %2 = call double @llvm.floor.f64(double %sub), !dbg !180
-  %conv = fptosi double %2 to i32, !dbg !180
-  store i32 %conv, i32* %i, align 4, !dbg !181
-  br label %for.cond, !dbg !182
+  call void @llvm.dbg.declare(metadata double* %ambient.addr, metadata !149, metadata !DIExpression()), !dbg !150
+  call void @llvm.dbg.declare(metadata i32* %i, metadata !151, metadata !DIExpression()), !dbg !152
+  call void @llvm.dbg.declare(metadata i32* %j, metadata !153, metadata !DIExpression()), !dbg !154
+  call void @llvm.dbg.declare(metadata i32* %intensity, metadata !155, metadata !DIExpression()), !dbg !156
+  call void @llvm.dbg.declare(metadata i32* %hit_result, metadata !157, metadata !DIExpression()), !dbg !158
+  call void @llvm.dbg.declare(metadata double* %b, metadata !159, metadata !DIExpression()), !dbg !160
+  call void @llvm.dbg.declare(metadata [3 x double]* %vec, metadata !161, metadata !DIExpression()), !dbg !162
+  call void @llvm.dbg.declare(metadata double* %x, metadata !163, metadata !DIExpression()), !dbg !164
+  call void @llvm.dbg.declare(metadata double* %y, metadata !165, metadata !DIExpression()), !dbg !166
+  call void @llvm.dbg.declare(metadata double* %zb1, metadata !167, metadata !DIExpression()), !dbg !168
+  call void @llvm.dbg.declare(metadata double* %zb2, metadata !169, metadata !DIExpression()), !dbg !170
+  call void @llvm.dbg.declare(metadata double* %zs1, metadata !171, metadata !DIExpression()), !dbg !172
+  call void @llvm.dbg.declare(metadata double* %zs2, metadata !173, metadata !DIExpression()), !dbg !174
+  %0 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 1), align 8, !dbg !175
+  %1 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 3), align 8, !dbg !177
+  %sub = fsub double %0, %1, !dbg !178
+  %2 = call double @llvm.floor.f64(double %sub), !dbg !179
+  %conv = fptosi double %2 to i32, !dbg !179
+  store i32 %conv, i32* %i, align 4, !dbg !180
+  br label %for.cond, !dbg !181
 
 for.cond:                                         ; preds = %for.inc71, %entry
-  %3 = load i32, i32* %i, align 4, !dbg !183
-  %conv1 = sitofp i32 %3 to double, !dbg !183
-  %4 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 1), align 8, !dbg !185
-  %5 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 3), align 8, !dbg !186
-  %add = fadd double %4, %5, !dbg !187
-  %6 = call double @llvm.ceil.f64(double %add), !dbg !188
-  %cmp = fcmp ole double %conv1, %6, !dbg !189
-  br i1 %cmp, label %for.body, label %for.end73, !dbg !190
+  %3 = load i32, i32* %i, align 4, !dbg !182
+  %conv1 = sitofp i32 %3 to double, !dbg !182
+  %4 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 1), align 8, !dbg !184
+  %5 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 3), align 8, !dbg !185
+  %add = fadd double %4, %5, !dbg !186
+  %6 = call double @llvm.ceil.f64(double %add), !dbg !187
+  %cmp = fcmp ole double %conv1, %6, !dbg !188
+  br i1 %cmp, label %for.body, label %for.end73, !dbg !189
 
 for.body:                                         ; preds = %for.cond
-  %7 = load i32, i32* %i, align 4, !dbg !191
-  %conv3 = sitofp i32 %7 to double, !dbg !191
-  %add4 = fadd double %conv3, 5.000000e-01, !dbg !193
-  store double %add4, double* %y, align 8, !dbg !194
-  %8 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !195
-  %9 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 3), align 8, !dbg !197
-  %mul = fmul double 2.000000e+00, %9, !dbg !198
-  %sub5 = fsub double %8, %mul, !dbg !199
-  %10 = call double @llvm.floor.f64(double %sub5), !dbg !200
-  %conv6 = fptosi double %10 to i32, !dbg !200
-  store i32 %conv6, i32* %j, align 4, !dbg !201
-  br label %for.cond7, !dbg !202
+  %7 = load i32, i32* %i, align 4, !dbg !190
+  %conv3 = sitofp i32 %7 to double, !dbg !190
+  %add4 = fadd double %conv3, 5.000000e-01, !dbg !192
+  store double %add4, double* %y, align 8, !dbg !193
+  %8 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !194
+  %9 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 3), align 8, !dbg !196
+  %mul = fmul double 2.000000e+00, %9, !dbg !197
+  %sub5 = fsub double %8, %mul, !dbg !198
+  %10 = call double @llvm.floor.f64(double %sub5), !dbg !199
+  %conv6 = fptosi double %10 to i32, !dbg !199
+  store i32 %conv6, i32* %j, align 4, !dbg !200
+  br label %for.cond7, !dbg !201
 
 for.cond7:                                        ; preds = %for.inc, %for.body
-  %11 = load i32, i32* %j, align 4, !dbg !203
-  %conv8 = sitofp i32 %11 to double, !dbg !203
-  %12 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !205
-  %13 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 3), align 8, !dbg !206
-  %mul9 = fmul double 2.000000e+00, %13, !dbg !207
-  %add10 = fadd double %12, %mul9, !dbg !208
-  %14 = call double @llvm.ceil.f64(double %add10), !dbg !209
-  %cmp11 = fcmp ole double %conv8, %14, !dbg !210
-  br i1 %cmp11, label %for.body13, label %for.end, !dbg !211
+  %11 = load i32, i32* %j, align 4, !dbg !202
+  %conv8 = sitofp i32 %11 to double, !dbg !202
+  %12 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !204
+  %13 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 3), align 8, !dbg !205
+  %mul9 = fmul double 2.000000e+00, %13, !dbg !206
+  %add10 = fadd double %12, %mul9, !dbg !207
+  %14 = call double @llvm.ceil.f64(double %add10), !dbg !208
+  %cmp11 = fcmp ole double %conv8, %14, !dbg !209
+  br i1 %cmp11, label %for.body13, label %for.end, !dbg !210
 
 for.body13:                                       ; preds = %for.cond7
-  %15 = load i32, i32* %j, align 4, !dbg !212
-  %conv14 = sitofp i32 %15 to double, !dbg !212
-  %16 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !214
-  %sub15 = fsub double %conv14, %16, !dbg !215
-  %div = fdiv double %sub15, 2.000000e+00, !dbg !216
-  %add16 = fadd double %div, 5.000000e-01, !dbg !217
-  %17 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !218
-  %add17 = fadd double %add16, %17, !dbg !219
-  store double %add17, double* %x, align 8, !dbg !220
-  %18 = load double, double* %x, align 8, !dbg !221
-  %19 = load double, double* %y, align 8, !dbg !223
-  %call = call i32 @hit_sphere(%struct.sphere_t* @pos, double %18, double %19, double* %zb1, double* %zb2), !dbg !224
-  %tobool = icmp ne i32 %call, 0, !dbg !224
-  br i1 %tobool, label %if.else, label %if.then, !dbg !225, !cf.info !126
+  %15 = load i32, i32* %j, align 4, !dbg !211
+  %conv14 = sitofp i32 %15 to double, !dbg !211
+  %16 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !213
+  %sub15 = fsub double %conv14, %16, !dbg !214
+  %div = fdiv double %sub15, 2.000000e+00, !dbg !215
+  %add16 = fadd double %div, 5.000000e-01, !dbg !216
+  %17 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !217
+  %add17 = fadd double %add16, %17, !dbg !218
+  store double %add17, double* %x, align 8, !dbg !219
+  %18 = load double, double* %x, align 8, !dbg !220
+  %19 = load double, double* %y, align 8, !dbg !222
+  %call = call i32 @hit_sphere(%struct.sphere_t* @pos, double %18, double %19, double* %zb1, double* %zb2), !dbg !223
+  %tobool = icmp ne i32 %call, 0, !dbg !223
+  br i1 %tobool, label %if.else, label %if.then, !dbg !224
 
 if.then:                                          ; preds = %for.body13
-  store i32 0, i32* %hit_result, align 4, !dbg !226
-  br label %if.end37, !dbg !227
+  store i32 0, i32* %hit_result, align 4, !dbg !225
+  br label %if.end37, !dbg !226
 
 if.else:                                          ; preds = %for.body13
-  %20 = load double, double* %x, align 8, !dbg !228
-  %21 = load double, double* %y, align 8, !dbg !230
-  %call18 = call i32 @hit_sphere(%struct.sphere_t* @neg, double %20, double %21, double* %zs1, double* %zs2), !dbg !231
-  %tobool19 = icmp ne i32 %call18, 0, !dbg !231
-  br i1 %tobool19, label %if.else21, label %if.then20, !dbg !232, !cf.info !126
+  %20 = load double, double* %x, align 8, !dbg !227
+  %21 = load double, double* %y, align 8, !dbg !229
+  %call18 = call i32 @hit_sphere(%struct.sphere_t* @neg, double %20, double %21, double* %zs1, double* %zs2), !dbg !230
+  %tobool19 = icmp ne i32 %call18, 0, !dbg !230
+  br i1 %tobool19, label %if.else21, label %if.then20, !dbg !231
 
 if.then20:                                        ; preds = %if.else
-  store i32 1, i32* %hit_result, align 4, !dbg !233
-  br label %if.end36, !dbg !234
+  store i32 1, i32* %hit_result, align 4, !dbg !232
+  br label %if.end36, !dbg !233
 
 if.else21:                                        ; preds = %if.else
-  %22 = load double, double* %zs1, align 8, !dbg !235
-  %23 = load double, double* %zb1, align 8, !dbg !237
-  %cmp22 = fcmp ogt double %22, %23, !dbg !238
-  br i1 %cmp22, label %if.then24, label %if.else25, !dbg !239, !cf.info !126
+  %22 = load double, double* %zs1, align 8, !dbg !234
+  %23 = load double, double* %zb1, align 8, !dbg !236
+  %cmp22 = fcmp ogt double %22, %23, !dbg !237
+  br i1 %cmp22, label %if.then24, label %if.else25, !dbg !238
 
 if.then24:                                        ; preds = %if.else21
-  store i32 1, i32* %hit_result, align 4, !dbg !240
-  br label %if.end35, !dbg !241
+  store i32 1, i32* %hit_result, align 4, !dbg !239
+  br label %if.end35, !dbg !240
 
 if.else25:                                        ; preds = %if.else21
-  %24 = load double, double* %zs2, align 8, !dbg !242
-  %25 = load double, double* %zb2, align 8, !dbg !244
-  %cmp26 = fcmp ogt double %24, %25, !dbg !245
-  br i1 %cmp26, label %if.then28, label %if.else29, !dbg !246, !cf.info !126
+  %24 = load double, double* %zs2, align 8, !dbg !241
+  %25 = load double, double* %zb2, align 8, !dbg !243
+  %cmp26 = fcmp ogt double %24, %25, !dbg !244
+  br i1 %cmp26, label %if.then28, label %if.else29, !dbg !245
 
 if.then28:                                        ; preds = %if.else25
-  store i32 0, i32* %hit_result, align 4, !dbg !247
-  br label %if.end34, !dbg !248
+  store i32 0, i32* %hit_result, align 4, !dbg !246
+  br label %if.end34, !dbg !247
 
 if.else29:                                        ; preds = %if.else25
-  %26 = load double, double* %zs2, align 8, !dbg !249
-  %27 = load double, double* %zb1, align 8, !dbg !251
-  %cmp30 = fcmp ogt double %26, %27, !dbg !252
-  br i1 %cmp30, label %if.then32, label %if.else33, !dbg !253, !cf.info !126
+  %26 = load double, double* %zs2, align 8, !dbg !248
+  %27 = load double, double* %zb1, align 8, !dbg !250
+  %cmp30 = fcmp ogt double %26, %27, !dbg !251
+  br i1 %cmp30, label %if.then32, label %if.else33, !dbg !252
 
 if.then32:                                        ; preds = %if.else29
-  store i32 2, i32* %hit_result, align 4, !dbg !254
-  br label %if.end, !dbg !255
+  store i32 2, i32* %hit_result, align 4, !dbg !253
+  br label %if.end, !dbg !254
 
 if.else33:                                        ; preds = %if.else29
-  store i32 1, i32* %hit_result, align 4, !dbg !256
+  store i32 1, i32* %hit_result, align 4, !dbg !255
   br label %if.end
 
 if.end:                                           ; preds = %if.else33, %if.then32
@@ -361,113 +361,113 @@ if.end36:                                         ; preds = %if.end35, %if.then2
   br label %if.end37
 
 if.end37:                                         ; preds = %if.end36, %if.then
-  %28 = load i32, i32* %hit_result, align 4, !dbg !257
+  %28 = load i32, i32* %hit_result, align 4, !dbg !256
   switch i32 %28, label %sw.default [
     i32 0, label %sw.bb
     i32 1, label %sw.bb39
-  ], !dbg !258
+  ], !dbg !257
 
 sw.bb:                                            ; preds = %if.end37
-  %call38 = call i32 @putchar(i32 43), !dbg !259
-  br label %for.inc, !dbg !261
+  %call38 = call i32 @putchar(i32 43), !dbg !258
+  br label %for.inc, !dbg !260
 
 sw.bb39:                                          ; preds = %if.end37
-  %29 = load double, double* %x, align 8, !dbg !262
-  %30 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !263
-  %sub40 = fsub double %29, %30, !dbg !264
-  %arrayidx = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 0, !dbg !265
-  store double %sub40, double* %arrayidx, align 16, !dbg !266
-  %31 = load double, double* %y, align 8, !dbg !267
-  %32 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 1), align 8, !dbg !268
-  %sub41 = fsub double %31, %32, !dbg !269
-  %arrayidx42 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 1, !dbg !270
-  store double %sub41, double* %arrayidx42, align 8, !dbg !271
-  %33 = load double, double* %zb1, align 8, !dbg !272
-  %34 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 2), align 8, !dbg !273
-  %sub43 = fsub double %33, %34, !dbg !274
-  %arrayidx44 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 2, !dbg !275
-  store double %sub43, double* %arrayidx44, align 16, !dbg !276
-  br label %sw.epilog, !dbg !277
+  %29 = load double, double* %x, align 8, !dbg !261
+  %30 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 0), align 8, !dbg !262
+  %sub40 = fsub double %29, %30, !dbg !263
+  %arrayidx = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 0, !dbg !264
+  store double %sub40, double* %arrayidx, align 16, !dbg !265
+  %31 = load double, double* %y, align 8, !dbg !266
+  %32 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 1), align 8, !dbg !267
+  %sub41 = fsub double %31, %32, !dbg !268
+  %arrayidx42 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 1, !dbg !269
+  store double %sub41, double* %arrayidx42, align 8, !dbg !270
+  %33 = load double, double* %zb1, align 8, !dbg !271
+  %34 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @pos, i32 0, i32 2), align 8, !dbg !272
+  %sub43 = fsub double %33, %34, !dbg !273
+  %arrayidx44 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 2, !dbg !274
+  store double %sub43, double* %arrayidx44, align 16, !dbg !275
+  br label %sw.epilog, !dbg !276
 
 sw.default:                                       ; preds = %if.end37
-  %35 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @neg, i32 0, i32 0), align 8, !dbg !278
-  %36 = load double, double* %x, align 8, !dbg !279
-  %sub45 = fsub double %35, %36, !dbg !280
-  %arrayidx46 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 0, !dbg !281
-  store double %sub45, double* %arrayidx46, align 16, !dbg !282
-  %37 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @neg, i32 0, i32 1), align 8, !dbg !283
-  %38 = load double, double* %y, align 8, !dbg !284
-  %sub47 = fsub double %37, %38, !dbg !285
-  %arrayidx48 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 1, !dbg !286
-  store double %sub47, double* %arrayidx48, align 8, !dbg !287
-  %39 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @neg, i32 0, i32 2), align 8, !dbg !288
-  %40 = load double, double* %zs2, align 8, !dbg !289
-  %sub49 = fsub double %39, %40, !dbg !290
-  %arrayidx50 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 2, !dbg !291
-  store double %sub49, double* %arrayidx50, align 16, !dbg !292
-  br label %sw.epilog, !dbg !293
+  %35 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @neg, i32 0, i32 0), align 8, !dbg !277
+  %36 = load double, double* %x, align 8, !dbg !278
+  %sub45 = fsub double %35, %36, !dbg !279
+  %arrayidx46 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 0, !dbg !280
+  store double %sub45, double* %arrayidx46, align 16, !dbg !281
+  %37 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @neg, i32 0, i32 1), align 8, !dbg !282
+  %38 = load double, double* %y, align 8, !dbg !283
+  %sub47 = fsub double %37, %38, !dbg !284
+  %arrayidx48 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 1, !dbg !285
+  store double %sub47, double* %arrayidx48, align 8, !dbg !286
+  %39 = load double, double* getelementptr inbounds (%struct.sphere_t, %struct.sphere_t* @neg, i32 0, i32 2), align 8, !dbg !287
+  %40 = load double, double* %zs2, align 8, !dbg !288
+  %sub49 = fsub double %39, %40, !dbg !289
+  %arrayidx50 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 2, !dbg !290
+  store double %sub49, double* %arrayidx50, align 16, !dbg !291
+  br label %sw.epilog, !dbg !292
 
 sw.epilog:                                        ; preds = %sw.default, %sw.bb39
-  %arraydecay = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 0, !dbg !294
-  call void @normalize(double* %arraydecay), !dbg !295
-  %arraydecay51 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 0, !dbg !296
-  %call52 = call double @dot(double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 0), double* %arraydecay51), !dbg !297
-  %41 = load double, double* %k.addr, align 8, !dbg !298
-  %call53 = call double @pow(double %call52, double %41) #4, !dbg !299
-  %42 = load double, double* %ambient.addr, align 8, !dbg !300
-  %add54 = fadd double %call53, %42, !dbg !301
-  store double %add54, double* %b, align 8, !dbg !302
-  %43 = load double, double* %b, align 8, !dbg !303
-  %sub55 = fsub double 1.000000e+00, %43, !dbg !304
-  %mul56 = fmul double %sub55, 7.000000e+00, !dbg !305
-  %conv57 = fptosi double %mul56 to i32, !dbg !306
-  store i32 %conv57, i32* %intensity, align 4, !dbg !307
-  %44 = load i32, i32* %intensity, align 4, !dbg !308
-  %cmp58 = icmp slt i32 %44, 0, !dbg !310
-  br i1 %cmp58, label %if.then60, label %if.end61, !dbg !311, !cf.info !126
+  %arraydecay = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 0, !dbg !293
+  call void @normalize(double* %arraydecay), !dbg !294
+  %arraydecay51 = getelementptr inbounds [3 x double], [3 x double]* %vec, i64 0, i64 0, !dbg !295
+  %call52 = call double @dot(double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 0), double* %arraydecay51), !dbg !296
+  %41 = load double, double* %k.addr, align 8, !dbg !297
+  %call53 = call double @pow(double %call52, double %41) #4, !dbg !298
+  %42 = load double, double* %ambient.addr, align 8, !dbg !299
+  %add54 = fadd double %call53, %42, !dbg !300
+  store double %add54, double* %b, align 8, !dbg !301
+  %43 = load double, double* %b, align 8, !dbg !302
+  %sub55 = fsub double 1.000000e+00, %43, !dbg !303
+  %mul56 = fmul double %sub55, 7.000000e+00, !dbg !304
+  %conv57 = fptosi double %mul56 to i32, !dbg !305
+  store i32 %conv57, i32* %intensity, align 4, !dbg !306
+  %44 = load i32, i32* %intensity, align 4, !dbg !307
+  %cmp58 = icmp slt i32 %44, 0, !dbg !309
+  br i1 %cmp58, label %if.then60, label %if.end61, !dbg !310
 
 if.then60:                                        ; preds = %sw.epilog
-  store i32 0, i32* %intensity, align 4, !dbg !312
-  br label %if.end61, !dbg !313
+  store i32 0, i32* %intensity, align 4, !dbg !311
+  br label %if.end61, !dbg !312
 
 if.end61:                                         ; preds = %if.then60, %sw.epilog
-  %45 = load i32, i32* %intensity, align 4, !dbg !314
-  %conv62 = sext i32 %45 to i64, !dbg !314
-  %cmp63 = icmp uge i64 %conv62, 7, !dbg !316
-  br i1 %cmp63, label %if.then65, label %if.end66, !dbg !317, !cf.info !126
+  %45 = load i32, i32* %intensity, align 4, !dbg !313
+  %conv62 = sext i32 %45 to i64, !dbg !313
+  %cmp63 = icmp uge i64 %conv62, 7, !dbg !315
+  br i1 %cmp63, label %if.then65, label %if.end66, !dbg !316
 
 if.then65:                                        ; preds = %if.end61
-  store i32 6, i32* %intensity, align 4, !dbg !318
-  br label %if.end66, !dbg !319
+  store i32 6, i32* %intensity, align 4, !dbg !317
+  br label %if.end66, !dbg !318
 
 if.end66:                                         ; preds = %if.then65, %if.end61
-  %46 = load i8*, i8** @shades, align 8, !dbg !320
-  %47 = load i32, i32* %intensity, align 4, !dbg !321
-  %idxprom = sext i32 %47 to i64, !dbg !320
-  %arrayidx67 = getelementptr inbounds i8, i8* %46, i64 %idxprom, !dbg !320
-  %48 = load i8, i8* %arrayidx67, align 1, !dbg !320
-  %conv68 = sext i8 %48 to i32, !dbg !320
-  %call69 = call i32 @putchar(i32 %conv68), !dbg !322
-  br label %for.inc, !dbg !323
+  %46 = load i8*, i8** @shades, align 8, !dbg !319
+  %47 = load i32, i32* %intensity, align 4, !dbg !320
+  %idxprom = sext i32 %47 to i64, !dbg !319
+  %arrayidx67 = getelementptr inbounds i8, i8* %46, i64 %idxprom, !dbg !319
+  %48 = load i8, i8* %arrayidx67, align 1, !dbg !319
+  %conv68 = sext i8 %48 to i32, !dbg !319
+  %call69 = call i32 @putchar(i32 %conv68), !dbg !321
+  br label %for.inc, !dbg !322
 
 for.inc:                                          ; preds = %if.end66, %sw.bb
-  %49 = load i32, i32* %j, align 4, !dbg !324
-  %inc = add nsw i32 %49, 1, !dbg !324
-  store i32 %inc, i32* %j, align 4, !dbg !324
-  br label %for.cond7, !dbg !325, !llvm.loop !326
+  %49 = load i32, i32* %j, align 4, !dbg !323
+  %inc = add nsw i32 %49, 1, !dbg !323
+  store i32 %inc, i32* %j, align 4, !dbg !323
+  br label %for.cond7, !dbg !324, !llvm.loop !325
 
 for.end:                                          ; preds = %for.cond7
-  %call70 = call i32 @putchar(i32 10), !dbg !328
-  br label %for.inc71, !dbg !329
+  %call70 = call i32 @putchar(i32 10), !dbg !327
+  br label %for.inc71, !dbg !328
 
 for.inc71:                                        ; preds = %for.end
-  %50 = load i32, i32* %i, align 4, !dbg !330
-  %inc72 = add nsw i32 %50, 1, !dbg !330
-  store i32 %inc72, i32* %i, align 4, !dbg !330
-  br label %for.cond, !dbg !331, !llvm.loop !332
+  %50 = load i32, i32* %i, align 4, !dbg !329
+  %inc72 = add nsw i32 %50, 1, !dbg !329
+  store i32 %inc72, i32* %i, align 4, !dbg !329
+  br label %for.cond, !dbg !330, !llvm.loop !331
 
 for.end73:                                        ; preds = %for.cond
-  ret void, !dbg !334
+  ret void, !dbg !333
 }
 
 ; Function Attrs: nounwind readnone speculatable willreturn
@@ -482,34 +482,34 @@ declare dso_local i32 @putchar(i32) #3
 declare dso_local double @pow(double, double) #2
 
 ; Function Attrs: noinline nounwind uwtable
-define dso_local i32 @main() #0 !dbg !335 {
+define dso_local i32 @main() #0 !dbg !334 {
 entry:
   %retval = alloca i32, align 4
   %ang = alloca double, align 8
   store i32 0, i32* %retval, align 4
-  call void @llvm.dbg.declare(metadata double* %ang, metadata !338, metadata !DIExpression()), !dbg !339
-  store double 0.000000e+00, double* %ang, align 8, !dbg !339
-  br label %while.body, !dbg !340
+  call void @llvm.dbg.declare(metadata double* %ang, metadata !337, metadata !DIExpression()), !dbg !338
+  store double 0.000000e+00, double* %ang, align 8, !dbg !338
+  br label %while.body, !dbg !339
 
-while.body:                                       ; preds = %entry, %while.body
-  %call = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.1, i64 0, i64 0)), !dbg !341
-  %0 = load double, double* %ang, align 8, !dbg !343
-  %mul = fmul double %0, 2.000000e+00, !dbg !344
-  %call1 = call double @cos(double %mul) #4, !dbg !345
-  store double %call1, double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 1), align 8, !dbg !346
-  %1 = load double, double* %ang, align 8, !dbg !347
-  %call2 = call double @cos(double %1) #4, !dbg !348
-  store double %call2, double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 2), align 16, !dbg !349
-  %2 = load double, double* %ang, align 8, !dbg !350
-  %call3 = call double @sin(double %2) #4, !dbg !351
-  store double %call3, double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 0), align 16, !dbg !352
-  call void @normalize(double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 0)), !dbg !353
-  %3 = load double, double* %ang, align 8, !dbg !354
-  %add = fadd double %3, 5.000000e-02, !dbg !354
-  store double %add, double* %ang, align 8, !dbg !354
-  call void @draw_sphere(double 2.000000e+00, double 3.000000e-01), !dbg !355
-  %call4 = call i32 @usleep(i32 100000), !dbg !356
-  br label %while.body, !dbg !340, !llvm.loop !357
+while.body:                                       ; preds = %while.body, %entry
+  %call = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.1, i64 0, i64 0)), !dbg !340
+  %0 = load double, double* %ang, align 8, !dbg !342
+  %mul = fmul double %0, 2.000000e+00, !dbg !343
+  %call1 = call double @cos(double %mul) #4, !dbg !344
+  store double %call1, double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 1), align 8, !dbg !345
+  %1 = load double, double* %ang, align 8, !dbg !346
+  %call2 = call double @cos(double %1) #4, !dbg !347
+  store double %call2, double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 2), align 16, !dbg !348
+  %2 = load double, double* %ang, align 8, !dbg !349
+  %call3 = call double @sin(double %2) #4, !dbg !350
+  store double %call3, double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 0), align 16, !dbg !351
+  call void @normalize(double* getelementptr inbounds ([3 x double], [3 x double]* @light, i64 0, i64 0)), !dbg !352
+  %3 = load double, double* %ang, align 8, !dbg !353
+  %add = fadd double %3, 5.000000e-02, !dbg !353
+  store double %add, double* %ang, align 8, !dbg !353
+  call void @draw_sphere(double 2.000000e+00, double 3.000000e-01), !dbg !354
+  %call4 = call i32 @usleep(i32 100000), !dbg !355
+  br label %while.body, !dbg !339, !llvm.loop !356
 }
 
 declare dso_local i32 @printf(i8*, ...) #3
@@ -534,7 +534,7 @@ attributes #4 = { nounwind }
 
 !0 = !DIGlobalVariableExpression(var: !1, expr: !DIExpression())
 !1 = distinct !DIGlobalVariable(name: "shades", scope: !2, file: !3, line: 5, type: !23, isLocal: false, isDefinition: true)
-!2 = distinct !DICompileUnit(language: DW_LANG_C99, file: !3, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !4, globals: !5, splitDebugInlining: false, nameTableKind: None)
+!2 = distinct !DICompileUnit(language: DW_LANG_C99, file: !3, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !4, globals: !5, splitDebugInlining: false, nameTableKind: None)
 !3 = !DIFile(filename: "death-star.c", directory: "/scratch/yc0769/xstack_benchmark/rosetta/Death-Star")
 !4 = !{}
 !5 = !{!0, !6, !12, !21}
@@ -561,7 +561,7 @@ attributes #4 = { nounwind }
 !26 = !{i32 7, !"Dwarf Version", i32 4}
 !27 = !{i32 2, !"Debug Info Version", i32 3}
 !28 = !{i32 1, !"wchar_size", i32 4}
-!29 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)"}
+!29 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)"}
 !30 = distinct !DISubprogram(name: "normalize", scope: !3, file: !3, line: 8, type: !31, scopeLine: 9, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !2, retainedNodes: !4)
 !31 = !DISubroutineType(types: !32)
 !32 = !{null, !33}
@@ -658,236 +658,235 @@ attributes #4 = { nounwind }
 !123 = distinct !DILexicalBlock(scope: !85, file: !3, line: 33, column: 6)
 !124 = !DILocation(line: 33, column: 10, scope: !123)
 !125 = !DILocation(line: 33, column: 6, scope: !85)
-!126 = !{!"if"}
-!127 = !DILocation(line: 33, column: 15, scope: !123)
-!128 = !DILocation(line: 34, column: 13, scope: !85)
-!129 = !DILocation(line: 34, column: 8, scope: !85)
-!130 = !DILocation(line: 34, column: 6, scope: !85)
-!131 = !DILocation(line: 35, column: 8, scope: !85)
-!132 = !DILocation(line: 35, column: 13, scope: !85)
-!133 = !DILocation(line: 35, column: 18, scope: !85)
-!134 = !DILocation(line: 35, column: 16, scope: !85)
-!135 = !DILocation(line: 35, column: 3, scope: !85)
-!136 = !DILocation(line: 35, column: 6, scope: !85)
-!137 = !DILocation(line: 36, column: 8, scope: !85)
-!138 = !DILocation(line: 36, column: 13, scope: !85)
-!139 = !DILocation(line: 36, column: 18, scope: !85)
-!140 = !DILocation(line: 36, column: 16, scope: !85)
-!141 = !DILocation(line: 36, column: 3, scope: !85)
-!142 = !DILocation(line: 36, column: 6, scope: !85)
-!143 = !DILocation(line: 37, column: 2, scope: !85)
-!144 = !DILocation(line: 38, column: 1, scope: !85)
-!145 = distinct !DISubprogram(name: "draw_sphere", scope: !3, file: !3, line: 40, type: !146, scopeLine: 41, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !2, retainedNodes: !4)
-!146 = !DISubroutineType(types: !147)
-!147 = !{null, !9, !9}
-!148 = !DILocalVariable(name: "k", arg: 1, scope: !145, file: !3, line: 40, type: !9)
-!149 = !DILocation(line: 40, column: 25, scope: !145)
-!150 = !DILocalVariable(name: "ambient", arg: 2, scope: !145, file: !3, line: 40, type: !9)
-!151 = !DILocation(line: 40, column: 35, scope: !145)
-!152 = !DILocalVariable(name: "i", scope: !145, file: !3, line: 42, type: !88)
-!153 = !DILocation(line: 42, column: 6, scope: !145)
-!154 = !DILocalVariable(name: "j", scope: !145, file: !3, line: 42, type: !88)
-!155 = !DILocation(line: 42, column: 9, scope: !145)
-!156 = !DILocalVariable(name: "intensity", scope: !145, file: !3, line: 42, type: !88)
-!157 = !DILocation(line: 42, column: 12, scope: !145)
-!158 = !DILocalVariable(name: "hit_result", scope: !145, file: !3, line: 42, type: !88)
-!159 = !DILocation(line: 42, column: 23, scope: !145)
-!160 = !DILocalVariable(name: "b", scope: !145, file: !3, line: 43, type: !9)
-!161 = !DILocation(line: 43, column: 9, scope: !145)
-!162 = !DILocalVariable(name: "vec", scope: !145, file: !3, line: 44, type: !8)
-!163 = !DILocation(line: 44, column: 9, scope: !145)
-!164 = !DILocalVariable(name: "x", scope: !145, file: !3, line: 44, type: !9)
-!165 = !DILocation(line: 44, column: 17, scope: !145)
-!166 = !DILocalVariable(name: "y", scope: !145, file: !3, line: 44, type: !9)
-!167 = !DILocation(line: 44, column: 20, scope: !145)
-!168 = !DILocalVariable(name: "zb1", scope: !145, file: !3, line: 44, type: !9)
-!169 = !DILocation(line: 44, column: 23, scope: !145)
-!170 = !DILocalVariable(name: "zb2", scope: !145, file: !3, line: 44, type: !9)
-!171 = !DILocation(line: 44, column: 28, scope: !145)
-!172 = !DILocalVariable(name: "zs1", scope: !145, file: !3, line: 44, type: !9)
-!173 = !DILocation(line: 44, column: 33, scope: !145)
-!174 = !DILocalVariable(name: "zs2", scope: !145, file: !3, line: 44, type: !9)
-!175 = !DILocation(line: 44, column: 38, scope: !145)
-!176 = !DILocation(line: 45, column: 21, scope: !177)
-!177 = distinct !DILexicalBlock(scope: !145, file: !3, line: 45, column: 2)
-!178 = !DILocation(line: 45, column: 30, scope: !177)
-!179 = !DILocation(line: 45, column: 24, scope: !177)
-!180 = !DILocation(line: 45, column: 11, scope: !177)
-!181 = !DILocation(line: 45, column: 9, scope: !177)
-!182 = !DILocation(line: 45, column: 7, scope: !177)
-!183 = !DILocation(line: 45, column: 34, scope: !184)
-!184 = distinct !DILexicalBlock(scope: !177, file: !3, line: 45, column: 2)
-!185 = !DILocation(line: 45, column: 48, scope: !184)
-!186 = !DILocation(line: 45, column: 57, scope: !184)
-!187 = !DILocation(line: 45, column: 51, scope: !184)
-!188 = !DILocation(line: 45, column: 39, scope: !184)
-!189 = !DILocation(line: 45, column: 36, scope: !184)
-!190 = !DILocation(line: 45, column: 2, scope: !177)
-!191 = !DILocation(line: 46, column: 7, scope: !192)
-!192 = distinct !DILexicalBlock(scope: !184, file: !3, line: 45, column: 66)
-!193 = !DILocation(line: 46, column: 9, scope: !192)
-!194 = !DILocation(line: 46, column: 5, scope: !192)
-!195 = !DILocation(line: 47, column: 22, scope: !196)
-!196 = distinct !DILexicalBlock(scope: !192, file: !3, line: 47, column: 3)
-!197 = !DILocation(line: 47, column: 35, scope: !196)
-!198 = !DILocation(line: 47, column: 29, scope: !196)
-!199 = !DILocation(line: 47, column: 25, scope: !196)
-!200 = !DILocation(line: 47, column: 12, scope: !196)
-!201 = !DILocation(line: 47, column: 10, scope: !196)
-!202 = !DILocation(line: 47, column: 8, scope: !196)
-!203 = !DILocation(line: 47, column: 39, scope: !204)
-!204 = distinct !DILexicalBlock(scope: !196, file: !3, line: 47, column: 3)
-!205 = !DILocation(line: 47, column: 53, scope: !204)
-!206 = !DILocation(line: 47, column: 66, scope: !204)
-!207 = !DILocation(line: 47, column: 60, scope: !204)
-!208 = !DILocation(line: 47, column: 56, scope: !204)
-!209 = !DILocation(line: 47, column: 44, scope: !204)
-!210 = !DILocation(line: 47, column: 41, scope: !204)
-!211 = !DILocation(line: 47, column: 3, scope: !196)
-!212 = !DILocation(line: 48, column: 9, scope: !213)
-!213 = distinct !DILexicalBlock(scope: !204, file: !3, line: 47, column: 75)
-!214 = !DILocation(line: 48, column: 17, scope: !213)
-!215 = !DILocation(line: 48, column: 11, scope: !213)
-!216 = !DILocation(line: 48, column: 21, scope: !213)
-!217 = !DILocation(line: 48, column: 26, scope: !213)
-!218 = !DILocation(line: 48, column: 37, scope: !213)
-!219 = !DILocation(line: 48, column: 31, scope: !213)
-!220 = !DILocation(line: 48, column: 6, scope: !213)
-!221 = !DILocation(line: 51, column: 26, scope: !222)
-!222 = distinct !DILexicalBlock(scope: !213, file: !3, line: 51, column: 8)
-!223 = !DILocation(line: 51, column: 29, scope: !222)
-!224 = !DILocation(line: 51, column: 9, scope: !222)
-!225 = !DILocation(line: 51, column: 8, scope: !213)
-!226 = !DILocation(line: 52, column: 16, scope: !222)
-!227 = !DILocation(line: 52, column: 5, scope: !222)
-!228 = !DILocation(line: 55, column: 31, scope: !229)
-!229 = distinct !DILexicalBlock(scope: !222, file: !3, line: 55, column: 13)
-!230 = !DILocation(line: 55, column: 34, scope: !229)
-!231 = !DILocation(line: 55, column: 14, scope: !229)
-!232 = !DILocation(line: 55, column: 13, scope: !222)
-!233 = !DILocation(line: 56, column: 16, scope: !229)
-!234 = !DILocation(line: 56, column: 5, scope: !229)
-!235 = !DILocation(line: 59, column: 13, scope: !236)
-!236 = distinct !DILexicalBlock(scope: !229, file: !3, line: 59, column: 13)
-!237 = !DILocation(line: 59, column: 19, scope: !236)
-!238 = !DILocation(line: 59, column: 17, scope: !236)
-!239 = !DILocation(line: 59, column: 13, scope: !229)
-!240 = !DILocation(line: 59, column: 35, scope: !236)
-!241 = !DILocation(line: 59, column: 24, scope: !236)
-!242 = !DILocation(line: 62, column: 13, scope: !243)
-!243 = distinct !DILexicalBlock(scope: !236, file: !3, line: 62, column: 13)
-!244 = !DILocation(line: 62, column: 19, scope: !243)
-!245 = !DILocation(line: 62, column: 17, scope: !243)
-!246 = !DILocation(line: 62, column: 13, scope: !236)
-!247 = !DILocation(line: 62, column: 35, scope: !243)
-!248 = !DILocation(line: 62, column: 24, scope: !243)
-!249 = !DILocation(line: 66, column: 13, scope: !250)
-!250 = distinct !DILexicalBlock(scope: !243, file: !3, line: 66, column: 13)
-!251 = !DILocation(line: 66, column: 19, scope: !250)
-!252 = !DILocation(line: 66, column: 17, scope: !250)
-!253 = !DILocation(line: 66, column: 13, scope: !243)
-!254 = !DILocation(line: 66, column: 35, scope: !250)
-!255 = !DILocation(line: 66, column: 24, scope: !250)
-!256 = !DILocation(line: 67, column: 25, scope: !250)
-!257 = !DILocation(line: 69, column: 11, scope: !213)
-!258 = !DILocation(line: 69, column: 4, scope: !213)
-!259 = !DILocation(line: 71, column: 5, scope: !260)
-!260 = distinct !DILexicalBlock(scope: !213, file: !3, line: 69, column: 23)
-!261 = !DILocation(line: 72, column: 5, scope: !260)
-!262 = !DILocation(line: 74, column: 14, scope: !260)
-!263 = !DILocation(line: 74, column: 22, scope: !260)
-!264 = !DILocation(line: 74, column: 16, scope: !260)
-!265 = !DILocation(line: 74, column: 5, scope: !260)
-!266 = !DILocation(line: 74, column: 12, scope: !260)
-!267 = !DILocation(line: 75, column: 14, scope: !260)
-!268 = !DILocation(line: 75, column: 22, scope: !260)
-!269 = !DILocation(line: 75, column: 16, scope: !260)
-!270 = !DILocation(line: 75, column: 5, scope: !260)
-!271 = !DILocation(line: 75, column: 12, scope: !260)
-!272 = !DILocation(line: 76, column: 14, scope: !260)
-!273 = !DILocation(line: 76, column: 24, scope: !260)
-!274 = !DILocation(line: 76, column: 18, scope: !260)
-!275 = !DILocation(line: 76, column: 5, scope: !260)
-!276 = !DILocation(line: 76, column: 12, scope: !260)
-!277 = !DILocation(line: 77, column: 5, scope: !260)
-!278 = !DILocation(line: 79, column: 18, scope: !260)
-!279 = !DILocation(line: 79, column: 23, scope: !260)
-!280 = !DILocation(line: 79, column: 21, scope: !260)
-!281 = !DILocation(line: 79, column: 5, scope: !260)
-!282 = !DILocation(line: 79, column: 12, scope: !260)
-!283 = !DILocation(line: 80, column: 18, scope: !260)
-!284 = !DILocation(line: 80, column: 23, scope: !260)
-!285 = !DILocation(line: 80, column: 21, scope: !260)
-!286 = !DILocation(line: 80, column: 5, scope: !260)
-!287 = !DILocation(line: 80, column: 12, scope: !260)
-!288 = !DILocation(line: 81, column: 18, scope: !260)
-!289 = !DILocation(line: 81, column: 23, scope: !260)
-!290 = !DILocation(line: 81, column: 21, scope: !260)
-!291 = !DILocation(line: 81, column: 5, scope: !260)
-!292 = !DILocation(line: 81, column: 12, scope: !260)
-!293 = !DILocation(line: 82, column: 4, scope: !260)
-!294 = !DILocation(line: 84, column: 14, scope: !213)
-!295 = !DILocation(line: 84, column: 4, scope: !213)
-!296 = !DILocation(line: 85, column: 23, scope: !213)
-!297 = !DILocation(line: 85, column: 12, scope: !213)
-!298 = !DILocation(line: 85, column: 29, scope: !213)
-!299 = !DILocation(line: 85, column: 8, scope: !213)
-!300 = !DILocation(line: 85, column: 34, scope: !213)
-!301 = !DILocation(line: 85, column: 32, scope: !213)
-!302 = !DILocation(line: 85, column: 6, scope: !213)
-!303 = !DILocation(line: 86, column: 21, scope: !213)
-!304 = !DILocation(line: 86, column: 19, scope: !213)
-!305 = !DILocation(line: 86, column: 24, scope: !213)
-!306 = !DILocation(line: 86, column: 16, scope: !213)
-!307 = !DILocation(line: 86, column: 14, scope: !213)
-!308 = !DILocation(line: 87, column: 8, scope: !309)
-!309 = distinct !DILexicalBlock(scope: !213, file: !3, line: 87, column: 8)
-!310 = !DILocation(line: 87, column: 18, scope: !309)
-!311 = !DILocation(line: 87, column: 8, scope: !213)
-!312 = !DILocation(line: 87, column: 33, scope: !309)
-!313 = !DILocation(line: 87, column: 23, scope: !309)
-!314 = !DILocation(line: 88, column: 8, scope: !315)
-!315 = distinct !DILexicalBlock(scope: !213, file: !3, line: 88, column: 8)
-!316 = !DILocation(line: 88, column: 18, scope: !315)
-!317 = !DILocation(line: 88, column: 8, scope: !213)
-!318 = !DILocation(line: 89, column: 15, scope: !315)
-!319 = !DILocation(line: 89, column: 5, scope: !315)
-!320 = !DILocation(line: 90, column: 12, scope: !213)
-!321 = !DILocation(line: 90, column: 19, scope: !213)
-!322 = !DILocation(line: 90, column: 4, scope: !213)
-!323 = !DILocation(line: 91, column: 3, scope: !213)
-!324 = !DILocation(line: 47, column: 71, scope: !204)
-!325 = !DILocation(line: 47, column: 3, scope: !204)
-!326 = distinct !{!326, !211, !327}
-!327 = !DILocation(line: 91, column: 3, scope: !196)
-!328 = !DILocation(line: 92, column: 3, scope: !192)
-!329 = !DILocation(line: 93, column: 2, scope: !192)
-!330 = !DILocation(line: 45, column: 62, scope: !184)
-!331 = !DILocation(line: 45, column: 2, scope: !184)
-!332 = distinct !{!332, !190, !333}
-!333 = !DILocation(line: 93, column: 2, scope: !177)
-!334 = !DILocation(line: 94, column: 1, scope: !145)
-!335 = distinct !DISubprogram(name: "main", scope: !3, file: !3, line: 96, type: !336, scopeLine: 97, spFlags: DISPFlagDefinition, unit: !2, retainedNodes: !4)
-!336 = !DISubroutineType(types: !337)
-!337 = !{!88}
-!338 = !DILocalVariable(name: "ang", scope: !335, file: !3, line: 98, type: !9)
-!339 = !DILocation(line: 98, column: 9, scope: !335)
-!340 = !DILocation(line: 100, column: 2, scope: !335)
-!341 = !DILocation(line: 101, column: 3, scope: !342)
-!342 = distinct !DILexicalBlock(scope: !335, file: !3, line: 100, column: 12)
-!343 = !DILocation(line: 102, column: 18, scope: !342)
-!344 = !DILocation(line: 102, column: 22, scope: !342)
-!345 = !DILocation(line: 102, column: 14, scope: !342)
-!346 = !DILocation(line: 102, column: 12, scope: !342)
-!347 = !DILocation(line: 103, column: 18, scope: !342)
-!348 = !DILocation(line: 103, column: 14, scope: !342)
-!349 = !DILocation(line: 103, column: 12, scope: !342)
-!350 = !DILocation(line: 104, column: 18, scope: !342)
-!351 = !DILocation(line: 104, column: 14, scope: !342)
-!352 = !DILocation(line: 104, column: 12, scope: !342)
-!353 = !DILocation(line: 105, column: 3, scope: !342)
-!354 = !DILocation(line: 106, column: 7, scope: !342)
-!355 = !DILocation(line: 108, column: 3, scope: !342)
-!356 = !DILocation(line: 109, column: 3, scope: !342)
-!357 = distinct !{!357, !340, !358}
-!358 = !DILocation(line: 110, column: 2, scope: !335)
+!126 = !DILocation(line: 33, column: 15, scope: !123)
+!127 = !DILocation(line: 34, column: 13, scope: !85)
+!128 = !DILocation(line: 34, column: 8, scope: !85)
+!129 = !DILocation(line: 34, column: 6, scope: !85)
+!130 = !DILocation(line: 35, column: 8, scope: !85)
+!131 = !DILocation(line: 35, column: 13, scope: !85)
+!132 = !DILocation(line: 35, column: 18, scope: !85)
+!133 = !DILocation(line: 35, column: 16, scope: !85)
+!134 = !DILocation(line: 35, column: 3, scope: !85)
+!135 = !DILocation(line: 35, column: 6, scope: !85)
+!136 = !DILocation(line: 36, column: 8, scope: !85)
+!137 = !DILocation(line: 36, column: 13, scope: !85)
+!138 = !DILocation(line: 36, column: 18, scope: !85)
+!139 = !DILocation(line: 36, column: 16, scope: !85)
+!140 = !DILocation(line: 36, column: 3, scope: !85)
+!141 = !DILocation(line: 36, column: 6, scope: !85)
+!142 = !DILocation(line: 37, column: 2, scope: !85)
+!143 = !DILocation(line: 38, column: 1, scope: !85)
+!144 = distinct !DISubprogram(name: "draw_sphere", scope: !3, file: !3, line: 40, type: !145, scopeLine: 41, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !2, retainedNodes: !4)
+!145 = !DISubroutineType(types: !146)
+!146 = !{null, !9, !9}
+!147 = !DILocalVariable(name: "k", arg: 1, scope: !144, file: !3, line: 40, type: !9)
+!148 = !DILocation(line: 40, column: 25, scope: !144)
+!149 = !DILocalVariable(name: "ambient", arg: 2, scope: !144, file: !3, line: 40, type: !9)
+!150 = !DILocation(line: 40, column: 35, scope: !144)
+!151 = !DILocalVariable(name: "i", scope: !144, file: !3, line: 42, type: !88)
+!152 = !DILocation(line: 42, column: 6, scope: !144)
+!153 = !DILocalVariable(name: "j", scope: !144, file: !3, line: 42, type: !88)
+!154 = !DILocation(line: 42, column: 9, scope: !144)
+!155 = !DILocalVariable(name: "intensity", scope: !144, file: !3, line: 42, type: !88)
+!156 = !DILocation(line: 42, column: 12, scope: !144)
+!157 = !DILocalVariable(name: "hit_result", scope: !144, file: !3, line: 42, type: !88)
+!158 = !DILocation(line: 42, column: 23, scope: !144)
+!159 = !DILocalVariable(name: "b", scope: !144, file: !3, line: 43, type: !9)
+!160 = !DILocation(line: 43, column: 9, scope: !144)
+!161 = !DILocalVariable(name: "vec", scope: !144, file: !3, line: 44, type: !8)
+!162 = !DILocation(line: 44, column: 9, scope: !144)
+!163 = !DILocalVariable(name: "x", scope: !144, file: !3, line: 44, type: !9)
+!164 = !DILocation(line: 44, column: 17, scope: !144)
+!165 = !DILocalVariable(name: "y", scope: !144, file: !3, line: 44, type: !9)
+!166 = !DILocation(line: 44, column: 20, scope: !144)
+!167 = !DILocalVariable(name: "zb1", scope: !144, file: !3, line: 44, type: !9)
+!168 = !DILocation(line: 44, column: 23, scope: !144)
+!169 = !DILocalVariable(name: "zb2", scope: !144, file: !3, line: 44, type: !9)
+!170 = !DILocation(line: 44, column: 28, scope: !144)
+!171 = !DILocalVariable(name: "zs1", scope: !144, file: !3, line: 44, type: !9)
+!172 = !DILocation(line: 44, column: 33, scope: !144)
+!173 = !DILocalVariable(name: "zs2", scope: !144, file: !3, line: 44, type: !9)
+!174 = !DILocation(line: 44, column: 38, scope: !144)
+!175 = !DILocation(line: 45, column: 21, scope: !176)
+!176 = distinct !DILexicalBlock(scope: !144, file: !3, line: 45, column: 2)
+!177 = !DILocation(line: 45, column: 30, scope: !176)
+!178 = !DILocation(line: 45, column: 24, scope: !176)
+!179 = !DILocation(line: 45, column: 11, scope: !176)
+!180 = !DILocation(line: 45, column: 9, scope: !176)
+!181 = !DILocation(line: 45, column: 7, scope: !176)
+!182 = !DILocation(line: 45, column: 34, scope: !183)
+!183 = distinct !DILexicalBlock(scope: !176, file: !3, line: 45, column: 2)
+!184 = !DILocation(line: 45, column: 48, scope: !183)
+!185 = !DILocation(line: 45, column: 57, scope: !183)
+!186 = !DILocation(line: 45, column: 51, scope: !183)
+!187 = !DILocation(line: 45, column: 39, scope: !183)
+!188 = !DILocation(line: 45, column: 36, scope: !183)
+!189 = !DILocation(line: 45, column: 2, scope: !176)
+!190 = !DILocation(line: 46, column: 7, scope: !191)
+!191 = distinct !DILexicalBlock(scope: !183, file: !3, line: 45, column: 66)
+!192 = !DILocation(line: 46, column: 9, scope: !191)
+!193 = !DILocation(line: 46, column: 5, scope: !191)
+!194 = !DILocation(line: 47, column: 22, scope: !195)
+!195 = distinct !DILexicalBlock(scope: !191, file: !3, line: 47, column: 3)
+!196 = !DILocation(line: 47, column: 35, scope: !195)
+!197 = !DILocation(line: 47, column: 29, scope: !195)
+!198 = !DILocation(line: 47, column: 25, scope: !195)
+!199 = !DILocation(line: 47, column: 12, scope: !195)
+!200 = !DILocation(line: 47, column: 10, scope: !195)
+!201 = !DILocation(line: 47, column: 8, scope: !195)
+!202 = !DILocation(line: 47, column: 39, scope: !203)
+!203 = distinct !DILexicalBlock(scope: !195, file: !3, line: 47, column: 3)
+!204 = !DILocation(line: 47, column: 53, scope: !203)
+!205 = !DILocation(line: 47, column: 66, scope: !203)
+!206 = !DILocation(line: 47, column: 60, scope: !203)
+!207 = !DILocation(line: 47, column: 56, scope: !203)
+!208 = !DILocation(line: 47, column: 44, scope: !203)
+!209 = !DILocation(line: 47, column: 41, scope: !203)
+!210 = !DILocation(line: 47, column: 3, scope: !195)
+!211 = !DILocation(line: 48, column: 9, scope: !212)
+!212 = distinct !DILexicalBlock(scope: !203, file: !3, line: 47, column: 75)
+!213 = !DILocation(line: 48, column: 17, scope: !212)
+!214 = !DILocation(line: 48, column: 11, scope: !212)
+!215 = !DILocation(line: 48, column: 21, scope: !212)
+!216 = !DILocation(line: 48, column: 26, scope: !212)
+!217 = !DILocation(line: 48, column: 37, scope: !212)
+!218 = !DILocation(line: 48, column: 31, scope: !212)
+!219 = !DILocation(line: 48, column: 6, scope: !212)
+!220 = !DILocation(line: 51, column: 26, scope: !221)
+!221 = distinct !DILexicalBlock(scope: !212, file: !3, line: 51, column: 8)
+!222 = !DILocation(line: 51, column: 29, scope: !221)
+!223 = !DILocation(line: 51, column: 9, scope: !221)
+!224 = !DILocation(line: 51, column: 8, scope: !212)
+!225 = !DILocation(line: 52, column: 16, scope: !221)
+!226 = !DILocation(line: 52, column: 5, scope: !221)
+!227 = !DILocation(line: 55, column: 31, scope: !228)
+!228 = distinct !DILexicalBlock(scope: !221, file: !3, line: 55, column: 13)
+!229 = !DILocation(line: 55, column: 34, scope: !228)
+!230 = !DILocation(line: 55, column: 14, scope: !228)
+!231 = !DILocation(line: 55, column: 13, scope: !221)
+!232 = !DILocation(line: 56, column: 16, scope: !228)
+!233 = !DILocation(line: 56, column: 5, scope: !228)
+!234 = !DILocation(line: 59, column: 13, scope: !235)
+!235 = distinct !DILexicalBlock(scope: !228, file: !3, line: 59, column: 13)
+!236 = !DILocation(line: 59, column: 19, scope: !235)
+!237 = !DILocation(line: 59, column: 17, scope: !235)
+!238 = !DILocation(line: 59, column: 13, scope: !228)
+!239 = !DILocation(line: 59, column: 35, scope: !235)
+!240 = !DILocation(line: 59, column: 24, scope: !235)
+!241 = !DILocation(line: 62, column: 13, scope: !242)
+!242 = distinct !DILexicalBlock(scope: !235, file: !3, line: 62, column: 13)
+!243 = !DILocation(line: 62, column: 19, scope: !242)
+!244 = !DILocation(line: 62, column: 17, scope: !242)
+!245 = !DILocation(line: 62, column: 13, scope: !235)
+!246 = !DILocation(line: 62, column: 35, scope: !242)
+!247 = !DILocation(line: 62, column: 24, scope: !242)
+!248 = !DILocation(line: 66, column: 13, scope: !249)
+!249 = distinct !DILexicalBlock(scope: !242, file: !3, line: 66, column: 13)
+!250 = !DILocation(line: 66, column: 19, scope: !249)
+!251 = !DILocation(line: 66, column: 17, scope: !249)
+!252 = !DILocation(line: 66, column: 13, scope: !242)
+!253 = !DILocation(line: 66, column: 35, scope: !249)
+!254 = !DILocation(line: 66, column: 24, scope: !249)
+!255 = !DILocation(line: 67, column: 25, scope: !249)
+!256 = !DILocation(line: 69, column: 11, scope: !212)
+!257 = !DILocation(line: 69, column: 4, scope: !212)
+!258 = !DILocation(line: 71, column: 5, scope: !259)
+!259 = distinct !DILexicalBlock(scope: !212, file: !3, line: 69, column: 23)
+!260 = !DILocation(line: 72, column: 5, scope: !259)
+!261 = !DILocation(line: 74, column: 14, scope: !259)
+!262 = !DILocation(line: 74, column: 22, scope: !259)
+!263 = !DILocation(line: 74, column: 16, scope: !259)
+!264 = !DILocation(line: 74, column: 5, scope: !259)
+!265 = !DILocation(line: 74, column: 12, scope: !259)
+!266 = !DILocation(line: 75, column: 14, scope: !259)
+!267 = !DILocation(line: 75, column: 22, scope: !259)
+!268 = !DILocation(line: 75, column: 16, scope: !259)
+!269 = !DILocation(line: 75, column: 5, scope: !259)
+!270 = !DILocation(line: 75, column: 12, scope: !259)
+!271 = !DILocation(line: 76, column: 14, scope: !259)
+!272 = !DILocation(line: 76, column: 24, scope: !259)
+!273 = !DILocation(line: 76, column: 18, scope: !259)
+!274 = !DILocation(line: 76, column: 5, scope: !259)
+!275 = !DILocation(line: 76, column: 12, scope: !259)
+!276 = !DILocation(line: 77, column: 5, scope: !259)
+!277 = !DILocation(line: 79, column: 18, scope: !259)
+!278 = !DILocation(line: 79, column: 23, scope: !259)
+!279 = !DILocation(line: 79, column: 21, scope: !259)
+!280 = !DILocation(line: 79, column: 5, scope: !259)
+!281 = !DILocation(line: 79, column: 12, scope: !259)
+!282 = !DILocation(line: 80, column: 18, scope: !259)
+!283 = !DILocation(line: 80, column: 23, scope: !259)
+!284 = !DILocation(line: 80, column: 21, scope: !259)
+!285 = !DILocation(line: 80, column: 5, scope: !259)
+!286 = !DILocation(line: 80, column: 12, scope: !259)
+!287 = !DILocation(line: 81, column: 18, scope: !259)
+!288 = !DILocation(line: 81, column: 23, scope: !259)
+!289 = !DILocation(line: 81, column: 21, scope: !259)
+!290 = !DILocation(line: 81, column: 5, scope: !259)
+!291 = !DILocation(line: 81, column: 12, scope: !259)
+!292 = !DILocation(line: 82, column: 4, scope: !259)
+!293 = !DILocation(line: 84, column: 14, scope: !212)
+!294 = !DILocation(line: 84, column: 4, scope: !212)
+!295 = !DILocation(line: 85, column: 23, scope: !212)
+!296 = !DILocation(line: 85, column: 12, scope: !212)
+!297 = !DILocation(line: 85, column: 29, scope: !212)
+!298 = !DILocation(line: 85, column: 8, scope: !212)
+!299 = !DILocation(line: 85, column: 34, scope: !212)
+!300 = !DILocation(line: 85, column: 32, scope: !212)
+!301 = !DILocation(line: 85, column: 6, scope: !212)
+!302 = !DILocation(line: 86, column: 21, scope: !212)
+!303 = !DILocation(line: 86, column: 19, scope: !212)
+!304 = !DILocation(line: 86, column: 24, scope: !212)
+!305 = !DILocation(line: 86, column: 16, scope: !212)
+!306 = !DILocation(line: 86, column: 14, scope: !212)
+!307 = !DILocation(line: 87, column: 8, scope: !308)
+!308 = distinct !DILexicalBlock(scope: !212, file: !3, line: 87, column: 8)
+!309 = !DILocation(line: 87, column: 18, scope: !308)
+!310 = !DILocation(line: 87, column: 8, scope: !212)
+!311 = !DILocation(line: 87, column: 33, scope: !308)
+!312 = !DILocation(line: 87, column: 23, scope: !308)
+!313 = !DILocation(line: 88, column: 8, scope: !314)
+!314 = distinct !DILexicalBlock(scope: !212, file: !3, line: 88, column: 8)
+!315 = !DILocation(line: 88, column: 18, scope: !314)
+!316 = !DILocation(line: 88, column: 8, scope: !212)
+!317 = !DILocation(line: 89, column: 15, scope: !314)
+!318 = !DILocation(line: 89, column: 5, scope: !314)
+!319 = !DILocation(line: 90, column: 12, scope: !212)
+!320 = !DILocation(line: 90, column: 19, scope: !212)
+!321 = !DILocation(line: 90, column: 4, scope: !212)
+!322 = !DILocation(line: 91, column: 3, scope: !212)
+!323 = !DILocation(line: 47, column: 71, scope: !203)
+!324 = !DILocation(line: 47, column: 3, scope: !203)
+!325 = distinct !{!325, !210, !326}
+!326 = !DILocation(line: 91, column: 3, scope: !195)
+!327 = !DILocation(line: 92, column: 3, scope: !191)
+!328 = !DILocation(line: 93, column: 2, scope: !191)
+!329 = !DILocation(line: 45, column: 62, scope: !183)
+!330 = !DILocation(line: 45, column: 2, scope: !183)
+!331 = distinct !{!331, !189, !332}
+!332 = !DILocation(line: 93, column: 2, scope: !176)
+!333 = !DILocation(line: 94, column: 1, scope: !144)
+!334 = distinct !DISubprogram(name: "main", scope: !3, file: !3, line: 96, type: !335, scopeLine: 97, spFlags: DISPFlagDefinition, unit: !2, retainedNodes: !4)
+!335 = !DISubroutineType(types: !336)
+!336 = !{!88}
+!337 = !DILocalVariable(name: "ang", scope: !334, file: !3, line: 98, type: !9)
+!338 = !DILocation(line: 98, column: 9, scope: !334)
+!339 = !DILocation(line: 100, column: 2, scope: !334)
+!340 = !DILocation(line: 101, column: 3, scope: !341)
+!341 = distinct !DILexicalBlock(scope: !334, file: !3, line: 100, column: 12)
+!342 = !DILocation(line: 102, column: 18, scope: !341)
+!343 = !DILocation(line: 102, column: 22, scope: !341)
+!344 = !DILocation(line: 102, column: 14, scope: !341)
+!345 = !DILocation(line: 102, column: 12, scope: !341)
+!346 = !DILocation(line: 103, column: 18, scope: !341)
+!347 = !DILocation(line: 103, column: 14, scope: !341)
+!348 = !DILocation(line: 103, column: 12, scope: !341)
+!349 = !DILocation(line: 104, column: 18, scope: !341)
+!350 = !DILocation(line: 104, column: 14, scope: !341)
+!351 = !DILocation(line: 104, column: 12, scope: !341)
+!352 = !DILocation(line: 105, column: 3, scope: !341)
+!353 = !DILocation(line: 106, column: 7, scope: !341)
+!354 = !DILocation(line: 108, column: 3, scope: !341)
+!355 = !DILocation(line: 109, column: 3, scope: !341)
+!356 = distinct !{!356, !339, !357}
+!357 = !DILocation(line: 110, column: 2, scope: !334)

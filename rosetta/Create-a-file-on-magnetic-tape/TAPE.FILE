@@ -1,0 +1,8 @@
+This code should be able to write a file to magnetic tape.
+The Wikipedia page on Magnetic tape data storage shows that magnetic tapes are still in use.
+In fact, the latest format, at the time of writing this code is TS1155 released in 2017.
+And since C is already 44, maybe 45, years old in 2017, I am sure someone somewhere did use a C compiler on magnetic tapes.
+If you happen to have one, please try to compile and execute me on that system.
+My creator tested me on an i5 machine with SSD and RAM that couldn't have even been dreamt of by Denis Ritchie.
+Who knows ? Maybe he did foresee today, after all he created something which is still young after 44-45 years and counting...
+EOF

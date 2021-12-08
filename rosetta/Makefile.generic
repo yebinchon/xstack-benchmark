@@ -1,26 +1,34 @@
-
-${BMARK}.exe: ${BMARK}.ll
-	llc -filetype=obj $< -o ${BMARK}.o
-	clang ${LINK_FLAGS} ${BMARK}.o -o $@
-
-${BMARK}.ll: ${BMARK}.c
+%.ll: %.c
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
+	opt -loop-simplify $@ -S -o $@
 
 ${BMARK}_mem2reg.ll: ${BMARK}.ll
 	opt -mem2reg $< -S -o $@
 
 ${BMARK}.cbe.c: ${BMARK}.ll
-	llvm-cbe $<
+	opt $< -o ${BMARK}.bc
+	llvm-cbe ${BMARK}.bc
+	llvm-dis ${BMARK}.bc #just for debugging
 
 ${BMARK}_mem2reg.cbe.c: ${BMARK}_mem2reg.ll
 	llvm-cbe $<
 
+${BMARK}.exe: ${BMARK}.ll
+	llc -filetype=obj $< -o ${BMARK}.o
+	clang -g -O3 ${LINK_FLAGS} ${BMARK}.o -o $@
+
 ${BMARK}.cbe.exe: ${BMARK}.cbe.c
-	clang $< ${LINK_FLAGS} -o $@
+	clang -g -O3 $< ${LINK_FLAGS} -o $@
 
 ${BMARK}_mem2reg.cbe.exe: ${BMARK}_mem2reg.cbe.c
-	clang $< ${LINK_FLAGS} -o $@
+	clang -g -O3 $< ${LINK_FLAGS} -o $@
+
+check_correctness: ${BMARK}_mem2reg.cbe.exe ${BMARK}.cbe.exe ${BMARK}.exe
+	./${BMARK}.exe > ${BMARK}.out
+	./${BMARK}.cbe.exe > ${BMARK}.cbe.out
+	./${BMARK}_mem2reg.cbe.exe > ${BMARK}_mem2reg.cbe.out
+	diff ${BMARK}.out ${BMARK}.cbe.out
+	diff ${BMARK}.out ${BMARK}_mem2reg.cbe.out
 
 clean:
-	rm -rf *.ll *.cbe.c *.exe *.o
-
+	rm -rf *.bc *.out *.ll *.cbe.c *.exe *.o

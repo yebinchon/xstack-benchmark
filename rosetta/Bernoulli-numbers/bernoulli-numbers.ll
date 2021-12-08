@@ -1,4 +1,4 @@
-; ModuleID = 'bernoulli-numbers.c'
+; ModuleID = 'bernoulli-numbers.bc'
 source_filename = "bernoulli-numbers.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -243,74 +243,74 @@ for.body:                                         ; preds = %for.cond
   %arraydecay3 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !154
   %1 = load i32, i32* %i, align 4, !dbg !156
   call void @bernoulli(%struct.__mpq_struct* %arraydecay3, i32 %1), !dbg !157
-  br i1 true, label %cond.true, label %cond.false11, !dbg !158, !cf.info !159
+  br i1 true, label %cond.true, label %cond.false11, !dbg !158
 
 cond.true:                                        ; preds = %for.body
-  %arraydecay4 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !160
-  %_mp_num = getelementptr inbounds %struct.__mpq_struct, %struct.__mpq_struct* %arraydecay4, i32 0, i32 0, !dbg !160
-  %_mp_size = getelementptr inbounds %struct.__mpz_struct, %struct.__mpz_struct* %_mp_num, i32 0, i32 1, !dbg !160
-  %2 = load i32, i32* %_mp_size, align 4, !dbg !160
-  %cmp5 = icmp slt i32 %2, 0, !dbg !160
-  br i1 %cmp5, label %cond.true6, label %cond.false, !dbg !160, !cf.info !159
+  %arraydecay4 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !159
+  %_mp_num = getelementptr inbounds %struct.__mpq_struct, %struct.__mpq_struct* %arraydecay4, i32 0, i32 0, !dbg !159
+  %_mp_size = getelementptr inbounds %struct.__mpz_struct, %struct.__mpz_struct* %_mp_num, i32 0, i32 1, !dbg !159
+  %2 = load i32, i32* %_mp_size, align 4, !dbg !159
+  %cmp5 = icmp slt i32 %2, 0, !dbg !159
+  br i1 %cmp5, label %cond.true6, label %cond.false, !dbg !159
 
 cond.true6:                                       ; preds = %cond.true
-  br i1 true, label %if.then, label %if.end, !dbg !160, !cf.info !159
+  br i1 true, label %if.then, label %if.end, !dbg !159
 
 cond.false:                                       ; preds = %cond.true
-  %arraydecay7 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !160
-  %_mp_num8 = getelementptr inbounds %struct.__mpq_struct, %struct.__mpq_struct* %arraydecay7, i32 0, i32 0, !dbg !160
-  %_mp_size9 = getelementptr inbounds %struct.__mpz_struct, %struct.__mpz_struct* %_mp_num8, i32 0, i32 1, !dbg !160
-  %3 = load i32, i32* %_mp_size9, align 4, !dbg !160
-  %cmp10 = icmp sgt i32 %3, 0, !dbg !160
-  br i1 %cmp10, label %if.then, label %if.end, !dbg !160, !cf.info !159
+  %arraydecay7 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !159
+  %_mp_num8 = getelementptr inbounds %struct.__mpq_struct, %struct.__mpq_struct* %arraydecay7, i32 0, i32 0, !dbg !159
+  %_mp_size9 = getelementptr inbounds %struct.__mpz_struct, %struct.__mpz_struct* %_mp_num8, i32 0, i32 1, !dbg !159
+  %3 = load i32, i32* %_mp_size9, align 4, !dbg !159
+  %cmp10 = icmp sgt i32 %3, 0, !dbg !159
+  br i1 %cmp10, label %if.then, label %if.end, !dbg !159
 
 cond.false11:                                     ; preds = %for.body
-  br i1 false, label %cond.true12, label %cond.false16, !dbg !158, !cf.info !159
+  br i1 false, label %cond.true12, label %cond.false16, !dbg !158
 
 cond.true12:                                      ; preds = %cond.false11
-  %arraydecay13 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !160
-  %_mp_num14 = getelementptr inbounds %struct.__mpq_struct, %struct.__mpq_struct* %arraydecay13, i32 0, i32 0, !dbg !160
-  %arraydecay15 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !160
-  %_mp_den = getelementptr inbounds %struct.__mpq_struct, %struct.__mpq_struct* %arraydecay15, i32 0, i32 1, !dbg !160
-  %call = call i32 @__gmpz_cmp(%struct.__mpz_struct* %_mp_num14, %struct.__mpz_struct* %_mp_den) #6, !dbg !160
-  %tobool = icmp ne i32 %call, 0, !dbg !160
-  br i1 %tobool, label %if.then, label %if.end, !dbg !160, !cf.info !159
+  %arraydecay13 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !159
+  %_mp_num14 = getelementptr inbounds %struct.__mpq_struct, %struct.__mpq_struct* %arraydecay13, i32 0, i32 0, !dbg !159
+  %arraydecay15 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !159
+  %_mp_den = getelementptr inbounds %struct.__mpq_struct, %struct.__mpq_struct* %arraydecay15, i32 0, i32 1, !dbg !159
+  %call = call i32 @__gmpz_cmp(%struct.__mpz_struct* %_mp_num14, %struct.__mpz_struct* %_mp_den) #6, !dbg !159
+  %tobool = icmp ne i32 %call, 0, !dbg !159
+  br i1 %tobool, label %if.then, label %if.end, !dbg !159
 
 cond.false16:                                     ; preds = %cond.false11
-  %arraydecay17 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !160
-  %call18 = call i32 @__gmpq_cmp_ui(%struct.__mpq_struct* %arraydecay17, i64 0, i64 1) #6, !dbg !160
-  %tobool19 = icmp ne i32 %call18, 0, !dbg !160
-  br i1 %tobool19, label %if.then, label %if.end, !dbg !158, !cf.info !159
+  %arraydecay17 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !159
+  %call18 = call i32 @__gmpq_cmp_ui(%struct.__mpq_struct* %arraydecay17, i64 0, i64 1) #6, !dbg !159
+  %tobool19 = icmp ne i32 %call18, 0, !dbg !159
+  br i1 %tobool19, label %if.then, label %if.end, !dbg !158
 
 if.then:                                          ; preds = %cond.false16, %cond.true12, %cond.false, %cond.true6
-  %arraydecay20 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %n, i64 0, i64 0, !dbg !162
-  %arraydecay21 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !164
-  call void @__gmpq_get_num(%struct.__mpz_struct* %arraydecay20, %struct.__mpq_struct* %arraydecay21), !dbg !165
-  %arraydecay22 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %d, i64 0, i64 0, !dbg !166
-  %arraydecay23 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !167
-  call void @__gmpq_get_den(%struct.__mpz_struct* %arraydecay22, %struct.__mpq_struct* %arraydecay23), !dbg !168
-  %4 = load i32, i32* %i, align 4, !dbg !169
-  %arraydecay24 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %n, i64 0, i64 0, !dbg !170
-  %arraydecay25 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %d, i64 0, i64 0, !dbg !171
-  %call26 = call i32 (i8*, ...) @__gmp_printf(i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str, i64 0, i64 0), i32 %4, %struct.__mpz_struct* %arraydecay24, %struct.__mpz_struct* %arraydecay25), !dbg !172
-  br label %if.end, !dbg !173
+  %arraydecay20 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %n, i64 0, i64 0, !dbg !161
+  %arraydecay21 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !163
+  call void @__gmpq_get_num(%struct.__mpz_struct* %arraydecay20, %struct.__mpq_struct* %arraydecay21), !dbg !164
+  %arraydecay22 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %d, i64 0, i64 0, !dbg !165
+  %arraydecay23 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !166
+  call void @__gmpq_get_den(%struct.__mpz_struct* %arraydecay22, %struct.__mpq_struct* %arraydecay23), !dbg !167
+  %4 = load i32, i32* %i, align 4, !dbg !168
+  %arraydecay24 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %n, i64 0, i64 0, !dbg !169
+  %arraydecay25 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %d, i64 0, i64 0, !dbg !170
+  %call26 = call i32 (i8*, ...) @__gmp_printf(i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str, i64 0, i64 0), i32 %4, %struct.__mpz_struct* %arraydecay24, %struct.__mpz_struct* %arraydecay25), !dbg !171
+  br label %if.end, !dbg !172
 
 if.end:                                           ; preds = %if.then, %cond.false16, %cond.true12, %cond.false, %cond.true6
-  br label %for.inc, !dbg !174
+  br label %for.inc, !dbg !173
 
 for.inc:                                          ; preds = %if.end
-  %5 = load i32, i32* %i, align 4, !dbg !175
-  %inc = add i32 %5, 1, !dbg !175
-  store i32 %inc, i32* %i, align 4, !dbg !175
-  br label %for.cond, !dbg !176, !llvm.loop !177
+  %5 = load i32, i32* %i, align 4, !dbg !174
+  %inc = add i32 %5, 1, !dbg !174
+  store i32 %inc, i32* %i, align 4, !dbg !174
+  br label %for.cond, !dbg !175, !llvm.loop !176
 
 for.end:                                          ; preds = %for.cond
-  %arraydecay27 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %n, i64 0, i64 0, !dbg !179
-  %arraydecay28 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %d, i64 0, i64 0, !dbg !180
-  call void (%struct.__mpz_struct*, ...) @__gmpz_clears(%struct.__mpz_struct* %arraydecay27, %struct.__mpz_struct* %arraydecay28, i8* null), !dbg !181
-  %arraydecay29 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !182
-  call void @__gmpq_clear(%struct.__mpq_struct* %arraydecay29), !dbg !183
-  ret i32 0, !dbg !184
+  %arraydecay27 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %n, i64 0, i64 0, !dbg !178
+  %arraydecay28 = getelementptr inbounds [1 x %struct.__mpz_struct], [1 x %struct.__mpz_struct]* %d, i64 0, i64 0, !dbg !179
+  call void (%struct.__mpz_struct*, ...) @__gmpz_clears(%struct.__mpz_struct* %arraydecay27, %struct.__mpz_struct* %arraydecay28, i8* null), !dbg !180
+  %arraydecay29 = getelementptr inbounds [1 x %struct.__mpq_struct], [1 x %struct.__mpq_struct]* %rop, i64 0, i64 0, !dbg !181
+  call void @__gmpq_clear(%struct.__mpq_struct* %arraydecay29), !dbg !182
+  ret i32 0, !dbg !183
 }
 
 declare dso_local void @__gmpz_inits(%struct.__mpz_struct*, ...) #3
@@ -341,7 +341,7 @@ attributes #6 = { nounwind readonly }
 !llvm.module.flags = !{!5, !6, !7}
 !llvm.ident = !{!8}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, retainedTypes: !3, splitDebugInlining: false, nameTableKind: None)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, retainedTypes: !3, splitDebugInlining: false, nameTableKind: None)
 !1 = !DIFile(filename: "bernoulli-numbers.c", directory: "/scratch/yc0769/xstack_benchmark/rosetta/Bernoulli-numbers")
 !2 = !{}
 !3 = !{!4}
@@ -349,7 +349,7 @@ attributes #6 = { nounwind readonly }
 !5 = !{i32 7, !"Dwarf Version", i32 4}
 !6 = !{i32 2, !"Debug Info Version", i32 3}
 !7 = !{i32 1, !"wchar_size", i32 4}
-!8 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)"}
+!8 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)"}
 !9 = distinct !DISubprogram(name: "bernoulli", scope: !1, file: !1, line: 11, type: !10, scopeLine: 12, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !0, retainedNodes: !2)
 !10 = !DISubroutineType(types: !11)
 !11 = !{null, !12, !29}
@@ -395,7 +395,7 @@ attributes #6 = { nounwind readonly }
 !51 = !DILocalVariable(name: "i", scope: !52, file: !1, line: 15, type: !53)
 !52 = distinct !DILexicalBlock(scope: !9, file: !1, line: 15, column: 5)
 !53 = !DIDerivedType(tag: DW_TAG_typedef, name: "size_t", file: !54, line: 46, baseType: !27)
-!54 = !DIFile(filename: "/u/NAS_SCRATCH/yc0769/xstack/llvm-install/lib/clang/10.0.1/include/stddef.h", directory: "")
+!54 = !DIFile(filename: "/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/llvm-install-debug/lib/clang/10.0.1/include/stddef.h", directory: "")
 !55 = !DILocation(line: 15, column: 5, scope: !52)
 !56 = !DILocation(line: 15, column: 5, scope: !57)
 !57 = distinct !DILexicalBlock(scope: !52, file: !1, line: 15, column: 5)
@@ -500,29 +500,28 @@ attributes #6 = { nounwind readonly }
 !156 = !DILocation(line: 40, column: 24, scope: !155)
 !157 = !DILocation(line: 40, column: 9, scope: !155)
 !158 = !DILocation(line: 41, column: 13, scope: !155)
-!159 = !{!"if"}
-!160 = !DILocation(line: 41, column: 13, scope: !161)
-!161 = distinct !DILexicalBlock(scope: !155, file: !1, line: 41, column: 13)
-!162 = !DILocation(line: 42, column: 25, scope: !163)
-!163 = distinct !DILexicalBlock(scope: !161, file: !1, line: 41, column: 36)
-!164 = !DILocation(line: 42, column: 28, scope: !163)
-!165 = !DILocation(line: 42, column: 13, scope: !163)
-!166 = !DILocation(line: 43, column: 25, scope: !163)
-!167 = !DILocation(line: 43, column: 28, scope: !163)
-!168 = !DILocation(line: 43, column: 13, scope: !163)
-!169 = !DILocation(line: 44, column: 51, scope: !163)
-!170 = !DILocation(line: 44, column: 54, scope: !163)
-!171 = !DILocation(line: 44, column: 57, scope: !163)
-!172 = !DILocation(line: 44, column: 13, scope: !163)
-!173 = !DILocation(line: 45, column: 9, scope: !163)
-!174 = !DILocation(line: 46, column: 5, scope: !155)
-!175 = !DILocation(line: 39, column: 26, scope: !151)
-!176 = !DILocation(line: 39, column: 5, scope: !151)
-!177 = distinct !{!177, !153, !178}
-!178 = !DILocation(line: 46, column: 5, scope: !148)
-!179 = !DILocation(line: 48, column: 16, scope: !129)
-!180 = !DILocation(line: 48, column: 19, scope: !129)
-!181 = !DILocation(line: 48, column: 5, scope: !129)
-!182 = !DILocation(line: 49, column: 15, scope: !129)
-!183 = !DILocation(line: 49, column: 5, scope: !129)
-!184 = !DILocation(line: 50, column: 5, scope: !129)
+!159 = !DILocation(line: 41, column: 13, scope: !160)
+!160 = distinct !DILexicalBlock(scope: !155, file: !1, line: 41, column: 13)
+!161 = !DILocation(line: 42, column: 25, scope: !162)
+!162 = distinct !DILexicalBlock(scope: !160, file: !1, line: 41, column: 36)
+!163 = !DILocation(line: 42, column: 28, scope: !162)
+!164 = !DILocation(line: 42, column: 13, scope: !162)
+!165 = !DILocation(line: 43, column: 25, scope: !162)
+!166 = !DILocation(line: 43, column: 28, scope: !162)
+!167 = !DILocation(line: 43, column: 13, scope: !162)
+!168 = !DILocation(line: 44, column: 51, scope: !162)
+!169 = !DILocation(line: 44, column: 54, scope: !162)
+!170 = !DILocation(line: 44, column: 57, scope: !162)
+!171 = !DILocation(line: 44, column: 13, scope: !162)
+!172 = !DILocation(line: 45, column: 9, scope: !162)
+!173 = !DILocation(line: 46, column: 5, scope: !155)
+!174 = !DILocation(line: 39, column: 26, scope: !151)
+!175 = !DILocation(line: 39, column: 5, scope: !151)
+!176 = distinct !{!176, !153, !177}
+!177 = !DILocation(line: 46, column: 5, scope: !148)
+!178 = !DILocation(line: 48, column: 16, scope: !129)
+!179 = !DILocation(line: 48, column: 19, scope: !129)
+!180 = !DILocation(line: 48, column: 5, scope: !129)
+!181 = !DILocation(line: 49, column: 15, scope: !129)
+!182 = !DILocation(line: 49, column: 5, scope: !129)
+!183 = !DILocation(line: 50, column: 5, scope: !129)

@@ -30,3 +30,8 @@ void complex_operations() {
   c = conj(a);
   printf("\nconj a="); cprint(c); printf("\n");
 }
+
+int main(void) {
+  complex_operations();
+  return 0;
+}

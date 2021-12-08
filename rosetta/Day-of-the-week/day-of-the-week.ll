@@ -1,4 +1,4 @@
-; ModuleID = 'day-of-the-week.c'
+; ModuleID = 'day-of-the-week.bc'
 source_filename = "day-of-the-week.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -80,24 +80,24 @@ for.body:                                         ; preds = %for.cond
   %1 = load i32, i32* %y, align 4, !dbg !68
   %call = call i32 @wday(i32 %1, i32 12, i32 25), !dbg !71
   %cmp1 = icmp eq i32 %call, 0, !dbg !72
-  br i1 %cmp1, label %if.then, label %if.end, !dbg !73, !cf.info !74
+  br i1 %cmp1, label %if.then, label %if.end, !dbg !73
 
 if.then:                                          ; preds = %for.body
-  %2 = load i32, i32* %y, align 4, !dbg !75
-  %call2 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 %2), !dbg !76
-  br label %if.end, !dbg !76
+  %2 = load i32, i32* %y, align 4, !dbg !74
+  %call2 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str, i64 0, i64 0), i32 %2), !dbg !75
+  br label %if.end, !dbg !75
 
 if.end:                                           ; preds = %if.then, %for.body
-  br label %for.inc, !dbg !77
+  br label %for.inc, !dbg !76
 
 for.inc:                                          ; preds = %if.end
-  %3 = load i32, i32* %y, align 4, !dbg !78
-  %inc = add nsw i32 %3, 1, !dbg !78
-  store i32 %inc, i32* %y, align 4, !dbg !78
-  br label %for.cond, !dbg !79, !llvm.loop !80
+  %3 = load i32, i32* %y, align 4, !dbg !77
+  %inc = add nsw i32 %3, 1, !dbg !77
+  store i32 %inc, i32* %y, align 4, !dbg !77
+  br label %for.cond, !dbg !78, !llvm.loop !79
 
 for.end:                                          ; preds = %for.cond
-  ret i32 0, !dbg !82
+  ret i32 0, !dbg !81
 }
 
 declare dso_local i32 @printf(i8*, ...) #2
@@ -110,13 +110,13 @@ attributes #2 = { "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-
 !llvm.module.flags = !{!3, !4, !5}
 !llvm.ident = !{!6}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, splitDebugInlining: false, nameTableKind: None)
 !1 = !DIFile(filename: "day-of-the-week.c", directory: "/scratch/yc0769/xstack_benchmark/rosetta/Day-of-the-week")
 !2 = !{}
 !3 = !{i32 7, !"Dwarf Version", i32 4}
 !4 = !{i32 2, !"Debug Info Version", i32 3}
 !5 = !{i32 1, !"wchar_size", i32 4}
-!6 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git 078de928eea94413164fbdff5fab7bdcf0f60aa7)"}
+!6 = !{!"clang version 10.0.1 (https://github.com/SusanTan/llvm-project.git ef32c611aa214dea855364efd7ba451ec5ec3f74)"}
 !7 = distinct !DISubprogram(name: "wday", scope: !1, file: !1, line: 4, type: !8, scopeLine: 5, flags: DIFlagPrototyped, spFlags: DISPFlagDefinition, unit: !0, retainedNodes: !2)
 !8 = !DISubroutineType(types: !9)
 !9 = !{!10, !10, !10, !10}
@@ -184,12 +184,11 @@ attributes #2 = { "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-
 !71 = !DILocation(line: 20, column: 7, scope: !69)
 !72 = !DILocation(line: 20, column: 23, scope: !69)
 !73 = !DILocation(line: 20, column: 7, scope: !70)
-!74 = !{!"if"}
-!75 = !DILocation(line: 20, column: 52, scope: !69)
-!76 = !DILocation(line: 20, column: 29, scope: !69)
-!77 = !DILocation(line: 21, column: 2, scope: !70)
-!78 = !DILocation(line: 19, column: 29, scope: !65)
-!79 = !DILocation(line: 19, column: 2, scope: !65)
-!80 = distinct !{!80, !67, !81}
-!81 = !DILocation(line: 21, column: 2, scope: !62)
-!82 = !DILocation(line: 23, column: 2, scope: !56)
+!74 = !DILocation(line: 20, column: 52, scope: !69)
+!75 = !DILocation(line: 20, column: 29, scope: !69)
+!76 = !DILocation(line: 21, column: 2, scope: !70)
+!77 = !DILocation(line: 19, column: 29, scope: !65)
+!78 = !DILocation(line: 19, column: 2, scope: !65)
+!79 = distinct !{!79, !67, !80}
+!80 = !DILocation(line: 21, column: 2, scope: !62)
+!81 = !DILocation(line: 23, column: 2, scope: !56)

@@ -28,5 +28,5 @@ int main(void)
     printf("%d\n", c[i]);
 
   free(c);
-  return EXIT_SUCCCESS;
+  return 0;
 }

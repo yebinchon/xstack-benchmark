@@ -19,7 +19,6 @@ int main(int argc, char* argv[])
   e = 1.0 + 1.0 / n;
   for (int i = 0; i < 13; i++)
     e *= e;
-  printf("Euler constant e = %.16lf\n", e);
 
   // Taylor expansion e = 1 + 1/1 + 1/2 + 1/2/3 + 1/2/3/4 + 1/2/3/4/5 + ...
   // Actually Kahan summation may improve the accuracy, but is not necessary.
@@ -27,13 +26,15 @@ int main(int argc, char* argv[])
   const int N = 1000;
   double a[1000];
   a[0] = 1.0;
+
   for (int i = 1; i < N; i++)
-  {
     a[i] = a[i-1] / i;
-  }
+
   e = 1.;
+
   for (int i = N - 1; i > 0; i--)
     e += a[i];
+
   printf("Euler constant e = %.16lf\n", e);
 
   return 0;
