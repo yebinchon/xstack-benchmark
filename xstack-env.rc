@@ -1,5 +1,9 @@
 # LLVM PATH
+<<<<<<< HEAD
 export LLVM_INSTALL_DIR=~/xstack-installs/llvm-install-debug/
+=======
+export LLVM_INSTALL_DIR=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/llvm-install-debug
+>>>>>>> yebin_branch
 export LLVM_OBJ_DIR=$LLVM_INSTALL_DIR
 export LLVM_INCLUDE_DIR=$LLVM_INSTALL_DIR/include
 export LLVM_BINS_DIR=$LLVM_INSTALL_DIR/bin
