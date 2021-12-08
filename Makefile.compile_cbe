@@ -48,5 +48,5 @@ llvm-cbe:
 	cd ${install-prefix}/llvm-project/llvm/projects/llvm-cbe && git checkout susan_playground && \
 	cd ${install-prefix}/llvm-objects-debug && \
 	cmake ${CONFIG_LLVM_DEBUG} ../llvm-project/llvm/ &&	\
-	make llvm-cbe -j20
+	make llvm-cbe -j20 && make install
 	
