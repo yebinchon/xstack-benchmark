@@ -114,20 +114,20 @@ if __name__ == "__main__":
 
   clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
   
-#  status_list = Parallel(n_jobs=config['core_num'])(delayed(get_all_passes)(config['root_path'],
-#                bmark, tests, config['result_path']) for bmark in config['bmark_list'])
-#  status = dict(ChainMap(*status_list))
-#  
-#  os.chdir(config['result_path'])
-#  with open("status.json", "w") as fd:
-#    json.dump(status, fd)
-#
-#  reVis = ReportVisualizer(bmarks=config['bmark_list'], passes=tests, status=status, path=config['result_path'])
-#  reVis.dumpCSV()
-#
-#  bmark_true = 0;
-#  for i in range(config['bmark_num']):
-#    if status[config['bmark_list'][i]][tests[0]] == True:
-#      bmark_true += 1
-#
-#  print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true))
+  status_list = Parallel(n_jobs=config['core_num'])(delayed(get_all_passes)(config['root_path'],
+                bmark, tests, config['result_path']) for bmark in config['bmark_list'])
+  status = dict(ChainMap(*status_list))
+  
+  os.chdir(config['result_path'])
+  with open("status.json", "w") as fd:
+    json.dump(status, fd)
+
+  reVis = ReportVisualizer(bmarks=config['bmark_list'], passes=tests, status=status, path=config['result_path'])
+  reVis.dumpCSV()
+
+  bmark_true = 0;
+  for i in range(config['bmark_num']):
+    if status[config['bmark_list'][i]][tests[0]] == True:
+      bmark_true += 1
+
+  print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true))
