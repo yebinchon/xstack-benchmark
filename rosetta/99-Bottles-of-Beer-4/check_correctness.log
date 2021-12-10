@@ -1,0 +1,26 @@
+clang -Xclang -disable-O0-optnone -S -emit-llvm -g 99-bottles-of-beer-4.c
+opt -loop-simplify 99-bottles-of-beer-4.ll -S -o 99-bottles-of-beer-4.ll
+opt -mem2reg 99-bottles-of-beer-4.ll -S -o 99-bottles-of-beer-4_mem2reg.ll
+llvm-cbe 99-bottles-of-beer-4_mem2reg.ll
+clang -g -O3 99-bottles-of-beer-4_mem2reg.cbe.c -lm -o 99-bottles-of-beer-4_mem2reg.cbe.exe
+99-bottles-of-beer-4_mem2reg.cbe.c:34:10: warning: incompatible redeclaration of library function 'printf' [-Wincompatible-library-redeclaration]
+uint32_t printf(uint8_t*, ...);
+         ^
+99-bottles-of-beer-4_mem2reg.cbe.c:34:10: note: 'printf' is a builtin with type 'int (const char *, ...)'
+1 warning generated.
+opt 99-bottles-of-beer-4.ll -o 99-bottles-of-beer-4.bc
+llvm-cbe 99-bottles-of-beer-4.bc
+llvm-dis 99-bottles-of-beer-4.bc #just for debugging
+clang -g -O3 99-bottles-of-beer-4.cbe.c -lm -o 99-bottles-of-beer-4.cbe.exe
+99-bottles-of-beer-4.cbe.c:34:10: warning: incompatible redeclaration of library function 'printf' [-Wincompatible-library-redeclaration]
+uint32_t printf(uint8_t*, ...);
+         ^
+99-bottles-of-beer-4.cbe.c:34:10: note: 'printf' is a builtin with type 'int (const char *, ...)'
+1 warning generated.
+llc -filetype=obj 99-bottles-of-beer-4.ll -o 99-bottles-of-beer-4.o
+clang -g -O3 -lm 99-bottles-of-beer-4.o -o 99-bottles-of-beer-4.exe
+./99-bottles-of-beer-4.exe > 99-bottles-of-beer-4.out
+./99-bottles-of-beer-4.cbe.exe > 99-bottles-of-beer-4.cbe.out
+./99-bottles-of-beer-4_mem2reg.cbe.exe > 99-bottles-of-beer-4_mem2reg.cbe.out
+diff 99-bottles-of-beer-4.out 99-bottles-of-beer-4.cbe.out
+diff 99-bottles-of-beer-4.out 99-bottles-of-beer-4_mem2reg.cbe.out

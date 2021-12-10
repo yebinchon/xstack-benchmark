@@ -1,0 +1,48 @@
+../Makefile.generic:9: warning: overriding recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:6: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:9: warning: overriding recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:6: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:9: warning: overriding recipe for target 'bitmap-write-a-ppm-file-1'
+../Makefile.generic:6: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-1'
+../Makefile.generic:14: warning: overriding recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:9: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:14: warning: overriding recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:9: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:14: warning: overriding recipe for target 'bitmap-write-a-ppm-file-1'
+../Makefile.generic:9: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-1'
+../Makefile.generic:17: warning: overriding recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:14: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:17: warning: overriding recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:14: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:17: warning: overriding recipe for target 'bitmap-write-a-ppm-file-1'
+../Makefile.generic:14: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-1'
+../Makefile.generic:21: warning: overriding recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:17: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:21: warning: overriding recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:17: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:21: warning: overriding recipe for target 'bitmap-write-a-ppm-file-1'
+../Makefile.generic:17: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-1'
+../Makefile.generic:24: warning: overriding recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:21: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-2'
+../Makefile.generic:24: warning: overriding recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:21: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-3'
+../Makefile.generic:24: warning: overriding recipe for target 'bitmap-write-a-ppm-file-1'
+../Makefile.generic:21: warning: ignoring old recipe for target 'bitmap-write-a-ppm-file-1'
+make: Circular bitmap-write-a-ppm-file-2 <- bitmap-write-a-ppm-file-2 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-3 <- bitmap-write-a-ppm-file-2 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-3 <- bitmap-write-a-ppm-file-3 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-1 <- bitmap-write-a-ppm-file-2 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-1 <- bitmap-write-a-ppm-file-3 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-1 <- bitmap-write-a-ppm-file-1 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-4_mem2reg.cbe.c <- bitmap-write-a-ppm-file-2 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-4_mem2reg.cbe.c <- bitmap-write-a-ppm-file-3 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-4_mem2reg.cbe.c <- bitmap-write-a-ppm-file-1 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-4_mem2reg.ll <- bitmap-write-a-ppm-file-2 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-4_mem2reg.ll <- bitmap-write-a-ppm-file-3 dependency dropped.
+make: Circular bitmap-write-a-ppm-file-4_mem2reg.ll <- bitmap-write-a-ppm-file-1 dependency dropped.
+clang -Xclang -disable-O0-optnone -S -emit-llvm -g bitmap-write-a-ppm-file-4.c
+bitmap-write-a-ppm-file-4.c:1:10: fatal error: 'imglib.h' file not found
+#include "imglib.h"
+         ^~~~~~~~~~
+1 error generated.
+make: *** [../Makefile.generic:2: bitmap-write-a-ppm-file-4.ll] Error 1

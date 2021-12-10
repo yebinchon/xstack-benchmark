@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-int main(int argc, char* argv[])
+int awesome_main(int argc, char* argv[])
 {
   double e;
 

@@ -1,0 +1,62 @@
+clang -Xclang -disable-O0-optnone -S -emit-llvm -g runge-kutta-method.c
+opt -loop-simplify runge-kutta-method.ll -S -o runge-kutta-method.ll
+opt -mem2reg runge-kutta-method.ll -S -o runge-kutta-method_mem2reg.ll
+llvm-cbe runge-kutta-method_mem2reg.ll
+SUSAN: print loop:Loop at depth 1 containing: %for.cond13<header><exiting>,%for.body16,%for.inc31<latch>
+
+SUSAN: exit block:
+for.end33:                                        ; preds = %for.cond13
+  ret i32 0, !dbg !76
+
+SUSAN: print loop:Loop at depth 1 containing: %for.cond<header><exiting>,%for.body,%for.inc<latch>
+
+SUSAN: exit block:
+for.end:                                          ; preds = %for.cond
+  %call12 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.str, i64 0, i64 0)), !dbg !49
+  call void @llvm.dbg.value(metadata i32 0, metadata !31, metadata !DIExpression()), !dbg !15
+  br label %for.cond13, !dbg !50
+
+clang -g -O3 runge-kutta-method_mem2reg.cbe.c -lm -o runge-kutta-method_mem2reg.cbe.exe
+runge-kutta-method_mem2reg.cbe.c:46:10: warning: incompatible redeclaration of library function 'malloc' [-Wincompatible-library-redeclaration]
+uint8_t* malloc(uint64_t) __ATTRIBUTELIST__((nothrow));
+         ^
+runge-kutta-method_mem2reg.cbe.c:46:10: note: 'malloc' is a builtin with type 'void *(unsigned long)'
+runge-kutta-method_mem2reg.cbe.c:47:10: warning: incompatible redeclaration of library function 'printf' [-Wincompatible-library-redeclaration]
+uint32_t printf(uint8_t*, ...);
+         ^
+runge-kutta-method_mem2reg.cbe.c:47:10: note: 'printf' is a builtin with type 'int (const char *, ...)'
+2 warnings generated.
+opt runge-kutta-method.ll -o runge-kutta-method.bc
+llvm-cbe runge-kutta-method.bc
+SUSAN: print loop:Loop at depth 1 containing: %for.cond13<header><exiting>,%for.body16,%for.inc31<latch>
+
+SUSAN: exit block:
+for.end33:                                        ; preds = %for.cond13
+  ret i32 0, !dbg !107
+
+SUSAN: print loop:Loop at depth 1 containing: %for.cond<header><exiting>,%for.body,%for.inc<latch>
+
+SUSAN: exit block:
+for.end:                                          ; preds = %for.cond
+  %call12 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.str, i64 0, i64 0)), !dbg !70
+  store i32 0, i32* %i, align 4, !dbg !71
+  br label %for.cond13, !dbg !73
+
+llvm-dis runge-kutta-method.bc #just for debugging
+clang -g -O3 runge-kutta-method.cbe.c -lm -o runge-kutta-method.cbe.exe
+runge-kutta-method.cbe.c:46:10: warning: incompatible redeclaration of library function 'malloc' [-Wincompatible-library-redeclaration]
+uint8_t* malloc(uint64_t) __ATTRIBUTELIST__((nothrow));
+         ^
+runge-kutta-method.cbe.c:46:10: note: 'malloc' is a builtin with type 'void *(unsigned long)'
+runge-kutta-method.cbe.c:47:10: warning: incompatible redeclaration of library function 'printf' [-Wincompatible-library-redeclaration]
+uint32_t printf(uint8_t*, ...);
+         ^
+runge-kutta-method.cbe.c:47:10: note: 'printf' is a builtin with type 'int (const char *, ...)'
+2 warnings generated.
+llc -filetype=obj runge-kutta-method.ll -o runge-kutta-method.o
+clang -g -O3 -lm runge-kutta-method.o -o runge-kutta-method.exe
+./runge-kutta-method.exe > runge-kutta-method.out
+./runge-kutta-method.cbe.exe > runge-kutta-method.cbe.out
+./runge-kutta-method_mem2reg.cbe.exe > runge-kutta-method_mem2reg.cbe.out
+diff runge-kutta-method.out runge-kutta-method.cbe.out
+diff runge-kutta-method.out runge-kutta-method_mem2reg.cbe.out

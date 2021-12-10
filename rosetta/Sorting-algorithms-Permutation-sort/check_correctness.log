@@ -1,0 +1,81 @@
+clang -Xclang -disable-O0-optnone -S -emit-llvm -g sorting-algorithms-permutation-sort.c
+opt -loop-simplify sorting-algorithms-permutation-sort.ll -S -o sorting-algorithms-permutation-sort.ll
+opt -mem2reg sorting-algorithms-permutation-sort.ll -S -o sorting-algorithms-permutation-sort_mem2reg.ll
+llvm-cbe sorting-algorithms-permutation-sort_mem2reg.ll
+SUSAN: print loop:Loop at depth 1 containing: %while.body<header>,%for.cond,%for.end.loopexit,%for.body,%if.end,%for.inc,%if.then,%for.end<exiting>,%if.end9,%for.cond14,%for.end26.loopexit,%for.body17,%if.end22,%for.inc23,%if.then21,%for.end26,%for.cond32,%for.end40<latch>,%for.body35,%for.inc36
+    Loop at depth 2 containing: %for.cond<header><exiting>,%for.body<exiting>,%if.end,%for.inc<latch>
+    Loop at depth 2 containing: %for.cond14<header><exiting>,%for.body17<exiting>,%if.end22,%for.inc23<latch>
+    Loop at depth 2 containing: %for.cond32<header><exiting>,%for.body35,%for.inc36<latch>
+
+SUSAN: exit block:
+if.then8:                                         ; preds = %for.end
+  br label %while.end, !dbg !60
+
+SUSAN: irregular exit:   br label %while.end, !dbg !60
+SUSAN: print loop:Loop at depth 2 containing: %for.cond<header><exiting>,%for.body<exiting>,%if.end,%for.inc<latch>
+
+SUSAN: exit block:
+for.end.loopexit:                                 ; preds = %for.cond
+  br label %for.end, !dbg !56
+
+SUSAN: exit block:
+if.then:                                          ; preds = %for.body
+  br label %for.end, !dbg !51
+
+SUSAN: irregular exit:   br label %for.end, !dbg !51
+SUSAN: print loop:Loop at depth 2 containing: %for.cond14<header><exiting>,%for.body17<exiting>,%if.end22,%for.inc23<latch>
+
+SUSAN: exit block:
+for.end26.loopexit:                               ; preds = %for.cond14
+  br label %for.end26, !dbg !78
+
+SUSAN: exit block:
+if.then21:                                        ; preds = %for.body17
+  br label %for.end26, !dbg !72
+
+SUSAN: irregular exit:   br label %for.end26, !dbg !72
+SUSAN: print loop:Loop at depth 2 containing: %for.cond32<header><exiting>,%for.body35,%for.inc36<latch>
+
+SUSAN: exit block:
+for.end40:                                        ; preds = %for.cond32
+  br label %while.body, !dbg !35, !llvm.loop !95
+
+SUSAN: false branch only!!!
+for.end:                                          ; preds = %for.end.loopexit, %if.then
+  %q.2 = phi i8* [ %add.ptr2, %if.then ], [ %q.1, %for.end.loopexit ]
+  call void @llvm.dbg.value(metadata i8* %q.2, metadata !36, metadata !DIExpression()), !dbg !29
+  %cmp6 = icmp ule i8* %p.0, %a, !dbg !58
+  br i1 %cmp6, label %if.then8, label %if.end9, !dbg !59
+
+SUSAN: print loop:Loop at depth 1 containing: %for.cond<header><exiting>,%for.body,%for.inc<latch>
+
+SUSAN: exit block:
+for.end:                                          ; preds = %for.cond
+  ret i32 0, !dbg !40
+
+clang -g -O3 sorting-algorithms-permutation-sort_mem2reg.cbe.c -lm -o sorting-algorithms-permutation-sort_mem2reg.cbe.exe
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:58:10: warning: incompatible redeclaration of library function 'malloc' [-Wincompatible-library-redeclaration]
+uint8_t* malloc(uint64_t) __ATTRIBUTELIST__((nothrow));
+         ^
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:58:10: note: 'malloc' is a builtin with type 'void *(unsigned long)'
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:61:10: warning: incompatible redeclaration of library function 'strcmp' [-Wincompatible-library-redeclaration]
+uint32_t strcmp(uint8_t*, uint8_t*) __ATTRIBUTELIST__((nothrow, pure));
+         ^
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:61:10: note: 'strcmp' is a builtin with type 'int (const char *, const char *)'
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:63:10: warning: incompatible redeclaration of library function 'printf' [-Wincompatible-library-redeclaration]
+uint32_t printf(uint8_t*, ...);
+         ^
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:63:10: note: 'printf' is a builtin with type 'int (const char *, ...)'
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:64:10: warning: incompatible redeclaration of library function 'memcpy' [-Wincompatible-library-redeclaration]
+uint8_t* memcpy(uint8_t*, uint8_t*, uint64_t);
+         ^
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:64:10: note: 'memcpy' is a builtin with type 'void *(void *, const void *, unsigned long)'
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:65:10: warning: incompatible redeclaration of library function 'memset' [-Wincompatible-library-redeclaration]
+uint8_t* memset(uint8_t*, uint32_t, uint64_t);
+         ^
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:65:10: note: 'memset' is a builtin with type 'void *(void *, int, unsigned long)'
+sorting-algorithms-permutation-sort_mem2reg.cbe.c:121:1: error: expected expression
+){
+^
+5 warnings and 1 error generated.
+make: *** [../Makefile.generic:24: sorting-algorithms-permutation-sort_mem2reg.cbe.exe] Error 1

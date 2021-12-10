@@ -1,0 +1,77 @@
+clang -Xclang -disable-O0-optnone -S -emit-llvm -g josephus-problem.c
+opt -loop-simplify josephus-problem.ll -S -o josephus-problem.ll
+opt -mem2reg josephus-problem.ll -S -o josephus-problem_mem2reg.ll
+llvm-cbe josephus-problem_mem2reg.ll
+SUSAN: print loop:Parallel Loop at depth 1 containing: %for.cond<header><exiting>,%for.body,%for.inc<latch>
+
+SUSAN: exit block:
+for.end:                                          ; preds = %for.cond
+  ret i32 %m.addr.0, !dbg !30
+
+SUSAN: print loop:Parallel Loop at depth 1 containing: %while.cond<header><exiting>,%while.body,%if.else,%if.then10,%if.end11,%if.then8,%if.end12<latch>
+
+SUSAN: exit block:
+while.end:                                        ; preds = %while.cond
+  br label %return, !dbg !49
+
+SUSAN: false branch only!!!
+if.else:                                          ; preds = %while.body
+  %tobool = icmp ne i64 %div, 0, !dbg !39
+  br i1 %tobool, label %if.end11, label %if.then10, !dbg !41
+
+SUSAN: print loop:Loop at depth 1 containing: %for.cond<header><exiting>,%for.body<latch>
+
+SUSAN: exit block:
+for.end:                                          ; preds = %for.cond
+  %call6 = call i32 @putchar(i32 10), !dbg !33
+  ret i32 0, !dbg !34
+
+clang -g -O3 josephus-problem_mem2reg.cbe.c -lm -o josephus-problem_mem2reg.cbe.exe
+josephus-problem_mem2reg.cbe.c:46:10: warning: incompatible redeclaration of library function 'printf' [-Wincompatible-library-redeclaration]
+uint32_t printf(uint8_t*, ...);
+         ^
+josephus-problem_mem2reg.cbe.c:46:10: note: 'printf' is a builtin with type 'int (const char *, ...)'
+1 warning generated.
+opt josephus-problem.ll -o josephus-problem.bc
+llvm-cbe josephus-problem.bc
+SUSAN: print loop:Loop at depth 1 containing: %for.cond<header><exiting>,%for.body,%for.inc<latch>
+
+SUSAN: exit block:
+for.end:                                          ; preds = %for.cond
+  %7 = load i32, i32* %m.addr, align 4, !dbg !40
+  ret i32 %7, !dbg !41
+
+SUSAN: print loop:Loop at depth 1 containing: %while.cond<header><exiting>,%while.body,%if.else,%if.then10,%if.end11,%if.then8,%if.end12<latch>
+
+SUSAN: exit block:
+while.end:                                        ; preds = %while.cond
+  %21 = load i64, i64* %m.addr, align 8, !dbg !74
+  store i64 %21, i64* %retval, align 8, !dbg !75
+  br label %return, !dbg !75
+
+SUSAN: false branch only!!!
+if.else:                                          ; preds = %while.body
+  %15 = load i64, i64* %q, align 8, !dbg !58
+  %tobool = icmp ne i64 %15, 0, !dbg !58
+  br i1 %tobool, label %if.end11, label %if.then10, !dbg !60
+
+SUSAN: print loop:Loop at depth 1 containing: %for.cond<header><exiting>,%for.body<latch>
+
+SUSAN: exit block:
+for.end:                                          ; preds = %for.cond
+  %call6 = call i32 @putchar(i32 10), !dbg !46
+  ret i32 0, !dbg !47
+
+llvm-dis josephus-problem.bc #just for debugging
+clang -g -O3 josephus-problem.cbe.c -lm -o josephus-problem.cbe.exe
+josephus-problem.cbe.c:46:10: warning: incompatible redeclaration of library function 'printf' [-Wincompatible-library-redeclaration]
+uint32_t printf(uint8_t*, ...);
+         ^
+josephus-problem.cbe.c:46:10: note: 'printf' is a builtin with type 'int (const char *, ...)'
+1 warning generated.
+llc -filetype=obj josephus-problem.ll -o josephus-problem.o
+clang -g -O3 -lm josephus-problem.o -o josephus-problem.exe
+./josephus-problem.exe > josephus-problem.out
+./josephus-problem.cbe.exe > josephus-problem.cbe.out
+./josephus-problem_mem2reg.cbe.exe > josephus-problem_mem2reg.cbe.out
+make: *** [../Makefile.generic:29: check_correctness] Interrupt

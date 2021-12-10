@@ -1,0 +1,23 @@
+clang -Xclang -disable-O0-optnone -S -emit-llvm -g make-directory-path.c
+opt -loop-simplify make-directory-path.ll -S -o make-directory-path.ll
+opt -mem2reg make-directory-path.ll -S -o make-directory-path_mem2reg.ll
+llvm-cbe make-directory-path_mem2reg.ll
+SUSAN: print loop:Loop at depth 1 containing: %while.cond<header><exiting>,%while.body,%if.then6,%if.end8,%if.else<exiting>,%if.end19,%if.then12,%if.end20<latch>
+
+SUSAN: exit block:
+while.end:                                        ; preds = %while.cond
+  ret i32 0, !dbg !105
+
+SUSAN: exit block:
+if.then16:                                        ; preds = %if.else
+  %6 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8, !dbg !98
+  %arrayidx17 = getelementptr inbounds i8*, i8** %argv, i64 1, !dbg !100
+  %7 = load i8*, i8** %arrayidx17, align 8, !dbg !100
+  %call18 = call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %6, i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.2, i64 0, i64 0), i8* %7), !dbg !101
+  call void @exit(i32 1) #6, !dbg !102
+  unreachable, !dbg !102
+
+SUSAN: irregular exit:   unreachable, !dbg !102
+UnreachableInst has no successors!
+UNREACHABLE executed at /u/NAS_SCRATCH/yc0769/xstack/xstack-installs/llvm-project/llvm/include/llvm/IR/Instructions.h:4701!
+make: *** [../Makefile.generic:14: make-directory-path_mem2reg.cbe.c] Interrupt

@@ -1,0 +1,2 @@
+clang -Xclang -disable-O0-optnone -S -emit-llvm -g zero-to-the-zero-power.c
+make: *** [../Makefile.generic:2: zero-to-the-zero-power.ll] Interrupt
