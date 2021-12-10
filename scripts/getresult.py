@@ -1,7 +1,8 @@
 import argparse
 import json
 import sys
-import os
+import os, signal
+import glob
 import subprocess
 import shutil
 from joblib import Parallel, delayed
@@ -28,6 +29,7 @@ def clean_all_bmarks(root_path, bmark_list, result_path):
 def get_one_prof(root_path, bmark, test_type):
   print("Generating %s on %s " % (test_type, bmark))
 
+  path = os.path.join(root_path, bmark)
   os.chdir(os.path.join(root_path, bmark))
 
   with open(test_type+".log", "w") as fd:
@@ -39,8 +41,15 @@ def get_one_prof(root_path, bmark, test_type):
     finally:
       timer.cancel()
 
+  bmark_name = glob.glob("*.cbe.exe")
+
   if make_process.wait() != 0:
     print(colored("%s failed for %s " % (test_type, bmark), 'red'))
+    for name in bmark_name:
+      for line in os.popen("ps ax | grep " + name + " | grep -v grep"):
+        fields = line.split()
+        pid = fields[0]
+        os.kill(int(pid), signal.SIGKILL)
     return False
   else:
     print(colored("%s succeeded for %s " % (test_type, bmark), 'green'))
@@ -73,7 +82,7 @@ def set_config():
   bmark_list = []
   bmark_num = 0
   for x in os.scandir(config['root_path']):
-#    if x.name == 'e_val' or x.name == 'primes':
+#    if x.name == 'Josephus-problem' or x.name == 'primes':
     if x.is_dir() and x.name != 'results' and x.name != '__pycache__':
       bmark_list.append(x.name)
       bmark_num += 1
@@ -105,20 +114,20 @@ if __name__ == "__main__":
 
   clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
   
-  status_list = Parallel(n_jobs=config['core_num'])(delayed(get_all_passes)(config['root_path'],
-                bmark, tests, config['result_path']) for bmark in config['bmark_list'])
-  status = dict(ChainMap(*status_list))
-  
-  os.chdir(config['result_path'])
-  with open("status.json", "w") as fd:
-    json.dump(status, fd)
-
-  reVis = ReportVisualizer(bmarks=config['bmark_list'], passes=tests, status=status, path=config['result_path'])
-  reVis.dumpCSV()
-
-  bmark_true = 0;
-  for i in range(config['bmark_num']):
-    if status[config['bmark_list'][i]][tests[0]] == True:
-      bmark_true += 1
-
-  print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true))
+#  status_list = Parallel(n_jobs=config['core_num'])(delayed(get_all_passes)(config['root_path'],
+#                bmark, tests, config['result_path']) for bmark in config['bmark_list'])
+#  status = dict(ChainMap(*status_list))
+#  
+#  os.chdir(config['result_path'])
+#  with open("status.json", "w") as fd:
+#    json.dump(status, fd)
+#
+#  reVis = ReportVisualizer(bmarks=config['bmark_list'], passes=tests, status=status, path=config['result_path'])
+#  reVis.dumpCSV()
+#
+#  bmark_true = 0;
+#  for i in range(config['bmark_num']):
+#    if status[config['bmark_list'][i]][tests[0]] == True:
+#      bmark_true += 1
+#
+#  print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true))
