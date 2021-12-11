@@ -17,29 +17,37 @@ def clean_all_bmarks(root_path, bmark_list, result_path):
   os.system("rm -rf *")
   for bmark in bmark_list:
     os.chdir(os.path.join(root_path, bmark))
-    make_process = subprocess.Popen(["make", "clean"],
+    bmark_name = glob.glob("Makefile.*")[0][9:]
+    make_process = subprocess.Popen(["make", "-f", "Makefile."+bmark_name, "clean"],
                     stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
     if make_process.wait() != 0:
       print(colored("Clean failed for %s" % bmark, 'red'))
 
-  print("Finish cleaning")
-  return 0
+  print(colored("Finish cleaning", 'green'))
+  return 
 
 def get_one_prof(root_path, bmark, test_type):
+  sanity_check=True
   print("Generating %s on %s " % (test_type, bmark))
 
   path = os.path.join(root_path, bmark)
   os.chdir(os.path.join(root_path, bmark))
 
+  bmarks = glob.glob("Makefile.*")
+
   with open(test_type+".log", "w") as fd:
-    make_process = subprocess.Popen(["make", test_type], stdout=fd, stderr=fd)
-    timer = Timer(60, make_process.kill)
-    try:
-      timer.start()
-      stdout, stderr = make_process.communicate()
-    finally:
-      timer.cancel()
+    for i in range(len(bmarks)):
+      bmark_name = bmarks[i][9:]
+      if(test_type == ".cbe.exe"):
+        test_type = bmark_name+test_type
+      make_process = subprocess.Popen(["make", "-f", "Makefile."+bmark_name, test_type], stdout=fd, stderr=fd)
+      timer = Timer(60, make_process.kill)
+      try:
+        timer.start()
+        stdout, stderr = make_process.communicate()
+      finally:
+        timer.cancel()
 
   bmark_name = glob.glob("*.cbe.exe")
 
@@ -58,7 +66,7 @@ def get_one_prof(root_path, bmark, test_type):
 def get_all_passes(root_path, bmark, tests, result_path):
   status = {}
   if "Compile" in tests:
-    status["Compile"] = get_one_prof(root_path, bmark, " ")
+    status["Compile"] = get_one_prof(root_path, bmark, ".cbe.exe")
   if "Correct" in tests:
     status["Correct"] = get_one_prof(root_path, bmark, "check_correctness")
 
@@ -73,6 +81,7 @@ def set_config():
 
   parser.add_argument("-n", "--core-num", type=int, default=5,
                       help="Number of cores")
+  parser.add_argument("-c", "--clean", action='store_true')
 
   args = parser.parse_args()
   
@@ -93,13 +102,13 @@ def set_config():
 
   config['result_path'] = os.path.join(config['root_path'], "results")
 
-  return config
+  return config, args
 
 if __name__ == "__main__":
-  #tests = ["Compile", "Correct"]
-  tests = ["Correct"]
+  tests = ["Compile", "Correct"]
+  #tests = ["Correct"]
   
-  config = set_config()
+  config, args = set_config()
   if not config:
     print("Bad configuration, please start over.")
     sys.exit(1)
@@ -113,7 +122,10 @@ if __name__ == "__main__":
   log_path = os.path.join(config['result_path'], "results.log")
 
   clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
-  
+
+  if(args.clean):
+    sys.exit()
+
   status_list = Parallel(n_jobs=config['core_num'])(delayed(get_all_passes)(config['root_path'],
                 bmark, tests, config['result_path']) for bmark in config['bmark_list'])
   status = dict(ChainMap(*status_list))
@@ -125,9 +137,11 @@ if __name__ == "__main__":
   reVis = ReportVisualizer(bmarks=config['bmark_list'], passes=tests, status=status, path=config['result_path'])
   reVis.dumpCSV()
 
-  bmark_true = 0;
-  for i in range(config['bmark_num']):
-    if status[config['bmark_list'][i]][tests[0]] == True:
-      bmark_true += 1
+  bmark_true = [0]*len(tests);
+  for t in range(len(tests)):
+    for i in range(config['bmark_num']):
+      if status[config['bmark_list'][i]][tests[t]] == True:
+        bmark_true[t] += 1
 
-  print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true))
+  print("\nOut of %d benchmarks, %d compile" % (config['bmark_num'], bmark_true[0]))
+  print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true[1]))
