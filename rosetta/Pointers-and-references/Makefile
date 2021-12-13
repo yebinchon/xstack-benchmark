@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=pointers-and-references-8
+CFILE=pointers-and-references-8.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

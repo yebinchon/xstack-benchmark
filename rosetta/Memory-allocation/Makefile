@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=memory-allocation-4
+CFILE=memory-allocation-4.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

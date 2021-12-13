@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=write-language-name-in-3d-ascii
+CFILE=write-language-name-in-3d-ascii.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=ternary-logic-2
+CFILE=ternary-logic-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

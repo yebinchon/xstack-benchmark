@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=start-from-a-main-routine
+CFILE=start-from-a-main-routine.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

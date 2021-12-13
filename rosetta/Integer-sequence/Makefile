@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=integer-sequence-3
+CFILE=integer-sequence-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

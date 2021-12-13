@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=strip-a-set-of-characters-from-a-string-1
+CFILE=strip-a-set-of-characters-from-a-string-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

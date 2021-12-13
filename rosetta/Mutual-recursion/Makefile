@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=mutual-recursion
+CFILE=mutual-recursion.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

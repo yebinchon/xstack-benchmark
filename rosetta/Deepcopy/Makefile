@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=deepcopy-1
+CFILE=deepcopy-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

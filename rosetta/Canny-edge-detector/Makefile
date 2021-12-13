@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=canny-edge-detector
+CFILE=canny-edge-detector.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=csv-data-manipulation
+CFILE=csv-data-manipulation.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

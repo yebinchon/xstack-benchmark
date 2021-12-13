@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=enforced-immutability-2
+CFILE=enforced-immutability-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=bitcoin-address-validation
+CFILE=bitcoin-address-validation.c
 
-LINK_FLAGS=-lm -lssl -lcrypto
 include ../Makefile.generic

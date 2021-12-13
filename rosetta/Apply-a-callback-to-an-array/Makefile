@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=apply-a-callback-to-an-array-1
+CFILE=apply-a-callback-to-an-array-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

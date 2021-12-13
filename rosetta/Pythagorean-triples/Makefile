@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=pythagorean-triples-5
+CFILE=pythagorean-triples-5.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

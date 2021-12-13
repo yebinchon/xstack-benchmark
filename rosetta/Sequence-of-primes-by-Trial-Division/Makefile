@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sequence-of-primes-by-trial-division
+CFILE=sequence-of-primes-by-trial-division.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

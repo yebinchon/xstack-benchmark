@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=horners-rule-for-polynomial-evaluation
+CFILE=horners-rule-for-polynomial-evaluation.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

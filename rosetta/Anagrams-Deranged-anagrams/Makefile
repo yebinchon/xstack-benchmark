@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=anagrams-deranged-anagrams
+CFILE=anagrams-deranged-anagrams.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=environment-variables
+CFILE=environment-variables.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

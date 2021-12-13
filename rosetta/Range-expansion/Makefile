@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=range-expansion
+CFILE=range-expansion.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=stack-traces-1
+CFILE=stack-traces-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

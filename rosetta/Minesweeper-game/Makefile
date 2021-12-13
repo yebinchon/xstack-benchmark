@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=minesweeper-game-1
+CFILE=minesweeper-game-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

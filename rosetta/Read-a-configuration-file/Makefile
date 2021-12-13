@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=read-a-configuration-file
+CFILE=read-a-configuration-file.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

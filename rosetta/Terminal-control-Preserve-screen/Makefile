@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=terminal-control-preserve-screen
+CFILE=terminal-control-preserve-screen.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=combinations-and-permutations
+CFILE=combinations-and-permutations.c
 
-LINK_FLAGS=-lm -lgmp
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=narcissistic-decimal-number
+CFILE=narcissistic-decimal-number.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

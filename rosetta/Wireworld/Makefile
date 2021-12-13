@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=wireworld
+CFILE=wireworld.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

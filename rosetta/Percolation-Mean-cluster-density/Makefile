@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=percolation-mean-cluster-density
+CFILE=percolation-mean-cluster-density.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

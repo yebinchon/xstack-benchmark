@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=9-billion-names-of-god-the-integer
+CFILE=9-billion-names-of-god-the-integer.c
 
-LINK_FLAGS=-lm -lgmp
 include ../Makefile.generic

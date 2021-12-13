@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=bernoulli-numbers
+CFILE=bernoulli-numbers.c
 
-LINK_FLAGS=-lm -lgmp
 include ../Makefile.generic

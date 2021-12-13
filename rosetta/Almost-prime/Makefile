@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=almost-prime
+CFILE=almost-prime.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

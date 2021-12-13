@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=plot-coordinate-pairs-1
+CFILE=plot-coordinate-pairs-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

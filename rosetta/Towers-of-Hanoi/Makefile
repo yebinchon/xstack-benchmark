@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=towers-of-hanoi-2
+CFILE=towers-of-hanoi-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

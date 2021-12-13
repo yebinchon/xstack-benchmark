@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=binary-strings
+CFILE=binary-strings.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=inverted-syntax-2
+CFILE=inverted-syntax-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

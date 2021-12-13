@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sum-and-product-of-an-array
+CFILE=sum-and-product-of-an-array.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

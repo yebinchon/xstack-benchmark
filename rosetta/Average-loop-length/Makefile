@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=average-loop-length
+CFILE=average-loop-length.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

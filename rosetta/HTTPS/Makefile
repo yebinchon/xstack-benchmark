@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=https
+CFILE=https.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

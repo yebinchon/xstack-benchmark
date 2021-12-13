@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=rot-13
+CFILE=rot-13.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

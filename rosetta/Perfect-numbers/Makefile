@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=perfect-numbers-1
+CFILE=perfect-numbers-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

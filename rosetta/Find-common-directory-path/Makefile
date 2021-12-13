@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=find-common-directory-path-2
+CFILE=find-common-directory-path-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

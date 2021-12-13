@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=reverse-words-in-a-string
+CFILE=reverse-words-in-a-string.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

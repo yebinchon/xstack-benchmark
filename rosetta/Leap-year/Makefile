@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=leap-year
+CFILE=leap-year.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

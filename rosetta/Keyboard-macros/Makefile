@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=keyboard-macros
+CFILE=keyboard-macros.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=gui-maximum-window-dimensions
+CFILE=gui-maximum-window-dimensions.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

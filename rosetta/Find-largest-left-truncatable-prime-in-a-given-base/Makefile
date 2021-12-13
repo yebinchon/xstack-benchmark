@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=find-largest-left-truncatable-prime-in-a-given-base
+CFILE=find-largest-left-truncatable-prime-in-a-given-base.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

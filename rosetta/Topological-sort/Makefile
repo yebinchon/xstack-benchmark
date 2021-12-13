@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=topological-sort-2
+CFILE=topological-sort-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

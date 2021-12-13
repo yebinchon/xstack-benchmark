@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=haversine-formula
+CFILE=haversine-formula.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

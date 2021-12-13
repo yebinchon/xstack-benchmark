@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=parallel-calculations
+CFILE=parallel-calculations.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

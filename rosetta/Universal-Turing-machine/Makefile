@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=universal-turing-machine
+CFILE=universal-turing-machine.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

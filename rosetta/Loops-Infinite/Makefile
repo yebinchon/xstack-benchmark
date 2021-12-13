@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=loops-infinite-2
+CFILE=loops-infinite-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=dot-product
+CFILE=dot-product.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

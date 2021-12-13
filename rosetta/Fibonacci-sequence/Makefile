@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=fibonacci-sequence-4
+CFILE=fibonacci-sequence-4.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

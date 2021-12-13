@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=bitmap-read-a-ppm-file-1
+CFILE=bitmap-read-a-ppm-file-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

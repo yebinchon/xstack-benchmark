@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=order-two-numerical-lists-1
+CFILE=order-two-numerical-lists-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

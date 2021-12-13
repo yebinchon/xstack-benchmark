@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=palindrome-detection-4
+CFILE=palindrome-detection-4.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

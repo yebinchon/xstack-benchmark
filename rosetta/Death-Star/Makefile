@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=death-star
+CFILE=death-star.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

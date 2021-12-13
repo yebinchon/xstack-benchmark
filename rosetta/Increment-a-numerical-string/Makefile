@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=increment-a-numerical-string
+CFILE=increment-a-numerical-string.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

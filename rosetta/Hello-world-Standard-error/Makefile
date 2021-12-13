@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hello-world-standard-error
+CFILE=hello-world-standard-error.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

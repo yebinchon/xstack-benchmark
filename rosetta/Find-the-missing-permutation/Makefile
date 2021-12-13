@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=find-the-missing-permutation
+CFILE=find-the-missing-permutation.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=create-a-file-on-magnetic-tape
+CFILE=create-a-file-on-magnetic-tape.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=scope-function-names-and-labels
+CFILE=scope-function-names-and-labels.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

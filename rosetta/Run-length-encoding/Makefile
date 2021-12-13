@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=run-length-encoding
+CFILE=run-length-encoding.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

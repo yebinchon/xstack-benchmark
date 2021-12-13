@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=fractal-tree
+CFILE=fractal-tree.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

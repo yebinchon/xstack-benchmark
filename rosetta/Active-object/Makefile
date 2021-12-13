@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=active-object
+CFILE=active-object.c
 
-LINK_FLAGS=-lm -pthread
 include ../Makefile.generic

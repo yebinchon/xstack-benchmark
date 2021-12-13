@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=simulate-input-keyboard
+CFILE=simulate-input-keyboard.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

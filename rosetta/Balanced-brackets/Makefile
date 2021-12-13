@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=balanced-brackets-1
+CFILE=balanced-brackets-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

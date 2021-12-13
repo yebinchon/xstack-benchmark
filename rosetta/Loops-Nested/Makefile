@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=loops-nested
+CFILE=loops-nested.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

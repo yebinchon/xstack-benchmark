@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sierpinski-triangle-4
+CFILE=sierpinski-triangle-4.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=4-rings_or_4-squares
+CFILE=4-rings_or_4-squares.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

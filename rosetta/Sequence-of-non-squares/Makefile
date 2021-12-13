@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sequence-of-non-squares
+CFILE=sequence-of-non-squares.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

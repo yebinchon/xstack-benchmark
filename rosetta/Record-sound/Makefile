@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=record-sound
+CFILE=record-sound.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=linear-congruential-generator
+CFILE=linear-congruential-generator.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

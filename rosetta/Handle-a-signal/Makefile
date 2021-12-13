@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=handle-a-signal
+CFILE=handle-a-signal.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=soap-2
+CFILE=soap-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

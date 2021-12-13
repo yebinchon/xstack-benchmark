@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=pi
+CFILE=pi.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

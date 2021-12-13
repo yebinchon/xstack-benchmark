@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=non-continuous-subsequences-2
+CFILE=non-continuous-subsequences-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

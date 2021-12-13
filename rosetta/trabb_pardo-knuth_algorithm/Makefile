@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=trabb_pardo-knuth_algorithm
+CFILE=trabb_pardo-knuth_algorithm.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

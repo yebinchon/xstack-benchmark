@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=host-introspection-2
+CFILE=host-introspection-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

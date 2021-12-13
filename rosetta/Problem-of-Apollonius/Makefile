@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=problem-of-apollonius
+CFILE=problem-of-apollonius.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=rate-counter
+CFILE=rate-counter.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

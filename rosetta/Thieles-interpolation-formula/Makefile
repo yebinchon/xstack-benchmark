@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=thieles-interpolation-formula-2
+CFILE=thieles-interpolation-formula-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

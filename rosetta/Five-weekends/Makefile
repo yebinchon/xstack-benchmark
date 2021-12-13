@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=five-weekends-1
+CFILE=five-weekends-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

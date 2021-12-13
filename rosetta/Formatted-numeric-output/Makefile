@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=formatted-numeric-output
+CFILE=formatted-numeric-output.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

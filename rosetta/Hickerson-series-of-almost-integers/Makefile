@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hickerson-series-of-almost-integers
+CFILE=hickerson-series-of-almost-integers.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

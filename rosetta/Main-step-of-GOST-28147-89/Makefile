@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=main-step-of-gost-28147-89
+CFILE=main-step-of-gost-28147-89.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

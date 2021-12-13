@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=generator-exponential-1
+CFILE=generator-exponential-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

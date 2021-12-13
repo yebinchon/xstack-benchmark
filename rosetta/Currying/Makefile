@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=currying
+CFILE=currying.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=stern-brocot-sequence-2
+CFILE=stern-brocot-sequence-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=parsing-shunting-yard-algorithm
+CFILE=parsing-shunting-yard-algorithm.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

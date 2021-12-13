@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=multiple-distinct-objects
+CFILE=multiple-distinct-objects.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

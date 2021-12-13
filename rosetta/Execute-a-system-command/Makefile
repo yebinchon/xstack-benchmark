@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=execute-a-system-command
+CFILE=execute-a-system-command.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

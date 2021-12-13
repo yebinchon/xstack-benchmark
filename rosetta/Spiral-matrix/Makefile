@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=spiral-matrix-2
+CFILE=spiral-matrix-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

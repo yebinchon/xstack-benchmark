@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=lzw-compression
+CFILE=lzw-compression.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

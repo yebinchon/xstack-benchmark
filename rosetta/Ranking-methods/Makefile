@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=ranking-methods
+CFILE=ranking-methods.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

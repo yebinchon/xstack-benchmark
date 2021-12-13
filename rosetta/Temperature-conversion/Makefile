@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=temperature-conversion
+CFILE=temperature-conversion.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=discordian-date
+CFILE=discordian-date.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

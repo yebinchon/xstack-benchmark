@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=regular-expressions
+CFILE=regular-expressions.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

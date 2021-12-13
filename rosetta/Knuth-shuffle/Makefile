@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=knuth-shuffle-1
+CFILE=knuth-shuffle-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

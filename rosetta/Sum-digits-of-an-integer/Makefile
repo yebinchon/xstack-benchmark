@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sum-digits-of-an-integer
+CFILE=sum-digits-of-an-integer.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

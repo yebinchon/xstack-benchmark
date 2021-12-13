@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=forest-fire-2
+CFILE=forest-fire-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

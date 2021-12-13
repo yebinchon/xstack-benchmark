@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=seven-sided-dice-from-five-sided-dice
+CFILE=seven-sided-dice-from-five-sided-dice.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=non-decimal-radices-input-1
+CFILE=non-decimal-radices-input-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

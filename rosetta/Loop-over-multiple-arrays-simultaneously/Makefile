@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=loop-over-multiple-arrays-simultaneously
+CFILE=loop-over-multiple-arrays-simultaneously.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

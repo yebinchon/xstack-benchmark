@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=box-the-compass
+CFILE=box-the-compass.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

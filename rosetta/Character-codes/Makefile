@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=character-codes
+CFILE=character-codes.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

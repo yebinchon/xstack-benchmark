@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=one-dimensional-cellular-automata-2
+CFILE=one-dimensional-cellular-automata-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=multiplicative-order
+CFILE=multiplicative-order.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

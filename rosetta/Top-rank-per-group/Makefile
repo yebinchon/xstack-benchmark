@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=top-rank-per-group
+CFILE=top-rank-per-group.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

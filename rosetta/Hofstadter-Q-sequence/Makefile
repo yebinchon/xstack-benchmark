@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hofstadter-q-sequence
+CFILE=hofstadter-q-sequence.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

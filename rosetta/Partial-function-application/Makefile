@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=partial-function-application-2
+CFILE=partial-function-application-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

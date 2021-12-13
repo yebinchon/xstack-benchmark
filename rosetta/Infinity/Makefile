@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=infinity-1
+CFILE=infinity-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

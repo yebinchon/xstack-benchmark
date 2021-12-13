@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=pangram-checker-1
+CFILE=pangram-checker-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

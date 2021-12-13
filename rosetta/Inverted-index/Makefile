@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=inverted-index-1
+CFILE=inverted-index-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

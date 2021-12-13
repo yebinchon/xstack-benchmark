@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=mouse-position
+CFILE=mouse-position.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

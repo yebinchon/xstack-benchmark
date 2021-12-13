@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=bitwise-operations-2
+CFILE=bitwise-operations-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hash-from-two-arrays
+CFILE=hash-from-two-arrays.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

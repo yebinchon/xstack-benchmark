@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=median-filter
+CFILE=median-filter.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

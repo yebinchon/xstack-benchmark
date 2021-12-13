@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=json
+CFILE=json.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

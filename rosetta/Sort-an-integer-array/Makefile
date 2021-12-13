@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sort-an-integer-array
+CFILE=sort-an-integer-array.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

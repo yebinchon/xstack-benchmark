@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=compound-data-type
+CFILE=compound-data-type.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

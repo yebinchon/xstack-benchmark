@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=visualize-a-tree
+CFILE=visualize-a-tree.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

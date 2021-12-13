@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sutherland-hodgman-polygon-clipping
+CFILE=sutherland-hodgman-polygon-clipping.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=parsing-rpn-calculator-algorithm-1
+CFILE=parsing-rpn-calculator-algorithm-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

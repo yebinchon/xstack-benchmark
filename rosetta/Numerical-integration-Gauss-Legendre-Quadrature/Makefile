@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=numerical-integration-gauss-legendre-quadrature
+CFILE=numerical-integration-gauss-legendre-quadrature.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

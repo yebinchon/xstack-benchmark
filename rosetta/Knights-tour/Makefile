@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=knights-tour
+CFILE=knights-tour.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

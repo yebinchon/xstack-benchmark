@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=yin-and-yang
+CFILE=yin-and-yang.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

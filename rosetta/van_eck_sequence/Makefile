@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=van_eck_sequence
+CFILE=van_eck_sequence.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

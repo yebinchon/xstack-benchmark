@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=luhn-test-of-credit-card-numbers
+CFILE=luhn-test-of-credit-card-numbers.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

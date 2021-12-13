@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=find-the-last-sunday-of-each-month
+CFILE=find-the-last-sunday-of-each-month.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

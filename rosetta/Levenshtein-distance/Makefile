@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=levenshtein-distance-1
+CFILE=levenshtein-distance-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

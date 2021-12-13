@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=one-of-n-lines-in-a-file
+CFILE=one-of-n-lines-in-a-file.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

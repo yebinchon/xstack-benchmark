@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=roman-numerals-decode
+CFILE=roman-numerals-decode.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

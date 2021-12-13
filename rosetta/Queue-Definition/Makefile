@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=queue-definition-1
+CFILE=queue-definition-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

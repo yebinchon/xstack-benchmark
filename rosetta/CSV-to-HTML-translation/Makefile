@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=csv-to-html-translation-1
+CFILE=csv-to-html-translation-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

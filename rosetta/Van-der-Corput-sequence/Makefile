@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=van-der-corput-sequence
+CFILE=van-der-corput-sequence.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

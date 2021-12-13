@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sorting-algorithms-radix-sort
+CFILE=sorting-algorithms-radix-sort.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

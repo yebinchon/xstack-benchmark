@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=ludic-numbers
+CFILE=ludic-numbers.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

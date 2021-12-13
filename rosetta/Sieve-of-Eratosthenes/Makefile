@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sieve-of-eratosthenes-3
+CFILE=sieve-of-eratosthenes-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

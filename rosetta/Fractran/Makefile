@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=fractran
+CFILE=fractran.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

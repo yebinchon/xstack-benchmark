@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=concurrent-computing-2
+CFILE=concurrent-computing-2.c
 
-LINK_FLAGS=-lm -pthread
 include ../Makefile.generic

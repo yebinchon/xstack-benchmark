@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=equilibrium-index
+CFILE=equilibrium-index.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=xml-dom-serialization
+CFILE=xml-dom-serialization.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

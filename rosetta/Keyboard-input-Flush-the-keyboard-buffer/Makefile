@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=keyboard-input-flush-the-keyboard-buffer-2
+CFILE=keyboard-input-flush-the-keyboard-buffer-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

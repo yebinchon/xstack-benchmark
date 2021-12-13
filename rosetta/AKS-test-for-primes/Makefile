@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=aks-test-for-primes
+CFILE=aks-test-for-primes.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

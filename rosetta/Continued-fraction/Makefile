@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=continued-fraction
+CFILE=continued-fraction.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

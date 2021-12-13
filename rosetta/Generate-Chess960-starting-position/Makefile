@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=generate-chess960-starting-position
+CFILE=generate-chess960-starting-position.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

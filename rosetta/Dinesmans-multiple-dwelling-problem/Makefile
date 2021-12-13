@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=dinesmans-multiple-dwelling-problem
+CFILE=dinesmans-multiple-dwelling-problem.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

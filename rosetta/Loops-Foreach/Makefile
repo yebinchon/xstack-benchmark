@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=loops-foreach-3
+CFILE=loops-foreach-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

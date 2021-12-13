@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=ripemd-160
+CFILE=ripemd-160.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

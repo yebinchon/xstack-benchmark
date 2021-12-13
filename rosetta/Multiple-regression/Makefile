@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=multiple-regression
+CFILE=multiple-regression.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

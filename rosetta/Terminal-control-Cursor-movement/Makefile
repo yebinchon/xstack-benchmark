@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=terminal-control-cursor-movement
+CFILE=terminal-control-cursor-movement.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

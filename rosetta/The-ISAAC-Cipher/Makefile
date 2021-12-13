@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=the-isaac-cipher
+CFILE=the-isaac-cipher.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

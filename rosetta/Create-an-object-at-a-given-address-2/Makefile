@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=create-an-object-at-a-given-address-2
+CFILE=create-an-object-at-a-given-address-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

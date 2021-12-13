@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sorting-algorithms-comb-sort
+CFILE=sorting-algorithms-comb-sort.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

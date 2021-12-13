@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=monty-hall-problem
+CFILE=monty-hall-problem.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

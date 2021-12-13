@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=tokenize-a-string-1
+CFILE=tokenize-a-string-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=integer-comparison
+CFILE=integer-comparison.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

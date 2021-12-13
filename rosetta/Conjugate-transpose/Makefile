@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=conjugate-transpose
+CFILE=conjugate-transpose.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

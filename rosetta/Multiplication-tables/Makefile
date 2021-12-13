@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=multiplication-tables
+CFILE=multiplication-tables.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

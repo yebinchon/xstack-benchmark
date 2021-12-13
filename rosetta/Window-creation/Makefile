@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=window-creation-2
+CFILE=window-creation-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

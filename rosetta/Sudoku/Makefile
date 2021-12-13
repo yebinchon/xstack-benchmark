@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sudoku
+CFILE=sudoku.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

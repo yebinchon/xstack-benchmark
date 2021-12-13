@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=digital-root-multiplicative-digital-root
+CFILE=digital-root-multiplicative-digital-root.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

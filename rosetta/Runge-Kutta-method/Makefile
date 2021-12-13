@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=runge-kutta-method
+CFILE=runge-kutta-method.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

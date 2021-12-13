@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=case-sensitivity-of-identifiers
+CFILE=case-sensitivity-of-identifiers.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

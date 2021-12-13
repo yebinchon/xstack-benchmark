@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hello-world-line-printer
+CFILE=hello-world-line-printer.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

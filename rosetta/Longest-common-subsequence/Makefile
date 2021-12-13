@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=longest-common-subsequence-1
+CFILE=longest-common-subsequence-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

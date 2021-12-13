@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=nautical-bell
+CFILE=nautical-bell.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

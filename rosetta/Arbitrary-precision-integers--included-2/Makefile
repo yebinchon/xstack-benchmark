@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=arbitrary-precision-integers--included--2
+CFILE=arbitrary-precision-integers--included--2.c
 
-LINK_FLAGS=-lm -lssl
 include ../Makefile.generic

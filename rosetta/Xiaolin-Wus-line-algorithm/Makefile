@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=xiaolin-wus-line-algorithm-1
+CFILE=xiaolin-wus-line-algorithm-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

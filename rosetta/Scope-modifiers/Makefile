@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=scope-modifiers-2
+CFILE=scope-modifiers-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

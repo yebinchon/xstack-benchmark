@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=delete-a-file-1
+CFILE=delete-a-file-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

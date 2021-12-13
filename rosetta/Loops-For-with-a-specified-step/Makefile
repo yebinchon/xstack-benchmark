@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=loops-for-with-a-specified-step
+CFILE=loops-for-with-a-specified-step.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

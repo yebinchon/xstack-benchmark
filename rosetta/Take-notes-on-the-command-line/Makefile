@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=take-notes-on-the-command-line
+CFILE=take-notes-on-the-command-line.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

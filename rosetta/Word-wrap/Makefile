@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=word-wrap
+CFILE=word-wrap.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

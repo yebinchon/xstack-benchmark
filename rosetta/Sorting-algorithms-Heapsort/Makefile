@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sorting-algorithms-heapsort
+CFILE=sorting-algorithms-heapsort.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

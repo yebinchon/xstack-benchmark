@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=pragmatic-directives
+CFILE=pragmatic-directives.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=ordered-partitions-1
+CFILE=ordered-partitions-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

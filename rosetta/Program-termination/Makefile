@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=program-termination-2
+CFILE=program-termination-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

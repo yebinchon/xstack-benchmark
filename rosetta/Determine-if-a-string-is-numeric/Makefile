@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=determine-if-a-string-is-numeric
+CFILE=determine-if-a-string-is-numeric.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=zhang-suen-thinning-algorithm
+CFILE=zhang-suen-thinning-algorithm.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=zig-zag-matrix
+CFILE=zig-zag-matrix.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

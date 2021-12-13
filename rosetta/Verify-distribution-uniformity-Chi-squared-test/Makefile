@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=verify-distribution-uniformity-chi-squared-test-3
+CFILE=verify-distribution-uniformity-chi-squared-test-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=doubly-linked-list-element-definition
+CFILE=doubly-linked-list-element-definition.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

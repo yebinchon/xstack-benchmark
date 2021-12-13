@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=odd-word-problem
+CFILE=odd-word-problem.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

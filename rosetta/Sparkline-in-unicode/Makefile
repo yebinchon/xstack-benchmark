@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sparkline-in-unicode
+CFILE=sparkline-in-unicode.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

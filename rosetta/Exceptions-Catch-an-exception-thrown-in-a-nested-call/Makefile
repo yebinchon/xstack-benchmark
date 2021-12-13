@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=exceptions-catch-an-exception-thrown-in-a-nested-call
+CFILE=exceptions-catch-an-exception-thrown-in-a-nested-call.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic
