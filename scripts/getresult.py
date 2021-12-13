@@ -17,8 +17,7 @@ def clean_all_bmarks(root_path, bmark_list, result_path):
   os.system("rm -rf *")
   for bmark in bmark_list:
     os.chdir(os.path.join(root_path, bmark))
-    bmark_name = glob.glob("Makefile.*")[0][9:]
-    make_process = subprocess.Popen(["make", "-f", "Makefile."+bmark_name, "clean"],
+    make_process = subprocess.Popen(["make", "clean"],
                     stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
     if make_process.wait() != 0:
