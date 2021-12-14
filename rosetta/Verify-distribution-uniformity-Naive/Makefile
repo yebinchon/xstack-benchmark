@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=verify-distribution-uniformity-naive
+CFILE=verify-distribution-uniformity-naive.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=maximum-triangle-path-sum
+CFILE=maximum-triangle-path-sum.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

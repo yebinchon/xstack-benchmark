@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=color-of-a-screen-pixel-1
+CFILE=color-of-a-screen-pixel-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=stem-and-leaf-plot-2
+CFILE=stem-and-leaf-plot-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

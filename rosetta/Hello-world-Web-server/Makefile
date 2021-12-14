@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hello-world-web-server
+CFILE=hello-world-web-server.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

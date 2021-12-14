@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=pascals-triangle-puzzle-2
+CFILE=pascals-triangle-puzzle-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

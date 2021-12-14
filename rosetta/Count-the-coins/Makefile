@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=count-the-coins-1
+CFILE=count-the-coins-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

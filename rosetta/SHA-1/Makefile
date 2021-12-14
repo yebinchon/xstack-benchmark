@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sha-1
+CFILE=sha-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

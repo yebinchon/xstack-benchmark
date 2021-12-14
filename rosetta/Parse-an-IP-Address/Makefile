@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=parse-an-ip-address-2
+CFILE=parse-an-ip-address-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

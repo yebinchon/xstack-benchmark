@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=loops-break
+CFILE=loops-break.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

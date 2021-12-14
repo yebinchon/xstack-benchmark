@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=polynomial-long-division-2
+CFILE=polynomial-long-division-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=flatten-a-list
+CFILE=flatten-a-list.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

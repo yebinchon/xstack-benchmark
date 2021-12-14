@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=rename-a-file
+CFILE=rename-a-file.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

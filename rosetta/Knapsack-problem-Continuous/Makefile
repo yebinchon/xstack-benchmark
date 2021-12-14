@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=knapsack-problem-continuous
+CFILE=knapsack-problem-continuous.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

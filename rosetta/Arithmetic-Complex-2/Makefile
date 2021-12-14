@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=arithmetic-complex-2
+CFILE=arithmetic-complex-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

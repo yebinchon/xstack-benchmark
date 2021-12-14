@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=remove-lines-from-a-file
+CFILE=remove-lines-from-a-file.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

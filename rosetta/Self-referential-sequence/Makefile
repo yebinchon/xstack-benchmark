@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=self-referential-sequence
+CFILE=self-referential-sequence.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

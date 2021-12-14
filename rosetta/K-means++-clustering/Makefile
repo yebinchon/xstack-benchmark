@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=k-means++-clustering
+CFILE=k-means++-clustering.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

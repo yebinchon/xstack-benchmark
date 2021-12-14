@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=reduced-row-echelon-form
+CFILE=reduced-row-echelon-form.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=check-that-file-exists
+CFILE=check-that-file-exists.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

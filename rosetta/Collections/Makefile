@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=collections-1
+CFILE=collections-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

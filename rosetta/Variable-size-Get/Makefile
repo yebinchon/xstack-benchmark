@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=variable-size-get
+CFILE=variable-size-get.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

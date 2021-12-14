@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=averages-simple-moving-average-2
+CFILE=averages-simple-moving-average-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=write-float-arrays-to-a-text-file-2
+CFILE=write-float-arrays-to-a-text-file-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

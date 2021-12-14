@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=create-an-html-table
+CFILE=create-an-html-table.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

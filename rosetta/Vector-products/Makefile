@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=vector-products
+CFILE=vector-products.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

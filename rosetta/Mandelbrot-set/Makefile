@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=mandelbrot-set-1
+CFILE=mandelbrot-set-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

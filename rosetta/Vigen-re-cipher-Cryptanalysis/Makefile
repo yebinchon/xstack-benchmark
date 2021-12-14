@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=vigen-re-cipher-cryptanalysis
+CFILE=vigen-re-cipher-cryptanalysis.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

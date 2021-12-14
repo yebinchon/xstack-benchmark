@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=dragon-curve
+CFILE=dragon-curve.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

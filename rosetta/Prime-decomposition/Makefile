@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=prime-decomposition-3
+CFILE=prime-decomposition-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

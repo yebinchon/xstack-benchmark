@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=deconvolution-2d+-1
+CFILE=deconvolution-2d+-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=echo-server
+CFILE=echo-server.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

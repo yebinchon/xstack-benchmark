@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=matrix-arithmetic-2
+CFILE=matrix-arithmetic-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

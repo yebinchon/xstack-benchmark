@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=parametrized-sql-statement
+CFILE=parametrized-sql-statement.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

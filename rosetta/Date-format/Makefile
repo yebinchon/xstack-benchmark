@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=date-format
+CFILE=date-format.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

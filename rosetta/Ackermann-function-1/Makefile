@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=ackermann-function-1
+CFILE=ackermann-function-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

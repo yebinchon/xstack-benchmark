@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=first-class-environments
+CFILE=first-class-environments.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

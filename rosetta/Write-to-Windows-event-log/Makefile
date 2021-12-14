@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=write-to-windows-event-log
+CFILE=write-to-windows-event-log.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

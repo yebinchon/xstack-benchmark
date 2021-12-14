@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=comments-2
+CFILE=comments-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

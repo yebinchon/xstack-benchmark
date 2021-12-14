@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=knuths-algorithm-s
+CFILE=knuths-algorithm-s.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

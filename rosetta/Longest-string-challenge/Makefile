@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=longest-string-challenge-2
+CFILE=longest-string-challenge-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

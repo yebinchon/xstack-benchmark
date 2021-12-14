@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=averages-mode
+CFILE=averages-mode.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

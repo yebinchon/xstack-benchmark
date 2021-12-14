@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=draw-a-sphere-2
+CFILE=draw-a-sphere-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

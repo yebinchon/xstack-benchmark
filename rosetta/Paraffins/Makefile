@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=paraffins-2
+CFILE=paraffins-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

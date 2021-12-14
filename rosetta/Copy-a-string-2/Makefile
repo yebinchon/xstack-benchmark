@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=copy-a-string-2
+CFILE=copy-a-string-2.c
 
-LINK_FLAGS=-lm -lbsd
 include ../Makefile.generic

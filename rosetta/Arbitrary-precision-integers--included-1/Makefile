@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=arbitrary-precision-integers--included--1
+CFILE=arbitrary-precision-integers--included--1.c
 
-LINK_FLAGS=-lm -lgmp
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=formal-power-series
+CFILE=formal-power-series.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

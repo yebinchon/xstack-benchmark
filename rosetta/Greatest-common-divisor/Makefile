@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=greatest-common-divisor-1
+CFILE=greatest-common-divisor-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

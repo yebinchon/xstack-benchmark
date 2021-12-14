@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=power-set
+CFILE=power-set.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

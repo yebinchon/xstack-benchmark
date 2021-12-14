@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=permutations-3
+CFILE=permutations-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

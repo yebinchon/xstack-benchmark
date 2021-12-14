@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=simple-database
+CFILE=simple-database.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

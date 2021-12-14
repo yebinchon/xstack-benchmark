@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=set-consolidation-2
+CFILE=set-consolidation-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

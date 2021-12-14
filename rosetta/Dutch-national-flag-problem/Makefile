@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=dutch-national-flag-problem
+CFILE=dutch-national-flag-problem.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=bitwise-io
+CFILE=bitwise-io.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

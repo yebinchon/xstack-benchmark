@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=metered-concurrency
+CFILE=metered-concurrency.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

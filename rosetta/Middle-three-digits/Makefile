@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=middle-three-digits-2
+CFILE=middle-three-digits-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

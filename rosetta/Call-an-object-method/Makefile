@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=call-an-object-method
+CFILE=call-an-object-method.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

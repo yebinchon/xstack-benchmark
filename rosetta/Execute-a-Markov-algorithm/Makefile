@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=execute-a-markov-algorithm-1
+CFILE=execute-a-markov-algorithm-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

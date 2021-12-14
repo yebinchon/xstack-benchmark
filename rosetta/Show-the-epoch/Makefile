@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=show-the-epoch-1
+CFILE=show-the-epoch-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

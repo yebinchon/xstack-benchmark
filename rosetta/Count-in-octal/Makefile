@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=count-in-octal
+CFILE=count-in-octal.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

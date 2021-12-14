@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=truncate-a-file-1
+CFILE=truncate-a-file-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

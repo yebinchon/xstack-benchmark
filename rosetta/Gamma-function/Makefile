@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=gamma-function
+CFILE=gamma-function.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=singleton-3
+CFILE=singleton-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

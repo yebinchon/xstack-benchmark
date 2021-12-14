@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=convert-decimal-number-to-rational-1
+CFILE=convert-decimal-number-to-rational-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

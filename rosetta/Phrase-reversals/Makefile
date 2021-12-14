@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=phrase-reversals
+CFILE=phrase-reversals.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

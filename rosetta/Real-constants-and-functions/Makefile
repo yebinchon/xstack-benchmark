@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=real-constants-and-functions
+CFILE=real-constants-and-functions.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

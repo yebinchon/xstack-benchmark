@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=carmichael-3-strong-pseudoprimes
+CFILE=carmichael-3-strong-pseudoprimes.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

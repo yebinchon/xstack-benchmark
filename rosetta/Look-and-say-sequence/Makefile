@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=look-and-say-sequence
+CFILE=look-and-say-sequence.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

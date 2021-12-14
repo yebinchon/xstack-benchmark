@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=terminal-control-dimensions-2
+CFILE=terminal-control-dimensions-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=extreme-floating-point-values-1
+CFILE=extreme-floating-point-values-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

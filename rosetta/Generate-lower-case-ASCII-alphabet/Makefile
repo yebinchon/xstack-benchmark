@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=generate-lower-case-ascii-alphabet
+CFILE=generate-lower-case-ascii-alphabet.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

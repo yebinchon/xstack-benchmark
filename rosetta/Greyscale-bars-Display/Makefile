@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=greyscale-bars-display
+CFILE=greyscale-bars-display.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

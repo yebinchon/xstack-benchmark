@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=arithmetic-geometric-mean-calculate-pi
+CFILE=arithmetic-geometric-mean-calculate-pi.c
 
-LINK_FLAGS=-lm -lgmp
 include ../Makefile.generic

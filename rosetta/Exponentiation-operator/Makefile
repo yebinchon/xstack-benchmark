@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=exponentiation-operator-2
+CFILE=exponentiation-operator-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

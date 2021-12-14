@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=secure-temporary-file-1
+CFILE=secure-temporary-file-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

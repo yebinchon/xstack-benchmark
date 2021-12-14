@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=extend-your-language-1
+CFILE=extend-your-language-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

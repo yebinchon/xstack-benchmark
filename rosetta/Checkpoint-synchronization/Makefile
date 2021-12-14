@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=checkpoint-synchronization
+CFILE=checkpoint-synchronization.c
 
-LINK_FLAGS=-lm -fopenmp
 include ../Makefile.generic

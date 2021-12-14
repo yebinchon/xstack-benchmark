@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=count-in-factors
+CFILE=count-in-factors.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

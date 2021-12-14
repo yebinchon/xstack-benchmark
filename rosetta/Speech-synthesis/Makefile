@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=speech-synthesis
+CFILE=speech-synthesis.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

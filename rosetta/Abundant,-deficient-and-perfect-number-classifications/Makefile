@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=abundant,-deficient-and-perfect-number-classifications
+CFILE=abundant,-deficient-and-perfect-number-classifications.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

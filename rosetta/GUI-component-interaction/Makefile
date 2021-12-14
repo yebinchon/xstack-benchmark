@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=gui-component-interaction-1
+CFILE=gui-component-interaction-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

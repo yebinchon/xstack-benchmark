@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=polynomial-regression-2
+CFILE=polynomial-regression-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

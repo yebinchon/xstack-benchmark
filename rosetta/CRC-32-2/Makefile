@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=crc-32-2
+CFILE=crc-32-2.c
 
-LINK_FLAGS=-lm -lz
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=numeric-error-propagation
+CFILE=numeric-error-propagation.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=walk-a-directory-recursively-1
+CFILE=walk-a-directory-recursively-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

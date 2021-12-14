@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=arena-storage-pool-7
+CFILE=arena-storage-pool-7.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=input-loop
+CFILE=input-loop.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

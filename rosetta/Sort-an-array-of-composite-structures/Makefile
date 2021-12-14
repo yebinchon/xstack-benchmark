@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sort-an-array-of-composite-structures
+CFILE=sort-an-array-of-composite-structures.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

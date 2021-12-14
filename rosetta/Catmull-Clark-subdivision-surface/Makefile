@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=catmull-clark-subdivision-surface
+CFILE=catmull-clark-subdivision-surface.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

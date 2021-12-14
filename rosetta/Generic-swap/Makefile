@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=generic-swap-3
+CFILE=generic-swap-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

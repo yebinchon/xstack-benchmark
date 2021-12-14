@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=higher-order-functions-3
+CFILE=higher-order-functions-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

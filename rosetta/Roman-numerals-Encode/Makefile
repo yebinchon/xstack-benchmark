@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=roman-numerals-encode-3
+CFILE=roman-numerals-encode-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

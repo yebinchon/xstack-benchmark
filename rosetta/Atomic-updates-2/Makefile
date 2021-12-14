@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=atomic-updates-2
+CFILE=atomic-updates-2.c
 
-LINK_FLAGS=-lm -fopenmp
 include ../Makefile.generic

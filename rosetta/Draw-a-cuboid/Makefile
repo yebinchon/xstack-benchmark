@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=draw-a-cuboid
+CFILE=draw-a-cuboid.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=fast-fourier-transform-1
+CFILE=fast-fourier-transform-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

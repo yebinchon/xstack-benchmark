@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=greatest-subsequential-sum
+CFILE=greatest-subsequential-sum.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

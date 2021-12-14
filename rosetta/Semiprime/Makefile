@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=semiprime
+CFILE=semiprime.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

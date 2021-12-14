@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=24-game
+CFILE=24-game.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

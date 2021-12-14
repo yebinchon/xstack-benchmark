@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=brownian-tree-2
+CFILE=brownian-tree-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

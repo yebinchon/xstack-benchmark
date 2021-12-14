@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=magic-squares-of-odd-order
+CFILE=magic-squares-of-odd-order.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

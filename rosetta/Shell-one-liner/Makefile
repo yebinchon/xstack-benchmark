@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=shell-one-liner
+CFILE=shell-one-liner.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=subtractive-generator
+CFILE=subtractive-generator.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

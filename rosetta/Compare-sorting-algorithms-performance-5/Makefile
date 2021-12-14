@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=compare-sorting-algorithms-performance-5
+CFILE=compare-sorting-algorithms-performance-5.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=topswops-2
+CFILE=topswops-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

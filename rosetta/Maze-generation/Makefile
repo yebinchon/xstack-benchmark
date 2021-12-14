@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=maze-generation
+CFILE=maze-generation.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

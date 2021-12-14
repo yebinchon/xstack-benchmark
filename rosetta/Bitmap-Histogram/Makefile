@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=bitmap-histogram-4
+CFILE=bitmap-histogram-4.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

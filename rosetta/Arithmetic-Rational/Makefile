@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=arithmetic-rational
+CFILE=arithmetic-rational.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

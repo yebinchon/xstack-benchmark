@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=gaussian-elimination
+CFILE=gaussian-elimination.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

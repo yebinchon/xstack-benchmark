@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=zero-to-the-zero-power
+CFILE=zero-to-the-zero-power.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

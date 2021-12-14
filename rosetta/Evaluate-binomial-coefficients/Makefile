@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=evaluate-binomial-coefficients
+CFILE=evaluate-binomial-coefficients.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

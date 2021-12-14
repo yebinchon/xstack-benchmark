@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=null-object
+CFILE=null-object.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

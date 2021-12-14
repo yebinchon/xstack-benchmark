@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=entropy-1
+CFILE=entropy-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

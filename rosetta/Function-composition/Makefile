@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=function-composition
+CFILE=function-composition.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

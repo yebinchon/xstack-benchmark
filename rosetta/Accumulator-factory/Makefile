@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=accumulator-factory
+CFILE=accumulator-factory.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

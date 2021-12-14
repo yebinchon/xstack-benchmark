@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=polymorphic-copy
+CFILE=polymorphic-copy.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

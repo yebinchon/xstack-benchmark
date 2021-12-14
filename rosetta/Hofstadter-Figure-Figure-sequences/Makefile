@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hofstadter-figure-figure-sequences
+CFILE=hofstadter-figure-figure-sequences.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

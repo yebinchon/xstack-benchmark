@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=roots-of-unity
+CFILE=roots-of-unity.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=pick-random-element
+CFILE=pick-random-element.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=date-manipulation
+CFILE=date-manipulation.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

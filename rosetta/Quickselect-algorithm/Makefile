@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=quickselect-algorithm
+CFILE=quickselect-algorithm.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

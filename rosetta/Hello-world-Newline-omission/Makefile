@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hello-world-newline-omission
+CFILE=hello-world-newline-omission.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

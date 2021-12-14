@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=langtons-ant
+CFILE=langtons-ant.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

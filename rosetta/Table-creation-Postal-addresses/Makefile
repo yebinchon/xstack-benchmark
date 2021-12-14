@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=table-creation-postal-addresses
+CFILE=table-creation-postal-addresses.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

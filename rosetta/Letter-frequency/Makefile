@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=letter-frequency
+CFILE=letter-frequency.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

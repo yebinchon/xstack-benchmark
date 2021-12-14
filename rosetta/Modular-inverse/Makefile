@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=modular-inverse-1
+CFILE=modular-inverse-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

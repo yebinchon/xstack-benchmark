@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=ordered-words-2
+CFILE=ordered-words-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

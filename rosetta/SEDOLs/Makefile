@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sedols
+CFILE=sedols.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

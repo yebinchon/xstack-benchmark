@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=return-multiple-values-2
+CFILE=return-multiple-values-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

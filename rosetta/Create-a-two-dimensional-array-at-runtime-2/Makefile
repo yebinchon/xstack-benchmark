@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=create-a-two-dimensional-array-at-runtime-2
+CFILE=create-a-two-dimensional-array-at-runtime-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

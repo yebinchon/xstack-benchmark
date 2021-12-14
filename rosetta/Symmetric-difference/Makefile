@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=symmetric-difference-1
+CFILE=symmetric-difference-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

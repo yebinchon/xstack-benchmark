@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=fibonacci-word-fractal
+CFILE=fibonacci-word-fractal.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=gray-code-2
+CFILE=gray-code-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

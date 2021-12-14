@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=animation
+CFILE=animation.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

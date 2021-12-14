@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=system-time
+CFILE=system-time.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

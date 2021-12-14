@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=solve-a-hidato-puzzle
+CFILE=solve-a-hidato-puzzle.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

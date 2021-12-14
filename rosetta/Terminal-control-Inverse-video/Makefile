@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=terminal-control-inverse-video
+CFILE=terminal-control-inverse-video.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

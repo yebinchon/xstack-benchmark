@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=floyds-triangle
+CFILE=floyds-triangle.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=search-a-list
+CFILE=search-a-list.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

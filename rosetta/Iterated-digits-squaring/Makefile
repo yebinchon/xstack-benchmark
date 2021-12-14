@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=iterated-digits-squaring-2
+CFILE=iterated-digits-squaring-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

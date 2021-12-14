@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=jensens-device-2
+CFILE=jensens-device-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

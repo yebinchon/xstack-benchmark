@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=deal-cards-for-freecell
+CFILE=deal-cards-for-freecell.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

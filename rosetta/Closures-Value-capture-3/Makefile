@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=closures-value-capture-3
+CFILE=closures-value-capture-3.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

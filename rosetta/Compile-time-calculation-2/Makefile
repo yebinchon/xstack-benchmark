@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=compile-time-calculation-2
+CFILE=compile-time-calculation-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

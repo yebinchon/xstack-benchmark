@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=continued-fraction-arithmetic-construct-from-rational-number
+CFILE=continued-fraction-arithmetic-construct-from-rational-number.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

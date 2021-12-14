@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=greatest-element-of-a-list-2
+CFILE=greatest-element-of-a-list-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

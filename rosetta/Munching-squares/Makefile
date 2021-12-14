@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=munching-squares
+CFILE=munching-squares.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

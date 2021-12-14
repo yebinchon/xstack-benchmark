@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=numerical-integration-2
+CFILE=numerical-integration-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

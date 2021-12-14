@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=execute-hq9+
+CFILE=execute-hq9+.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=move-to-front-algorithm
+CFILE=move-to-front-algorithm.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

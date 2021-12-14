@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=monte-carlo-methods
+CFILE=monte-carlo-methods.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=xml-input
+CFILE=xml-input.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

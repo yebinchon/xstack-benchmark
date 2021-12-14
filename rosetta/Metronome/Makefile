@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=metronome
+CFILE=metronome.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

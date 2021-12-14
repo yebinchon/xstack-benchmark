@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=ray-casting-algorithm
+CFILE=ray-casting-algorithm.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

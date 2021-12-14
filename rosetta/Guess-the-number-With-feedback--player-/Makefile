@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=guess-the-number-with-feedback--player--2
+CFILE=guess-the-number-with-feedback--player--2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

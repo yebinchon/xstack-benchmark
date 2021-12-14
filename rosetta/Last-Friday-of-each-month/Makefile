@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=last-friday-of-each-month
+CFILE=last-friday-of-each-month.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

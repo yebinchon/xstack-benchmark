@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=array-concatenation
+CFILE=array-concatenation.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

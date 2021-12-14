@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=catalan-numbers-pascals-triangle
+CFILE=catalan-numbers-pascals-triangle.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

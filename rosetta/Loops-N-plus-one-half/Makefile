@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=loops-n-plus-one-half
+CFILE=loops-n-plus-one-half.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

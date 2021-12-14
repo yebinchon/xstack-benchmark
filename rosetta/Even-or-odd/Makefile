@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=even-or-odd-1
+CFILE=even-or-odd-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

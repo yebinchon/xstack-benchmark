@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=dining-philosophers-1
+CFILE=dining-philosophers-1.c
 
-LINK_FLAGS=-lm -pthread
 include ../Makefile.generic

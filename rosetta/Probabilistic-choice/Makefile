@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=probabilistic-choice-1
+CFILE=probabilistic-choice-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

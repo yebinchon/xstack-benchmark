@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=harshad-or-niven-series
+CFILE=harshad-or-niven-series.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=draw-a-clock
+CFILE=draw-a-clock.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

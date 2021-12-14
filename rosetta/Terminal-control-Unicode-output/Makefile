@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=terminal-control-unicode-output
+CFILE=terminal-control-unicode-output.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

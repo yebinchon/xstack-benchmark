@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=huffman-coding-1
+CFILE=huffman-coding-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

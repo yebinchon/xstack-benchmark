@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=strip-block-comments
+CFILE=strip-block-comments.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

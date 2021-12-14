@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=horizontal-sundial-calculations
+CFILE=horizontal-sundial-calculations.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

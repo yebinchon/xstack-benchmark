@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=simple-windowed-application
+CFILE=simple-windowed-application.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

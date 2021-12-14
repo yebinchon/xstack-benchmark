@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=forward-difference-2
+CFILE=forward-difference-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

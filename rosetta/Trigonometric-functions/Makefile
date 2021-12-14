@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=trigonometric-functions
+CFILE=trigonometric-functions.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

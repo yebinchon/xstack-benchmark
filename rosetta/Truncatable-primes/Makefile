@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=truncatable-primes-1
+CFILE=truncatable-primes-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

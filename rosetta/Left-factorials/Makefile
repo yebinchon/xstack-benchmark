@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=left-factorials
+CFILE=left-factorials.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

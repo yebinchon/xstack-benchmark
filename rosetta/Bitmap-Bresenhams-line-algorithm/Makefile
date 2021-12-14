@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=bitmap-bresenhams-line-algorithm
+CFILE=bitmap-bresenhams-line-algorithm.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

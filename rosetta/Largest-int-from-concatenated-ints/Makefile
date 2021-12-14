@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=largest-int-from-concatenated-ints
+CFILE=largest-int-from-concatenated-ints.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

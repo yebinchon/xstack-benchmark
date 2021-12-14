@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=morse-code
+CFILE=morse-code.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

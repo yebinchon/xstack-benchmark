@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=random-numbers
+CFILE=random-numbers.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

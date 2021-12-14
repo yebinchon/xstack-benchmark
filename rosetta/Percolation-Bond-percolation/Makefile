@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=percolation-bond-percolation
+CFILE=percolation-bond-percolation.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

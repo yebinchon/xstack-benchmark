@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=balanced-ternary
+CFILE=balanced-ternary.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

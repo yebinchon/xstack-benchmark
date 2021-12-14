@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=singly-linked-list-element-insertion-2
+CFILE=singly-linked-list-element-insertion-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=repeat-a-string-2
+CFILE=repeat-a-string-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

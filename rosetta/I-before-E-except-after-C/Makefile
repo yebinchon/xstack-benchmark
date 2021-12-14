@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=i-before-e-except-after-c
+CFILE=i-before-e-except-after-c.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

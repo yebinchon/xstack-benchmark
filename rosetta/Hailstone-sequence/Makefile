@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hailstone-sequence-1
+CFILE=hailstone-sequence-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

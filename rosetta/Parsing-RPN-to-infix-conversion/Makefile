@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=parsing-rpn-to-infix-conversion
+CFILE=parsing-rpn-to-infix-conversion.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

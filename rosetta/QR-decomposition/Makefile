@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=qr-decomposition
+CFILE=qr-decomposition.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

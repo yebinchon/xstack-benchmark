@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=unbias-a-random-generator
+CFILE=unbias-a-random-generator.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

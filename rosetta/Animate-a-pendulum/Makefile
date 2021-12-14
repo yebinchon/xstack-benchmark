@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=animate-a-pendulum
+CFILE=animate-a-pendulum.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

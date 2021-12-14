@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=same-fringe
+CFILE=same-fringe.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

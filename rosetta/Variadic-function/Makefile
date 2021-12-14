@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=variadic-function
+CFILE=variadic-function.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=function-definition-2
+CFILE=function-definition-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=find-limit-of-recursion-2
+CFILE=find-limit-of-recursion-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

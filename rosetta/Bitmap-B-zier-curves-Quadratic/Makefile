@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=bitmap-b-zier-curves-quadratic-1
+CFILE=bitmap-b-zier-curves-quadratic-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

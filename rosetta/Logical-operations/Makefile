@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=logical-operations
+CFILE=logical-operations.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

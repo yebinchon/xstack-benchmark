@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=doubly-linked-list-traversal
+CFILE=doubly-linked-list-traversal.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

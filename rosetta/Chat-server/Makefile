@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=chat-server
+CFILE=chat-server.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

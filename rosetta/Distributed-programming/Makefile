@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=distributed-programming-1
+CFILE=distributed-programming-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

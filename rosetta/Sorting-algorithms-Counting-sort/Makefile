@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sorting-algorithms-counting-sort-2
+CFILE=sorting-algorithms-counting-sort-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

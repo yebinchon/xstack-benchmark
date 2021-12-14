@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=command-line-arguments
+CFILE=command-line-arguments.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

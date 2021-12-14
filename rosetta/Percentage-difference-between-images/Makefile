@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=percentage-difference-between-images
+CFILE=percentage-difference-between-images.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

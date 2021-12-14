@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=flipping-bits-game
+CFILE=flipping-bits-game.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

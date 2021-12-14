@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=xml-xpath
+CFILE=xml-xpath.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

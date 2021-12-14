@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=aliquot-sequence-classifications-1
+CFILE=aliquot-sequence-classifications-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

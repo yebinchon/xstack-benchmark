@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=update-a-configuration-file
+CFILE=update-a-configuration-file.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

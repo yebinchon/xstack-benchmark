@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=safe-addition-2
+CFILE=safe-addition-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

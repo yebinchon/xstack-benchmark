@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=zeckendorf-arithmetic
+CFILE=zeckendorf-arithmetic.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

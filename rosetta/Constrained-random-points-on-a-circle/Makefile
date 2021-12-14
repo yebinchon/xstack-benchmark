@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=constrained-random-points-on-a-circle-1
+CFILE=constrained-random-points-on-a-circle-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

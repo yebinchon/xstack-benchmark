@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=read-a-specific-line-from-a-file-1
+CFILE=read-a-specific-line-from-a-file-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

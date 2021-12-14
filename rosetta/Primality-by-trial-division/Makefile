@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=primality-by-trial-division
+CFILE=primality-by-trial-division.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

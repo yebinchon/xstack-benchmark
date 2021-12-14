@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=binary-search
+CFILE=binary-search.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

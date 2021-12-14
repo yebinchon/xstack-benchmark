@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=long-multiplication-1
+CFILE=long-multiplication-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

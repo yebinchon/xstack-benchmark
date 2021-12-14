@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=inheritance-multiple
+CFILE=inheritance-multiple.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

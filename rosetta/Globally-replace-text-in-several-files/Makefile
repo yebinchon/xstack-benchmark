@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=globally-replace-text-in-several-files
+CFILE=globally-replace-text-in-several-files.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

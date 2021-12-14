@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=count-occurrences-of-a-substring-1
+CFILE=count-occurrences-of-a-substring-1.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

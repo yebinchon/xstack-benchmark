@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=sort-disjoint-sublist
+CFILE=sort-disjoint-sublist.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

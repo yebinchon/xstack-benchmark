@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=url-encoding
+CFILE=url-encoding.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

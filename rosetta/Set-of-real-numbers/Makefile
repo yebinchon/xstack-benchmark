@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=set-of-real-numbers
+CFILE=set-of-real-numbers.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

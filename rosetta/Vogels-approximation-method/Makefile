@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=vogels-approximation-method-2
+CFILE=vogels-approximation-method-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

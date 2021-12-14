@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=string-append
+CFILE=string-append.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

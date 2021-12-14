@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=evolutionary-algorithm-2
+CFILE=evolutionary-algorithm-2.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=function-frequency
+CFILE=function-frequency.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=atomic-updates-1
+CFILE=atomic-updates-1.c
 
-LINK_FLAGS=-lm -pthread
 include ../Makefile.generic

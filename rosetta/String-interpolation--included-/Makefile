@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=string-interpolation--included-
+CFILE=string-interpolation--included-.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

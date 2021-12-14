@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=append-a-record-to-the-end-of-a-text-file
+CFILE=append-a-record-to-the-end-of-a-text-file.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

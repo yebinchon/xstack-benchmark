@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=arrays-8
+CFILE=arrays-8.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

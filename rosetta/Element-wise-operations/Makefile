@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=element-wise-operations
+CFILE=element-wise-operations.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

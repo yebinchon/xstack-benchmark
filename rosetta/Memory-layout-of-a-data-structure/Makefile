@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=memory-layout-of-a-data-structure
+CFILE=memory-layout-of-a-data-structure.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

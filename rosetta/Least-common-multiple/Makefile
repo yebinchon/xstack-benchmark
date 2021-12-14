@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=least-common-multiple
+CFILE=least-common-multiple.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

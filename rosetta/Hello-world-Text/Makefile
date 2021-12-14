@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=hello-world-text-4
+CFILE=hello-world-text-4.c
 
-LINK_FLAGS=-lm
 include ../Makefile.generic

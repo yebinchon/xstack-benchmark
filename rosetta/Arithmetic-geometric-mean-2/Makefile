@@ -1,5 +1,4 @@
-CFILE=$(wildcard *.c)
-BMARK=$(CFILE:.c=)
+BMARK=arithmetic-geometric-mean-2
+CFILE=arithmetic-geometric-mean-2.c
 
-LINK_FLAGS=-lm -lgmp
 include ../Makefile.generic
