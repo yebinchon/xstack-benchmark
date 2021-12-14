@@ -48,19 +48,19 @@ def get_one_prof(root_path, bmark, test_type):
       finally:
         timer.cancel()
 
-  bmark_name = glob.glob("*.cbe.exe")
+      exec_name = [bmark_name+".cbe.exe", bmark_name+"_mem2reg.cbe.exe"]
+      if make_process.wait() != 0:
+        print(colored("%s failed for %s " % (test_type, bmark_name), 'red'))
+        for name in exec_name:
+          for line in os.popen("ps ax | grep " + name + " | grep -v grep"):
+            fields = line.split()
+            pid = fields[0]
+            os.kill(int(pid), signal.SIGKILL)
+        sanity_check=False
+      else:
+        print(colored("%s succeeded for %s " % (test_type, bmark_name), 'green'))
 
-  if make_process.wait() != 0:
-    print(colored("%s failed for %s " % (test_type, bmark), 'red'))
-    for name in bmark_name:
-      for line in os.popen("ps ax | grep " + name + " | grep -v grep"):
-        fields = line.split()
-        pid = fields[0]
-        os.kill(int(pid), signal.SIGKILL)
-    return False
-  else:
-    print(colored("%s succeeded for %s " % (test_type, bmark), 'green'))
-    return True
+  return sanity_check
 
 def get_all_passes(root_path, bmark, tests, result_path):
   status = {}
