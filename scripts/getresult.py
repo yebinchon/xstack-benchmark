@@ -2,15 +2,21 @@ import argparse
 import json
 import sys
 import os, signal
-import glob
 import subprocess
-import shutil
+import glob
 from joblib import Parallel, delayed
 from threading import Timer
 from termcolor import colored
 from collections import ChainMap
 
 from ReportVisualizer import ReportVisualizer
+
+def get_pid(name):
+  try:
+    pids = map(int, subprocess.check_output(["pidof", name]).split())
+  except:
+    pids = []
+  return pids 
 
 def clean_all_bmarks(root_path, bmark_list, result_path):
   os.chdir(result_path)
@@ -23,49 +29,43 @@ def clean_all_bmarks(root_path, bmark_list, result_path):
     if make_process.wait() != 0:
       print(colored("Clean failed for %s" % bmark, 'red'))
 
-  print(colored("Finish cleaning", 'green'))
-  return 
+  print("Finish cleaning")
+  return 0
 
 def get_one_prof(root_path, bmark, test_type):
-  sanity_check=True
   print("Generating %s on %s " % (test_type, bmark))
 
-  path = os.path.join(root_path, bmark)
   os.chdir(os.path.join(root_path, bmark))
-
-  bmarks = glob.glob("Makefile.*")
+  temp = glob.glob("*.c")
+  print(bmark)
+  bmark_name = temp[0][:-2]
 
   with open(test_type+".log", "w") as fd:
-    for i in range(len(bmarks)):
-      bmark_name = bmarks[i][9:]
-      if(test_type == ".cbe.exe"):
-        test_type = bmark_name+test_type
-      make_process = subprocess.Popen(["make", "-f", "Makefile."+bmark_name, test_type], stdout=fd, stderr=fd)
-      timer = Timer(60, make_process.kill)
-      try:
-        timer.start()
-        stdout, stderr = make_process.communicate()
-      finally:
-        timer.cancel()
+    make_process = subprocess.Popen(["make", test_type], stdout=fd, stderr=fd)
+    timer = Timer(60, make_process.kill)
+    try:
+      timer.start()
+      stdout, stderr = make_process.communicate()
+    finally:
+      timer.cancel()
 
-      exec_name = [bmark_name+".cbe.exe", bmark_name+"_mem2reg.cbe.exe"]
-      if make_process.wait() != 0:
-        print(colored("%s failed for %s " % (test_type, bmark_name), 'red'))
-        for name in exec_name:
-          for line in os.popen("ps ax | grep " + name + " | grep -v grep"):
-            fields = line.split()
-            pid = fields[0]
+    exec_name = [bmark_name, bmark_name+".cbe.exe", bmark_name+"_mem2reg.cbe.exe"]
+
+    if make_process.wait() != 0:
+      print(colored("%s failed for %s " % (test_type, bmark), 'red'))
+      for name in exec_name:
+        for pid in  get_pid(exec_name):
+          if pid:
             os.kill(int(pid), signal.SIGKILL)
-        sanity_check=False
-      else:
-        print(colored("%s succeeded for %s " % (test_type, bmark_name), 'green'))
-
-  return sanity_check
+      return False
+    else:
+      print(colored("%s succeeded for %s " % (test_type, bmark), 'green'))
+      return True
 
 def get_all_passes(root_path, bmark, tests, result_path):
   status = {}
   if "Compile" in tests:
-    status["Compile"] = get_one_prof(root_path, bmark, ".cbe.exe")
+    status["Compile"] = get_one_prof(root_path, bmark, " ")
   if "Correct" in tests:
     status["Correct"] = get_one_prof(root_path, bmark, "check_correctness")
 
@@ -78,9 +78,8 @@ def get_all_passes(root_path, bmark, tests, result_path):
 def set_config():
   parser = argparse.ArgumentParser()
 
-  parser.add_argument("-n", "--core-num", type=int, default=5,
+  parser.add_argument("-n", "--core-num", type=int, default=10,
                       help="Number of cores")
-  parser.add_argument("-c", "--clean", action='store_true')
 
   args = parser.parse_args()
   
@@ -90,8 +89,8 @@ def set_config():
   bmark_list = []
   bmark_num = 0
   for x in os.scandir(config['root_path']):
-#    if x.name == 'Josephus-problem' or x.name == 'primes':
-    if x.is_dir() and x.name != 'results' and x.name != '__pycache__':
+#    if x.name == 'README' or x.name == 'Sudoku':
+    if x.is_dir() and x.name != 'results' and x.name != '__pycache__' and x.name != 'README':
       bmark_list.append(x.name)
       bmark_num += 1
 
@@ -101,13 +100,13 @@ def set_config():
 
   config['result_path'] = os.path.join(config['root_path'], "results")
 
-  return config, args
+  return config
 
 if __name__ == "__main__":
-  tests = ["Compile", "Correct"]
-  #tests = ["Correct"]
+  #tests = ["Compile", "Correct"]
+  tests = ["Correct"]
   
-  config, args = set_config()
+  config = set_config()
   if not config:
     print("Bad configuration, please start over.")
     sys.exit(1)
@@ -121,10 +120,7 @@ if __name__ == "__main__":
   log_path = os.path.join(config['result_path'], "results.log")
 
   clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
-
-  if(args.clean):
-    sys.exit()
-
+  
   status_list = Parallel(n_jobs=config['core_num'])(delayed(get_all_passes)(config['root_path'],
                 bmark, tests, config['result_path']) for bmark in config['bmark_list'])
   status = dict(ChainMap(*status_list))
@@ -136,11 +132,9 @@ if __name__ == "__main__":
   reVis = ReportVisualizer(bmarks=config['bmark_list'], passes=tests, status=status, path=config['result_path'])
   reVis.dumpCSV()
 
-  bmark_true = [0]*len(tests);
-  for t in range(len(tests)):
-    for i in range(config['bmark_num']):
-      if status[config['bmark_list'][i]][tests[t]] == True:
-        bmark_true[t] += 1
+  bmark_true = 0;
+  for i in range(config['bmark_num']):
+    if status[config['bmark_list'][i]][tests[0]] == True:
+      bmark_true += 1
 
-  print("\nOut of %d benchmarks, %d compile" % (config['bmark_num'], bmark_true[0]))
-  print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true[1]))
+  print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true))
