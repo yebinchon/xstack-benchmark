@@ -21,7 +21,7 @@ def create_makefile(root_path, bmark):
     with open("Makefile."+bmark_name, "w") as makefile:
       makefile.write("BMARK="+bmark_name+"\n")
       makefile.write("CFILE="+bmark_name+".c\n")
-      makefile.write("LINK_FLAGS=-pthread -lm\n")
+      makefile.write("LINK_FLAGS=-pthread -lm -lgmp\n")
       makefile.write("\ninclude ../Makefile.generic")
     
   return

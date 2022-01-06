@@ -1,5 +1,0 @@
-BMARK=terminal-control-dimensions-2
-CFILE=terminal-control-dimensions-2.c
-LINK_FLAGS=-pthread -lm
-
-include ../Makefile.generic

@@ -1,4 +1,0 @@
-BMARK=split_a_char_string_based_on_change_of_char
-CFILE=split_a_char_string_based_on_change_of_char.c
-
-include ../Makefile.generic
