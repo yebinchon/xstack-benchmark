@@ -22,7 +22,8 @@ def clean_all_bmarks(root_path, bmark_list, result_path):
   os.chdir(result_path)
   os.system("rm -rf *")
   for bmark in bmark_list:
-    os.chdir(os.path.join(root_path, bmark))
+    bmark_dir = bmark["name"]
+    os.chdir(os.path.join(root_path, bmark_dir))
     make_process = subprocess.Popen(["make", "clean"],
                     stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
@@ -32,14 +33,12 @@ def clean_all_bmarks(root_path, bmark_list, result_path):
   print("Finish cleaning")
   return 0
 
-def get_one_prof(root_path, bmark, test_type):
-  print("Generating %s on %s " % (test_type, bmark))
+def get_one_prof(path, bmark_file, test_type):
+  os.chdir(path)
 
-  os.chdir(os.path.join(root_path, bmark))
-  temp = glob.glob("*.c")
-  print(bmark)
-  bmark_name = temp[0][:-2]
-
+  bmark_name = bmark_file[:-2]
+  exec_name = [bmark_name+".cbe.exe", bmark_name+"_mem2reg.cbe.exe"]
+  print("Generating %s on %s " % (test_type, bmark_name))
   with open(test_type+".log", "w") as fd:
     make_process = subprocess.Popen(["make", test_type], stdout=fd, stderr=fd)
     timer = Timer(60, make_process.kill)
@@ -48,32 +47,35 @@ def get_one_prof(root_path, bmark, test_type):
       stdout, stderr = make_process.communicate()
     finally:
       timer.cancel()
-
-    exec_name = [bmark_name, bmark_name+".cbe.exe", bmark_name+"_mem2reg.cbe.exe"]
-
+  
     if make_process.wait() != 0:
-      print(colored("%s failed for %s " % (test_type, bmark), 'red'))
+      print(colored("%s failed for %s " % (test_type, bmark_name), 'red'))
       for name in exec_name:
         for pid in  get_pid(exec_name):
           if pid:
             os.kill(int(pid), signal.SIGKILL)
       return False
     else:
-      print(colored("%s succeeded for %s " % (test_type, bmark), 'green'))
+      print(colored("%s succeeded for %s " % (test_type, bmark_name), 'green'))
       return True
 
-def get_all_passes(root_path, bmark, tests, result_path):
-  status = {}
-  if "Compile" in tests:
-    status["Compile"] = get_one_prof(root_path, bmark, " ")
-  if "Correct" in tests:
-    status["Correct"] = get_one_prof(root_path, bmark, "check_correctness")
+def get_all_passes(root_path, bmark_dic, tests, result_path):
+  bmark_path = os.path.join(root_path, bmark_dic["name"])
+  bmark_set = bmark_dic["set"]
+  bmark_status = {}
+  for bmark_file in bmark_set:
+    status = {}
+    if "Compile" in tests:
+      status["Compile"] = get_one_prof(bmark_path, bmark_file, " ")
+    if "Correct" in tests:
+      status["Correct"] = get_one_prof(bmark_path, bmark_file, "check_correctness")
+    bmark_status.update({ bmark_file : status })
 
-  os.chdir(result_path)
+#  os.chdir(result_path)
 #  with open("status_" + bmark + ".json", "w") as fd:
 #    json.dump(status, fd)
 
-  return {bmark: status}
+  return bmark_status
 
 def set_config():
   parser = argparse.ArgumentParser()
@@ -89,10 +91,12 @@ def set_config():
   bmark_list = []
   bmark_num = 0
   for x in os.scandir(config['root_path']):
-#    if x.name == 'README' or x.name == 'Sudoku':
+#    if x.name == '100-doors' or x.name == 'Y-combinator':
     if x.is_dir() and x.name != 'results' and x.name != '__pycache__' and x.name != 'README':
-      bmark_list.append(x.name)
-      bmark_num += 1
+      os.chdir(os.path.join(config['root_path'], x.name))
+      bmark_set = set(glob.glob("*.c")) - set(glob.glob("*.cbe.c"))
+      bmark_num += len(bmark_set)
+      bmark_list.append({"name" : x.name, "set": bmark_set})
 
   config['core_num'] = args.core_num
   config['bmark_list'] = bmark_list
@@ -133,8 +137,9 @@ if __name__ == "__main__":
   reVis.dumpCSV()
 
   bmark_true = 0;
-  for i in range(config['bmark_num']):
-    if status[config['bmark_list'][i]][tests[0]] == True:
-      bmark_true += 1
+  for bmark_dir in config['bmark_list']:
+    for bmark_name in bmark_dir["set"]:
+      if status[bmark_name][tests[0]] == True:
+        bmark_true += 1
 
   print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true))
