@@ -1,0 +1,5 @@
+BMARK=take-notes-on-the-command-line
+CFILE=take-notes-on-the-command-line.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

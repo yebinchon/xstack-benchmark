@@ -1,0 +1,5 @@
+BMARK=carmichael-3-strong-pseudoprimes
+CFILE=carmichael-3-strong-pseudoprimes.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

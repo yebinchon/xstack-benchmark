@@ -1,0 +1,5 @@
+BMARK=write-language-name-in-3d-ascii
+CFILE=write-language-name-in-3d-ascii.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

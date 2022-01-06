@@ -1,0 +1,5 @@
+BMARK=bitmap-read-an-image-through-a-pipe-1
+CFILE=bitmap-read-an-image-through-a-pipe-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=hello-world-graphical-3
+CFILE=hello-world-graphical-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

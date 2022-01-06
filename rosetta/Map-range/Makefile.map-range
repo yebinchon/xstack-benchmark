@@ -1,0 +1,5 @@
+BMARK=map-range
+CFILE=map-range.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=compound-data-type
+CFILE=compound-data-type.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

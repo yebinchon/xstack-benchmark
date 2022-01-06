@@ -1,0 +1,5 @@
+BMARK=executable-library-1
+CFILE=executable-library-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

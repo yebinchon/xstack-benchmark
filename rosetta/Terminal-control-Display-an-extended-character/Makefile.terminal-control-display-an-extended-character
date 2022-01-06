@@ -1,0 +1,5 @@
+BMARK=terminal-control-display-an-extended-character
+CFILE=terminal-control-display-an-extended-character.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=machine-code
+CFILE=machine-code.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

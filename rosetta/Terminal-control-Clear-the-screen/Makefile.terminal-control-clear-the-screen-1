@@ -1,0 +1,5 @@
+BMARK=terminal-control-clear-the-screen-1
+CFILE=terminal-control-clear-the-screen-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

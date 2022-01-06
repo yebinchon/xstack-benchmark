@@ -1,0 +1,5 @@
+BMARK=bitmap-read-a-ppm-file-2
+CFILE=bitmap-read-a-ppm-file-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=image-noise-2
+CFILE=image-noise-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

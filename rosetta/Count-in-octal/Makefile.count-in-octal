@@ -1,0 +1,5 @@
+BMARK=count-in-octal
+CFILE=count-in-octal.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

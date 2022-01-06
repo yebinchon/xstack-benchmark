@@ -1,0 +1,5 @@
+BMARK=non-decimal-radices-input-2
+CFILE=non-decimal-radices-input-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

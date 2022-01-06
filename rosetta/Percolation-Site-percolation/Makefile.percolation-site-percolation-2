@@ -1,0 +1,5 @@
+BMARK=percolation-site-percolation-2
+CFILE=percolation-site-percolation-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

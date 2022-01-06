@@ -1,0 +1,5 @@
+BMARK=zero-to-the-zero-power
+CFILE=zero-to-the-zero-power.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=bitmap-bresenhams-line-algorithm
+CFILE=bitmap-bresenhams-line-algorithm.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

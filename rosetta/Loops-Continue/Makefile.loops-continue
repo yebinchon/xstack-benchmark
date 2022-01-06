@@ -1,0 +1,5 @@
+BMARK=loops-continue
+CFILE=loops-continue.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

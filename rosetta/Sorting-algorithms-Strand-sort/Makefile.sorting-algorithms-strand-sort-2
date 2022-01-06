@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-strand-sort-2
+CFILE=sorting-algorithms-strand-sort-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

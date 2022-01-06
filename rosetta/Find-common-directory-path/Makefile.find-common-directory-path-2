@@ -1,0 +1,5 @@
+BMARK=find-common-directory-path-2
+CFILE=find-common-directory-path-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=catalan-numbers-1
+CFILE=catalan-numbers-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

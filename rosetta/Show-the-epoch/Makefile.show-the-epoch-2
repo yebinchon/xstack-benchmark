@@ -1,0 +1,5 @@
+BMARK=show-the-epoch-2
+CFILE=show-the-epoch-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

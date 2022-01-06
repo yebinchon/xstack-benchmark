@@ -1,0 +1,5 @@
+BMARK=reduced-row-echelon-form
+CFILE=reduced-row-echelon-form.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

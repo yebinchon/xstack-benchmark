@@ -1,0 +1,5 @@
+BMARK=tau
+CFILE=tau.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

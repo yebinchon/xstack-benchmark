@@ -1,0 +1,5 @@
+BMARK=apply-a-callback-to-an-array-2
+CFILE=apply-a-callback-to-an-array-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

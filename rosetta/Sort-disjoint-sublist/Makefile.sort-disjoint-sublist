@@ -1,0 +1,5 @@
+BMARK=sort-disjoint-sublist
+CFILE=sort-disjoint-sublist.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

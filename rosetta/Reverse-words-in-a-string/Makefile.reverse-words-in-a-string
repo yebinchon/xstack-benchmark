@@ -1,0 +1,5 @@
+BMARK=reverse-words-in-a-string
+CFILE=reverse-words-in-a-string.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

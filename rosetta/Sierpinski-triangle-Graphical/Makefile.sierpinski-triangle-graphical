@@ -1,0 +1,5 @@
+BMARK=sierpinski-triangle-graphical
+CFILE=sierpinski-triangle-graphical.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

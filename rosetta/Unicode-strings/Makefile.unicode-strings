@@ -1,0 +1,5 @@
+BMARK=unicode-strings
+CFILE=unicode-strings.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

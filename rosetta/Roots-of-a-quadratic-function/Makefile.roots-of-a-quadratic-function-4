@@ -1,0 +1,5 @@
+BMARK=roots-of-a-quadratic-function-4
+CFILE=roots-of-a-quadratic-function-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

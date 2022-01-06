@@ -1,0 +1,5 @@
+BMARK=narcissistic-decimal-number
+CFILE=narcissistic-decimal-number.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

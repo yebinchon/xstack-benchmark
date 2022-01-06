@@ -1,0 +1,5 @@
+BMARK=include-a-file
+CFILE=include-a-file.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

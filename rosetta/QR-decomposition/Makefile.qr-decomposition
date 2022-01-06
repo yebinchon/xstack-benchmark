@@ -1,0 +1,5 @@
+BMARK=qr-decomposition
+CFILE=qr-decomposition.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

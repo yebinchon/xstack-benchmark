@@ -1,0 +1,5 @@
+BMARK=arithmetic-geometric-mean-calculate-pi
+CFILE=arithmetic-geometric-mean-calculate-pi.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

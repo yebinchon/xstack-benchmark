@@ -1,0 +1,5 @@
+BMARK=integer-comparison
+CFILE=integer-comparison.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

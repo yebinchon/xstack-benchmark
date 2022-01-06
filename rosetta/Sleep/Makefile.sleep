@@ -1,0 +1,5 @@
+BMARK=sleep
+CFILE=sleep.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

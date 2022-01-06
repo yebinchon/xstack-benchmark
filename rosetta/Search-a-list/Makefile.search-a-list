@@ -1,0 +1,5 @@
+BMARK=search-a-list
+CFILE=search-a-list.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

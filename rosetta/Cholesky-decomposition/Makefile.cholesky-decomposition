@@ -1,0 +1,5 @@
+BMARK=cholesky-decomposition
+CFILE=cholesky-decomposition.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

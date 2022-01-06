@@ -1,0 +1,5 @@
+BMARK=matrix-exponentiation-operator
+CFILE=matrix-exponentiation-operator.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=day-of-the-week
+CFILE=day-of-the-week.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

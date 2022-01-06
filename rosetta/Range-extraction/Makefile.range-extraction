@@ -1,0 +1,5 @@
+BMARK=range-extraction
+CFILE=range-extraction.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

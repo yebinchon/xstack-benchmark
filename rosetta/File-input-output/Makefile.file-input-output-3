@@ -1,0 +1,5 @@
+BMARK=file-input-output-3
+CFILE=file-input-output-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

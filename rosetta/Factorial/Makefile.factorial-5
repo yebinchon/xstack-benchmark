@@ -1,0 +1,5 @@
+BMARK=factorial-5
+CFILE=factorial-5.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

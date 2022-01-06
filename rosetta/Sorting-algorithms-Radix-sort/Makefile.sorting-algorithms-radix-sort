@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-radix-sort
+CFILE=sorting-algorithms-radix-sort.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

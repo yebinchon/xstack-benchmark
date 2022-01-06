@@ -1,0 +1,5 @@
+BMARK=inverted-index-1
+CFILE=inverted-index-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

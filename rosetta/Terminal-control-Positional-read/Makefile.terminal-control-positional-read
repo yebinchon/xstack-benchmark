@@ -1,0 +1,5 @@
+BMARK=terminal-control-positional-read
+CFILE=terminal-control-positional-read.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

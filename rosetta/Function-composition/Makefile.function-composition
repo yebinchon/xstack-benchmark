@@ -1,0 +1,5 @@
+BMARK=function-composition
+CFILE=function-composition.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

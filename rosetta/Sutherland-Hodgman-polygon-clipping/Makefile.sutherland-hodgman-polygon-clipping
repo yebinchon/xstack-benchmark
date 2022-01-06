@@ -1,0 +1,5 @@
+BMARK=sutherland-hodgman-polygon-clipping
+CFILE=sutherland-hodgman-polygon-clipping.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

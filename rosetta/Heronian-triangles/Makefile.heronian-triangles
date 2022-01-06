@@ -1,0 +1,5 @@
+BMARK=heronian-triangles
+CFILE=heronian-triangles.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

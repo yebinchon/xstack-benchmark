@@ -1,0 +1,5 @@
+BMARK=ray-casting-algorithm
+CFILE=ray-casting-algorithm.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

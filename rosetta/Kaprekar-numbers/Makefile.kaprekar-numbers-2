@@ -1,0 +1,5 @@
+BMARK=kaprekar-numbers-2
+CFILE=kaprekar-numbers-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

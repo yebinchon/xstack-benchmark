@@ -1,0 +1,5 @@
+BMARK=sort-an-integer-array
+CFILE=sort-an-integer-array.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

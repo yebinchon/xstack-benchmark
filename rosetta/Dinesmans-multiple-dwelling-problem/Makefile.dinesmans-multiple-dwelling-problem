@@ -1,0 +1,5 @@
+BMARK=dinesmans-multiple-dwelling-problem
+CFILE=dinesmans-multiple-dwelling-problem.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

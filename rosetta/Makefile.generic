@@ -31,4 +31,4 @@ check_correctness: ${BMARK}_mem2reg.cbe.exe ${BMARK}.cbe.exe ${BMARK}.exe
 	diff ${BMARK}.out ${BMARK}_mem2reg.cbe.out
 
 clean:
-	rm -rf *.bc *.out *.ll *.cbe.c *.exe *.o
+	rm -rf *.bc *.out *.ll *.cbe.c *.exe *.o *.log

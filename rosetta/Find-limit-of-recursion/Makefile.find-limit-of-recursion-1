@@ -1,0 +1,5 @@
+BMARK=find-limit-of-recursion-1
+CFILE=find-limit-of-recursion-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

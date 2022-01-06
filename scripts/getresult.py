@@ -37,10 +37,10 @@ def get_one_prof(path, bmark_file, test_type):
   os.chdir(path)
 
   bmark_name = bmark_file[:-2]
-  exec_name = [bmark_name+".cbe.exe", bmark_name+"_mem2reg.cbe.exe"]
+  exec_name = [bmark_name+".exe", bmark_name+".cbe.exe", bmark_name+"_mem2reg.cbe.exe"]
   print("Generating %s on %s " % (test_type, bmark_name))
   with open(test_type+".log", "w") as fd:
-    make_process = subprocess.Popen(["make", test_type], stdout=fd, stderr=fd)
+    make_process = subprocess.Popen(["make", "-f", "Makefile."+bmark_name, test_type], stdout=fd, stderr=fd)
     timer = Timer(60, make_process.kill)
     try:
       timer.start()
@@ -51,7 +51,7 @@ def get_one_prof(path, bmark_file, test_type):
     if make_process.wait() != 0:
       print(colored("%s failed for %s " % (test_type, bmark_name), 'red'))
       for name in exec_name:
-        for pid in  get_pid(exec_name):
+        for pid in get_pid(name):
           if pid:
             os.kill(int(pid), signal.SIGKILL)
       return False
@@ -91,7 +91,7 @@ def set_config():
   bmark_list = []
   bmark_num = 0
   for x in os.scandir(config['root_path']):
-#    if x.name == '100-doors' or x.name == 'Y-combinator':
+#    if x.name == 'Sierpinski-carpet' or x.name == 'Matrix-arithmetic':
     if x.is_dir() and x.name != 'results' and x.name != '__pycache__' and x.name != 'README':
       os.chdir(os.path.join(config['root_path'], x.name))
       bmark_set = set(glob.glob("*.c")) - set(glob.glob("*.cbe.c"))

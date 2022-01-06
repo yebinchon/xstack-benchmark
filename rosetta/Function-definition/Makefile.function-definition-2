@@ -1,0 +1,5 @@
+BMARK=function-definition-2
+CFILE=function-definition-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=morse-code
+CFILE=morse-code.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

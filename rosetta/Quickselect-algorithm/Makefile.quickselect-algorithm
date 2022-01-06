@@ -1,0 +1,5 @@
+BMARK=quickselect-algorithm
+CFILE=quickselect-algorithm.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

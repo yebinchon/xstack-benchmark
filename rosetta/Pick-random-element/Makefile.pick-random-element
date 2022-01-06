@@ -1,0 +1,5 @@
+BMARK=pick-random-element
+CFILE=pick-random-element.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

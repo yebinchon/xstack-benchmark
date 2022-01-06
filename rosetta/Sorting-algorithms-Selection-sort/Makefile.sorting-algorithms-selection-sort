@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-selection-sort
+CFILE=sorting-algorithms-selection-sort.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

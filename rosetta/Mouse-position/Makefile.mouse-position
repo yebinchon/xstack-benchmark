@@ -1,0 +1,5 @@
+BMARK=mouse-position
+CFILE=mouse-position.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

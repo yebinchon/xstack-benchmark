@@ -1,0 +1,5 @@
+BMARK=arithmetic-geometric-mean-2
+CFILE=arithmetic-geometric-mean-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

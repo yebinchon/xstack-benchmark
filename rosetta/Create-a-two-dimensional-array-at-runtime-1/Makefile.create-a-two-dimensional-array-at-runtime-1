@@ -1,0 +1,5 @@
+BMARK=create-a-two-dimensional-array-at-runtime-1
+CFILE=create-a-two-dimensional-array-at-runtime-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

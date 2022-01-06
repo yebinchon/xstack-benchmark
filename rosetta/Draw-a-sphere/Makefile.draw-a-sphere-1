@@ -1,0 +1,5 @@
+BMARK=draw-a-sphere-1
+CFILE=draw-a-sphere-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

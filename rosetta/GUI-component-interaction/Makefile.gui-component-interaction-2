@@ -1,0 +1,5 @@
+BMARK=gui-component-interaction-2
+CFILE=gui-component-interaction-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

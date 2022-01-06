@@ -1,0 +1,5 @@
+BMARK=caesar-cipher
+CFILE=caesar-cipher.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

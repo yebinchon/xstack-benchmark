@@ -1,0 +1,5 @@
+BMARK=self-referential-sequence
+CFILE=self-referential-sequence.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

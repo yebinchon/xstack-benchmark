@@ -1,0 +1,5 @@
+BMARK=sierpinski-carpet-2
+CFILE=sierpinski-carpet-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

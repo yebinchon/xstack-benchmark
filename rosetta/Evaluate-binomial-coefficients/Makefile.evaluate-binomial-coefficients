@@ -1,0 +1,5 @@
+BMARK=evaluate-binomial-coefficients
+CFILE=evaluate-binomial-coefficients.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

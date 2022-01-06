@@ -1,0 +1,5 @@
+BMARK=huffman-coding-2
+CFILE=huffman-coding-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

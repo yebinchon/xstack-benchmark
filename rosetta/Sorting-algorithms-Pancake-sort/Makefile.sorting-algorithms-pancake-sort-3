@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-pancake-sort-3
+CFILE=sorting-algorithms-pancake-sort-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

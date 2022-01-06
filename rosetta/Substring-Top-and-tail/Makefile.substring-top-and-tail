@@ -1,0 +1,5 @@
+BMARK=substring-top-and-tail
+CFILE=substring-top-and-tail.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

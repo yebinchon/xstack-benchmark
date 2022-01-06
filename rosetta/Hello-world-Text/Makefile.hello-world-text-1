@@ -1,0 +1,5 @@
+BMARK=hello-world-text-1
+CFILE=hello-world-text-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=keyboard-macros
+CFILE=keyboard-macros.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

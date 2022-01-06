@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-stooge-sort
+CFILE=sorting-algorithms-stooge-sort.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

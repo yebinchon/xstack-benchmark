@@ -1,0 +1,5 @@
+BMARK=minesweeper-game-1
+CFILE=minesweeper-game-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

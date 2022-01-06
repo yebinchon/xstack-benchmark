@@ -1,0 +1,5 @@
+BMARK=greatest-common-divisor-1
+CFILE=greatest-common-divisor-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

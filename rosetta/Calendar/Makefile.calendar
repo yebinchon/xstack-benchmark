@@ -1,0 +1,5 @@
+BMARK=calendar
+CFILE=calendar.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

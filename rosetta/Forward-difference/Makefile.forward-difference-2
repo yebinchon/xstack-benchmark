@@ -1,0 +1,5 @@
+BMARK=forward-difference-2
+CFILE=forward-difference-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

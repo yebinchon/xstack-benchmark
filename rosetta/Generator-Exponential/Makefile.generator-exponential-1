@@ -1,0 +1,5 @@
+BMARK=generator-exponential-1
+CFILE=generator-exponential-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

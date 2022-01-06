@@ -1,0 +1,5 @@
+BMARK=unix-ls
+CFILE=unix-ls.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

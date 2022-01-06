@@ -1,0 +1,5 @@
+BMARK=left-factorials
+CFILE=left-factorials.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

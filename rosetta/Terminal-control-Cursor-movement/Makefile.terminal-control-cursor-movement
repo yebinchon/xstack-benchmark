@@ -1,0 +1,5 @@
+BMARK=terminal-control-cursor-movement
+CFILE=terminal-control-cursor-movement.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

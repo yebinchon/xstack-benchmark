@@ -1,0 +1,5 @@
+BMARK=tokenize-a-string-2
+CFILE=tokenize-a-string-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

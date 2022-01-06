@@ -1,0 +1,5 @@
+BMARK=average-loop-length
+CFILE=average-loop-length.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=terminal-control-cursor-positioning-2
+CFILE=terminal-control-cursor-positioning-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

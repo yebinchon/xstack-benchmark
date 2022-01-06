@@ -1,0 +1,5 @@
+BMARK=resistor-mesh
+CFILE=resistor-mesh.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

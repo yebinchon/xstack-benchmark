@@ -1,0 +1,5 @@
+BMARK=matrix-multiplication
+CFILE=matrix-multiplication.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

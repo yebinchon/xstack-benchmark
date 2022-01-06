@@ -1,0 +1,5 @@
+BMARK=leap-year
+CFILE=leap-year.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

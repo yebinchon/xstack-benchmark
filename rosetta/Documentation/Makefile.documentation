@@ -1,0 +1,5 @@
+BMARK=documentation
+CFILE=documentation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

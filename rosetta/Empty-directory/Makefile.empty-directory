@@ -1,0 +1,5 @@
+BMARK=empty-directory
+CFILE=empty-directory.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=catamorphism
+CFILE=catamorphism.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=xml-xpath
+CFILE=xml-xpath.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -14,13 +14,14 @@ def create_makefile(root_path, bmark):
   path = os.path.join(root_path, bmark)
   os.chdir(path)
 
-  bmarks = glob.glob("*.c")
+  bmark_set = set(glob.glob("*.c")) - set(glob.glob("*.cbe.c"))
 
-  for i in range(len(bmarks)):
-    bmark_name = bmarks[i][:-2]
+  for bmark in bmark_set:
+    bmark_name = bmark[:-2]
     with open("Makefile."+bmark_name, "w") as makefile:
       makefile.write("BMARK="+bmark_name+"\n")
       makefile.write("CFILE="+bmark_name+".c\n")
+      makefile.write("LINK_FLAGS=-pthread -lm\n")
       makefile.write("\ninclude ../Makefile.generic")
     
   return

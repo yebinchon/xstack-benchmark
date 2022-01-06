@@ -1,0 +1,5 @@
+BMARK=multiplicative-order
+CFILE=multiplicative-order.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=shell-one-liner
+CFILE=shell-one-liner.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

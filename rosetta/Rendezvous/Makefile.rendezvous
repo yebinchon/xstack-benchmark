@@ -1,0 +1,5 @@
+BMARK=rendezvous
+CFILE=rendezvous.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

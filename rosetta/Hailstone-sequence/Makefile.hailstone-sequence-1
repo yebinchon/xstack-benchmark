@@ -1,0 +1,5 @@
+BMARK=hailstone-sequence-1
+CFILE=hailstone-sequence-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

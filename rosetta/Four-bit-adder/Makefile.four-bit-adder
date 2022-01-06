@@ -1,0 +1,5 @@
+BMARK=four-bit-adder
+CFILE=four-bit-adder.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

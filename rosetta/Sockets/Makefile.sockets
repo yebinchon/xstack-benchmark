@@ -1,0 +1,5 @@
+BMARK=sockets
+CFILE=sockets.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

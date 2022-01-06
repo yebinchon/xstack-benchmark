@@ -1,0 +1,5 @@
+BMARK=image-convolution-2
+CFILE=image-convolution-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

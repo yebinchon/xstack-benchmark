@@ -1,0 +1,5 @@
+BMARK=babbage_problem
+CFILE=babbage_problem.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

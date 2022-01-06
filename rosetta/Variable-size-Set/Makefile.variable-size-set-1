@@ -1,0 +1,5 @@
+BMARK=variable-size-set-1
+CFILE=variable-size-set-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

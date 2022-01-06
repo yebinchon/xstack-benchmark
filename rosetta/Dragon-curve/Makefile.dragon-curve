@@ -1,0 +1,5 @@
+BMARK=dragon-curve
+CFILE=dragon-curve.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

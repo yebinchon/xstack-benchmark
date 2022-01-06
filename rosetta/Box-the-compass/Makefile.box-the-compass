@@ -1,0 +1,5 @@
+BMARK=box-the-compass
+CFILE=box-the-compass.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

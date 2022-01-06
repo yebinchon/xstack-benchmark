@@ -1,0 +1,5 @@
+BMARK=seven-sided-dice-from-five-sided-dice
+CFILE=seven-sided-dice-from-five-sided-dice.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

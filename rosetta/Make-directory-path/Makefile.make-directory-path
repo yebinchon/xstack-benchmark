@@ -1,0 +1,5 @@
+BMARK=make-directory-path
+CFILE=make-directory-path.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

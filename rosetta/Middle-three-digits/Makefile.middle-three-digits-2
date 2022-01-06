@@ -1,0 +1,5 @@
+BMARK=middle-three-digits-2
+CFILE=middle-three-digits-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

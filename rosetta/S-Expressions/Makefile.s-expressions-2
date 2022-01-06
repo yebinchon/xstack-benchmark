@@ -1,0 +1,5 @@
+BMARK=s-expressions-2
+CFILE=s-expressions-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=character-codes
+CFILE=character-codes.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

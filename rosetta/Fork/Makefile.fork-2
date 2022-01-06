@@ -1,0 +1,5 @@
+BMARK=fork-2
+CFILE=fork-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

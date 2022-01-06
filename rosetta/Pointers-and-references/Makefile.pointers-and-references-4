@@ -1,0 +1,5 @@
+BMARK=pointers-and-references-4
+CFILE=pointers-and-references-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=super-d
+CFILE=super-d.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

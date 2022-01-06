@@ -1,0 +1,5 @@
+BMARK=bulls-and-cows-player-1
+CFILE=bulls-and-cows-player-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

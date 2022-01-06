@@ -1,0 +1,5 @@
+BMARK=sum_three_five
+CFILE=sum_three_five.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

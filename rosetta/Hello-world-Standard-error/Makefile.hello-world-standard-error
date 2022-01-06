@@ -1,0 +1,5 @@
+BMARK=hello-world-standard-error
+CFILE=hello-world-standard-error.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

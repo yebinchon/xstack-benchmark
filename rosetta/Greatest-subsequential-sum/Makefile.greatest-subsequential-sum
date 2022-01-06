@@ -1,0 +1,5 @@
+BMARK=greatest-subsequential-sum
+CFILE=greatest-subsequential-sum.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

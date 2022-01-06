@@ -1,0 +1,5 @@
+BMARK=unbias-a-random-generator
+CFILE=unbias-a-random-generator.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=read-entire-file-1
+CFILE=read-entire-file-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

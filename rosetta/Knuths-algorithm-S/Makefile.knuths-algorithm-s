@@ -1,0 +1,5 @@
+BMARK=knuths-algorithm-s
+CFILE=knuths-algorithm-s.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

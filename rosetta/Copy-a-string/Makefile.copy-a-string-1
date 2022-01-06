@@ -1,0 +1,5 @@
+BMARK=copy-a-string-1
+CFILE=copy-a-string-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

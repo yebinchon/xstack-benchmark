@@ -1,0 +1,5 @@
+BMARK=call-an-object-method
+CFILE=call-an-object-method.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=append-a-record-to-the-end-of-a-text-file
+CFILE=append-a-record-to-the-end-of-a-text-file.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

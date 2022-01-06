@@ -1,0 +1,5 @@
+BMARK=deconvolution-2d+-1
+CFILE=deconvolution-2d+-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

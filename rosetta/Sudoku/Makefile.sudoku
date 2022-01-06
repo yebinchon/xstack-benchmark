@@ -1,0 +1,5 @@
+BMARK=sudoku
+CFILE=sudoku.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=josephus-problem
+CFILE=josephus-problem.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

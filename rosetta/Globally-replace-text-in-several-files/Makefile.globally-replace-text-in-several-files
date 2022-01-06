@@ -1,0 +1,5 @@
+BMARK=globally-replace-text-in-several-files
+CFILE=globally-replace-text-in-several-files.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

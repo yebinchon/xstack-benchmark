@@ -1,0 +1,5 @@
+BMARK=sql-based-authentication
+CFILE=sql-based-authentication.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

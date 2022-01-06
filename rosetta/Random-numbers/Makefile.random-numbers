@@ -1,0 +1,5 @@
+BMARK=random-numbers
+CFILE=random-numbers.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

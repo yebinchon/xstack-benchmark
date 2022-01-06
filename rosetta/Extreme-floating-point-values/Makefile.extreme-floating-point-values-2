@@ -1,0 +1,5 @@
+BMARK=extreme-floating-point-values-2
+CFILE=extreme-floating-point-values-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

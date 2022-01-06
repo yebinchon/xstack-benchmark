@@ -1,0 +1,5 @@
+BMARK=substring-2
+CFILE=substring-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

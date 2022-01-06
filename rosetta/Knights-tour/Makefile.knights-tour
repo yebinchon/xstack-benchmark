@@ -1,0 +1,5 @@
+BMARK=knights-tour
+CFILE=knights-tour.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

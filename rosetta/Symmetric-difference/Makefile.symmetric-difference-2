@@ -1,0 +1,5 @@
+BMARK=symmetric-difference-2
+CFILE=symmetric-difference-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=magic-squares-of-odd-order
+CFILE=magic-squares-of-odd-order.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=extend-your-language-4
+CFILE=extend-your-language-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

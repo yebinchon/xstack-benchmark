@@ -1,0 +1,5 @@
+BMARK=tree-traversal
+CFILE=tree-traversal.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

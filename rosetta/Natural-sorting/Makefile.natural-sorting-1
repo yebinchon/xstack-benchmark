@@ -1,0 +1,5 @@
+BMARK=natural-sorting-1
+CFILE=natural-sorting-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=sort-using-a-custom-comparator
+CFILE=sort-using-a-custom-comparator.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

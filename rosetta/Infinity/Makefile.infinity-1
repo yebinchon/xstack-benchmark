@@ -1,0 +1,5 @@
+BMARK=infinity-1
+CFILE=infinity-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

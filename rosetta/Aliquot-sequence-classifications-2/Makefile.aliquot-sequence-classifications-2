@@ -1,0 +1,5 @@
+BMARK=aliquot-sequence-classifications-2
+CFILE=aliquot-sequence-classifications-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

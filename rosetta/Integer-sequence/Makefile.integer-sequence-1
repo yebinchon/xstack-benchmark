@@ -1,0 +1,5 @@
+BMARK=integer-sequence-1
+CFILE=integer-sequence-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

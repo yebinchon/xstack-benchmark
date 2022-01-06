@@ -1,0 +1,5 @@
+BMARK=unicode-variable-names
+CFILE=unicode-variable-names.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

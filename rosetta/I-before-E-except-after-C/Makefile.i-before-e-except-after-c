@@ -1,0 +1,5 @@
+BMARK=i-before-e-except-after-c
+CFILE=i-before-e-except-after-c.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

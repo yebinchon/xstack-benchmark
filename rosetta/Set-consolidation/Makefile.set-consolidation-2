@@ -1,0 +1,5 @@
+BMARK=set-consolidation-2
+CFILE=set-consolidation-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

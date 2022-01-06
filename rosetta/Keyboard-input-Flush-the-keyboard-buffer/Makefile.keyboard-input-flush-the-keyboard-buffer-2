@@ -1,0 +1,5 @@
+BMARK=keyboard-input-flush-the-keyboard-buffer-2
+CFILE=keyboard-input-flush-the-keyboard-buffer-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

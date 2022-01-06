@@ -1,0 +1,5 @@
+BMARK=quaternion-type-1
+CFILE=quaternion-type-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

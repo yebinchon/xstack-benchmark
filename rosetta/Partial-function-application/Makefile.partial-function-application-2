@@ -1,0 +1,5 @@
+BMARK=partial-function-application-2
+CFILE=partial-function-application-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

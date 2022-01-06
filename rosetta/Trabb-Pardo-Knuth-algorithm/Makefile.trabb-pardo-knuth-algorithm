@@ -1,0 +1,5 @@
+BMARK=trabb-pardo-knuth-algorithm
+CFILE=trabb-pardo-knuth-algorithm.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

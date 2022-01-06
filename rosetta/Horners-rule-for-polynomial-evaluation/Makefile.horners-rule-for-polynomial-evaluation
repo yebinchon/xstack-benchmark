@@ -1,0 +1,5 @@
+BMARK=horners-rule-for-polynomial-evaluation
+CFILE=horners-rule-for-polynomial-evaluation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

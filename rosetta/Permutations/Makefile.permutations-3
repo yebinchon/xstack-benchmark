@@ -1,0 +1,5 @@
+BMARK=permutations-3
+CFILE=permutations-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

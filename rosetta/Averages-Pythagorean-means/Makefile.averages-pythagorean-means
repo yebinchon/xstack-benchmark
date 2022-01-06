@@ -1,0 +1,5 @@
+BMARK=averages-pythagorean-means
+CFILE=averages-pythagorean-means.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

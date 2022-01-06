@@ -1,0 +1,5 @@
+BMARK=penneys-game
+CFILE=penneys-game.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

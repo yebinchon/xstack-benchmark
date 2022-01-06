@@ -1,0 +1,5 @@
+BMARK=execute-hq9+
+CFILE=execute-hq9+.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

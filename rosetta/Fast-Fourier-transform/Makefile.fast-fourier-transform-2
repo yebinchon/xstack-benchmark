@@ -1,0 +1,5 @@
+BMARK=fast-fourier-transform-2
+CFILE=fast-fourier-transform-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

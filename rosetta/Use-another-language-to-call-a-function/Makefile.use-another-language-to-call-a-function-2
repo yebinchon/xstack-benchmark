@@ -1,0 +1,5 @@
+BMARK=use-another-language-to-call-a-function-2
+CFILE=use-another-language-to-call-a-function-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

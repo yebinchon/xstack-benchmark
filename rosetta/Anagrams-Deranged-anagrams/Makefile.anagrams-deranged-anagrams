@@ -1,0 +1,5 @@
+BMARK=anagrams-deranged-anagrams
+CFILE=anagrams-deranged-anagrams.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

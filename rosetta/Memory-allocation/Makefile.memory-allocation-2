@@ -1,0 +1,5 @@
+BMARK=memory-allocation-2
+CFILE=memory-allocation-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

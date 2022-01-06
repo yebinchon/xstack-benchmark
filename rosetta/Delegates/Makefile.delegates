@@ -1,0 +1,5 @@
+BMARK=delegates
+CFILE=delegates.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

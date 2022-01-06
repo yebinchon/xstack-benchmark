@@ -1,0 +1,5 @@
+BMARK=factors-of-an-integer-2
+CFILE=factors-of-an-integer-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

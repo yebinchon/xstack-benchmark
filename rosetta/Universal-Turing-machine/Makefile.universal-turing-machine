@@ -1,0 +1,5 @@
+BMARK=universal-turing-machine
+CFILE=universal-turing-machine.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

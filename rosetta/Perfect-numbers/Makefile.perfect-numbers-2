@@ -1,0 +1,5 @@
+BMARK=perfect-numbers-2
+CFILE=perfect-numbers-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

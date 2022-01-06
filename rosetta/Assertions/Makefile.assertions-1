@@ -1,0 +1,5 @@
+BMARK=assertions-1
+CFILE=assertions-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

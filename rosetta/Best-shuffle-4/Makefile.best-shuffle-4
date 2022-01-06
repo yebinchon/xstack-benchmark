@@ -1,0 +1,5 @@
+BMARK=best-shuffle-4
+CFILE=best-shuffle-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

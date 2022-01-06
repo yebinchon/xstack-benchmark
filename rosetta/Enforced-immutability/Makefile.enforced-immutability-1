@@ -1,0 +1,5 @@
+BMARK=enforced-immutability-1
+CFILE=enforced-immutability-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

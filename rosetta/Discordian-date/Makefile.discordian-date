@@ -1,0 +1,5 @@
+BMARK=discordian-date
+CFILE=discordian-date.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

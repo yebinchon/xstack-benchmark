@@ -1,0 +1,5 @@
+BMARK=the-twelve-days-of-christmas
+CFILE=the-twelve-days-of-christmas.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

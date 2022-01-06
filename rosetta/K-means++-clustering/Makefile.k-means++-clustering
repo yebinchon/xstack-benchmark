@@ -1,0 +1,5 @@
+BMARK=k-means++-clustering
+CFILE=k-means++-clustering.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

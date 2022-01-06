@@ -1,0 +1,5 @@
+BMARK=a+b-3
+CFILE=a+b-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=fibonacci-n-step-number-sequences
+CFILE=fibonacci-n-step-number-sequences.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

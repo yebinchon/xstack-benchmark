@@ -1,0 +1,5 @@
+BMARK=doubly-linked-list-element-insertion-2
+CFILE=doubly-linked-list-element-insertion-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

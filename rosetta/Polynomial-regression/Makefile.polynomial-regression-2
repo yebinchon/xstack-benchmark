@@ -1,0 +1,5 @@
+BMARK=polynomial-regression-2
+CFILE=polynomial-regression-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=stack-traces-4
+CFILE=stack-traces-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=formal-power-series
+CFILE=formal-power-series.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

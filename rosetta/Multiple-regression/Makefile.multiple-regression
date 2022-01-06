@@ -1,0 +1,5 @@
+BMARK=multiple-regression
+CFILE=multiple-regression.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

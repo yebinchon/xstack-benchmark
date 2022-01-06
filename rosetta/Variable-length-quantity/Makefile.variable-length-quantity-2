@@ -1,0 +1,5 @@
+BMARK=variable-length-quantity-2
+CFILE=variable-length-quantity-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

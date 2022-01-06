@@ -1,0 +1,5 @@
+BMARK=stern-brocot-sequence-2
+CFILE=stern-brocot-sequence-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

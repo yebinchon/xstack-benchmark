@@ -1,0 +1,5 @@
+BMARK=tic-tac-toe
+CFILE=tic-tac-toe.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

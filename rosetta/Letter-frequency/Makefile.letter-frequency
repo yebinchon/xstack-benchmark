@@ -1,0 +1,5 @@
+BMARK=letter-frequency
+CFILE=letter-frequency.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

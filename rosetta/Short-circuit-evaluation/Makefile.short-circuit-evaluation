@@ -1,0 +1,5 @@
+BMARK=short-circuit-evaluation
+CFILE=short-circuit-evaluation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

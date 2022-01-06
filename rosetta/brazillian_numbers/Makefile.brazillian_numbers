@@ -1,0 +1,5 @@
+BMARK=brazillian_numbers
+CFILE=brazillian_numbers.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

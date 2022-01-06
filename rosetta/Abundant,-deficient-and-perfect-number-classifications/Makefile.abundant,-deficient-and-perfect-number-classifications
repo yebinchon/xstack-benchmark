@@ -1,0 +1,5 @@
+BMARK=abundant,-deficient-and-perfect-number-classifications
+CFILE=abundant,-deficient-and-perfect-number-classifications.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

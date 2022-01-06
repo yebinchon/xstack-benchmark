@@ -1,0 +1,5 @@
+BMARK=zeckendorf-number-representation
+CFILE=zeckendorf-number-representation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

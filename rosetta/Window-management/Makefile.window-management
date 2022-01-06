@@ -1,0 +1,5 @@
+BMARK=window-management
+CFILE=window-management.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

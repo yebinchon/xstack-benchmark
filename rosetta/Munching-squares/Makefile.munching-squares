@@ -1,0 +1,5 @@
+BMARK=munching-squares
+CFILE=munching-squares.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

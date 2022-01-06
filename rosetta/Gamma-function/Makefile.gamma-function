@@ -1,0 +1,5 @@
+BMARK=gamma-function
+CFILE=gamma-function.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

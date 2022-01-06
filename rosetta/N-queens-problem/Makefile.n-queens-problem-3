@@ -1,0 +1,5 @@
+BMARK=n-queens-problem-3
+CFILE=n-queens-problem-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

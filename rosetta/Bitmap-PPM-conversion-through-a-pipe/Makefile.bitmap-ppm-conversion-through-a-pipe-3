@@ -1,0 +1,5 @@
+BMARK=bitmap-ppm-conversion-through-a-pipe-3
+CFILE=bitmap-ppm-conversion-through-a-pipe-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

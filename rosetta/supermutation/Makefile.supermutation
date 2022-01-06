@@ -1,0 +1,5 @@
+BMARK=supermutation
+CFILE=supermutation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

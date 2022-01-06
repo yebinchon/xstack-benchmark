@@ -1,0 +1,5 @@
+BMARK=total-circles-area-1
+CFILE=total-circles-area-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=truncatable-primes-2
+CFILE=truncatable-primes-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

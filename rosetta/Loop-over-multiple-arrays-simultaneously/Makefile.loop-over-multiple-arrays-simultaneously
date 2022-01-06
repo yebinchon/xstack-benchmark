@@ -1,0 +1,5 @@
+BMARK=loop-over-multiple-arrays-simultaneously
+CFILE=loop-over-multiple-arrays-simultaneously.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

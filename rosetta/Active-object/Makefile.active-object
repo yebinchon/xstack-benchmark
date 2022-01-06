@@ -1,0 +1,5 @@
+BMARK=active-object
+CFILE=active-object.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=matrix-transposition-1
+CFILE=matrix-transposition-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

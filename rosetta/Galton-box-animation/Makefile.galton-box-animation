@@ -1,0 +1,5 @@
+BMARK=galton-box-animation
+CFILE=galton-box-animation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

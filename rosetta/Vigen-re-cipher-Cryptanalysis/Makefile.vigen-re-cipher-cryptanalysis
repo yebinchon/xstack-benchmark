@@ -1,0 +1,5 @@
+BMARK=vigen-re-cipher-cryptanalysis
+CFILE=vigen-re-cipher-cryptanalysis.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

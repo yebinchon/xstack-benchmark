@@ -1,0 +1,5 @@
+BMARK=prime-decomposition-2
+CFILE=prime-decomposition-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

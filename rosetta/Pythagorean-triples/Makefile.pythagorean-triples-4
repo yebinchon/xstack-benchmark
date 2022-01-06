@@ -1,0 +1,5 @@
+BMARK=pythagorean-triples-4
+CFILE=pythagorean-triples-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

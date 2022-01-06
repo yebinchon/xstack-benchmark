@@ -1,0 +1,5 @@
+BMARK=iterated-digits-squaring-2
+CFILE=iterated-digits-squaring-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=repeat-a-string-3
+CFILE=repeat-a-string-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

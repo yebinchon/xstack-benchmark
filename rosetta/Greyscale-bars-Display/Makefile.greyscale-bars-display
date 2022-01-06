@@ -1,0 +1,5 @@
+BMARK=greyscale-bars-display
+CFILE=greyscale-bars-display.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

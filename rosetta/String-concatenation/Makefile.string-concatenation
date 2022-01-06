@@ -1,0 +1,5 @@
+BMARK=string-concatenation
+CFILE=string-concatenation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

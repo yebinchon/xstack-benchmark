@@ -1,0 +1,5 @@
+BMARK=queue-usage
+CFILE=queue-usage.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

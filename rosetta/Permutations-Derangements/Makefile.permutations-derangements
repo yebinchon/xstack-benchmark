@@ -1,0 +1,5 @@
+BMARK=permutations-derangements
+CFILE=permutations-derangements.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

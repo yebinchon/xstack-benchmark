@@ -1,0 +1,5 @@
+BMARK=percentage-difference-between-images
+CFILE=percentage-difference-between-images.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

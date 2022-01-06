@@ -1,0 +1,5 @@
+BMARK=averages-median-1
+CFILE=averages-median-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

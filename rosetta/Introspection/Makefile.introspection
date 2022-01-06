@@ -1,0 +1,5 @@
+BMARK=introspection
+CFILE=introspection.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

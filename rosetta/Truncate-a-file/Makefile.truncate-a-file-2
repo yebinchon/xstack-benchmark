@@ -1,0 +1,5 @@
+BMARK=truncate-a-file-2
+CFILE=truncate-a-file-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=terminal-control-preserve-screen
+CFILE=terminal-control-preserve-screen.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=secure-temporary-file-1
+CFILE=secure-temporary-file-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

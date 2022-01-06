@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-permutation-sort
+CFILE=sorting-algorithms-permutation-sort.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

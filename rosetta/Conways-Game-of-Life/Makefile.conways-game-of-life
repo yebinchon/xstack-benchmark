@@ -1,0 +1,5 @@
+BMARK=conways-game-of-life
+CFILE=conways-game-of-life.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

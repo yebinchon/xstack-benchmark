@@ -1,0 +1,5 @@
+BMARK=zeckendorf-arithmetic
+CFILE=zeckendorf-arithmetic.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

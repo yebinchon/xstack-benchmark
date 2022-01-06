@@ -1,0 +1,5 @@
+BMARK=power-set
+CFILE=power-set.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

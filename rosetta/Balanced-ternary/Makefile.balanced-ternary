@@ -1,0 +1,5 @@
+BMARK=balanced-ternary
+CFILE=balanced-ternary.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

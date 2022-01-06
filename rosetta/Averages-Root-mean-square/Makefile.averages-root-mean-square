@@ -1,0 +1,5 @@
+BMARK=averages-root-mean-square
+CFILE=averages-root-mean-square.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

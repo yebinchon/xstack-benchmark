@@ -1,0 +1,5 @@
+BMARK=arithmetic-complex-2
+CFILE=arithmetic-complex-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=abstract-type-2
+CFILE=abstract-type-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

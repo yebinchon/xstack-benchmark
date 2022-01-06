@@ -1,0 +1,5 @@
+BMARK=pangram-checker-2
+CFILE=pangram-checker-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

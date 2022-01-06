@@ -1,0 +1,5 @@
+BMARK=synchronous-concurrency
+CFILE=synchronous-concurrency.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=first-class-environments
+CFILE=first-class-environments.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

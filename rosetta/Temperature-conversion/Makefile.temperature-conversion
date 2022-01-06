@@ -1,0 +1,5 @@
+BMARK=temperature-conversion
+CFILE=temperature-conversion.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

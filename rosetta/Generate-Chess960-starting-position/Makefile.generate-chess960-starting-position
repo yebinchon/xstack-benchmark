@@ -1,0 +1,5 @@
+BMARK=generate-chess960-starting-position
+CFILE=generate-chess960-starting-position.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

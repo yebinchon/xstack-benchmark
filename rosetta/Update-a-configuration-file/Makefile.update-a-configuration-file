@@ -1,0 +1,5 @@
+BMARK=update-a-configuration-file
+CFILE=update-a-configuration-file.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

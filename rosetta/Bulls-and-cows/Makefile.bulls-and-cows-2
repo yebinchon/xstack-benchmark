@@ -1,0 +1,5 @@
+BMARK=bulls-and-cows-2
+CFILE=bulls-and-cows-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

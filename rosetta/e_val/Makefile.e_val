@@ -1,0 +1,5 @@
+BMARK=e_val
+CFILE=e_val.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

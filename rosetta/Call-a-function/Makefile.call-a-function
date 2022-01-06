@@ -1,0 +1,5 @@
+BMARK=call-a-function
+CFILE=call-a-function.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

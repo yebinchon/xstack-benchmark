@@ -1,0 +1,5 @@
+BMARK=inverted-syntax-1
+CFILE=inverted-syntax-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=nth
+CFILE=nth.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

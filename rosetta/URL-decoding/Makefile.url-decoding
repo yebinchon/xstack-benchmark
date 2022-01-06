@@ -1,0 +1,5 @@
+BMARK=url-decoding
+CFILE=url-decoding.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

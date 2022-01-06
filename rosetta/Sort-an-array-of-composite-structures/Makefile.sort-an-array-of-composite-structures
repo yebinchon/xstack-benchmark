@@ -1,0 +1,5 @@
+BMARK=sort-an-array-of-composite-structures
+CFILE=sort-an-array-of-composite-structures.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

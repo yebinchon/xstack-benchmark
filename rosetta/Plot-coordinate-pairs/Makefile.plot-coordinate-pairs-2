@@ -1,0 +1,5 @@
+BMARK=plot-coordinate-pairs-2
+CFILE=plot-coordinate-pairs-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

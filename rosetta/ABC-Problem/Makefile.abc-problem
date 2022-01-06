@@ -1,0 +1,5 @@
+BMARK=abc-problem
+CFILE=abc-problem.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

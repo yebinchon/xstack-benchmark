@@ -1,0 +1,5 @@
+BMARK=modular-inverse-2
+CFILE=modular-inverse-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

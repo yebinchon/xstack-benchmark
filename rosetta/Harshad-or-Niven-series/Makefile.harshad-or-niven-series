@@ -1,0 +1,5 @@
+BMARK=harshad-or-niven-series
+CFILE=harshad-or-niven-series.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=phrase-reversals
+CFILE=phrase-reversals.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

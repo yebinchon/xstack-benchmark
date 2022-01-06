@@ -1,0 +1,5 @@
+BMARK=nautical-bell
+CFILE=nautical-bell.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

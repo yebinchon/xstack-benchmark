@@ -1,0 +1,5 @@
+BMARK=parallel-calculations
+CFILE=parallel-calculations.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

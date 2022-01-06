@@ -1,0 +1,5 @@
+BMARK=continued-fraction
+CFILE=continued-fraction.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

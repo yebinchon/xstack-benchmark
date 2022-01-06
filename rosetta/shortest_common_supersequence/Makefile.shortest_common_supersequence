@@ -1,0 +1,5 @@
+BMARK=shortest_common_supersequence
+CFILE=shortest_common_supersequence.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=roots-of-unity
+CFILE=roots-of-unity.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

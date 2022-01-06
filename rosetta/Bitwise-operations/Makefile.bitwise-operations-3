@@ -1,0 +1,5 @@
+BMARK=bitwise-operations-3
+CFILE=bitwise-operations-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

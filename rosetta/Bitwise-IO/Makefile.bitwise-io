@@ -1,0 +1,5 @@
+BMARK=bitwise-io
+CFILE=bitwise-io.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

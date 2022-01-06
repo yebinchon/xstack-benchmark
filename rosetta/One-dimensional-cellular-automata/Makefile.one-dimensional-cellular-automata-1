@@ -1,0 +1,5 @@
+BMARK=one-dimensional-cellular-automata-1
+CFILE=one-dimensional-cellular-automata-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

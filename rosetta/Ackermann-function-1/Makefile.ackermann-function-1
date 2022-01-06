@@ -1,0 +1,5 @@
+BMARK=ackermann-function-1
+CFILE=ackermann-function-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

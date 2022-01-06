@@ -1,0 +1,5 @@
+BMARK=man-or-boy-test-2
+CFILE=man-or-boy-test-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

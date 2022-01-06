@@ -1,0 +1,5 @@
+BMARK=sieve-of-eratosthenes-1
+CFILE=sieve-of-eratosthenes-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

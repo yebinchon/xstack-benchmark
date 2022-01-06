@@ -1,0 +1,5 @@
+BMARK=walk-a-directory-recursively-2
+CFILE=walk-a-directory-recursively-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

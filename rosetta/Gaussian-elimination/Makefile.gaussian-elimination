@@ -1,0 +1,5 @@
+BMARK=gaussian-elimination
+CFILE=gaussian-elimination.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

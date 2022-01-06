@@ -1,0 +1,5 @@
+BMARK=knuth-shuffle-2
+CFILE=knuth-shuffle-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

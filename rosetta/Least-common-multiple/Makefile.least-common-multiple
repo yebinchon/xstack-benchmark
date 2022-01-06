@@ -1,0 +1,5 @@
+BMARK=least-common-multiple
+CFILE=least-common-multiple.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

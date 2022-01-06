@@ -1,0 +1,5 @@
+BMARK=real-constants-and-functions
+CFILE=real-constants-and-functions.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

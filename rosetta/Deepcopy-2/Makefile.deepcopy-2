@@ -1,0 +1,5 @@
+BMARK=deepcopy-2
+CFILE=deepcopy-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

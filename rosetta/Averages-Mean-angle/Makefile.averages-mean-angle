@@ -1,0 +1,5 @@
+BMARK=averages-mean-angle
+CFILE=averages-mean-angle.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

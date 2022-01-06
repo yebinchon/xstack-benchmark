@@ -1,0 +1,5 @@
+BMARK=speech-synthesis
+CFILE=speech-synthesis.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

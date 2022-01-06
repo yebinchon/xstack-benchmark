@@ -1,0 +1,5 @@
+BMARK=remove-duplicate-elements-1
+CFILE=remove-duplicate-elements-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

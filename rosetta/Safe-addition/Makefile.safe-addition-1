@@ -1,0 +1,5 @@
+BMARK=safe-addition-1
+CFILE=safe-addition-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

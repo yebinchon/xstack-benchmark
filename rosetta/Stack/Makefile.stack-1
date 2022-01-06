@@ -1,0 +1,5 @@
+BMARK=stack-1
+CFILE=stack-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

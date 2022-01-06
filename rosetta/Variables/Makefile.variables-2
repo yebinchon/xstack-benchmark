@@ -1,0 +1,5 @@
+BMARK=variables-2
+CFILE=variables-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

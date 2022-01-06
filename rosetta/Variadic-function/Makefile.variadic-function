@@ -1,0 +1,5 @@
+BMARK=variadic-function
+CFILE=variadic-function.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

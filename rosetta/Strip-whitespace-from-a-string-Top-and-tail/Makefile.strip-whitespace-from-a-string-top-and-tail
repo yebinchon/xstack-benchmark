@@ -1,0 +1,5 @@
+BMARK=strip-whitespace-from-a-string-top-and-tail
+CFILE=strip-whitespace-from-a-string-top-and-tail.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

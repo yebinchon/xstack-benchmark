@@ -1,0 +1,5 @@
+BMARK=sum-multiples-of-3-and-5-2
+CFILE=sum-multiples-of-3-and-5-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

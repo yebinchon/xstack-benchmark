@@ -1,0 +1,5 @@
+BMARK=arithmetic-rational
+CFILE=arithmetic-rational.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=exponentiation-operator-2
+CFILE=exponentiation-operator-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=loops-for-with-a-specified-step
+CFILE=loops-for-with-a-specified-step.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

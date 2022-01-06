@@ -1,0 +1,5 @@
+BMARK=anonymous-recursion
+CFILE=anonymous-recursion.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

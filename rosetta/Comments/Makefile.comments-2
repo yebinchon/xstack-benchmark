@@ -1,0 +1,5 @@
+BMARK=comments-2
+CFILE=comments-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

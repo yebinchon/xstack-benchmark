@@ -1,0 +1,5 @@
+BMARK=draw-a-cuboid
+CFILE=draw-a-cuboid.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

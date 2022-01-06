@@ -1,0 +1,5 @@
+BMARK=top-rank-per-group
+CFILE=top-rank-per-group.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

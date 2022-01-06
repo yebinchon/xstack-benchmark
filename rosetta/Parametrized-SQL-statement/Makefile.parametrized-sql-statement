@@ -1,0 +1,5 @@
+BMARK=parametrized-sql-statement
+CFILE=parametrized-sql-statement.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

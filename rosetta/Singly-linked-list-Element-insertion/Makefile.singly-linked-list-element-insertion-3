@@ -1,0 +1,5 @@
+BMARK=singly-linked-list-element-insertion-3
+CFILE=singly-linked-list-element-insertion-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

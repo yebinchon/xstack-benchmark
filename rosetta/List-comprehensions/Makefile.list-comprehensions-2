@@ -1,0 +1,5 @@
+BMARK=list-comprehensions-2
+CFILE=list-comprehensions-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

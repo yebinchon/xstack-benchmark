@@ -1,0 +1,5 @@
+BMARK=time-a-function
+CFILE=time-a-function.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

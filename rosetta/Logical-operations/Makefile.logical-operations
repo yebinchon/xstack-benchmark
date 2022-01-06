@@ -1,0 +1,5 @@
+BMARK=logical-operations
+CFILE=logical-operations.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

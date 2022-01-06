@@ -1,0 +1,5 @@
+BMARK=fizzbuzz-8
+CFILE=fizzbuzz-8.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

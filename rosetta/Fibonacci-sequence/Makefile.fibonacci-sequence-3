@@ -1,0 +1,5 @@
+BMARK=fibonacci-sequence-3
+CFILE=fibonacci-sequence-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

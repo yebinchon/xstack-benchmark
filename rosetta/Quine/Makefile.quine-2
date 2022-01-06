@@ -1,0 +1,5 @@
+BMARK=quine-2
+CFILE=quine-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

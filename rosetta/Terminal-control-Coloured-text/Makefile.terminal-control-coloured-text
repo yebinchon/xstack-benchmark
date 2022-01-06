@@ -1,0 +1,5 @@
+BMARK=terminal-control-coloured-text
+CFILE=terminal-control-coloured-text.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

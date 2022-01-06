@@ -1,0 +1,5 @@
+BMARK=canny-edge-detector
+CFILE=canny-edge-detector.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

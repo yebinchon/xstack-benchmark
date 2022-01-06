@@ -1,0 +1,5 @@
+BMARK=verify-distribution-uniformity-chi-squared-test-2
+CFILE=verify-distribution-uniformity-chi-squared-test-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

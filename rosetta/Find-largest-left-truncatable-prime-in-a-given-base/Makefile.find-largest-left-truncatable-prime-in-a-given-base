@@ -1,0 +1,5 @@
+BMARK=find-largest-left-truncatable-prime-in-a-given-base
+CFILE=find-largest-left-truncatable-prime-in-a-given-base.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

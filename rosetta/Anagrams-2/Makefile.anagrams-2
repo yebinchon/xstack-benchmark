@@ -1,0 +1,5 @@
+BMARK=anagrams-2
+CFILE=anagrams-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

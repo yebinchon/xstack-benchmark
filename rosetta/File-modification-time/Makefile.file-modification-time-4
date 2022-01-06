@@ -1,0 +1,5 @@
+BMARK=file-modification-time-4
+CFILE=file-modification-time-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

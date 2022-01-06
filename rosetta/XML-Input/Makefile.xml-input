@@ -1,0 +1,5 @@
+BMARK=xml-input
+CFILE=xml-input.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

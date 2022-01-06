@@ -1,0 +1,5 @@
+BMARK=execute-a-markov-algorithm-2
+CFILE=execute-a-markov-algorithm-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

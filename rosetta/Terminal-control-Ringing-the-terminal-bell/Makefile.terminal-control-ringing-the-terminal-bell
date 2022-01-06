@@ -1,0 +1,5 @@
+BMARK=terminal-control-ringing-the-terminal-bell
+CFILE=terminal-control-ringing-the-terminal-bell.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

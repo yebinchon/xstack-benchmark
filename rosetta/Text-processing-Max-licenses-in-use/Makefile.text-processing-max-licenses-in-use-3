@@ -1,0 +1,5 @@
+BMARK=text-processing-max-licenses-in-use-3
+CFILE=text-processing-max-licenses-in-use-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=guess-the-number
+CFILE=guess-the-number.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

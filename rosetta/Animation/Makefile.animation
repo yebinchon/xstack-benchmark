@@ -1,0 +1,5 @@
+BMARK=animation
+CFILE=animation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=digital-root
+CFILE=digital-root.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

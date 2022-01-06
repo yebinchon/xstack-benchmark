@@ -1,0 +1,5 @@
+BMARK=lucas-lehmer-test-2
+CFILE=lucas-lehmer-test-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

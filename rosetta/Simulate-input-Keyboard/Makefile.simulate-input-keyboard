@@ -1,0 +1,5 @@
+BMARK=simulate-input-keyboard
+CFILE=simulate-input-keyboard.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

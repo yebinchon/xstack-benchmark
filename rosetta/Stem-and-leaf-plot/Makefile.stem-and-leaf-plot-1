@@ -1,0 +1,5 @@
+BMARK=stem-and-leaf-plot-1
+CFILE=stem-and-leaf-plot-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

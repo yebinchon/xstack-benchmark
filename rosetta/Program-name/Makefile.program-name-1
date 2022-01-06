@@ -1,0 +1,5 @@
+BMARK=program-name-1
+CFILE=program-name-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

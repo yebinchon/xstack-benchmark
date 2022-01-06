@@ -1,0 +1,5 @@
+BMARK=ulam-spiral--for-primes--1
+CFILE=ulam-spiral--for-primes--1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

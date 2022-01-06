@@ -1,0 +1,5 @@
+BMARK=sparkline-in-unicode
+CFILE=sparkline-in-unicode.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

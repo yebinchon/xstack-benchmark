@@ -1,0 +1,5 @@
+BMARK=terminal-control-unicode-output
+CFILE=terminal-control-unicode-output.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

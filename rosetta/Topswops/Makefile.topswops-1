@@ -1,0 +1,5 @@
+BMARK=topswops-1
+CFILE=topswops-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

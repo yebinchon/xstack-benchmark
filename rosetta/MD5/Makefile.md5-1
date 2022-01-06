@@ -1,0 +1,5 @@
+BMARK=md5-1
+CFILE=md5-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

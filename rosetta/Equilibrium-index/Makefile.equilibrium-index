@@ -1,0 +1,5 @@
+BMARK=equilibrium-index
+CFILE=equilibrium-index.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

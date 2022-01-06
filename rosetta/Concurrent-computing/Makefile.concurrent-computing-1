@@ -1,0 +1,5 @@
+BMARK=concurrent-computing-1
+CFILE=concurrent-computing-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

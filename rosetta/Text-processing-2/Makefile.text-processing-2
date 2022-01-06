@@ -1,0 +1,5 @@
+BMARK=text-processing-2
+CFILE=text-processing-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

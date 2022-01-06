@@ -1,0 +1,5 @@
+BMARK=horizontal-sundial-calculations
+CFILE=horizontal-sundial-calculations.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

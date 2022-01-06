@@ -1,0 +1,5 @@
+BMARK=hickerson-series-of-almost-integers
+CFILE=hickerson-series-of-almost-integers.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

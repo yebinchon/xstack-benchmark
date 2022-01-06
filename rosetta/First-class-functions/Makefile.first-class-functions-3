@@ -1,0 +1,5 @@
+BMARK=first-class-functions-3
+CFILE=first-class-functions-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

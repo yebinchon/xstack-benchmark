@@ -1,0 +1,5 @@
+BMARK=multiplication-tables
+CFILE=multiplication-tables.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

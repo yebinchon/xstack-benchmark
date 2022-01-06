@@ -1,0 +1,5 @@
+BMARK=named-parameters
+CFILE=named-parameters.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

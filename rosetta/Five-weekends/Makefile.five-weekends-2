@@ -1,0 +1,5 @@
+BMARK=five-weekends-2
+CFILE=five-weekends-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=paraffins-1
+CFILE=paraffins-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

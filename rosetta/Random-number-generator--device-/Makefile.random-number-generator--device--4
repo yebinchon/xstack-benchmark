@@ -1,0 +1,5 @@
+BMARK=random-number-generator--device--4
+CFILE=random-number-generator--device--4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

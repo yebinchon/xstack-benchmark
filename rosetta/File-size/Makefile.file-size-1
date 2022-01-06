@@ -1,0 +1,5 @@
+BMARK=file-size-1
+CFILE=file-size-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

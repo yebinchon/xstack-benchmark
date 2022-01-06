@@ -1,0 +1,5 @@
+BMARK=pragmatic-directives
+CFILE=pragmatic-directives.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=guess-the-number-with-feedback
+CFILE=guess-the-number-with-feedback.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

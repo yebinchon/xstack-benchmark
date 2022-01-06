@@ -1,0 +1,5 @@
+BMARK=increment-a-numerical-string
+CFILE=increment-a-numerical-string.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

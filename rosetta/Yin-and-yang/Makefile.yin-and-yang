@@ -1,0 +1,5 @@
+BMARK=yin-and-yang
+CFILE=yin-and-yang.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

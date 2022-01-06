@@ -1,0 +1,5 @@
+BMARK=averages-mean-time-of-day
+CFILE=averages-mean-time-of-day.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

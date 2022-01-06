@@ -1,0 +1,5 @@
+BMARK=non-continuous-subsequences-1
+CFILE=non-continuous-subsequences-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

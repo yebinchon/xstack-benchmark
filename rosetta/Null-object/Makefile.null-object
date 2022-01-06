@@ -1,0 +1,5 @@
+BMARK=null-object
+CFILE=null-object.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=closures-value-capture-1
+CFILE=closures-value-capture-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

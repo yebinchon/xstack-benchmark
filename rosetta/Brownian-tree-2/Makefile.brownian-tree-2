@@ -1,0 +1,5 @@
+BMARK=brownian-tree-2
+CFILE=brownian-tree-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

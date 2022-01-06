@@ -1,0 +1,5 @@
+BMARK=formatted-numeric-output
+CFILE=formatted-numeric-output.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

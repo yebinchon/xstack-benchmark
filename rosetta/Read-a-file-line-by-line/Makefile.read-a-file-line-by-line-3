@@ -1,0 +1,5 @@
+BMARK=read-a-file-line-by-line-3
+CFILE=read-a-file-line-by-line-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

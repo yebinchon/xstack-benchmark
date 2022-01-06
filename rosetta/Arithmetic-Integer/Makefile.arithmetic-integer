@@ -1,0 +1,5 @@
+BMARK=arithmetic-integer
+CFILE=arithmetic-integer.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

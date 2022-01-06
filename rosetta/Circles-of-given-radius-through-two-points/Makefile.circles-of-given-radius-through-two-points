@@ -1,0 +1,5 @@
+BMARK=circles-of-given-radius-through-two-points
+CFILE=circles-of-given-radius-through-two-points.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=polynomial-long-division-1
+CFILE=polynomial-long-division-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

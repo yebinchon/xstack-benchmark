@@ -1,0 +1,5 @@
+BMARK=arrays-6
+CFILE=arrays-6.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

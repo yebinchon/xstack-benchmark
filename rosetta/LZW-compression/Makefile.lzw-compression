@@ -1,0 +1,5 @@
+BMARK=lzw-compression
+CFILE=lzw-compression.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

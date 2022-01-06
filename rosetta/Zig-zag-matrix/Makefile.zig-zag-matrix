@@ -1,0 +1,5 @@
+BMARK=zig-zag-matrix
+CFILE=zig-zag-matrix.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

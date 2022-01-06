@@ -1,0 +1,5 @@
+BMARK=knapsack-problem-continuous
+CFILE=knapsack-problem-continuous.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

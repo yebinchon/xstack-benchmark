@@ -1,0 +1,5 @@
+BMARK=https-authenticated
+CFILE=https-authenticated.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

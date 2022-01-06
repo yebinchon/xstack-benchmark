@@ -1,0 +1,5 @@
+BMARK=permutations-rank-of-a-permutation
+CFILE=permutations-rank-of-a-permutation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

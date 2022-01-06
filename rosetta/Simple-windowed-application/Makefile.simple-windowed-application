@@ -1,0 +1,5 @@
+BMARK=simple-windowed-application
+CFILE=simple-windowed-application.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=convert-decimal-number-to-rational-1
+CFILE=convert-decimal-number-to-rational-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=generate-lower-case-ascii-alphabet
+CFILE=generate-lower-case-ascii-alphabet.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

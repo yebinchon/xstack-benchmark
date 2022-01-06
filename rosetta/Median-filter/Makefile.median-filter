@@ -1,0 +1,5 @@
+BMARK=median-filter
+CFILE=median-filter.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

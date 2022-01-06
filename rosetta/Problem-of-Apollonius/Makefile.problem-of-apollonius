@@ -1,0 +1,5 @@
+BMARK=problem-of-apollonius
+CFILE=problem-of-apollonius.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

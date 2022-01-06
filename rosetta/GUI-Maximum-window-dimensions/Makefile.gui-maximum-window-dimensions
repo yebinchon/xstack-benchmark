@@ -1,0 +1,5 @@
+BMARK=gui-maximum-window-dimensions
+CFILE=gui-maximum-window-dimensions.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

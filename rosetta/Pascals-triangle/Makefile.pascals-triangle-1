@@ -1,0 +1,5 @@
+BMARK=pascals-triangle-1
+CFILE=pascals-triangle-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

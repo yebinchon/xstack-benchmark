@@ -1,0 +1,5 @@
+BMARK=ethiopian-multiplication
+CFILE=ethiopian-multiplication.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=almost-prime
+CFILE=almost-prime.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

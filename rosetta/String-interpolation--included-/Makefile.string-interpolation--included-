@@ -1,0 +1,5 @@
+BMARK=string-interpolation--included-
+CFILE=string-interpolation--included-.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

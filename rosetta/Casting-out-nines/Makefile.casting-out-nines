@@ -1,0 +1,5 @@
+BMARK=casting-out-nines
+CFILE=casting-out-nines.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

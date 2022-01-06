@@ -1,0 +1,5 @@
+BMARK=scope-function-names-and-labels
+CFILE=scope-function-names-and-labels.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

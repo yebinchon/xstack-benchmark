@@ -1,0 +1,5 @@
+BMARK=count-occurrences-of-a-substring-2
+CFILE=count-occurrences-of-a-substring-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

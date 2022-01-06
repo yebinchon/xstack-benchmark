@@ -1,0 +1,5 @@
+BMARK=arena-storage-pool-7
+CFILE=arena-storage-pool-7.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

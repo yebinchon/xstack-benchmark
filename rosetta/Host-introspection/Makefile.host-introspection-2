@@ -1,0 +1,5 @@
+BMARK=host-introspection-2
+CFILE=host-introspection-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

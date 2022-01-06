@@ -1,0 +1,5 @@
+BMARK=higher-order-functions-2
+CFILE=higher-order-functions-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=holidays-related-to-easter
+CFILE=holidays-related-to-easter.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

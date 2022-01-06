@@ -1,0 +1,5 @@
+BMARK=integer-overflow
+CFILE=integer-overflow.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

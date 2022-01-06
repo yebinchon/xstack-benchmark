@@ -1,0 +1,5 @@
+BMARK=probabilistic-choice-2
+CFILE=probabilistic-choice-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

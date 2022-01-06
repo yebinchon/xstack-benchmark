@@ -1,0 +1,5 @@
+BMARK=hofstadter-figure-figure-sequences
+CFILE=hofstadter-figure-figure-sequences.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=last-letter-first-letter-2
+CFILE=last-letter-first-letter-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=multiple-distinct-objects
+CFILE=multiple-distinct-objects.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

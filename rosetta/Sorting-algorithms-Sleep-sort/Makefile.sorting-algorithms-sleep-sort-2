@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-sleep-sort-2
+CFILE=sorting-algorithms-sleep-sort-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

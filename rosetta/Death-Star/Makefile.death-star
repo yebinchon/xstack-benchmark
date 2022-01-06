@@ -1,0 +1,5 @@
+BMARK=death-star
+CFILE=death-star.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

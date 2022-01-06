@@ -1,0 +1,5 @@
+BMARK=keyboard-input-obtain-a-y-or-n-response
+CFILE=keyboard-input-obtain-a-y-or-n-response.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

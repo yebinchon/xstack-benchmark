@@ -1,0 +1,5 @@
+BMARK=largest-int-from-concatenated-ints
+CFILE=largest-int-from-concatenated-ints.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

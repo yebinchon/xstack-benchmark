@@ -1,0 +1,5 @@
+BMARK=levenshtein-distance-1
+CFILE=levenshtein-distance-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

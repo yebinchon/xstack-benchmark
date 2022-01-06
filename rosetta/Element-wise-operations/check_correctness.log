@@ -1,1 +1,0 @@
-clang -Xclang -disable-O0-optnone -S -emit-llvm -g element-wise-operations.c

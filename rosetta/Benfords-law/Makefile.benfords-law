@@ -1,0 +1,5 @@
+BMARK=benfords-law
+CFILE=benfords-law.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

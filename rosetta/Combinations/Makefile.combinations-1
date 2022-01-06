@@ -1,0 +1,5 @@
+BMARK=combinations-1
+CFILE=combinations-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

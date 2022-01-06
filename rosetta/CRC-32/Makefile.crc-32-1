@@ -1,0 +1,5 @@
+BMARK=crc-32-1
+CFILE=crc-32-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

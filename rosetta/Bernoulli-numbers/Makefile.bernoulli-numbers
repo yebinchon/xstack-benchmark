@@ -1,0 +1,5 @@
+BMARK=bernoulli-numbers
+CFILE=bernoulli-numbers.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

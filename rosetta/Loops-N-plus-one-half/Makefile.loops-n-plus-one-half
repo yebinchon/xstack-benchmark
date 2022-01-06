@@ -1,0 +1,5 @@
+BMARK=loops-n-plus-one-half
+CFILE=loops-n-plus-one-half.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

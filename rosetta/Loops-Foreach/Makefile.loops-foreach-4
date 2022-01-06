@@ -1,0 +1,5 @@
+BMARK=loops-foreach-4
+CFILE=loops-foreach-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

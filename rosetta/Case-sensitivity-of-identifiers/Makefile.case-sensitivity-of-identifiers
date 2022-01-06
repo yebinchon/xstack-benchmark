@@ -1,0 +1,5 @@
+BMARK=case-sensitivity-of-identifiers
+CFILE=case-sensitivity-of-identifiers.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

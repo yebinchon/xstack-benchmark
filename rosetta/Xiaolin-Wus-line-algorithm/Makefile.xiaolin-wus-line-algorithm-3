@@ -1,0 +1,5 @@
+BMARK=xiaolin-wus-line-algorithm-3
+CFILE=xiaolin-wus-line-algorithm-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

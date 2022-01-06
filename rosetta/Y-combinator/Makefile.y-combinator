@@ -1,0 +1,5 @@
+BMARK=y-combinator
+CFILE=y-combinator.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

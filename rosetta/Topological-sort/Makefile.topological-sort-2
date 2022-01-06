@@ -1,0 +1,5 @@
+BMARK=topological-sort-2
+CFILE=topological-sort-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

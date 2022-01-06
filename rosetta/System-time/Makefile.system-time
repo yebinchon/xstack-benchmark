@@ -1,0 +1,5 @@
+BMARK=system-time
+CFILE=system-time.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

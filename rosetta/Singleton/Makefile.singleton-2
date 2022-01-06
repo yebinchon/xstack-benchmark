@@ -1,0 +1,5 @@
+BMARK=singleton-2
+CFILE=singleton-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

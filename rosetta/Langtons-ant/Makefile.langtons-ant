@@ -1,0 +1,5 @@
+BMARK=langtons-ant
+CFILE=langtons-ant.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

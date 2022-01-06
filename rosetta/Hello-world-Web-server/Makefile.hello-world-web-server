@@ -1,0 +1,5 @@
+BMARK=hello-world-web-server
+CFILE=hello-world-web-server.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

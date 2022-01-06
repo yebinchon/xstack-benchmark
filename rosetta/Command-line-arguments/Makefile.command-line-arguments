@@ -1,0 +1,5 @@
+BMARK=command-line-arguments
+CFILE=command-line-arguments.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

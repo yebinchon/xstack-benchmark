@@ -1,0 +1,5 @@
+BMARK=hash-from-two-arrays
+CFILE=hash-from-two-arrays.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

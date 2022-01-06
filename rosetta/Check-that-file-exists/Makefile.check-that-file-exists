@@ -1,0 +1,5 @@
+BMARK=check-that-file-exists
+CFILE=check-that-file-exists.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=web-scraping
+CFILE=web-scraping.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

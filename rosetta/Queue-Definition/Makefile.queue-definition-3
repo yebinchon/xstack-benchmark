@@ -1,0 +1,5 @@
+BMARK=queue-definition-3
+CFILE=queue-definition-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=hofstadter-conway-$10,000-sequence
+CFILE=hofstadter-conway-$10,000-sequence.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

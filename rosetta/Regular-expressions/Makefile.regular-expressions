@@ -1,0 +1,5 @@
+BMARK=regular-expressions
+CFILE=regular-expressions.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

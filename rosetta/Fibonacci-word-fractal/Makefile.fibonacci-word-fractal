@@ -1,0 +1,5 @@
+BMARK=fibonacci-word-fractal
+CFILE=fibonacci-word-fractal.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=identity-matrix
+CFILE=identity-matrix.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

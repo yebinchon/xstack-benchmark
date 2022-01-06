@@ -1,0 +1,5 @@
+BMARK=call-a-function-in-a-shared-library-1
+CFILE=call-a-function-in-a-shared-library-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

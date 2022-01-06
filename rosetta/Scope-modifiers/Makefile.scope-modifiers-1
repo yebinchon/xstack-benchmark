@@ -1,0 +1,5 @@
+BMARK=scope-modifiers-1
+CFILE=scope-modifiers-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=palindrome-detection-2
+CFILE=palindrome-detection-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

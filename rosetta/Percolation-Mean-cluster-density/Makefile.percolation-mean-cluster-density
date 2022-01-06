@@ -1,0 +1,5 @@
+BMARK=percolation-mean-cluster-density
+CFILE=percolation-mean-cluster-density.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

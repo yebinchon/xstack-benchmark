@@ -1,0 +1,5 @@
+BMARK=grayscale-image-5
+CFILE=grayscale-image-5.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

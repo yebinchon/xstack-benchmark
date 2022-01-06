@@ -1,0 +1,5 @@
+BMARK=combinations-and-permutations
+CFILE=combinations-and-permutations.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

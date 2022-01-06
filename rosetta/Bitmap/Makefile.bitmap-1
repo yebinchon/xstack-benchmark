@@ -1,0 +1,5 @@
+BMARK=bitmap-1
+CFILE=bitmap-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

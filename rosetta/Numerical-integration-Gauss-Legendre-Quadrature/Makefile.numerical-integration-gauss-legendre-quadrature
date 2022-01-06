@@ -1,0 +1,5 @@
+BMARK=numerical-integration-gauss-legendre-quadrature
+CFILE=numerical-integration-gauss-legendre-quadrature.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

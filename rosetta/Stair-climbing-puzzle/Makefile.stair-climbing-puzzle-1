@@ -1,0 +1,5 @@
+BMARK=stair-climbing-puzzle-1
+CFILE=stair-climbing-puzzle-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

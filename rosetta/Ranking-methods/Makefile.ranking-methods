@@ -1,0 +1,5 @@
+BMARK=ranking-methods
+CFILE=ranking-methods.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

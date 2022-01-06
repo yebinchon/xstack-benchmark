@@ -1,0 +1,5 @@
+BMARK=look-and-say-sequence
+CFILE=look-and-say-sequence.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

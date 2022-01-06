@@ -1,0 +1,5 @@
+BMARK=longest-common-subsequence-1
+CFILE=longest-common-subsequence-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

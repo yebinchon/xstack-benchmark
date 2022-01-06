@@ -1,0 +1,5 @@
+BMARK=percolation-mean-run-density
+CFILE=percolation-mean-run-density.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

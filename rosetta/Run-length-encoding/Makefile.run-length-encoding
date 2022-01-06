@@ -1,0 +1,5 @@
+BMARK=run-length-encoding
+CFILE=run-length-encoding.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

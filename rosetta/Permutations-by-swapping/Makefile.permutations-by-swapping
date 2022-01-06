@@ -1,0 +1,5 @@
+BMARK=permutations-by-swapping
+CFILE=permutations-by-swapping.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=dot-product
+CFILE=dot-product.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

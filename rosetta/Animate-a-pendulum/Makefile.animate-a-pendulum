@@ -1,0 +1,5 @@
+BMARK=animate-a-pendulum
+CFILE=animate-a-pendulum.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

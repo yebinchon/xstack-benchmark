@@ -1,0 +1,5 @@
+BMARK=bitmap-histogram-4
+CFILE=bitmap-histogram-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

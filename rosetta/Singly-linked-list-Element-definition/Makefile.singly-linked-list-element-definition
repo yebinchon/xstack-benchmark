@@ -1,0 +1,5 @@
+BMARK=singly-linked-list-element-definition
+CFILE=singly-linked-list-element-definition.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

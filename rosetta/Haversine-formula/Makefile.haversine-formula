@@ -1,0 +1,5 @@
+BMARK=haversine-formula
+CFILE=haversine-formula.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

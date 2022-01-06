@@ -1,0 +1,5 @@
+BMARK=parsing-rpn-calculator-algorithm-1
+CFILE=parsing-rpn-calculator-algorithm-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

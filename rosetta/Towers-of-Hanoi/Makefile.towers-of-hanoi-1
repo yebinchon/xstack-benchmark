@@ -1,0 +1,5 @@
+BMARK=towers-of-hanoi-1
+CFILE=towers-of-hanoi-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

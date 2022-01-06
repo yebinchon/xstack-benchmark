@@ -1,0 +1,5 @@
+BMARK=spiral-matrix-2
+CFILE=spiral-matrix-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

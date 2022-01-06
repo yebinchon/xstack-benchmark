@@ -1,0 +1,5 @@
+BMARK=parsing-shunting-yard-algorithm
+CFILE=parsing-shunting-yard-algorithm.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

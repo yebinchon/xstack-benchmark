@@ -1,0 +1,5 @@
+BMARK=state-name-puzzle
+CFILE=state-name-puzzle.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

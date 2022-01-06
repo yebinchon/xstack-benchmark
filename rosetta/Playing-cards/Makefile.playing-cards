@@ -1,0 +1,5 @@
+BMARK=playing-cards
+CFILE=playing-cards.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

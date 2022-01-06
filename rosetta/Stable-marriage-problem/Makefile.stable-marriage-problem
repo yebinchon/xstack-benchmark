@@ -1,0 +1,5 @@
+BMARK=stable-marriage-problem
+CFILE=stable-marriage-problem.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

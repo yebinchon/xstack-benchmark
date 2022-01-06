@@ -1,0 +1,5 @@
+BMARK=singly-linked-list-traversal
+CFILE=singly-linked-list-traversal.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

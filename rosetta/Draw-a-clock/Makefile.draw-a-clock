@@ -1,0 +1,5 @@
+BMARK=draw-a-clock
+CFILE=draw-a-clock.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

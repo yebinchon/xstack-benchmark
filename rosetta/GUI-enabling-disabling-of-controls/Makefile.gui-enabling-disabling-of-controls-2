@@ -1,0 +1,5 @@
+BMARK=gui-enabling-disabling-of-controls-2
+CFILE=gui-enabling-disabling-of-controls-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

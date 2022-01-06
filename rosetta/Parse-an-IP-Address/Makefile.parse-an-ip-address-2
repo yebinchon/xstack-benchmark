@@ -1,0 +1,5 @@
+BMARK=parse-an-ip-address-2
+CFILE=parse-an-ip-address-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

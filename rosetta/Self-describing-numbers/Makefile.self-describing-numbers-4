@@ -1,0 +1,5 @@
+BMARK=self-describing-numbers-4
+CFILE=self-describing-numbers-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

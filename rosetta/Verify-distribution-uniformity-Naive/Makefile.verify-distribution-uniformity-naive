@@ -1,0 +1,5 @@
+BMARK=verify-distribution-uniformity-naive
+CFILE=verify-distribution-uniformity-naive.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

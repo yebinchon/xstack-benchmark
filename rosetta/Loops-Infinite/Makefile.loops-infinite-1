@@ -1,0 +1,5 @@
+BMARK=loops-infinite-1
+CFILE=loops-infinite-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

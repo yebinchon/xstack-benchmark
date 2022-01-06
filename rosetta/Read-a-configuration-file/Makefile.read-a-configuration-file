@@ -1,0 +1,5 @@
+BMARK=read-a-configuration-file
+CFILE=read-a-configuration-file.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

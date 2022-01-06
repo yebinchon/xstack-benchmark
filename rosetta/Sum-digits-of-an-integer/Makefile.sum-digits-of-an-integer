@@ -1,0 +1,5 @@
+BMARK=sum-digits-of-an-integer
+CFILE=sum-digits-of-an-integer.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

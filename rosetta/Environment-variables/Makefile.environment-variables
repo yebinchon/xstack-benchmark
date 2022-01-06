@@ -1,0 +1,5 @@
+BMARK=environment-variables
+CFILE=environment-variables.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

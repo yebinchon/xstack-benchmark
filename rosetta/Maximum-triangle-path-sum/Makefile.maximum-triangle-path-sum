@@ -1,0 +1,5 @@
+BMARK=maximum-triangle-path-sum
+CFILE=maximum-triangle-path-sum.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

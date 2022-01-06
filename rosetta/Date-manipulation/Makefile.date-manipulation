@@ -1,0 +1,5 @@
+BMARK=date-manipulation
+CFILE=date-manipulation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

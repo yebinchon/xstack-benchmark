@@ -1,0 +1,5 @@
+BMARK=date-format
+CFILE=date-format.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

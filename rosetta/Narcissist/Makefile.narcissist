@@ -1,0 +1,5 @@
+BMARK=narcissist
+CFILE=narcissist.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

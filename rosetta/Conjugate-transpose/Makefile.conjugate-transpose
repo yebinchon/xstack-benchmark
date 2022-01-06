@@ -1,0 +1,5 @@
+BMARK=conjugate-transpose
+CFILE=conjugate-transpose.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

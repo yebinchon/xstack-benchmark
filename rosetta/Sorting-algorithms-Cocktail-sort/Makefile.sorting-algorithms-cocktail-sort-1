@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-cocktail-sort-1
+CFILE=sorting-algorithms-cocktail-sort-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=runge-kutta-method
+CFILE=runge-kutta-method.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=greatest-element-of-a-list-1
+CFILE=greatest-element-of-a-list-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

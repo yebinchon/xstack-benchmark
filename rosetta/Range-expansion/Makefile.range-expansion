@@ -1,0 +1,5 @@
+BMARK=range-expansion
+CFILE=range-expansion.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

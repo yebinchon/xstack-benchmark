@@ -1,0 +1,5 @@
+BMARK=comma-quibbling
+CFILE=comma-quibbling.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

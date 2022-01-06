@@ -1,0 +1,5 @@
+BMARK=send-email
+CFILE=send-email.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

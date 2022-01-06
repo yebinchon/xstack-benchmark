@@ -1,0 +1,5 @@
+BMARK=soap-3
+CFILE=soap-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

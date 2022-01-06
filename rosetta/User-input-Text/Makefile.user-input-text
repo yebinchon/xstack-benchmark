@@ -1,0 +1,5 @@
+BMARK=user-input-text
+CFILE=user-input-text.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

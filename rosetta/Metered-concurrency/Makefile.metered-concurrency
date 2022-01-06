@@ -1,0 +1,5 @@
+BMARK=metered-concurrency
+CFILE=metered-concurrency.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

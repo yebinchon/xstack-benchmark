@@ -1,0 +1,5 @@
+BMARK=order-two-numerical-lists-1
+CFILE=order-two-numerical-lists-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

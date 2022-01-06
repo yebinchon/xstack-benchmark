@@ -1,0 +1,5 @@
+BMARK=rot-13
+CFILE=rot-13.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

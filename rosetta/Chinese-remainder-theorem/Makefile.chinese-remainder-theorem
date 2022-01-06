@@ -1,0 +1,5 @@
+BMARK=chinese-remainder-theorem
+CFILE=chinese-remainder-theorem.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

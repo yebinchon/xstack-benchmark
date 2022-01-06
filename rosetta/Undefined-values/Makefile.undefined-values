@@ -1,0 +1,5 @@
+BMARK=undefined-values
+CFILE=undefined-values.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

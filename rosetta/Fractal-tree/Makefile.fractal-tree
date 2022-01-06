@@ -1,0 +1,5 @@
+BMARK=fractal-tree
+CFILE=fractal-tree.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=van_eck_sequence
+CFILE=van_eck_sequence.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

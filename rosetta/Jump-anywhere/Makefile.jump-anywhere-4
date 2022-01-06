@@ -1,0 +1,5 @@
+BMARK=jump-anywhere-4
+CFILE=jump-anywhere-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

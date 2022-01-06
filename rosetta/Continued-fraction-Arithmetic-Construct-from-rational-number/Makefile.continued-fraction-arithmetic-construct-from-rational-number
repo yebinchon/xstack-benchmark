@@ -1,0 +1,5 @@
+BMARK=continued-fraction-arithmetic-construct-from-rational-number
+CFILE=continued-fraction-arithmetic-construct-from-rational-number.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

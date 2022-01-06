@@ -1,0 +1,5 @@
+BMARK=sum-and-product-of-an-array
+CFILE=sum-and-product-of-an-array.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

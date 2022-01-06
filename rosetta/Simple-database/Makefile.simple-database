@@ -1,0 +1,5 @@
+BMARK=simple-database
+CFILE=simple-database.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-bubble-sort
+CFILE=sorting-algorithms-bubble-sort.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

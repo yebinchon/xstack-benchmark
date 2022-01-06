@@ -1,0 +1,5 @@
+BMARK=bitmap-b-zier-curves-cubic-1
+CFILE=bitmap-b-zier-curves-cubic-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

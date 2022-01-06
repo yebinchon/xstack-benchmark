@@ -1,0 +1,5 @@
+BMARK=window-creation-x11-1
+CFILE=window-creation-x11-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

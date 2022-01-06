@@ -1,0 +1,5 @@
+BMARK=word-wrap
+CFILE=word-wrap.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

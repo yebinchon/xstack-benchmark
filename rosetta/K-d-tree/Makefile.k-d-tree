@@ -1,0 +1,5 @@
+BMARK=k-d-tree
+CFILE=k-d-tree.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

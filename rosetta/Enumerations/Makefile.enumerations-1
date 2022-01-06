@@ -1,0 +1,5 @@
+BMARK=enumerations-1
+CFILE=enumerations-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

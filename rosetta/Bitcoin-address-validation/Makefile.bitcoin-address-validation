@@ -1,0 +1,5 @@
+BMARK=bitcoin-address-validation
+CFILE=bitcoin-address-validation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

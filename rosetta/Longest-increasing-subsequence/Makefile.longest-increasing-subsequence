@@ -1,0 +1,5 @@
+BMARK=longest-increasing-subsequence
+CFILE=longest-increasing-subsequence.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

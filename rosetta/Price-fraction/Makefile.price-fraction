@@ -1,0 +1,5 @@
+BMARK=price-fraction
+CFILE=price-fraction.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

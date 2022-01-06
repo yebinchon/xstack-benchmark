@@ -1,0 +1,5 @@
+BMARK=simulate-input-mouse
+CFILE=simulate-input-mouse.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

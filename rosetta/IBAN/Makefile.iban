@@ -1,0 +1,5 @@
+BMARK=iban
+CFILE=iban.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

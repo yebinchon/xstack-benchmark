@@ -1,0 +1,5 @@
+BMARK=string-matching-2
+CFILE=string-matching-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-merge-sort
+CFILE=sorting-algorithms-merge-sort.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

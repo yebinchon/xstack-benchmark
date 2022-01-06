@@ -1,0 +1,5 @@
+BMARK=flatten-a-list
+CFILE=flatten-a-list.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

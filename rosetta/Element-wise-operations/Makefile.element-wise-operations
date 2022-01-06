@@ -1,0 +1,5 @@
+BMARK=element-wise-operations
+CFILE=element-wise-operations.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

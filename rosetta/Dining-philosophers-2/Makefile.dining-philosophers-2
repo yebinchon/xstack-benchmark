@@ -1,0 +1,5 @@
+BMARK=dining-philosophers-2
+CFILE=dining-philosophers-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

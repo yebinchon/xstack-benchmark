@@ -1,0 +1,5 @@
+BMARK=roman-numerals-encode-1
+CFILE=roman-numerals-encode-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

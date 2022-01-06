@@ -1,0 +1,5 @@
+BMARK=determine-if-a-string-is-numeric
+CFILE=determine-if-a-string-is-numeric.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

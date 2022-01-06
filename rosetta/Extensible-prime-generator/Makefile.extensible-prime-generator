@@ -1,0 +1,5 @@
+BMARK=extensible-prime-generator
+CFILE=extensible-prime-generator.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

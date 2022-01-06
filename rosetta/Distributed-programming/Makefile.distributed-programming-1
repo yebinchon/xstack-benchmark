@@ -1,0 +1,5 @@
+BMARK=distributed-programming-1
+CFILE=distributed-programming-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

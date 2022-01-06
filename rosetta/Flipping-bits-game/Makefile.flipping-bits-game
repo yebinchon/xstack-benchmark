@@ -1,0 +1,5 @@
+BMARK=flipping-bits-game
+CFILE=flipping-bits-game.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

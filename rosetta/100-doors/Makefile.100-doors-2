@@ -1,0 +1,5 @@
+BMARK=100-doors-2
+CFILE=100-doors-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

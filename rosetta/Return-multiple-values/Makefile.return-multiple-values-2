@@ -1,0 +1,5 @@
+BMARK=return-multiple-values-2
+CFILE=return-multiple-values-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

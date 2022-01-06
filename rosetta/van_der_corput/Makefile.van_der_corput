@@ -1,0 +1,5 @@
+BMARK=van_der_corput
+CFILE=van_der_corput.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

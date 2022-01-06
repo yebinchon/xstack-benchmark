@@ -1,0 +1,5 @@
+BMARK=xml-output
+CFILE=xml-output.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

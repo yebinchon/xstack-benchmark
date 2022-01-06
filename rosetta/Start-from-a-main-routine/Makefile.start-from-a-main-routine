@@ -1,0 +1,5 @@
+BMARK=start-from-a-main-routine
+CFILE=start-from-a-main-routine.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

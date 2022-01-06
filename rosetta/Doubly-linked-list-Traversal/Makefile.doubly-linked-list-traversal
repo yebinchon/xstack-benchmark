@@ -1,0 +1,5 @@
+BMARK=doubly-linked-list-traversal
+CFILE=doubly-linked-list-traversal.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

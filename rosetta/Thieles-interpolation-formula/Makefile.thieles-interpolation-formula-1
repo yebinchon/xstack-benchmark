@@ -1,0 +1,5 @@
+BMARK=thieles-interpolation-formula-1
+CFILE=thieles-interpolation-formula-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

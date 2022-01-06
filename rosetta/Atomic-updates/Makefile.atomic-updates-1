@@ -1,0 +1,5 @@
+BMARK=atomic-updates-1
+CFILE=atomic-updates-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=bitmap-write-a-ppm-file-4
+CFILE=bitmap-write-a-ppm-file-4.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

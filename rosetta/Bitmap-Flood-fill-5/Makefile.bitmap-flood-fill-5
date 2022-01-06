@@ -1,0 +1,5 @@
+BMARK=bitmap-flood-fill-5
+CFILE=bitmap-flood-fill-5.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

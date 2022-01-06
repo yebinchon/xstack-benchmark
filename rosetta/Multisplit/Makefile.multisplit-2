@@ -1,0 +1,5 @@
+BMARK=multisplit-2
+CFILE=multisplit-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

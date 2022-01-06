@@ -1,0 +1,5 @@
+BMARK=generic-swap-1
+CFILE=generic-swap-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

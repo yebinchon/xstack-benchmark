@@ -1,0 +1,5 @@
+BMARK=gray-code-1
+CFILE=gray-code-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

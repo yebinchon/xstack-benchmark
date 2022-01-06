@@ -1,0 +1,5 @@
+BMARK=input-loop
+CFILE=input-loop.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

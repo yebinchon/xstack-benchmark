@@ -1,9 +1,0 @@
-clang -Xclang -disable-O0-optnone -S -emit-llvm -g abstract-type-1.c
-opt -loop-simplify abstract-type-1.ll -S -o abstract-type-1.ll
-opt -mem2reg abstract-type-1.ll -S -o abstract-type-1_mem2reg.ll
-llvm-cbe abstract-type-1_mem2reg.ll
-clang -g -O3 abstract-type-1_mem2reg.cbe.c -lm -o abstract-type-1_mem2reg.cbe.exe
-/usr/bin/ld: /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crt1.o: in function `_start':
-(.text+0x24): undefined reference to `main'
-clang-10: error: linker command failed with exit code 1 (use -v to see invocation)
-make: *** [../Makefile.generic:24: abstract-type-1_mem2reg.cbe.exe] Error 1

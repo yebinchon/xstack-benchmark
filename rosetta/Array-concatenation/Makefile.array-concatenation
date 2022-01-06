@@ -1,0 +1,5 @@
+BMARK=array-concatenation
+CFILE=array-concatenation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=memory-layout-of-a-data-structure
+CFILE=memory-layout-of-a-data-structure.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

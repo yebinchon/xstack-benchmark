@@ -1,0 +1,5 @@
+BMARK=sequence-of-primes-by-trial-division
+CFILE=sequence-of-primes-by-trial-division.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

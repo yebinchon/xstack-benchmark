@@ -1,0 +1,5 @@
+BMARK=soundex
+CFILE=soundex.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=keyboard-input-keypress-check
+CFILE=keyboard-input-keypress-check.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

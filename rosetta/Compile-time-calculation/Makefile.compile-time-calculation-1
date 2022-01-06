@@ -1,0 +1,5 @@
+BMARK=compile-time-calculation-1
+CFILE=compile-time-calculation-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

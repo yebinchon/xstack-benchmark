@@ -1,0 +1,5 @@
+BMARK=same-fringe
+CFILE=same-fringe.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

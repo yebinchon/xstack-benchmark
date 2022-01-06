@@ -1,0 +1,5 @@
+BMARK=honeycombs
+CFILE=honeycombs.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

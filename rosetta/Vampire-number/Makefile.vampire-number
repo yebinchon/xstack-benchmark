@@ -1,0 +1,5 @@
+BMARK=vampire-number
+CFILE=vampire-number.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

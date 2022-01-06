@@ -1,0 +1,5 @@
+BMARK=number-names
+CFILE=number-names.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

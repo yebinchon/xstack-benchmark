@@ -1,0 +1,5 @@
+BMARK=numeric-error-propagation
+CFILE=numeric-error-propagation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

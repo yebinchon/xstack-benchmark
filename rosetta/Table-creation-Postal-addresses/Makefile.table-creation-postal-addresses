@@ -1,0 +1,5 @@
+BMARK=table-creation-postal-addresses
+CFILE=table-creation-postal-addresses.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

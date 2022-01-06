@@ -1,0 +1,5 @@
+BMARK=loops-while-2
+CFILE=loops-while-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

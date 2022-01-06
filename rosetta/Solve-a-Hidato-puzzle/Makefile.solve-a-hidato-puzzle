@@ -1,0 +1,5 @@
+BMARK=solve-a-hidato-puzzle
+CFILE=solve-a-hidato-puzzle.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

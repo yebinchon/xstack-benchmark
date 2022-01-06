@@ -1,0 +1,5 @@
+BMARK=ludic-numbers
+CFILE=ludic-numbers.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=find-the-last-sunday-of-each-month
+CFILE=find-the-last-sunday-of-each-month.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

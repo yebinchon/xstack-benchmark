@@ -1,0 +1,5 @@
+BMARK=aks-test-for-primes
+CFILE=aks-test-for-primes.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

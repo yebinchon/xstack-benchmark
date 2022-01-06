@@ -1,0 +1,5 @@
+BMARK=vector-products
+CFILE=vector-products.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

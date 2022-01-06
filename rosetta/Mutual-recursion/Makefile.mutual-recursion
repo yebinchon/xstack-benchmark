@@ -1,0 +1,5 @@
+BMARK=mutual-recursion
+CFILE=mutual-recursion.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

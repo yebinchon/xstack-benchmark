@@ -1,0 +1,5 @@
+BMARK=literals-string-3
+CFILE=literals-string-3.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

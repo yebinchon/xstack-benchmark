@@ -1,0 +1,5 @@
+BMARK=ordered-words-1
+CFILE=ordered-words-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

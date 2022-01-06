@@ -1,0 +1,5 @@
+BMARK=floyds-triangle
+CFILE=floyds-triangle.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

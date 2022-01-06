@@ -1,0 +1,5 @@
+BMARK=handle-a-signal
+CFILE=handle-a-signal.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

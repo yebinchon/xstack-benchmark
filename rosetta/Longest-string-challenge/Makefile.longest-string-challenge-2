@@ -1,0 +1,5 @@
+BMARK=longest-string-challenge-2
+CFILE=longest-string-challenge-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=long-multiplication-2
+CFILE=long-multiplication-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

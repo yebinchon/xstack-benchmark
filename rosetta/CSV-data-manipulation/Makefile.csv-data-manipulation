@@ -1,0 +1,5 @@
+BMARK=csv-data-manipulation
+CFILE=csv-data-manipulation.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

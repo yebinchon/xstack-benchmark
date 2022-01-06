@@ -1,0 +1,5 @@
+BMARK=xml-dom-serialization
+CFILE=xml-dom-serialization.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

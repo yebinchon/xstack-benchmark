@@ -1,0 +1,5 @@
+BMARK=parsing-rpn-to-infix-conversion
+CFILE=parsing-rpn-to-infix-conversion.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

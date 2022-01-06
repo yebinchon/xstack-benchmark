@@ -1,0 +1,5 @@
+BMARK=ternary-logic-1
+CFILE=ternary-logic-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

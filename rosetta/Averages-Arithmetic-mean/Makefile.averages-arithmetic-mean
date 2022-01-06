@@ -1,0 +1,5 @@
+BMARK=averages-arithmetic-mean
+CFILE=averages-arithmetic-mean.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

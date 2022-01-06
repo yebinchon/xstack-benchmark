@@ -1,0 +1,5 @@
+BMARK=24-game
+CFILE=24-game.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

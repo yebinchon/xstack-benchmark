@@ -1,0 +1,5 @@
+BMARK=99-bottles-of-beer-2
+CFILE=99-bottles-of-beer-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

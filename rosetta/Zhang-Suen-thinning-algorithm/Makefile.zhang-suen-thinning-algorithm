@@ -1,0 +1,5 @@
+BMARK=zhang-suen-thinning-algorithm
+CFILE=zhang-suen-thinning-algorithm.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

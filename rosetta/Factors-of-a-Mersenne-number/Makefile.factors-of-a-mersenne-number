@@ -1,0 +1,5 @@
+BMARK=factors-of-a-mersenne-number
+CFILE=factors-of-a-mersenne-number.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

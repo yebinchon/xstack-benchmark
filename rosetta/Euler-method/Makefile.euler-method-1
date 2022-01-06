@@ -1,0 +1,5 @@
+BMARK=euler-method-1
+CFILE=euler-method-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

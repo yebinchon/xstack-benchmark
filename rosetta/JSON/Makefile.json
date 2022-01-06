@@ -1,0 +1,5 @@
+BMARK=json
+CFILE=json.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

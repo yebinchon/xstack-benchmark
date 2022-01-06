@@ -1,0 +1,5 @@
+BMARK=rate-counter
+CFILE=rate-counter.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

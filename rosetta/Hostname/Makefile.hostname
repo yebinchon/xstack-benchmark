@@ -1,0 +1,5 @@
+BMARK=hostname
+CFILE=hostname.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

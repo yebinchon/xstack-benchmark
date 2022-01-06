@@ -1,0 +1,5 @@
+BMARK=rename-a-file
+CFILE=rename-a-file.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

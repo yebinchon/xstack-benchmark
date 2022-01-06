@@ -1,0 +1,5 @@
+BMARK=sha-1
+CFILE=sha-1.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=strip-comments-from-a-string
+CFILE=strip-comments-from-a-string.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

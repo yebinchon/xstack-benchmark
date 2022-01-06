@@ -1,0 +1,5 @@
+BMARK=detect-division-by-zero
+CFILE=detect-division-by-zero.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

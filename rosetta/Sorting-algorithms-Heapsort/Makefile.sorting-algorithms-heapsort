@@ -1,0 +1,5 @@
+BMARK=sorting-algorithms-heapsort
+CFILE=sorting-algorithms-heapsort.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

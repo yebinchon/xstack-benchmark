@@ -1,0 +1,5 @@
+BMARK=voronoi-diagram
+CFILE=voronoi-diagram.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

@@ -1,0 +1,5 @@
+BMARK=color-of-a-screen-pixel-2
+CFILE=color-of-a-screen-pixel-2.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

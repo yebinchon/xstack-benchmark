@@ -1,0 +1,5 @@
+BMARK=one-of-n-lines-in-a-file
+CFILE=one-of-n-lines-in-a-file.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic

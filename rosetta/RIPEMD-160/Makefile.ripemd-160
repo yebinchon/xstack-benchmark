@@ -1,0 +1,5 @@
+BMARK=ripemd-160
+CFILE=ripemd-160.c
+LINK_FLAGS=-pthread -lm
+
+include ../Makefile.generic
