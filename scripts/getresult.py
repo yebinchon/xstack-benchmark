@@ -42,7 +42,10 @@ def get_one_prof(path, bmark_file, test_type):
   exec_name = [bmark_name+".exe", bmark_name+".cbe.exe", bmark_name+"_mem2reg.cbe.exe"]
   print("Generating %s on %s " % (test_type, bmark_name))
   with open(test_type+".log", "w") as fd:
-    make_process = subprocess.Popen(["make", "-f", "Makefile."+bmark_name, test_type], stdout=fd, stderr=fd)
+    if test_type == "compile":
+      make_process = subprocess.Popen(["make", "-f", "Makefile."+bmark_name], stdout=fd, stderr=fd)
+    else:
+      make_process = subprocess.Popen(["make", "-f", "Makefile."+bmark_name, test_type], stdout=fd, stderr=fd)
     timer = Timer(60, make_process.kill)
     try:
       timer.start()
@@ -67,10 +70,10 @@ def get_all_passes(root_path, bmark_dic, tests, result_path):
   bmark_status = {}
   for bmark_file in bmark_set:
     status = {}
-    if "Compile" in tests:
-      status["Compile"] = get_one_prof(bmark_path, bmark_file, " ")
-    if "Correct" in tests:
-      status["Correct"] = get_one_prof(bmark_path, bmark_file, "check_correctness")
+    if "compile" in tests:
+      status["compile"] = get_one_prof(bmark_path, bmark_file, "compile")
+    if "correct" in tests:
+      status["correct"] = get_one_prof(bmark_path, bmark_file, "check_correctness")
     bmark_status.update({ bmark_file : status })
 
 #  os.chdir(result_path)
@@ -109,8 +112,9 @@ def set_config():
   return config
 
 if __name__ == "__main__":
-  #tests = ["Compile", "Correct"]
-  tests = ["Correct"]
+  tests = ["compile", "correct"]
+  #tests = ["correct"]
+  #tests = ["compile"]
   
   config = set_config()
   if not config:
@@ -138,10 +142,11 @@ if __name__ == "__main__":
   reVis = ReportVisualizer(bmarks=config['bmark_list'], passes=tests, status=status, path=config['result_path'])
   reVis.dumpCSV()
 
-  bmark_true = 0;
-  for bmark_dir in config['bmark_list']:
-    for bmark_name in bmark_dir["set"]:
-      if status[bmark_name][tests[0]] == True:
-        bmark_true += 1
+  bmark_true = [0, 0];
+  for i in range(len(tests)):
+    for bmark_dir in config['bmark_list']:
+      for bmark_name in bmark_dir["set"]:
+        if status[bmark_name][tests[i]] == True:
+          bmark_true[i] += 1
 
-  print("\nOut of %d benchmarks, %d are correct" % (config['bmark_num'], bmark_true))
+    print("\nOut of %d benchmarks, %d are %s" % (config['bmark_num'], bmark_true[i], tests[i]))
