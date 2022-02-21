@@ -1,3 +1,5 @@
+LINK_FLAGS+=-fopenmp
+
 %.ll: %.c
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
 	opt -loop-simplify $@ -S -o $@
