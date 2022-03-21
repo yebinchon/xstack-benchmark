@@ -5,6 +5,7 @@ OBJFILES_BC?= $(shell find . -name \*.c | sed -e "s/\.c/.bc/" ) $(shell find . -
 endif
 
 PLAIN=benchmark
+LINK_FLAGS+=-fopenmp
 
 %.ll: %.c
 	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -S -emit-llvm -g $<
