@@ -1,9 +1,27 @@
+ifdef SPEC_DEFAULTS
+OBJFILES_BC = $(OBJS)
+else
+OBJFILES_BC?= $(shell find . -name \*.c | sed -e "s/\.c/.bc/" ) $(shell find . -name \*.C | sed -e "s/\.C/.bc/" ) $(shell find . -name \*.cpp | sed -e "s/\.cpp/.bc/" )  $(shell find . -name \*.cc | sed -e "s/\.cc/.bc/" )
+endif
+
+PLAIN=benchmark
+
 %.ll: %.c
-	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
+	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -S -emit-llvm -g $<
 	opt -loop-simplify $@ -S -o $@
 
+%.bc: %.c
+	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -g -c -emit-llvm $<
+	opt -loop-simplify $@ -S -o $@
+
+$(PLAIN).bc : $(OBJFILES_BC)
+	llvm-link $(LLVM_LINK_FLAGS) $^ -o $@
+
+$(PLAIN).ll : $(PLAIN).bc
+	llvm-dis $^
+
 ${BMARK}_mem2reg.ll: ${BMARK}.ll
-	opt -mem2reg $< -S -o $@
+	opt -mem2reg -sroa $< -S -o $@
 
 ${BMARK}.cbe.c: ${BMARK}.ll
 	opt $< -o ${BMARK}.bc
