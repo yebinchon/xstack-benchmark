@@ -11,7 +11,15 @@ LINK_FLAGS+=-fopenmp
 	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -S -emit-llvm -g $<
 	opt -loop-simplify $@ -S -o $@
 
+%.ll: %.cpp
+	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -S -emit-llvm -g $<
+	opt -loop-simplify $@ -S -o $@
+
 %.bc: %.c
+	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -g -c -emit-llvm $<
+	opt -loop-simplify $@ -S -o $@
+
+%.bc: %.cpp
 	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -g -c -emit-llvm $<
 	opt -loop-simplify $@ -S -o $@
 
