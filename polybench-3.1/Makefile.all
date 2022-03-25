@@ -1,0 +1,10 @@
+BASE_DIR := $(shell pwd)
+
+DIRS := $(wildcard */)
+
+all:
+	for dir in $(DIRS) ; do cd $(DIRS) ; make benchmark.ll ; cd ../ ; done
+
+clean:
+	for dir in $(DIRS) ; do cd $(DIRS) ; make clean ; cd ../ ; done
+
