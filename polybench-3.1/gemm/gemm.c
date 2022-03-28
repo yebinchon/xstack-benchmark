@@ -1,31 +1,23 @@
 /**
- * gemm.c: This file is part of the PolyBench 3.0 test suite.
+ * gemm.c: This file is part of the PolyBench/C 3.2 test suite.
  *
  *
  * Contact: Louis-Noel Pouchet <pouchet@cse.ohio-state.edu>
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
-
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 4000. */
-#include "gemm.h"
-
-
-/* Array initialization. */
-static
+  static
 void init_array(int ni, int nj, int nk,
-		DATA_TYPE *alpha,
-		DATA_TYPE *beta,
-		DATA_TYPE POLYBENCH_2D(C,NI,NJ,ni,nj),
-		DATA_TYPE POLYBENCH_2D(A,NI,NK,ni,nk),
-		DATA_TYPE POLYBENCH_2D(B,NK,NJ,nk,nj))
+    double *alpha,
+    double *beta,
+    double C[ni][nj],
+    double A[ni][nk],
+    double B[nk][nj])
 {
   int i, j;
 
@@ -33,54 +25,54 @@ void init_array(int ni, int nj, int nk,
   *beta = 2123;
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
-      C[i][j] = ((DATA_TYPE) i*j) / ni;
+      C[i][j] = ((double) i*j) / ni;
   for (i = 0; i < ni; i++)
     for (j = 0; j < nk; j++)
-      A[i][j] = ((DATA_TYPE) i*j) / ni;
+      A[i][j] = ((double) i*j) / ni;
   for (i = 0; i < nk; i++)
     for (j = 0; j < nj; j++)
-      B[i][j] = ((DATA_TYPE) i*j) / ni;
+      B[i][j] = ((double) i*j) / ni;
 }
 
 
-/* DCE code. Must scan the entire live-out data.
-   Can be used also to check the correctness of the output. */
-static
+
+
+  static
 void print_array(int ni, int nj,
-		 DATA_TYPE POLYBENCH_2D(C,NI,NJ,ni,nj))
+    double C[ni][nj])
 {
   int i, j;
 
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++) {
-	fprintf (stderr, DATA_PRINTF_MODIFIER, C[i][j]);
-	if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
+      fprintf (stderr, "%0.2lf ", C[i][j]);
+      if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
     }
   fprintf (stderr, "\n");
 }
 
 
-/* Main computational kernel. The whole function will be timed,
-   including the call and return. */
-static
+
+
+  static
 void kernel_gemm(int ni, int nj, int nk,
-		 DATA_TYPE alpha,
-		 DATA_TYPE beta,
-		 DATA_TYPE POLYBENCH_2D(C,NI,NJ,ni,nj),
-		 DATA_TYPE POLYBENCH_2D(A,NI,NK,ni,nk),
-		 DATA_TYPE POLYBENCH_2D(B,NK,NJ,nk,nj))
+    double alpha,
+    double beta,
+    double C[ni][nj],
+    double A[ni][nk],
+    double B[nk][nj])
 {
   int i, j, k;
 
 #pragma scop
-  /* C := alpha*A*B + beta*C */
+
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
-      {
-	C[i][j] *= beta;
-	for (k = 0; k < nk; ++k)
-	  C[i][j] += alpha * A[i][k] * B[k][j];
-      }
+    {
+      C[i][j] *= beta;
+      for (k = 0; k < nk; ++k)
+        C[i][j] += alpha * A[i][k] * B[k][j];
+    }
 #pragma endscop
 
 }
@@ -88,46 +80,43 @@ void kernel_gemm(int ni, int nj, int nk,
 
 int main(int argc, char** argv)
 {
-  /* Retrieve problem size. */
-  int ni = NI;
-  int nj = NJ;
-  int nk = NK;
 
-  /* Variable declaration/allocation. */
-  DATA_TYPE alpha;
-  DATA_TYPE beta;
-  POLYBENCH_2D_ARRAY_DECL(C,DATA_TYPE,NI,NJ,ni,nj);
-  POLYBENCH_2D_ARRAY_DECL(A,DATA_TYPE,NI,NK,ni,nk);
-  POLYBENCH_2D_ARRAY_DECL(B,DATA_TYPE,NK,NJ,nk,nj);
+  int dump_code = atoi(argv[1]);
+  int ni = atoi(argv[2]);
+  int nj = atoi(argv[3]);
+  int nk = atoi(argv[4]);
 
-  /* Initialize array(s). */
+  double alpha;
+  double beta;
+  double (*C)[ni][nj]; C = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
+  double (*A)[ni][nk]; A = (double(*)[ni][nk])malloc((ni) * (nk) * sizeof(double));;
+  double (*B)[nk][nj]; B = (double(*)[nk][nj])malloc((nk) * (nj) * sizeof(double));;
+
+
   init_array (ni, nj, nk, &alpha, &beta,
-	      POLYBENCH_ARRAY(C),
-	      POLYBENCH_ARRAY(A),
-	      POLYBENCH_ARRAY(B));
+      *C,
+      *A,
+      *B);
 
-  /* Start timer. */
-  polybench_start_instruments;
 
-  /* Run kernel. */
+
+
   kernel_gemm (ni, nj, nk,
-	       alpha, beta,
-	       POLYBENCH_ARRAY(C),
-	       POLYBENCH_ARRAY(A),
-	       POLYBENCH_ARRAY(B));
+      alpha, beta,
+      *C,
+      *A,
+      *B);
 
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
 
-  /* Prevent dead-code elimination. All live-out data must be printed
-     by the function call in argument. */
-  polybench_prevent_dce(print_array(ni, nj,  POLYBENCH_ARRAY(C)));
 
-  /* Be clean. */
-  POLYBENCH_FREE_ARRAY(C);
-  POLYBENCH_FREE_ARRAY(A);
-  POLYBENCH_FREE_ARRAY(B);
+
+
+  if (dump_code == 1) print_array(ni, nj, *C);
+
+
+  free((void*)C);;
+  free((void*)A);;
+  free((void*)B);;
 
   return 0;
 }

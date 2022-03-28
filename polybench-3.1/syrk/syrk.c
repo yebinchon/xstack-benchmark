@@ -1,30 +1,22 @@
 /**
- * syrk.c: This file is part of the PolyBench 3.0 test suite.
+ * syrk.c: This file is part of the PolyBench/C 3.2 test suite.
  *
  *
  * Contact: Louis-Noel Pouchet <pouchet@cse.ohio-state.edu>
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
-
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 4000. */
-#include "syrk.h"
-
-
-/* Array initialization. */
-static
+  static
 void init_array(int ni, int nj,
-		DATA_TYPE *alpha,
-		DATA_TYPE *beta,
-		DATA_TYPE POLYBENCH_2D(C,NI,NI,ni,ni),
-		DATA_TYPE POLYBENCH_2D(A,NI,NJ,ni,nj))
+    double *alpha,
+    double *beta,
+    double C[ni][ni],
+    double A[ni][nj])
 {
   int i, j;
 
@@ -32,50 +24,50 @@ void init_array(int ni, int nj,
   *beta = 2123;
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
-      A[i][j] = ((DATA_TYPE) i*j) / ni;
+      A[i][j] = ((double) i*j) / ni;
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++)
-      C[i][j] = ((DATA_TYPE) i*j) / ni;
+      C[i][j] = ((double) i*j) / ni;
 }
 
 
-/* DCE code. Must scan the entire live-out data.
-   Can be used also to check the correctness of the output. */
-static
+
+
+  static
 void print_array(int ni,
-		 DATA_TYPE POLYBENCH_2D(C,NI,NI,ni,ni))
+    double C[ni][ni])
 {
   int i, j;
 
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++) {
-	fprintf (stderr, DATA_PRINTF_MODIFIER, C[i][j]);
-	if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
+      fprintf (stderr, "%0.2lf ", C[i][j]);
+      if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
     }
   fprintf (stderr, "\n");
 }
 
 
-/* Main computational kernel. The whole function will be timed,
-   including the call and return. */
-static
+
+
+  static
 void kernel_syrk(int ni, int nj,
-		 DATA_TYPE alpha,
-		 DATA_TYPE beta,
-		 DATA_TYPE POLYBENCH_2D(C,NI,NI,ni,ni),
-		 DATA_TYPE POLYBENCH_2D(A,NI,NJ,ni,nj))
+    double alpha,
+    double beta,
+    double C[ni][ni],
+    double A[ni][nj])
 {
   int i, j, k;
 
 #pragma scop
-  /*  C := alpha*A*A' + beta*C */
+
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++)
       C[i][j] *= beta;
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++)
       for (k = 0; k < nj; k++)
-	  C[i][j] += alpha * A[i][k] * A[j][k];
+        C[i][j] += alpha * A[i][k] * A[j][k];
 #pragma endscop
 
 }
@@ -83,36 +75,32 @@ void kernel_syrk(int ni, int nj,
 
 int main(int argc, char** argv)
 {
-  /* Retrieve problem size. */
-  int ni = NI;
-  int nj = NJ;
+  int dump_code = atoi(argv[1]);
+  int ni = atoi(argv[2]);
+  int nj = atoi(argv[3]);
 
-  /* Variable declaration/allocation. */
-  DATA_TYPE alpha;
-  DATA_TYPE beta;
-  POLYBENCH_2D_ARRAY_DECL(C,DATA_TYPE,NI,NI,ni,ni);
-  POLYBENCH_2D_ARRAY_DECL(A,DATA_TYPE,NI,NJ,ni,nj);
+  double alpha;
+  double beta;
+  double (*C)[ni][ni]; C = (double(*)[ni][ni])malloc((ni) * (ni) * sizeof(double));;
+  double (*A)[ni][nj]; A = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
 
-  /* Initialize array(s). */
-  init_array (ni, nj, &alpha, &beta, POLYBENCH_ARRAY(C), POLYBENCH_ARRAY(A));
 
-  /* Start timer. */
-  polybench_start_instruments;
+  init_array (ni, nj, &alpha, &beta, *C, *A);
 
-  /* Run kernel. */
-  kernel_syrk (ni, nj, alpha, beta, POLYBENCH_ARRAY(C), POLYBENCH_ARRAY(A));
 
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
 
-  /* Prevent dead-code elimination. All live-out data must be printed
-     by the function call in argument. */
-  polybench_prevent_dce(print_array(ni, POLYBENCH_ARRAY(C)));
 
-  /* Be clean. */
-  POLYBENCH_FREE_ARRAY(C);
-  POLYBENCH_FREE_ARRAY(A);
+  kernel_syrk (ni, nj, alpha, beta, *C, *A);
+
+
+
+
+
+  if (dump_code == 1) print_array(ni, *C);
+
+
+  free((void*)C);;
+  free((void*)A);;
 
   return 0;
 }

@@ -1,97 +1,90 @@
 /**
- * reg_detect.c: This file is part of the PolyBench 3.0 test suite.
+ * reg_detect.c: This file is part of the PolyBench/C 3.2 test suite.
  *
  *
  * Contact: Louis-Noel Pouchet <pouchet@cse.ohio-state.edu>
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
 
-/* Include benchmark-specific header. */
-/* Default data type is int, default size is 50. */
-#include "reg_detect.h"
-
-
-/* Array initialization. */
-static
+  static
 void init_array(int maxgrid,
-		DATA_TYPE POLYBENCH_2D(sum_tang,MAXGRID,MAXGRID,maxgrid,maxgrid),
-		DATA_TYPE POLYBENCH_2D(mean,MAXGRID,MAXGRID,maxgrid,maxgrid),
-		DATA_TYPE POLYBENCH_2D(path,MAXGRID,MAXGRID,maxgrid,maxgrid))
+    int sum_tang[maxgrid][maxgrid],
+    int mean[maxgrid][maxgrid],
+    int path[maxgrid][maxgrid])
 {
   int i, j;
 
   for (i = 0; i < maxgrid; i++)
     for (j = 0; j < maxgrid; j++) {
-      sum_tang[i][j] = (DATA_TYPE)((i+1)*(j+1));
-      mean[i][j] = ((DATA_TYPE) i-j) / maxgrid;
-      path[i][j] = ((DATA_TYPE) i*(j-1)) / maxgrid;
+      sum_tang[i][j] = (int)((i+1)*(j+1));
+      mean[i][j] = ((int) i-j) / maxgrid;
+      path[i][j] = ((int) i*(j-1)) / maxgrid;
     }
 }
 
 
-/* DCE code. Must scan the entire live-out data.
-   Can be used also to check the correctness of the output. */
-static
+
+
+  static
 void print_array(int maxgrid,
-		 DATA_TYPE POLYBENCH_2D(path,MAXGRID,MAXGRID,maxgrid,maxgrid))
+    int path[maxgrid][maxgrid])
 {
   int i, j;
 
   for (i = 0; i < maxgrid; i++)
     for (j = 0; j < maxgrid; j++) {
-      fprintf (stderr, DATA_PRINTF_MODIFIER, path[i][j]);
+      fprintf (stderr, "%d ", path[i][j]);
       if ((i * maxgrid + j) % 20 == 0) fprintf (stderr, "\n");
     }
   fprintf (stderr, "\n");
 }
 
 
-/* Main computational kernel. The whole function will be timed,
-   including the call and return. */
-/* Source (modified): http://www.cs.uic.edu/~iluican/reg_detect.c */
-static
+
+
+
+  static
 void kernel_reg_detect(int niter, int maxgrid, int length,
-		       DATA_TYPE POLYBENCH_2D(sum_tang,MAXGRID,MAXGRID,maxgrid,maxgrid),
-		       DATA_TYPE POLYBENCH_2D(mean,MAXGRID,MAXGRID,maxgrid,maxgrid),
-		       DATA_TYPE POLYBENCH_2D(path,MAXGRID,MAXGRID,maxgrid,maxgrid),
-		       DATA_TYPE POLYBENCH_3D(diff,MAXGRID,MAXGRID,LENGTH,maxgrid,maxgrid,length),
-		       DATA_TYPE POLYBENCH_3D(sum_diff,MAXGRID,MAXGRID,LENGTH,maxgrid,maxgrid,length))
+    int sum_tang[maxgrid][maxgrid],
+    int mean[maxgrid][maxgrid],
+    int path[maxgrid][maxgrid],
+    int diff[maxgrid][maxgrid][length],
+    int sum_diff[maxgrid][maxgrid][length])
 {
   int t, i, j, cnt;
 
 #pragma scop
   for (t = 0; t < niter; t++)
+  {
+    for (j = 0; j <= maxgrid - 1; j++)
+      for (i = j; i <= maxgrid - 1; i++)
+        for (cnt = 0; cnt <= length - 1; cnt++)
+          diff[j][i][cnt] = sum_tang[j][i];
+
+    for (j = 0; j <= maxgrid - 1; j++)
     {
-      for (j = 0; j <= maxgrid - 1; j++)
-	for (i = j; i <= maxgrid - 1; i++)
-	  for (cnt = 0; cnt <= length - 1; cnt++)
-	    diff[j][i][cnt] = sum_tang[j][i];
-
-      for (j = 0; j <= maxgrid - 1; j++)
-        {
-	  for (i = j; i <= maxgrid - 1; i++)
-            {
-	      sum_diff[j][i][0] = diff[j][i][0];
-	      for (cnt = 1; cnt <= length - 1; cnt++)
-		sum_diff[j][i][cnt] = sum_diff[j][i][cnt - 1] + diff[j][i][cnt];
-	      mean[j][i] = sum_diff[j][i][length - 1];
-            }
-        }
-
-      for (i = 0; i <= maxgrid - 1; i++)
-	path[0][i] = mean[0][i];
-
-      for (j = 1; j <= maxgrid - 1; j++)
-	for (i = j; i <= maxgrid - 1; i++)
-	  path[j][i] = path[j - 1][i - 1] + mean[j][i];
+      for (i = j; i <= maxgrid - 1; i++)
+      {
+        sum_diff[j][i][0] = diff[j][i][0];
+        for (cnt = 1; cnt <= length - 1; cnt++)
+          sum_diff[j][i][cnt] = sum_diff[j][i][cnt - 1] + diff[j][i][cnt];
+        mean[j][i] = sum_diff[j][i][length - 1];
+      }
     }
+
+    for (i = 0; i <= maxgrid - 1; i++)
+      path[0][i] = mean[0][i];
+
+    for (j = 1; j <= maxgrid - 1; j++)
+      for (i = j; i <= maxgrid - 1; i++)
+        path[j][i] = path[j - 1][i - 1] + mean[j][i];
+  }
 #pragma endscop
 
 }
@@ -99,49 +92,46 @@ void kernel_reg_detect(int niter, int maxgrid, int length,
 
 int main(int argc, char** argv)
 {
-  /* Retrieve problem size. */
-  int niter = NITER;
-  int maxgrid = MAXGRID;
-  int length = LENGTH;
 
-  /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(sum_tang, DATA_TYPE, MAXGRID, MAXGRID, maxgrid, maxgrid);
-  POLYBENCH_2D_ARRAY_DECL(mean, DATA_TYPE, MAXGRID, MAXGRID, maxgrid, maxgrid);
-  POLYBENCH_2D_ARRAY_DECL(path, DATA_TYPE, MAXGRID, MAXGRID, maxgrid, maxgrid);
-  POLYBENCH_3D_ARRAY_DECL(diff, DATA_TYPE, MAXGRID, MAXGRID, LENGTH, maxgrid, maxgrid, length);
-  POLYBENCH_3D_ARRAY_DECL(sum_diff, DATA_TYPE, MAXGRID, MAXGRID, LENGTH, maxgrid, maxgrid, length);
+  int dump_code = atoi(argv[1]);
+  int niter = atoi(argv[2]);
+  int maxgrid = atoi(argv[3]);
+  int length = atoi(argv[4]);
 
-  /* Initialize array(s). */
+  int (*sum_tang)[maxgrid][maxgrid]; sum_tang = (int(*)[maxgrid][maxgrid])malloc((maxgrid) * (maxgrid) * sizeof(int));;
+  int (*mean)[maxgrid][maxgrid]; mean = (int(*)[maxgrid][maxgrid])malloc((maxgrid) * (maxgrid) * sizeof(int));;
+  int (*path)[maxgrid][maxgrid]; path = (int(*)[maxgrid][maxgrid])malloc((maxgrid) * (maxgrid) * sizeof(int));;
+  int (*diff)[maxgrid][maxgrid][length]; diff = (int(*)[maxgrid][maxgrid][length])malloc((maxgrid) * (maxgrid) * (length) * sizeof(int));;
+  int (*sum_diff)[maxgrid][maxgrid][length]; sum_diff = (int(*)[maxgrid][maxgrid][length])malloc((maxgrid) * (maxgrid) * (length) * sizeof(int));;
+
+
   init_array (maxgrid,
-	      POLYBENCH_ARRAY(sum_tang),
-	      POLYBENCH_ARRAY(mean),
-	      POLYBENCH_ARRAY(path));
+      *sum_tang,
+      *mean,
+      *path);
 
-  /* Start timer. */
-  polybench_start_instruments;
 
-  /* Run kernel. */
+
+
   kernel_reg_detect (niter, maxgrid, length,
-		     POLYBENCH_ARRAY(sum_tang),
-		     POLYBENCH_ARRAY(mean),
-		     POLYBENCH_ARRAY(path),
-		     POLYBENCH_ARRAY(diff),
-		     POLYBENCH_ARRAY(sum_diff));
+      *sum_tang,
+      *mean,
+      *path,
+      *diff,
+      *sum_diff);
 
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
 
-  /* Prevent dead-code elimination. All live-out data must be printed
-     by the function call in argument. */
-  polybench_prevent_dce(print_array(maxgrid, POLYBENCH_ARRAY(path)));
 
-  /* Be clean. */
-  POLYBENCH_FREE_ARRAY(sum_tang);
-  POLYBENCH_FREE_ARRAY(mean);
-  POLYBENCH_FREE_ARRAY(path);
-  POLYBENCH_FREE_ARRAY(diff);
-  POLYBENCH_FREE_ARRAY(sum_diff);
+
+
+  if (dump_code == 1) print_array(maxgrid, *path);
+
+
+  free((void*)sum_tang);;
+  free((void*)mean);;
+  free((void*)path);;
+  free((void*)diff);;
+  free((void*)sum_diff);;
 
   return 0;
 }
