@@ -4,23 +4,17 @@ else
 OBJFILES_BC?= $(shell find . -name \*.c | sed -e "s/\.c/.bc/" ) $(shell find . -name \*.C | sed -e "s/\.C/.bc/" ) $(shell find . -name \*.cpp | sed -e "s/\.cpp/.bc/" )  $(shell find . -name \*.cc | sed -e "s/\.cc/.bc/" )
 endif
 
+ifdef SPEC_DEFAULTS
+POLLY_OBJFILES_BC = $(OBJS)
+else
+POLLY_OBJFILES_BC?= $(shell find . -name \*.c | sed -e "s/\.c/_polly.bc/" ) $(shell find . -name \*.C | sed -e "s/\.C/_polly.bc/" ) $(shell find . -name \*.cpp | sed -e "s/\.cpp/_polly.bc/" )  $(shell find . -name \*.cc | sed -e "s/\.cc/_polly.bc/" )
+endif
+
 PLAIN=benchmark
 LINK_FLAGS+=-fopenmp
 
-%.ll: %.c
-	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -S -emit-llvm -g $<
-	opt -loop-simplify $@ -S -o $@
-
-%.ll: %.cpp
-	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -S -emit-llvm -g $<
-	opt -loop-simplify $@ -S -o $@
-
 %.bc: %.c
-	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -g -c -emit-llvm $<
-	opt -loop-simplify $@ -S -o $@
-
-%.bc: %.cpp
-	clang -O2 -fopenmp -fno-vectorize -Xclang -disable-O0-optnone -g -c -emit-llvm $<
+	clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
 
 $(PLAIN).bc : $(OBJFILES_BC)

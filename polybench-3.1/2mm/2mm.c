@@ -1,32 +1,25 @@
 /**
- * 2mm.c: This file is part of the PolyBench 3.0 test suite.
+ * 2mm.c: This file is part of the PolyBench/C 3.2 test suite.
  *
  *
  * Contact: Louis-Noel Pouchet <pouchet@cse.ohio-state.edu>
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
 
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 4000. */
-#include "2mm.h"
-
-
-/* Array initialization. */
-static
+  static
 void init_array(int ni, int nj, int nk, int nl,
-		DATA_TYPE *alpha,
-		DATA_TYPE *beta,
-		DATA_TYPE POLYBENCH_2D(A,NI,NK,ni,nl),
-		DATA_TYPE POLYBENCH_2D(B,NK,NJ,nk,nj),
-		DATA_TYPE POLYBENCH_2D(C,NL,NJ,nl,nj),
-		DATA_TYPE POLYBENCH_2D(D,NI,NL,ni,nl))
+    double *alpha,
+    double *beta,
+    double A[ni][nl],
+    double B[nk][nj],
+    double C[nl][nj],
+    double D[ni][nl])
 {
   int i, j;
 
@@ -34,66 +27,66 @@ void init_array(int ni, int nj, int nk, int nl,
   *beta = 2123;
   for (i = 0; i < ni; i++)
     for (j = 0; j < nk; j++)
-      A[i][j] = ((DATA_TYPE) i*j) / ni;
+      A[i][j] = ((double) i*j) / ni;
   for (i = 0; i < nk; i++)
     for (j = 0; j < nj; j++)
-      B[i][j] = ((DATA_TYPE) i*(j+1)) / nj;
+      B[i][j] = ((double) i*(j+1)) / nj;
   for (i = 0; i < nl; i++)
     for (j = 0; j < nj; j++)
-      C[i][j] = ((DATA_TYPE) i*(j+3)) / nl;
+      C[i][j] = ((double) i*(j+3)) / nl;
   for (i = 0; i < ni; i++)
     for (j = 0; j < nl; j++)
-      D[i][j] = ((DATA_TYPE) i*(j+2)) / nk;
+      D[i][j] = ((double) i*(j+2)) / nk;
 }
 
 
-/* DCE code. Must scan the entire live-out data.
-   Can be used also to check the correctness of the output. */
-static
+
+
+  static
 void print_array(int ni, int nl,
-		 DATA_TYPE POLYBENCH_2D(D,NI,NL,ni,nl))
+    double D[ni][nl])
 {
   int i, j;
 
   for (i = 0; i < ni; i++)
     for (j = 0; j < nl; j++) {
-	fprintf (stderr, DATA_PRINTF_MODIFIER, D[i][j]);
-	if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
+      fprintf (stderr, "%0.2lf ", D[i][j]);
+      if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
     }
   fprintf (stderr, "\n");
 }
 
 
-/* Main computational kernel. The whole function will be timed,
-   including the call and return. */
-static
+
+
+  static
 void kernel_2mm(int ni, int nj, int nk, int nl,
-		DATA_TYPE alpha,
-		DATA_TYPE beta,
-		DATA_TYPE POLYBENCH_2D(tmp,NI,NJ,ni,nj),
-		DATA_TYPE POLYBENCH_2D(A,NI,NK,ni,nk),
-		DATA_TYPE POLYBENCH_2D(B,NK,NJ,nk,nj),
-		DATA_TYPE POLYBENCH_2D(C,NL,NJ,nl,nj),
-		DATA_TYPE POLYBENCH_2D(D,NI,NL,ni,nl))
+    double alpha,
+    double beta,
+    double tmp[ni][nj],
+    double A[ni][nk],
+    double B[nk][nj],
+    double C[nl][nj],
+    double D[ni][nl])
 {
   int i, j, k;
 
 #pragma scop
-  /* D := alpha*A*B*C + beta*D */
+
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
-      {
-	tmp[i][j] = 0;
-	for (k = 0; k < nk; ++k)
-	  tmp[i][j] += alpha * A[i][k] * B[k][j];
-      }
+    {
+      tmp[i][j] = 0;
+      for (k = 0; k < nk; ++k)
+        tmp[i][j] += alpha * A[i][k] * B[k][j];
+    }
   for (i = 0; i < ni; i++)
     for (j = 0; j < nl; j++)
-      {
-	D[i][j] *= beta;
-	for (k = 0; k < nj; ++k)
-	  D[i][j] += tmp[i][k] * C[k][j];
-      }
+    {
+      D[i][j] *= beta;
+      for (k = 0; k < nj; ++k)
+        D[i][j] += tmp[i][k] * C[k][j];
+    }
 #pragma endscop
 
 }
@@ -101,54 +94,51 @@ void kernel_2mm(int ni, int nj, int nk, int nl,
 
 int main(int argc, char** argv)
 {
-  /* Retrieve problem size. */
-  int ni = NI;
-  int nj = NJ;
-  int nk = NK;
-  int nl = NL;
+  int dump_code = atoi(argv[1]);
+  int ni = atoi(argv[2]);
+  int nj = atoi(argv[3]);
+  int nk = atoi(argv[4]);
+  int nl = atoi(argv[5]);
 
-  /* Variable declaration/allocation. */
-  DATA_TYPE alpha;
-  DATA_TYPE beta;
-  POLYBENCH_2D_ARRAY_DECL(tmp,DATA_TYPE,NI,NJ,ni,nj);
-  POLYBENCH_2D_ARRAY_DECL(A,DATA_TYPE,NI,NK,ni,nk);
-  POLYBENCH_2D_ARRAY_DECL(B,DATA_TYPE,NK,NJ,nk,nj);
-  POLYBENCH_2D_ARRAY_DECL(C,DATA_TYPE,NL,NJ,nl,nj);
-  POLYBENCH_2D_ARRAY_DECL(D,DATA_TYPE,NI,NL,ni,nl);
 
-  /* Initialize array(s). */
+  double alpha;
+  double beta;
+  double (*tmp)[ni][nj]; tmp = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
+  double (*A)[ni][nk]; A = (double(*)[ni][nk])malloc((ni) * (nk) * sizeof(double));;
+  double (*B)[nk][nj]; B = (double(*)[nk][nj])malloc((nk) * (nj) * sizeof(double));;
+  double (*C)[nl][nj]; C = (double(*)[nl][nj])malloc((nl) * (nj) * sizeof(double));;
+  double (*D)[ni][nl]; D = (double(*)[ni][nl])malloc((ni) * (nl) * sizeof(double));;
+
+
   init_array (ni, nj, nk, nl, &alpha, &beta,
-	      POLYBENCH_ARRAY(A),
-	      POLYBENCH_ARRAY(B),
-	      POLYBENCH_ARRAY(C),
-	      POLYBENCH_ARRAY(D));
+      *A,
+      *B,
+      *C,
+      *D);
 
-  /* Start timer. */
-  polybench_start_instruments;
 
-  /* Run kernel. */
+
+
   kernel_2mm (ni, nj, nk, nl,
-	      alpha, beta,
-	      POLYBENCH_ARRAY(tmp),
-	      POLYBENCH_ARRAY(A),
-	      POLYBENCH_ARRAY(B),
-	      POLYBENCH_ARRAY(C),
-	      POLYBENCH_ARRAY(D));
+      alpha, beta,
+      *tmp,
+      *A,
+      *B,
+      *C,
+      *D);
 
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
 
-  /* Prevent dead-code elimination. All live-out data must be printed
-     by the function call in argument. */
-  polybench_prevent_dce(print_array(ni, nl,  POLYBENCH_ARRAY(D)));
 
-  /* Be clean. */
-  POLYBENCH_FREE_ARRAY(tmp);
-  POLYBENCH_FREE_ARRAY(A);
-  POLYBENCH_FREE_ARRAY(B);
-  POLYBENCH_FREE_ARRAY(C);
-  POLYBENCH_FREE_ARRAY(D);
+
+
+  if (dump_code == 1) print_array(ni, nl, *D);
+
+
+  free((void*)tmp);;
+  free((void*)A);;
+  free((void*)B);;
+  free((void*)C);;
+  free((void*)D);;
 
   return 0;
 }
