@@ -14,7 +14,7 @@ PLAIN=benchmark
 LINK_FLAGS+=-fopenmp
 
 %.bc: %.c
-	clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -g -c -emit-llvm $< -o $@
+	clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
 
 $(PLAIN).bc : $(OBJFILES_BC)
@@ -22,6 +22,10 @@ $(PLAIN).bc : $(OBJFILES_BC)
 
 $(PLAIN).ll : $(PLAIN).bc
 	llvm-dis $^
+
+$(PLAIN).exe : $(PLAIN).ll
+	llc -filetype=obj $< -o $(PLAIN).o
+	clang -g -O3 ${LINK_FLAGS} -o $@
 
 ${BMARK}_mem2reg.ll: ${BMARK}.ll
 	opt -mem2reg -sroa $< -S -o $@
