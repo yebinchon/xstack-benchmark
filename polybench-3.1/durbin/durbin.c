@@ -6,26 +6,23 @@
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
-
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-#include "durbin.h"
-
+#define N 4000
 
 /* Array initialization. */
 static
 void init_array (int n,
-		 DATA_TYPE POLYBENCH_2D(y,N,N,n,n),
-		 DATA_TYPE POLYBENCH_2D(sum,N,N,n,n),
-		 DATA_TYPE POLYBENCH_1D(alpha,N,n),
-		 DATA_TYPE POLYBENCH_1D(beta,N,n),
-		 DATA_TYPE POLYBENCH_1D(r,N,n))
+		 double y[n][n],
+		 double sum[n][n],
+		 double alpha[n],
+		 double beta[n],
+		 double r[n])
 {
   int i, j;
 
@@ -35,8 +32,8 @@ void init_array (int n,
       beta[i] = (i+1)/n/2.0;
       r[i] = (i+1)/n/4.0;
       for (j = 0; j < n; j++) {
-	y[i][j] = ((DATA_TYPE) i*j) / n;
-	sum[i][j] = ((DATA_TYPE) i*j) / n;
+	y[i][j] = ((double) i*j) / n;
+	sum[i][j] = ((double) i*j) / n;
       }
     }
 }
@@ -46,13 +43,13 @@ void init_array (int n,
    Can be used also to check the correctness of the output. */
 static
 void print_array(int n,
-		 DATA_TYPE POLYBENCH_1D(out,N,n))
+		 double out[n])
 
 {
   int i;
 
   for (i = 0; i < n; i++) {
-    fprintf (stderr, DATA_PRINTF_MODIFIER, out[i]);
+    fprintf (stderr, "%0.2lf ", out[i]);
     if (i % 20 == 0) fprintf (stderr, "\n");
   }
 }
@@ -62,12 +59,12 @@ void print_array(int n,
    including the call and return. */
 static
 void kernel_durbin(int n,
-		   DATA_TYPE POLYBENCH_2D(y,N,N,n,n),
-		   DATA_TYPE POLYBENCH_2D(sum,N,N,n,n),
-		   DATA_TYPE POLYBENCH_1D(alpha,N,n),
-		   DATA_TYPE POLYBENCH_1D(beta,N,n),
-		   DATA_TYPE POLYBENCH_1D(r,N,n),
-		   DATA_TYPE POLYBENCH_1D(out,N,n))
+		 double y[n][n],
+		 double sum[n][n],
+		 double alpha[n],
+		 double beta[n],
+		 double r[n],
+     double out[n])
 {
   int i, k;
 
@@ -97,51 +94,45 @@ int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
   int n = N;
+  int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(y, DATA_TYPE, N, N, n, n);
-  POLYBENCH_2D_ARRAY_DECL(sum, DATA_TYPE, N, N, n, n);
-  POLYBENCH_1D_ARRAY_DECL(alpha, DATA_TYPE, N, n);
-  POLYBENCH_1D_ARRAY_DECL(beta, DATA_TYPE, N, n);
-  POLYBENCH_1D_ARRAY_DECL(r, DATA_TYPE, N, n);
-  POLYBENCH_1D_ARRAY_DECL(out, DATA_TYPE, N, n);
+  double (*y)[n][n]; y = (double(*)[n][n])malloc(n*n*sizeof(double));
+  double (*sum)[n][n]; sum = (double(*)[n][n])malloc(n*n*sizeof(double));
+  double (*alpha)[n]; alpha = (double(*)[n])malloc(n*sizeof(double));
+  double (*beta)[n]; beta = (double(*)[n])malloc(n*sizeof(double));
+  double (*r)[n]; r = (double(*)[n])malloc(n*sizeof(double));
+  double (*out)[n]; out = (double(*)[n])malloc(n*sizeof(double));
 
 
   /* Initialize array(s). */
   init_array (n,
-	      POLYBENCH_ARRAY(y),
-	      POLYBENCH_ARRAY(sum),
-	      POLYBENCH_ARRAY(alpha),
-	      POLYBENCH_ARRAY(beta),
-	      POLYBENCH_ARRAY(r));
-
-  /* Start timer. */
-  polybench_start_instruments;
+	      *y,
+	      *sum,
+	      *alpha,
+	      *beta,
+	      *r);
 
   /* Run kernel. */
   kernel_durbin (n,
-		 POLYBENCH_ARRAY(y),
-		 POLYBENCH_ARRAY(sum),
-		 POLYBENCH_ARRAY(alpha),
-		 POLYBENCH_ARRAY(beta),
-		 POLYBENCH_ARRAY(r),
-		 POLYBENCH_ARRAY(out));
-
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
+		 *y,
+		 *sum,
+		 *alpha,
+		 *beta,
+		 *r,
+		 *out);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  polybench_prevent_dce(print_array(n, POLYBENCH_ARRAY(out)));
+  if(dump_code == 1) print_array(n, *out);
 
   /* Be clean. */
-  POLYBENCH_FREE_ARRAY(y);
-  POLYBENCH_FREE_ARRAY(sum);
-  POLYBENCH_FREE_ARRAY(alpha);
-  POLYBENCH_FREE_ARRAY(beta);
-  POLYBENCH_FREE_ARRAY(r);
-  POLYBENCH_FREE_ARRAY(out);
+  free((void*)y);
+  free((void*)sum);
+  free((void*)alpha);
+  free((void*)beta);
+  free((void*)r);
+  free((void*)out);
 
   return 0;
 }

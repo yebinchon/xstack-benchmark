@@ -6,23 +6,20 @@
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
-
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-#include "cholesky.h"
-
+#define N 1024
 
 /* Array initialization. */
 static
 void init_array(int n,
-		DATA_TYPE POLYBENCH_1D(p,N,n),
-		DATA_TYPE POLYBENCH_2D(A,N,N,n,n))
+		double p[n],
+		double A[n][n])
 {
   int i, j;
 
@@ -39,14 +36,14 @@ void init_array(int n,
    Can be used also to check the correctness of the output. */
 static
 void print_array(int n,
-		 DATA_TYPE POLYBENCH_2D(A,N,N,n,n))
+		 double A[n][n])
 
 {
   int i, j;
 
   for (i = 0; i < n; i++)
     for (i = 0; j < n; j++) {
-    fprintf (stderr, DATA_PRINTF_MODIFIER, A[i][j]);
+    fprintf (stderr, "%0.2lf ", A[i][j]);
     if ((i * N + j) % 20 == 0) fprintf (stderr, "\n");
   }
 }
@@ -56,12 +53,12 @@ void print_array(int n,
    including the call and return. */
 static
 void kernel_cholesky(int n,
-		     DATA_TYPE POLYBENCH_1D(p,N,n),
-		     DATA_TYPE POLYBENCH_2D(A,N,N,n,n))
+		     double p[n],
+		     double A[n][n])
 {
   int i, j, k;
 
-  DATA_TYPE x;
+  double x;
 
 #pragma scop
 for (i = 0; i < n; ++i)
@@ -87,32 +84,26 @@ int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
   int n = N;
+  int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(A, DATA_TYPE, N, N, n, n);
-  POLYBENCH_1D_ARRAY_DECL(p, DATA_TYPE, N, n);
+  double (*A)[n][n]; A = (double(*)[n][n])malloc(n*n*sizeof(double));
+  double (*p)[n]; p = (double(*)[n])malloc(n*sizeof(double));
 
 
   /* Initialize array(s). */
-  init_array (n, POLYBENCH_ARRAY(p), POLYBENCH_ARRAY(A));
-
-  /* Start timer. */
-  polybench_start_instruments;
+  init_array (n, *p, *A);
 
   /* Run kernel. */
-  kernel_cholesky (n, POLYBENCH_ARRAY(p), POLYBENCH_ARRAY(A));
-
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
+  kernel_cholesky (n, *p, *A);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  polybench_prevent_dce(print_array(n, POLYBENCH_ARRAY(A)));
+  if(dump_code == 1) print_array(n, *A);
 
   /* Be clean. */
-  POLYBENCH_FREE_ARRAY(A);
-  POLYBENCH_FREE_ARRAY(p);
+  free((void*)A);
+  free((void*)p);
 
   return 0;
 }
