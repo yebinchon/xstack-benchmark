@@ -6,23 +6,22 @@
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include <polybench.h>
 
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-#include "atax.h"
-
+#define NX 4000
+#define NY 4000
 
 /* Array initialization. */
 static
 void init_array (int nx, int ny,
-		 DATA_TYPE POLYBENCH_2D(A,NX,NY,nx,ny),
-		 DATA_TYPE POLYBENCH_1D(x,NY,ny))
+		 double A[nx][ny],
+		 double x[ny])
 {
   int i, j;
 
@@ -30,7 +29,7 @@ void init_array (int nx, int ny,
       x[i] = i * M_PI;
   for (i = 0; i < nx; i++)
     for (j = 0; j < ny; j++)
-      A[i][j] = ((DATA_TYPE) i*(j+1)) / nx;
+      A[i][j] = ((double) i*(j+1)) / nx;
 }
 
 
@@ -38,13 +37,13 @@ void init_array (int nx, int ny,
    Can be used also to check the correctness of the output. */
 static
 void print_array(int nx,
-		 DATA_TYPE POLYBENCH_1D(y,NX,nx))
+		 double y[nx])
 
 {
   int i;
 
   for (i = 0; i < nx; i++) {
-    fprintf (stderr, DATA_PRINTF_MODIFIER, y[i]);
+    fprintf (stderr, "%0.2lf ", y[i]);
     if (i % 20 == 0) fprintf (stderr, "\n");
   }
   fprintf (stderr, "\n");
@@ -55,10 +54,10 @@ void print_array(int nx,
    including the call and return. */
 static
 void kernel_atax(int nx, int ny,
-		 DATA_TYPE POLYBENCH_2D(A,NX,NY,nx,ny),
-		 DATA_TYPE POLYBENCH_1D(x,NY,ny),
-		 DATA_TYPE POLYBENCH_1D(y,NX,nx),
-		 DATA_TYPE POLYBENCH_1D(tmp,NY,ny))
+		 double A[nx][ny],
+		 double x[ny],
+		 double y[nx],
+		 double tmp[ny])
 {
   int i, j;
 
@@ -83,39 +82,32 @@ int main(int argc, char** argv)
   /* Retrieve problem size. */
   int nx = NX;
   int ny = NY;
+  int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(A, DATA_TYPE, NX, NY, nx, ny);
-  POLYBENCH_1D_ARRAY_DECL(x, DATA_TYPE, NY, ny);
-  POLYBENCH_1D_ARRAY_DECL(y, DATA_TYPE, NX, nx);
-  POLYBENCH_1D_ARRAY_DECL(tmp, DATA_TYPE, NY, ny);
+  double (*A)[nx][ny]; A = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
+  double (*x)[ny]; x = (double(*)[ny])malloc(ny*sizeof(double));
+  double (*y)[nx]; y = (double(*)[nx])malloc(nx*sizeof(double));
+  double (*tmp)[ny]; tmp = (double(*)[ny])malloc(ny*sizeof(double));
 
   /* Initialize array(s). */
-  init_array (nx, ny, POLYBENCH_ARRAY(A), POLYBENCH_ARRAY(x));
+  init_array (nx, ny, *A, *x);
 
-  /* Start timer. */
-  polybench_start_instruments;
 
   /* Run kernel. */
   kernel_atax (nx, ny,
-	       POLYBENCH_ARRAY(A),
-	       POLYBENCH_ARRAY(x),
-	       POLYBENCH_ARRAY(y),
-	       POLYBENCH_ARRAY(tmp));
+        *A, *x, *y, *tmp);
 
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  polybench_prevent_dce(print_array(nx, POLYBENCH_ARRAY(y)));
+  if(dump_code == 1) print_array(nx, *y);
 
   /* Be clean. */
-  POLYBENCH_FREE_ARRAY(A);
-  POLYBENCH_FREE_ARRAY(x);
-  POLYBENCH_FREE_ARRAY(y);
-  POLYBENCH_FREE_ARRAY(tmp);
+  free((void*)A);
+  free((void*)x);
+  free((void*)y);
+  free((void*)tmp);
 
   return 0;
 }
