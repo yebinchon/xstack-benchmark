@@ -6,37 +6,37 @@
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
-
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 50x1000x1000. */
-#include "fdtd-2d.h"
+#define TMAX 50
+#define NX 1000
+#define NY 1000
 
 
 /* Array initialization. */
 static
 void init_array (int nx,
 		 int ny,
-		 DATA_TYPE POLYBENCH_2D(ex,NX,NY,nx,ny),
-		 DATA_TYPE POLYBENCH_2D(ey,NX,NY,nx,ny),
-		 DATA_TYPE POLYBENCH_2D(hz,NX,NY,nx,ny),
-		 DATA_TYPE POLYBENCH_1D(_fict_,NY,ny))
+		 double ex[nx][ny],
+		 double ey[nx][ny],
+		 double hz[nx][ny],
+		 double _fict_[ny])
 {
   int i, j;
 
   for (i = 0; i < ny; i++)
-    _fict_[i] = (DATA_TYPE) i;
+    _fict_[i] = (double) i;
   for (i = 0; i < nx; i++)
     for (j = 0; j < ny; j++)
       {
-	ex[i][j] = ((DATA_TYPE) i*(j+1)) / nx;
-	ey[i][j] = ((DATA_TYPE) i*(j+2)) / ny;
-	hz[i][j] = ((DATA_TYPE) i*(j+3)) / nx;
+	ex[i][j] = ((double) i*(j+1)) / nx;
+	ey[i][j] = ((double) i*(j+2)) / ny;
+	hz[i][j] = ((double) i*(j+3)) / nx;
       }
 }
 
@@ -46,17 +46,17 @@ void init_array (int nx,
 static
 void print_array(int nx,
 		 int ny,
-		 DATA_TYPE POLYBENCH_2D(ex,NX,NY,nx,ny),
-		 DATA_TYPE POLYBENCH_2D(ey,NX,NY,nx,ny),
-		 DATA_TYPE POLYBENCH_2D(hz,NX,NY,nx,ny))
+		 double ex[nx][ny],
+		 double ey[nx][ny],
+		 double hz[nx][ny])
 {
   int i, j;
 
   for (i = 0; i < nx; i++)
     for (j = 0; j < ny; j++) {
-      fprintf(stderr, DATA_PRINTF_MODIFIER, ex[i][j]);
-      fprintf(stderr, DATA_PRINTF_MODIFIER, ey[i][j]);
-      fprintf(stderr, DATA_PRINTF_MODIFIER, hz[i][j]);
+      fprintf(stderr, "%0.2lf ", ex[i][j]);
+      fprintf(stderr, "%0.2lf ", ey[i][j]);
+      fprintf(stderr, "%0.2lf ", hz[i][j]);
       if ((i * nx + j) % 20 == 0) fprintf(stderr, "\n");
     }
   fprintf(stderr, "\n");
@@ -69,10 +69,10 @@ static
 void kernel_fdtd_2d(int tmax,
 		    int nx,
 		    int ny,
-		    DATA_TYPE POLYBENCH_2D(ex,NX,NY,nx,ny),
-		    DATA_TYPE POLYBENCH_2D(ey,NX,NY,nx,ny),
-		    DATA_TYPE POLYBENCH_2D(hz,NX,NY,nx,ny),
-		    DATA_TYPE POLYBENCH_1D(_fict_,NY,ny))
+		    double ex[nx][ny],
+		    double ey[nx][ny],
+		    double hz[nx][ny],
+		    double _fict_[ny])
 {
   int t, i, j;
 
@@ -104,46 +104,37 @@ int main(int argc, char** argv)
   int tmax = TMAX;
   int nx = NX;
   int ny = NY;
+  int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(ex,DATA_TYPE,NX,NY,nx,ny);
-  POLYBENCH_2D_ARRAY_DECL(ey,DATA_TYPE,NX,NY,nx,ny);
-  POLYBENCH_2D_ARRAY_DECL(hz,DATA_TYPE,NX,NY,nx,ny);
-  POLYBENCH_1D_ARRAY_DECL(_fict_,DATA_TYPE,NY,ny);
+  double (*ex)[nx][ny]; ex = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
+  double (*ey)[nx][ny]; ey = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
+  double (*hz)[nx][ny]; hz = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
+  double (*_fict_)[ny]; _fict_ = (double(*)[ny])malloc(ny*sizeof(double));
 
   /* Initialize array(s). */
   init_array (nx, ny,
-	      POLYBENCH_ARRAY(ex),
-	      POLYBENCH_ARRAY(ey),
-	      POLYBENCH_ARRAY(hz),
-	      POLYBENCH_ARRAY(_fict_));
-
-  /* Start timer. */
-  polybench_start_instruments;
+	      *ex,
+	      *ey,
+	      *hz,
+	      *_fict_);
 
   /* Run kernel. */
   kernel_fdtd_2d (tmax, nx, ny,
-		  POLYBENCH_ARRAY(ex),
-		  POLYBENCH_ARRAY(ey),
-		  POLYBENCH_ARRAY(hz),
-		  POLYBENCH_ARRAY(_fict_));
-
-
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
+	      *ex,
+	      *ey,
+	      *hz,
+	      *_fict_);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  polybench_prevent_dce(print_array(nx, ny, POLYBENCH_ARRAY(ex),
-				    POLYBENCH_ARRAY(ey),
-				    POLYBENCH_ARRAY(hz)));
+  if(dump_code == 1) print_array(nx, ny, *ex, *ey, *hz);
 
   /* Be clean. */
-  POLYBENCH_FREE_ARRAY(ex);
-  POLYBENCH_FREE_ARRAY(ey);
-  POLYBENCH_FREE_ARRAY(hz);
-  POLYBENCH_FREE_ARRAY(_fict_);
+  free((void*)ex);
+  free((void*)ey);
+  free((void*)hz);
+  free((void*)_fict_);
 
   return 0;
 }
