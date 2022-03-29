@@ -113,7 +113,7 @@ int main(int argc, char** argv)
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  if(dump_code == 1) print_array(n, n, *A);
+  if(dump_code == 1) print_array(n, *x1, *x2);
 
   /* Be clean. */
   free((void*)A);
