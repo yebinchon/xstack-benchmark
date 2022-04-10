@@ -6,32 +6,27 @@
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
-
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 4000. */
-#include "trisolv.h"
-
+#define N 4000
 
 /* Array initialization. */
 static
 void init_array(int n,
-		DATA_TYPE POLYBENCH_2D(A,N,N,n,n),
-		DATA_TYPE POLYBENCH_1D(x,N,n),
-		DATA_TYPE POLYBENCH_1D(c,N,n))
+		double A[n][n],
+		double x[n],
+		double c[n])
 {
   int i, j;
 
   for (i = 0; i < n; i++)
     {
-      c[i] = x[i] = ((DATA_TYPE) i) / n;
+      c[i] = x[i] = ((double) i) / n;
       for (j = 0; j < n; j++)
-	A[i][j] = ((DATA_TYPE) i*j) / n;
+	A[i][j] = ((double) i*j) / n;
     }
 }
 
@@ -40,13 +35,13 @@ void init_array(int n,
    Can be used also to check the correctness of the output. */
 static
 void print_array(int n,
-		 DATA_TYPE POLYBENCH_1D(x,N,n))
+		 double x[n])
 
 {
   int i;
 
   for (i = 0; i < n; i++) {
-    fprintf (stderr, DATA_PRINTF_MODIFIER, x[i]);
+    fprintf (stderr, "%0,2lf ", x[i]);
     if (i % 20 == 0) fprintf (stderr, "\n");
   }
 }
@@ -56,9 +51,9 @@ void print_array(int n,
    including the call and return. */
 static
 void kernel_trisolv(int n,
-		    DATA_TYPE POLYBENCH_2D(A,N,N,n,n),
-		    DATA_TYPE POLYBENCH_1D(x,N,n),
-		    DATA_TYPE POLYBENCH_1D(c,N,n))
+		    double A[n][n],
+		    double x[n],
+		    double c[n])
 {
   int i, j;
 
@@ -79,34 +74,28 @@ int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
   int n = N;
+  int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  POLYBENCH_2D_ARRAY_DECL(A, DATA_TYPE, N, N, n, n);
-  POLYBENCH_1D_ARRAY_DECL(x, DATA_TYPE, N, n);
-  POLYBENCH_1D_ARRAY_DECL(c, DATA_TYPE, N, n);
+  double (*A)[n][n]; A = (double(*)[n][n])malloc(n*n*sizeof(double));
+  double (*x)[n]; x = (double(*)[n])malloc(n*sizeof(double));
+  double (*c)[n]; c = (double(*)[n])malloc(n*sizeof(double));
 
 
   /* Initialize array(s). */
-  init_array (n, POLYBENCH_ARRAY(A), POLYBENCH_ARRAY(x), POLYBENCH_ARRAY(c));
-
-  /* Start timer. */
-  polybench_start_instruments;
+  init_array (n, *A, *x, *c);
 
   /* Run kernel. */
-  kernel_trisolv (n, POLYBENCH_ARRAY(A), POLYBENCH_ARRAY(x), POLYBENCH_ARRAY(c));
-
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
+  kernel_trisolv (n, *A, *x, *c);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  polybench_prevent_dce(print_array(n, POLYBENCH_ARRAY(x)));
+  if(dump_code == 1) print_array(n, *x);
 
   /* Be clean. */
-  POLYBENCH_FREE_ARRAY(A);
-  POLYBENCH_FREE_ARRAY(x);
-  POLYBENCH_FREE_ARRAY(c);
+  free((void*)A);
+  free((void*)x);
+  free((void*)c);
 
   return 0;
 }

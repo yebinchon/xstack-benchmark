@@ -6,32 +6,27 @@
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
-
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 4000. */
-#include "trmm.h"
-
+#define NI 1024
 
 /* Array initialization. */
 static
 void init_array(int ni,
-		DATA_TYPE *alpha,
-		DATA_TYPE POLYBENCH_2D(A,NI,NI,ni,ni),
-		DATA_TYPE POLYBENCH_2D(B,NI,NI,ni,ni))
+		double *alpha,
+		double A[ni][ni],
+		double B[ni][ni])
 {
   int i, j;
 
   *alpha = 32412;
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++) {
-      A[i][j] = ((DATA_TYPE) i*j) / ni;
-      B[i][j] = ((DATA_TYPE) i*j) / ni;
+      A[i][j] = ((double) i*j) / ni;
+      B[i][j] = ((double) i*j) / ni;
     }
 }
 
@@ -40,13 +35,13 @@ void init_array(int ni,
    Can be used also to check the correctness of the output. */
 static
 void print_array(int ni,
-		 DATA_TYPE POLYBENCH_2D(B,NI,NI,ni,ni))
+		 double B[ni][ni])
 {
   int i, j;
 
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++) {
-	fprintf (stderr, DATA_PRINTF_MODIFIER, B[i][j]);
+	fprintf (stderr, "%0,2lf ", B[i][j]);
 	if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
     }
   fprintf (stderr, "\n");
@@ -57,9 +52,9 @@ void print_array(int ni,
    including the call and return. */
 static
 void kernel_trmm(int ni,
-		 DATA_TYPE alpha,
-		 DATA_TYPE POLYBENCH_2D(A,NI,NI,ni,ni),
-		 DATA_TYPE POLYBENCH_2D(B,NI,NI,ni,ni))
+		 double alpha,
+		 double A[ni][ni],
+		 double B[ni][ni])
 {
   int i, j, k;
 
@@ -78,32 +73,26 @@ int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
   int ni = NI;
+  int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  DATA_TYPE alpha;
-  POLYBENCH_2D_ARRAY_DECL(A,DATA_TYPE,NI,NI,ni,ni);
-  POLYBENCH_2D_ARRAY_DECL(B,DATA_TYPE,NI,NI,ni,ni);
+  double alpha;
+  double (*A)[ni][ni]; A = (double(*)[ni][ni])malloc(ni*ni*sizeof(double));
+  double (*B)[ni][ni]; B = (double(*)[ni][ni])malloc(ni*ni*sizeof(double));
 
   /* Initialize array(s). */
-  init_array (ni, &alpha, POLYBENCH_ARRAY(A), POLYBENCH_ARRAY(B));
-
-  /* Start timer. */
-  polybench_start_instruments;
+  init_array (ni, &alpha, *A, *B);
 
   /* Run kernel. */
-  kernel_trmm (ni, alpha, POLYBENCH_ARRAY(A), POLYBENCH_ARRAY(B));
-
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
+  kernel_trmm (ni, alpha, *A, *B);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  polybench_prevent_dce(print_array(ni, POLYBENCH_ARRAY(B)));
+  if(dump_code == 1) print_array(ni, *B);
 
   /* Be clean. */
-  POLYBENCH_FREE_ARRAY(A);
-  POLYBENCH_FREE_ARRAY(B);
+  free((void*)A);
+  free((void*)B);
 
   return 0;
 }

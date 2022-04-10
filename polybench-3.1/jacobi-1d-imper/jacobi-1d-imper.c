@@ -6,30 +6,26 @@
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
-
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 100x10000. */
-#include "jacobi-1d-imper.h"
-
+#define TSTEPS 100
+#define N 10000
 
 /* Array initialization. */
 static
 void init_array (int n,
-		 DATA_TYPE POLYBENCH_1D(A,N,n),
-		 DATA_TYPE POLYBENCH_1D(B,N,n))
+		 double A[n],
+		 double B[n])
 {
   int i;
 
   for (i = 0; i < n; i++)
       {
-	A[i] = ((DATA_TYPE) i+ 2) / n;
-	B[i] = ((DATA_TYPE) i+ 3) / n;
+	A[i] = ((double) i+ 2) / n;
+	B[i] = ((double) i+ 3) / n;
       }
 }
 
@@ -38,14 +34,14 @@ void init_array (int n,
    Can be used also to check the correctness of the output. */
 static
 void print_array(int n,
-		 DATA_TYPE POLYBENCH_1D(A,N,n))
+		 double A[n])
 
 {
   int i;
 
   for (i = 0; i < n; i++)
     {
-      fprintf(stderr, DATA_PRINTF_MODIFIER, A[i]);
+      fprintf(stderr, "%0,2lf ", A[i]);
       if (i % 20 == 0) fprintf(stderr, "\n");
     }
   fprintf(stderr, "\n");
@@ -57,8 +53,8 @@ void print_array(int n,
 static
 void kernel_jacobi_1d_imper(int tsteps,
 			    int n,
-			    DATA_TYPE POLYBENCH_1D(A,N,n),
-			    DATA_TYPE POLYBENCH_1D(B,N,n))
+			    double A[n],
+			    double B[n])
 {
   int t, i, j;
 
@@ -80,32 +76,26 @@ int main(int argc, char** argv)
   /* Retrieve problem size. */
   int n = N;
   int tsteps = TSTEPS;
+  int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  POLYBENCH_1D_ARRAY_DECL(A, DATA_TYPE, N, n);
-  POLYBENCH_1D_ARRAY_DECL(B, DATA_TYPE, N, n);
+  double (*A)[n]; A = (double(*)[n])malloc(n*sizeof(double));
+  double (*B)[n]; B = (double(*)[n])malloc(n*sizeof(double));
 
 
   /* Initialize array(s). */
-  init_array (n, POLYBENCH_ARRAY(A), POLYBENCH_ARRAY(B));
-
-  /* Start timer. */
-  polybench_start_instruments;
+  init_array (n, *A, *B);
 
   /* Run kernel. */
-  kernel_jacobi_1d_imper (tsteps, n, POLYBENCH_ARRAY(A), POLYBENCH_ARRAY(B));
-
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
+  kernel_jacobi_1d_imper (tsteps, n, *A, *B);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  polybench_prevent_dce(print_array(n, POLYBENCH_ARRAY(A)));
+  if(dump_code == 1) print_array(n, *A);
 
   /* Be clean. */
-  POLYBENCH_FREE_ARRAY(A);
-  POLYBENCH_FREE_ARRAY(B);
+  free((void*)A);
+  free((void*)B);
 
   return 0;
 }

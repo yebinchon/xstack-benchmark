@@ -6,16 +6,14 @@
  * Web address: http://polybench.sourceforge.net
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
 
-/* Include polybench common header. */
-#include "polybench.h"
-
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 256x256x256. */
-#include "fdtd-apml.h"
+#define CZ 256
+#define CYM 256
+#define CXM 256
 
 
 /* Array initialization. */
@@ -23,49 +21,49 @@ static
 void init_array (int cz,
 		 int cxm,
 		 int cym,
-		 DATA_TYPE *mui,
-		 DATA_TYPE *ch,
-		 DATA_TYPE POLYBENCH_2D(Ax,CZ+1,CYM+1,cz+1,cym+1),
-		 DATA_TYPE POLYBENCH_2D(Ry,CZ+1,CYM+1,cz+1,cym+1),
-		 DATA_TYPE POLYBENCH_3D(Ex,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		 DATA_TYPE POLYBENCH_3D(Ey,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		 DATA_TYPE POLYBENCH_3D(Hz,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		 DATA_TYPE POLYBENCH_1D(czm,CZ+1,cz+1),
-		 DATA_TYPE POLYBENCH_1D(czp,CZ+1,cz+1),
-		 DATA_TYPE POLYBENCH_1D(cxmh,CXM+1,cxm+1),
-		 DATA_TYPE POLYBENCH_1D(cxph,CXM+1,cxm+1),
-		 DATA_TYPE POLYBENCH_1D(cymh,CYM+1,cym+1),
-		 DATA_TYPE POLYBENCH_1D(cyph,CYM+1,cym+1))
+		 double *mui,
+		 double *ch,
+		 double Ax[cz+1][cym+1],
+		 double Ry[cz+1][cym+1],
+		 double Ex[cz+1][cym+1][cxm+1],
+		 double Ey[cz+1][cym+1][cxm+1],
+		 double Hz[cz+1][cym+1][cxm+1],
+		 double czm[cz+1],
+		 double czp[cz+1],
+		 double cxmh[cxm+1],
+		 double cxph[cxm+1],
+		 double cymh[cym+1],
+		 double cyph[cym+1])
 {
   int i, j, k;
   *mui = 2341;
   *ch = 42;
   for (i = 0; i <= cz; i++)
     {
-      czm[i] = ((DATA_TYPE) i + 1) / cxm;
-      czp[i] = ((DATA_TYPE) i + 2) / cxm;
+      czm[i] = ((double) i + 1) / cxm;
+      czp[i] = ((double) i + 2) / cxm;
     }
   for (i = 0; i <= cxm; i++)
     {
-      cxmh[i] = ((DATA_TYPE) i + 3) / cxm;
-      cxph[i] = ((DATA_TYPE) i + 4) / cxm;
+      cxmh[i] = ((double) i + 3) / cxm;
+      cxph[i] = ((double) i + 4) / cxm;
     }
   for (i = 0; i <= cym; i++)
     {
-      cymh[i] = ((DATA_TYPE) i + 5) / cxm;
-      cyph[i] = ((DATA_TYPE) i + 6) / cxm;
+      cymh[i] = ((double) i + 5) / cxm;
+      cyph[i] = ((double) i + 6) / cxm;
     }
 
   for (i = 0; i <= cz; i++)
     for (j = 0; j <= cym; j++)
       {
-	Ry[i][j] = ((DATA_TYPE) i*(j+1) + 10) / cym;
-	Ax[i][j] = ((DATA_TYPE) i*(j+2) + 11) / cym;
+	Ry[i][j] = ((double) i*(j+1) + 10) / cym;
+	Ax[i][j] = ((double) i*(j+2) + 11) / cym;
 	for (k = 0; k <= cxm; k++)
 	  {
-	    Ex[i][j][k] = ((DATA_TYPE) i*(j+3) + k + 1) / cxm;
-	    Ey[i][j][k] = ((DATA_TYPE) i*(j+4) + k + 2) / cym;
-	    Hz[i][j][k] = ((DATA_TYPE) i*(j+5) + k + 3) / cz;
+	    Ex[i][j][k] = ((double) i*(j+3) + k + 1) / cxm;
+	    Ey[i][j][k] = ((double) i*(j+4) + k + 2) / cym;
+	    Hz[i][j][k] = ((double) i*(j+5) + k + 3) / cz;
 	  }
       }
 }
@@ -77,20 +75,20 @@ static
 void print_array(int cz,
 		 int cxm,
 		 int cym,
-		 DATA_TYPE POLYBENCH_3D(Bza,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		 DATA_TYPE POLYBENCH_3D(Ex,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		 DATA_TYPE POLYBENCH_3D(Ey,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		 DATA_TYPE POLYBENCH_3D(Hz,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1))
+		 double Bza[cz+1][cym+1][cxm+1],
+		 double Ex[cz+1][cym+1][cxm+1],
+		 double Ey[cz+1][cym+1][cxm+1],
+		 double Hz[cz+1][cym+1][cxm+1])
 {
   int i, j, k;
 
   for (i = 0; i <= cz; i++)
     for (j = 0; j <= cym; j++)
       for (k = 0; k <= cxm; k++) {
-	fprintf(stderr, DATA_PRINTF_MODIFIER, Bza[i][j][k]);
-	fprintf(stderr, DATA_PRINTF_MODIFIER, Ex[i][j][k]);
-	fprintf(stderr, DATA_PRINTF_MODIFIER, Ey[i][j][k]);
-	fprintf(stderr, DATA_PRINTF_MODIFIER, Hz[i][j][k]);
+	fprintf(stderr, "%0.2lf ", Bza[i][j][k]);
+	fprintf(stderr, "%0.2lf ", Ex[i][j][k]);
+	fprintf(stderr, "%0.2lf ", Ey[i][j][k]);
+	fprintf(stderr, "%0.2lf ", Hz[i][j][k]);
 	if ((i * cxm + j) % 20 == 0) fprintf(stderr, "\n");
       }
   fprintf(stderr, "\n");
@@ -103,22 +101,22 @@ static
 void kernel_fdtd_apml(int cz,
 		      int cxm,
 		      int cym,
-		      DATA_TYPE mui,
-		      DATA_TYPE ch,
-		      DATA_TYPE POLYBENCH_2D(Ax,CZ+1,CYM+1,cz+1,cym+1),
-		      DATA_TYPE POLYBENCH_2D(Ry,CZ+1,CYM+1,cz+1,cym+1),
-		      DATA_TYPE POLYBENCH_2D(clf,CYM+1,CXM+1,cym+1,cxm+1),
-		      DATA_TYPE POLYBENCH_2D(tmp,CYM+1,CXM+1,cym+1,cxm+1),
-		      DATA_TYPE POLYBENCH_3D(Bza,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		      DATA_TYPE POLYBENCH_3D(Ex,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		      DATA_TYPE POLYBENCH_3D(Ey,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		      DATA_TYPE POLYBENCH_3D(Hz,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1),
-		      DATA_TYPE POLYBENCH_1D(czm,CZ+1,cz+1),
-		      DATA_TYPE POLYBENCH_1D(czp,CZ+1,cz+1),
-		      DATA_TYPE POLYBENCH_1D(cxmh,CXM+1,cxm+1),
-		      DATA_TYPE POLYBENCH_1D(cxph,CXM+1,cxm+1),
-		      DATA_TYPE POLYBENCH_1D(cymh,CYM+1,cym+1),
-		      DATA_TYPE POLYBENCH_1D(cyph,CYM+1,cym+1))
+		      double mui,
+		      double ch,
+		 double Ax[cz+1][cym+1],
+		 double Ry[cz+1][cym+1],
+     double clf[cym+1][cxm+1],
+     double tmp[cym+1][cxm+1],
+     double Bza[cz+1][cym+1][cxm+1],
+		 double Ex[cz+1][cym+1][cxm+1],
+		 double Ey[cz+1][cym+1][cxm+1],
+		 double Hz[cz+1][cym+1][cxm+1],
+		 double czm[cz+1],
+		 double czp[cz+1],
+		 double cxmh[cxm+1],
+		 double cxph[cxm+1],
+		 double cymh[cym+1],
+		 double cyph[cym+1])
 {
   int iz, iy, ix;
 
@@ -170,86 +168,76 @@ int main(int argc, char** argv)
   int cz = CZ;
   int cym = CYM;
   int cxm = CXM;
+  int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  DATA_TYPE mui;
-  DATA_TYPE ch;
-  POLYBENCH_2D_ARRAY_DECL(Ax,DATA_TYPE,CZ+1,CYM+1,cz+1,cym+1);
-  POLYBENCH_2D_ARRAY_DECL(Ry,DATA_TYPE,CZ+1,CYM+1,cz+1,cym+1);
-  POLYBENCH_2D_ARRAY_DECL(clf,DATA_TYPE,CYM+1,CXM+1,cym+1,cxm+1);
-  POLYBENCH_2D_ARRAY_DECL(tmp,DATA_TYPE,CYM+1,CXM+1,cym+1,cxm+1);
-  POLYBENCH_3D_ARRAY_DECL(Bza,DATA_TYPE,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1);
-  POLYBENCH_3D_ARRAY_DECL(Ex,DATA_TYPE,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1);
-  POLYBENCH_3D_ARRAY_DECL(Ey,DATA_TYPE,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1);
-  POLYBENCH_3D_ARRAY_DECL(Hz,DATA_TYPE,CZ+1,CYM+1,CXM+1,cz+1,cym+1,cxm+1);
-  POLYBENCH_1D_ARRAY_DECL(czm,DATA_TYPE,CZ+1,cz+1);
-  POLYBENCH_1D_ARRAY_DECL(czp,DATA_TYPE,CZ+1,cz+1);
-  POLYBENCH_1D_ARRAY_DECL(cxmh,DATA_TYPE,CXM+1,cxm+1);
-  POLYBENCH_1D_ARRAY_DECL(cxph,DATA_TYPE,CXM+1,cxm+1);
-  POLYBENCH_1D_ARRAY_DECL(cymh,DATA_TYPE,CYM+1,cym+1);
-  POLYBENCH_1D_ARRAY_DECL(cyph,DATA_TYPE,CYM+1,cym+1);
+  double mui;
+  double ch;
+  double (*Ax)[cz+1][cym+1]; Ax = (double(*)[cz+1][cym+1])malloc((cz+1)*(cym+1)*sizeof(double));
+  double (*Ry)[cz+1][cym+1]; Ry = (double(*)[cz+1][cym+1])malloc((cz+1)*(cym+1)*sizeof(double));
+  double (*clf)[cym+1][cxm+1]; clf = (double(*)[cym+1][cxm+1])malloc((cym+1)*(cxm+1)*sizeof(double));
+  double (*tmp)[cym+1][cxm+1]; tmp = (double(*)[cym+1][cxm+1])malloc((cym+1)*(cxm+1)*sizeof(double));
+  double (*Bza)[cz+1][cym+1][cxm+1]; Bza = (double(*)[cz+1][cym+1][cxm+1])malloc((cz+1)*(cxm+1)*(cym+1)*sizeof(double));
+  double (*Ex)[cz+1][cym+1][cxm+1]; Ex = (double(*)[cz+1][cym+1][cxm+1])malloc((cz+1)*(cxm+1)*(cym+1)*sizeof(double));
+  double (*Ey)[cz+1][cym+1][cxm+1]; Ey = (double(*)[cz+1][cym+1][cxm+1])malloc((cz+1)*(cxm+1)*(cym+1)*sizeof(double));
+  double (*Hz)[cz+1][cym+1][cxm+1]; Hz = (double(*)[cz+1][cym+1][cxm+1])malloc((cz+1)*(cxm+1)*(cym+1)*sizeof(double));
+  double (*czm)[cz+1]; czm = (double(*)[cz+1])malloc((cz+1)*sizeof(double));
+  double (*czp)[cz+1]; czp = (double(*)[cz+1])malloc((cz+1)*sizeof(double));
+  double (*cxmh)[cxm+1]; cxmh = (double(*)[cxm+1])malloc((cxm+1)*sizeof(double));
+  double (*cxph)[cxm+1]; cxph = (double(*)[cxm+1])malloc((cxm+1)*sizeof(double));
+  double (*cymh)[cym+1]; cymh = (double(*)[cym+1])malloc((cym+1)*sizeof(double));
+  double (*cyph)[cym+1]; cyph = (double(*)[cym+1])malloc((cym+1)*sizeof(double));
 
   /* Initialize array(s). */
   init_array (cz, cxm, cym, &mui, &ch,
-  	      POLYBENCH_ARRAY(Ax),
-  	      POLYBENCH_ARRAY(Ry),
-  	      POLYBENCH_ARRAY(Ex),
-  	      POLYBENCH_ARRAY(Ey),
-  	      POLYBENCH_ARRAY(Hz),
-  	      POLYBENCH_ARRAY(czm),
-  	      POLYBENCH_ARRAY(czp),
-  	      POLYBENCH_ARRAY(cxmh),
-  	      POLYBENCH_ARRAY(cxph),
-  	      POLYBENCH_ARRAY(cymh),
-  	      POLYBENCH_ARRAY(cyph));
-
-  /* Start timer. */
-  polybench_start_instruments;
+  	      *Ax,
+  	      *Ry,
+  	      *Ex,
+  	      *Ey,
+  	      *Hz,
+  	      *czm,
+  	      *czp,
+  	      *cxmh,
+  	      *cxph,
+  	      *cymh,
+  	      *cyph);
 
   /* Run kernel. */
   kernel_fdtd_apml (cz, cxm, cym, mui, ch,
-  		    POLYBENCH_ARRAY(Ax),
-  		    POLYBENCH_ARRAY(Ry),
-  		    POLYBENCH_ARRAY(clf),
-  		    POLYBENCH_ARRAY(tmp),
-  		    POLYBENCH_ARRAY(Bza),
-  		    POLYBENCH_ARRAY(Ex),
-  		    POLYBENCH_ARRAY(Ey),
-  		    POLYBENCH_ARRAY(Hz),
-  		    POLYBENCH_ARRAY(czm),
-  		    POLYBENCH_ARRAY(czp),
-  		    POLYBENCH_ARRAY(cxmh),
-  		    POLYBENCH_ARRAY(cxph),
-  		    POLYBENCH_ARRAY(cymh),
-  		    POLYBENCH_ARRAY(cyph));
-
-  /* Stop and print timer. */
-  polybench_stop_instruments;
-  polybench_print_instruments;
+  		    *Ax,
+  		    *Ry,
+  		    *clf,
+  		    *tmp,
+  		    *Bza,
+  		    *Ex,
+  		    *Ey,
+  		    *Hz,
+  		    *czm,
+  		    *czp,
+  		    *cxmh,
+  		    *cxph,
+  		    *cymh,
+  		    *cyph);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  polybench_prevent_dce(print_array(cz, cxm, cym,
-  				    POLYBENCH_ARRAY(Bza),
-  				    POLYBENCH_ARRAY(Ex),
-  				    POLYBENCH_ARRAY(Ey),
-  				    POLYBENCH_ARRAY(Hz)));
+  if(dump_code == 1) print_array(cz,cxm, cym, *Bza, *Ex, *Ey, *Hz);
 
   /* Be clean. */
-  POLYBENCH_FREE_ARRAY(Ax);
-  POLYBENCH_FREE_ARRAY(Ry);
-  POLYBENCH_FREE_ARRAY(clf);
-  POLYBENCH_FREE_ARRAY(tmp);
-  POLYBENCH_FREE_ARRAY(Bza);
-  POLYBENCH_FREE_ARRAY(Ex);
-  POLYBENCH_FREE_ARRAY(Ey);
-  POLYBENCH_FREE_ARRAY(Hz);
-  POLYBENCH_FREE_ARRAY(czm);
-  POLYBENCH_FREE_ARRAY(czp);
-  POLYBENCH_FREE_ARRAY(cxmh);
-  POLYBENCH_FREE_ARRAY(cxph);
-  POLYBENCH_FREE_ARRAY(cymh);
-  POLYBENCH_FREE_ARRAY(cyph);
+  free((void*)Ax);
+  free((void*)Ry);
+  free((void*)clf);
+  free((void*)tmp);
+  free((void*)Bza);
+  free((void*)Ex);
+  free((void*)Ey);
+  free((void*)Hz);
+  free((void*)czm);
+  free((void*)czp);
+  free((void*)cxmh);
+  free((void*)cxph);
+  free((void*)cymh);
+  free((void*)cyph);
 
   return 0;
 }
