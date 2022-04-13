@@ -1,20 +1,37 @@
+POLLY=true
+
 ifdef SPEC_DEFAULTS
 OBJFILES_BC = $(OBJS)
 else
-OBJFILES_BC?= $(shell find . -name \*.c | sed -e "s/\.c/.bc/" ) $(shell find . -name \*.C | sed -e "s/\.C/.bc/" ) $(shell find . -name \*.cpp | sed -e "s/\.cpp/.bc/" )  $(shell find . -name \*.cc | sed -e "s/\.cc/.bc/" )
+OBJFILES_BC?= $(shell find . -name \*.c -not -path \*.cbe.c | sed -e "s/\.c/.bc/" ) $(shell find . -name \*.C -not -path \*.cbe.C | sed -e "s/\.C/.bc/" ) $(shell find . -name \*.cpp -not -path \*.cbe.cpp | sed -e "s/\.cpp/.bc/" )  $(shell find . -name \*.cc -not -path \*.cbe.cc | sed -e "s/\.cc/.bc/" )
 endif
 
-ifdef SPEC_DEFAULTS
-POLLY_OBJFILES_BC = $(OBJS)
-else
-POLLY_OBJFILES_BC?= $(shell find . -name \*.c | sed -e "s/\.c/_polly.bc/" ) $(shell find . -name \*.C | sed -e "s/\.C/_polly.bc/" ) $(shell find . -name \*.cpp | sed -e "s/\.cpp/_polly.bc/" )  $(shell find . -name \*.cc | sed -e "s/\.cc/_polly.bc/" )
-endif
+#ifdef SPEC_DEFAULTS
+#POLLY_OBJFILES_BC = $(OBJS)
+#else
+#POLLY_OBJFILES_BC?= $(shell find . -name \*.c | sed -e "s/\.c/_polly.bc/" ) $(shell find . -name \*.C | sed -e "s/\.C/_polly.bc/" ) $(shell find . -name \*.cpp | sed -e "s/\.cpp/_polly.bc/" )  $(shell find . -name \*.cc | sed -e "s/\.cc/_polly.bc/" )
+#endif
 
 PLAIN=benchmark
 LINK_FLAGS+=-fopenmp
 
+ifdef POLLY
 %.bc: %.c
-	clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -g -c -emit-llvm $< -o $@
+	clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -g -c -emit-llvm $< -o $@
+	opt -loop-simplify $@ -S -o $@
+
+$(PLAIN).polly.bc : $(OBJFILES_BC)
+	llvm-link $(LLVM_LINK_FLAGS) $^ -o $@
+
+$(PLAIN).polly.ll : $(PLAIN).bc
+	llvm-dis $^
+
+$(PLAIN).polly.exe : $(PLAIN).ll
+	llc -filetype=obj $< -o $(PLAIN).bc
+	clang -g -O3 ${LINK_FLAGS} -o $@
+else
+%.bc: %.c
+	clang -O2 -fopenmp -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vecorize -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
 
 $(PLAIN).bc : $(OBJFILES_BC)
@@ -24,36 +41,26 @@ $(PLAIN).ll : $(PLAIN).bc
 	llvm-dis $^
 
 $(PLAIN).exe : $(PLAIN).ll
-	llc -filetype=obj $< -o $(PLAIN).o
+	llc -filetype=obj $< -o $(PLAIN).bc
 	clang -g -O3 ${LINK_FLAGS} -o $@
-
-${BMARK}_mem2reg.ll: ${BMARK}.ll
-	opt -mem2reg -sroa $< -S -o $@
+endif
 
 ${BMARK}.cbe.c: ${BMARK}.ll
 	opt $< -o ${BMARK}.bc
 	llvm-cbe ${BMARK}.bc
 	llvm-dis ${BMARK}.bc #just for debugging
 
-${BMARK}_mem2reg.cbe.c: ${BMARK}_mem2reg.ll
-	llvm-cbe $<
-
 ${BMARK}.exe: ${BMARK}.ll
 	llc -filetype=obj $< -o ${BMARK}.o
-	clang -g -O3 ${LINK_FLAGS} ${BMARK}.o -o $@
+	clang -g -O3 ${LINK_FLAGS} ${BMARK}.bc -o $@
 
 ${BMARK}.cbe.exe: ${BMARK}.cbe.c
 	clang -g -O3 $< ${LINK_FLAGS} -o $@
 
-${BMARK}_mem2reg.cbe.exe: ${BMARK}_mem2reg.cbe.c
-	clang -g -O3 $< ${LINK_FLAGS} -o $@
-
-check_correctness: ${BMARK}_mem2reg.cbe.exe ${BMARK}.cbe.exe ${BMARK}.exe
+check_correctness: ${BMARK}.cbe.exe ${BMARK}.exe
 	./${BMARK}.exe > ${BMARK}.out
 	./${BMARK}.cbe.exe > ${BMARK}.cbe.out
-	./${BMARK}_mem2reg.cbe.exe > ${BMARK}_mem2reg.cbe.out
 	diff ${BMARK}.out ${BMARK}.cbe.out
-	diff ${BMARK}.out ${BMARK}_mem2reg.cbe.out
 
 clean:
 	rm -rf *.bc *.out *.ll *.cbe.c *.exe *.o
