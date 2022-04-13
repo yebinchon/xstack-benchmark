@@ -19,20 +19,11 @@ ifdef POLLY
 %.bc: %.c
 	clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
-
-$(PLAIN).polly.bc : $(OBJFILES_BC)
-	llvm-link $(LLVM_LINK_FLAGS) $^ -o $@
-
-$(PLAIN).polly.ll : $(PLAIN).bc
-	llvm-dis $^
-
-$(PLAIN).polly.exe : $(PLAIN).ll
-	llc -filetype=obj $< -o $(PLAIN).bc
-	clang -g -O3 ${LINK_FLAGS} -o $@
 else
 %.bc: %.c
 	clang -O2 -fopenmp -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vecorize -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
+endif
 
 $(PLAIN).bc : $(OBJFILES_BC)
 	llvm-link $(LLVM_LINK_FLAGS) $^ -o $@
@@ -43,7 +34,16 @@ $(PLAIN).ll : $(PLAIN).bc
 $(PLAIN).exe : $(PLAIN).ll
 	llc -filetype=obj $< -o $(PLAIN).bc
 	clang -g -O3 ${LINK_FLAGS} -o $@
-endif
+
+$(PLAIN).polly.bc : $(OBJFILES_BC)
+	llvm-link $(LLVM_LINK_FLAGS) $^ -o $@
+
+$(PLAIN).polly.ll : $(PLAIN).bc
+	llvm-dis $^
+
+$(PLAIN).polly.exe : $(PLAIN).ll
+	llc -filetype=obj $< -o $(PLAIN).bc
+	clang -g -O3 ${LINK_FLAGS} -o $@
 
 ${BMARK}.cbe.c: ${BMARK}.ll
 	opt $< -o ${BMARK}.bc
