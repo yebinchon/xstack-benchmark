@@ -1,4 +1,3 @@
-POLLY=true
 
 ifdef SPEC_DEFAULTS
 OBJFILES_BC = $(OBJS)
@@ -21,7 +20,7 @@ ifdef POLLY
 	opt -loop-simplify $@ -S -o $@
 else
 %.bc: %.c
-	clang -O2 -fopenmp -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vecorize -g -c -emit-llvm $< -o $@
+	clang -O2 -fopenmp -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
 endif
 
@@ -33,7 +32,7 @@ $(PLAIN).ll : $(PLAIN).bc
 
 $(PLAIN).exe : $(PLAIN).ll
 	llc -filetype=obj $< -o $(PLAIN).bc
-	clang -g -O3 ${LINK_FLAGS} -o $@
+	clang -g -O3 $(LINK_FLAGS) $< -o $@
 
 $(PLAIN).polly.bc : $(OBJFILES_BC)
 	llvm-link $(LLVM_LINK_FLAGS) $^ -o $@
@@ -43,24 +42,20 @@ $(PLAIN).polly.ll : $(PLAIN).bc
 
 $(PLAIN).polly.exe : $(PLAIN).ll
 	llc -filetype=obj $< -o $(PLAIN).bc
-	clang -g -O3 ${LINK_FLAGS} -o $@
+	clang -g -O3 $(LINK_FLAGS) $< -o $@
 
-${BMARK}.cbe.c: ${BMARK}.ll
-	opt $< -o ${BMARK}.bc
-	llvm-cbe ${BMARK}.bc
-	llvm-dis ${BMARK}.bc #just for debugging
+$(PLAIN).cbe.c: $(PLAIN).ll
+	opt $< -o $(PLAIN).bc
+	llvm-cbe $(PLAIN).bc
+	llvm-dis $(PLAIN).bc #just for debugging
 
-${BMARK}.exe: ${BMARK}.ll
-	llc -filetype=obj $< -o ${BMARK}.o
-	clang -g -O3 ${LINK_FLAGS} ${BMARK}.bc -o $@
+$(PLAIN).cbe.exe: $(PLAIN).cbe.c
+	clang -g -O3 $< $(LINK_FLAGS) -o $@
 
-${BMARK}.cbe.exe: ${BMARK}.cbe.c
-	clang -g -O3 $< ${LINK_FLAGS} -o $@
-
-check_correctness: ${BMARK}.cbe.exe ${BMARK}.exe
-	./${BMARK}.exe > ${BMARK}.out
-	./${BMARK}.cbe.exe > ${BMARK}.cbe.out
-	diff ${BMARK}.out ${BMARK}.cbe.out
+check_correctness: $(PLAIN).cbe.exe $(PLAIN).exe
+	./$(PLAIN).exe $(ARGS) > $(PLAIN).out 2>&1
+	./$(PLAIN).cbe.exe $(ARGS) > $(PLAIN).cbe.out 2>&1
+	diff $(PLAIN).out $(PLAIN).cbe.out
 
 clean:
 	rm -rf *.bc *.out *.ll *.cbe.c *.exe *.o
