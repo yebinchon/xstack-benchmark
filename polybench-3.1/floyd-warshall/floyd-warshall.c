@@ -37,7 +37,7 @@ void print_array(int n,
 
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++) {
-      fprintf (stderr, "%0,2lf ", path[i][j]);
+      fprintf (stderr, "%0.2lf ", path[i][j]);
       if ((i * n + j) % 20 == 0) fprintf (stderr, "\n");
     }
   fprintf (stderr, "\n");

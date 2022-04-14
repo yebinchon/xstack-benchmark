@@ -41,7 +41,7 @@ void print_array(int n,
 
   for (i = 0; i < n; i++)
     {
-      fprintf(stderr, "%0,2lf ", A[i]);
+      fprintf(stderr, "%0.2lf ", A[i]);
       if (i % 20 == 0) fprintf(stderr, "\n");
     }
   fprintf(stderr, "\n");
