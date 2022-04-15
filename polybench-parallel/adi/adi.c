@@ -67,9 +67,9 @@ void kernel_adi(int tsteps,
   int t, i1, i2;
 
 #pragma scop
-#pragma omp parallel private (t, i1, i2)
+#pragma omp master
   {
-  #pragma omp master
+#pragma omp parallel private (t, i1, i2)
   {
   for (t = 0; t < tsteps; t++)
     {

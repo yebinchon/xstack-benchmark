@@ -58,9 +58,9 @@ void kernel_trisolv(int n,
   int i, j;
 
 #pragma scop
-#pragma omp parallel private (i,j)
+#pragma omp master
 {
-  #pragma omp master
+  #pragma omp parallel private (i,j)
   {
   for (i = 0; i < n; i++)
     {

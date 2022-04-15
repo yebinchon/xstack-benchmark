@@ -77,9 +77,9 @@ void kernel_fdtd_2d(int tmax,
   int t, i, j;
 
 #pragma scop
-#pragma omp parallel private (t,i,j)
+#pragma omp master
 {
-  #pragma omp master
+  #pragma omp parallel private (t,i,j)
   {
   for(t = 0; t < tmax; t++)
     {

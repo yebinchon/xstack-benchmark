@@ -60,9 +60,9 @@ void kernel_reg_detect(int niter, int maxgrid, int length,
   int t, i, j, cnt;
 
 #pragma scop
-#pragma omp parallel
+  #pragma omp master
 {
-  #pragma omp paster
+#pragma omp parallel
   {
   for (t = 0; t < niter; t++)
   {

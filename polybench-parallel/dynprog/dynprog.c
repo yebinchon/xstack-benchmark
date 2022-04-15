@@ -49,9 +49,9 @@ void kernel_dynprog(int tsteps, int length,
   int out_l = 0;
 
 #pragma scop
-#pragma omp parallel
+#pragma omp master
 {
-  #pragma omp master
+  #pragma omp parallel
   {
   for (iter = 0; iter < tsteps; iter++)
   {
