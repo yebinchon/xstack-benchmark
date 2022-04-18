@@ -15,35 +15,35 @@
 #define N 10000
 
 /* Array initialization. */
-static
+  static
 void init_array (int n,
-		 double A[n],
-		 double B[n])
+    double A[n],
+    double B[n])
 {
   int i;
 
   for (i = 0; i < n; i++)
-      {
-	A[i] = ((double) i+ 2) / n;
-	B[i] = ((double) i+ 3) / n;
-      }
+  {
+    A[i] = ((double) i+ 2) / n;
+    B[i] = ((double) i+ 3) / n;
+  }
 }
 
 
 /* DCE code. Must scan the entire live-out data.
    Can be used also to check the correctness of the output. */
-static
+  static
 void print_array(int n,
-		 double A[n])
+    double A[n])
 
 {
   int i;
 
   for (i = 0; i < n; i++)
-    {
-      fprintf(stderr, "%0.2lf ", A[i]);
-      if (i % 20 == 0) fprintf(stderr, "\n");
-    }
+  {
+    fprintf(stderr, "%0.2lf ", A[i]);
+    if (i % 20 == 0) fprintf(stderr, "\n");
+  }
   fprintf(stderr, "\n");
 }
 
@@ -52,34 +52,40 @@ void print_array(int n,
    including the call and return. */
 static
 void kernel_jacobi_1d_imper(int tsteps,
-			    int n,
-			    double A[n],
-			    double B[n])
+    int n,
+    double A[n],
+    double B[n])
 {
   int t, i, j;
 
 #pragma scop
-#pragma omp master
-{
 #pragma omp parallel
-{
-  for (t = 0; t < tsteps; t++)
+  //{
+#pragma omp master
+  {
+    for (t = 0; t < tsteps; t++)
     {
-    #pragma omp for schedule(static)
-      for (i = 1; i < n - 1; i++)
-	      B[i] = 0.33333 * (A[i-1] + A[i] + A[i + 1]);
-    #pragma omp barrier
+#pragma omp parallel
+      {
+#pragma omp for schedule(static)
+        for (i = 1; i < n - 1; i++)
+          B[i] = 0.33333 * (A[i-1] + A[i] + A[i + 1]);
+#pragma omp barrier
+      }
 
-    #pragma omp for schedule(static)
-      for (j = 1; j < n - 1; j++)
-	      A[j] = B[j];
-    #pragma omp barrier
+#pragma omp parallel
+      {
+#pragma omp for schedule(static)
+        for (j = 1; j < n - 1; j++)
+          A[j] = B[j];
+#pragma omp barrier
+      }
     }
-}
-}
+  }
+  //}
 #pragma endscop
-}
 
+}
 
 int main(int argc, char** argv)
 {
