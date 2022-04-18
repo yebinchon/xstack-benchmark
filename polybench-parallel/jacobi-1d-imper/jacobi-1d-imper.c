@@ -41,7 +41,7 @@ void print_array(int n,
 
   for (i = 0; i < n; i++)
     {
-      fprintf(stderr, "%0,2lf ", A[i]);
+      fprintf(stderr, "%0.2lf ", A[i]);
       if (i % 20 == 0) fprintf(stderr, "\n");
     }
   fprintf(stderr, "\n");
@@ -59,9 +59,9 @@ void kernel_jacobi_1d_imper(int tsteps,
   int t, i, j;
 
 #pragma scop
-#pragma omp parallel
+#pragma omp master
 {
-  #pragma omp master
+  #pragma omp parallel
   {
   for (t = 0; t < tsteps; t++)
     {

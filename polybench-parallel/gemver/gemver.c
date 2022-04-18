@@ -11,7 +11,7 @@
 #include <string.h>
 #include <math.h>
 
-#define N 4000
+#define N 3
 
 
 /* Array initialization. */
