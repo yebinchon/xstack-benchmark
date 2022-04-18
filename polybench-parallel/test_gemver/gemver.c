@@ -11,7 +11,7 @@
 #include <string.h>
 #include <math.h>
 
-#define N 3
+//#define N 3
 
 
 /* Array initialization. */
@@ -37,11 +37,11 @@ void init_array (int n,
   for (i = 0; i < n; i++)
     {
       u1[i] = i;
-      u2[i] = (i+1)/n/2.0;
-      v1[i] = (i+1)/n/4.0;
-      v2[i] = (i+1)/n/6.0;
-      y[i] = (i+1)/n/8.0;
-      z[i] = (i+1)/n/9.0;
+      u2[i] = (i+1)/(double)n/2.0;
+      v1[i] = (i+1)/(double)n/4.0;
+      v2[i] = (i+1)/(double)n/6.0;
+      y[i] = (i+1)/(double)n/8.0;
+      z[i] = (i+1)/(double)n/9.0;
       x[i] = 0.0;
       w[i] = 0.0;
       for (j = 0; j < n; j++)
@@ -60,7 +60,6 @@ void print_array(int n,
 
   for (i = 0; i < n; i++) {
     fprintf (stderr, "%0.2lf ", w[i]);
-    if (i % 20 == 0) fprintf (stderr, "\n");
   }
 }
 
@@ -112,7 +111,7 @@ void kernel_gemver(int n,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = N;
+  int n = atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
@@ -155,7 +154,26 @@ int main(int argc, char** argv)
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  if(dump_code == 1) print_array(n, *w);
+  if(dump_code == 1) {
+    printf("w: ");
+    //print_array(n, *w);
+    for(int i = 0; i < n; i++) printf("%0.2lf ", (*w)[i]);
+    printf("\nu1: ");
+    for(int i = 0; i < n; i++) printf("%0.2lf ", (*u1)[i]);
+    printf("\nu2: ");
+    for(int i = 0; i < n; i++) printf("%0.2lf ", (*u2)[i]);
+    printf("\nv1: ");
+    for(int i = 0; i < n; i++) printf("%0.2lf ", (*v1)[i]);
+    printf("\nv2: ");
+    for(int i = 0; i < n; i++) printf("%0.2lf ", (*v2)[i]);
+    printf("\nx: ");
+    for(int i = 0; i < n; i++) printf("%0.2lf ", (*x)[i]);
+    printf("\ny: ");
+    for(int i = 0; i < n; i++) printf("%0.2lf ", (*y)[i]);
+    printf("\nz: ");
+    for(int i = 0; i < n; i++) printf("%0.2lf ", (*z)[i]);
+    printf("\n");
+  }
 
   /* Be clean. */
   free((void*)A);

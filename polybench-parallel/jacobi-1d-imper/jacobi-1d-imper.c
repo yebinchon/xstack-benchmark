@@ -15,38 +15,37 @@
 #define N 10000
 
 /* Array initialization. */
-static
+  static
 void init_array (int n,
-		 double A[n],
-		 double B[n])
+    double A[n],
+    double B[n])
 {
   int i;
 
   for (i = 0; i < n; i++)
-      {
-	A[i] = ((double) i+ 2) / n;
-	B[i] = ((double) i+ 3) / n;
-      }
+  {
+    A[i] = ((double) i+ 2) / n;
+    B[i] = ((double) i+ 3) / n;
+  }
 }
 
 
 /* DCE code. Must scan the entire live-out data.
    Can be used also to check the correctness of the output. */
-static
+  static
 void print_array(int n,
-		 double A[n])
+    double A[n])
 
 {
   int i;
 
   for (i = 0; i < n; i++)
-    {
-      fprintf(stderr, "%0.2lf ", A[i]);
-      if (i % 20 == 0) fprintf(stderr, "\n");
-    }
+  {
+    fprintf(stderr, "%0.2lf ", A[i]);
+    if (i % 20 == 0) fprintf(stderr, "\n");
+  }
   fprintf(stderr, "\n");
 }
-
 
  void kernel_jacobi_1d_imper(int tsteps,
            int n,

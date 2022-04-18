@@ -1,4 +1,4 @@
-
+#POLLY=true
 ifdef SPEC_DEFAULTS
 OBJFILES_BC = $(OBJS)
 else
