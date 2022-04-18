@@ -41,45 +41,48 @@ void print_array(int n,
 
   for (i = 0; i < n; i++)
     {
-      fprintf(stderr, "%0,2lf ", A[i]);
+      fprintf(stderr, "%0.2lf ", A[i]);
       if (i % 20 == 0) fprintf(stderr, "\n");
     }
   fprintf(stderr, "\n");
 }
 
 
-/* Main computational kernel. The whole function will be timed,
-   including the call and return. */
-static
-void kernel_jacobi_1d_imper(int tsteps,
-			    int n,
-			    double A[n],
-			    double B[n])
-{
-  int t, i, j;
+ void kernel_jacobi_1d_imper(int tsteps,
+           int n,
+           double A[n],
+           double B[n])
+ {
+   int t, i, j;
 
-#pragma scop
-#pragma omp parallel
-{
-  #pragma omp master
-  {
-  for (t = 0; t < tsteps; t++)
-    {
-      #pragma omp for schedule(static)
-      for (i = 1; i < n - 1; i++)
-	B[i] = 0.33333 * (A[i-1] + A[i] + A[i + 1]);
-      #pragma omp barrier
-      #pragma omp for schedule(static)
-      for (j = 1; j < n - 1; j++)
-	A[j] = B[j];
-      #pragma omp barrier
-    }
-  }
-}
-#pragma endscop
+ #pragma scop
+ //#pragma omp parallel
+ //{
+   #pragma omp master
+   {
+   for (t = 0; t < tsteps; t++)
+     {
+       #pragma omp parallel
+       {
+       #pragma omp for schedule(static)
+       for (i = 1; i < n - 1; i++)
+   B[i] = 0.33333 * (A[i-1] + A[i] + A[i + 1]);
+       #pragma omp barrier
+       }
 
-}
+       #pragma omp parallel
+       {
+       #pragma omp for schedule(static)
+       for (j = 1; j < n - 1; j++)
+   A[j] = B[j];
+       #pragma omp barrier
+       }
+     }
+   }
+ //}
+ #pragma endscop
 
+ }
 
 int main(int argc, char** argv)
 {
