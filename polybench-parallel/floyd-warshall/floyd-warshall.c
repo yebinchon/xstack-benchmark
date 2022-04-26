@@ -86,7 +86,7 @@ int main(int argc, char** argv)
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  double (*path)[n][n]; path = (double(*)[n][n])malloc(n*sizeof(double));
+  double (*path)[n][n]; path = (double(*)[n][n])malloc(n*n*sizeof(double));
 
 
   /* Initialize array(s). */
