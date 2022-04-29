@@ -197,24 +197,24 @@ double	randlc( double *X, double *A );
 
 void full_verify( void );
 
-//void c_print_results( char   *name,
-//                      char   class,
-//                      int    n1,
-//                      int    n2,
-//                      int    n3,
-//                      int    niter,
-//                      double t,
-//                      double mops,
-//		      char   *optype,
-//                      int    passed_verification,
-//                      char   *npbversion,
-//                      char   *compiletime,
-//                      char   *cc,
-//                      char   *clink,
-//                      char   *c_lib,
-//                      char   *c_inc,
-//                      char   *cflags,
-//                      char   *clinkflags );
+void c_print_results( char   *name,
+                      char   class,
+                      int    n1,
+                      int    n2,
+                      int    n3,
+                      int    niter,
+                      double t,
+                      double mops,
+		      char   *optype,
+                      int    passed_verification,
+                      char   *npbversion,
+                      char   *compiletime,
+                      char   *cc,
+                      char   *clink,
+                      char   *c_lib,
+                      char   *c_inc,
+                      char   *cflags,
+                      char   *clinkflags );
 
 
 //void    timer_clear( int n );
@@ -564,133 +564,31 @@ void rank( int iteration )
     for( i=0; i<TEST_ARRAY_SIZE; i++ )
     {
         k = partial_verify_vals[i];          /* test vals were put here */
-        if( 0 <= k  &&  k <= NUM_KEYS-1 )
-            switch( CLASS )
-            {
-                case 'S':
-                    if( i <= 2 )
-                    {
-                        if( key_buff_ptr[k-1] != test_rank_array[i]+iteration )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-                    }
-                    else
-                    {
-                        if( key_buff_ptr[k-1] != test_rank_array[i]-iteration )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-                    }
-                    break;
-                case 'W':
-                    if( i < 2 )
-                    {
-                        if( key_buff_ptr[k-1] !=
-                                          test_rank_array[i]+(iteration-2) )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-                    }
-                    else
-                    {
-                        if( key_buff_ptr[k-1] != test_rank_array[i]-iteration )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-                    }
-                    break;
-                case 'A':
-                    if( i <= 2 )
-        	    {
-                        if( key_buff_ptr[k-1] !=
-                                          test_rank_array[i]+(iteration-1) )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-        	    }
-                    else
-                    {
-                        if( key_buff_ptr[k-1] !=
-                                          test_rank_array[i]-(iteration-1) )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-                    }
-                    break;
-                case 'B':
-                    if( i == 1 || i == 2 || i == 4 )
-        	    {
-                        if( key_buff_ptr[k-1] != test_rank_array[i]+iteration )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-        	    }
-                    else
-                    {
-                        if( key_buff_ptr[k-1] != test_rank_array[i]-iteration )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-                    }
-                    break;
-                case 'C':
-                    if( i <= 2 )
-        	    {
-                        if( key_buff_ptr[k-1] != test_rank_array[i]+iteration )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-        	    }
-                    else
-                    {
-                        if( key_buff_ptr[k-1] != test_rank_array[i]-iteration )
-                        {
-                            printf( "Failed partial verification: "
-                                  "iteration %d, test key %d\n",
-                                   iteration, i );
-                        }
-                        else
-                            passed_verification++;
-                    }
-                    break;
-            }
+        if( 0 <= k  &&  k <= NUM_KEYS-1 ){
+          if( i < 2 )
+          {
+              if( key_buff_ptr[k-1] !=
+                                test_rank_array[i]+(iteration-2) )
+              {
+                  printf( "Failed partial verification: "
+                        "iteration %d, test key %d\n",
+                         iteration, i );
+              }
+              else
+                  passed_verification++;
+          }
+          else
+          {
+              if( key_buff_ptr[k-1] != test_rank_array[i]-iteration )
+              {
+                  printf( "Failed partial verification: "
+                        "iteration %d, test key %d\n",
+                         iteration, i );
+              }
+              else
+                  passed_verification++;
+          }
+        }
     }
 
 
@@ -715,7 +613,7 @@ main( argc, argv )
     char **argv;
 {
 
-    int             i, iteration, timer_on;
+    int             i, iteration;//, timer_on;
 
     double          timecounter;
 
@@ -723,48 +621,26 @@ main( argc, argv )
 
 
 /*  Initialize timers  */
-//    timer_on = 0;
-//    if ((fp = fopen("timer.flag", "r")) != NULL) {
-//        fclose(fp);
-//        timer_on = 1;
-//    }
-//    timer_clear( 0 );
-//    if (timer_on) {
-//        timer_clear( 1 );
-//        timer_clear( 2 );
-//        timer_clear( 3 );
-//    }
-//
-//    if (timer_on) timer_start( 3 );
+    //timer_on = 0;
+    if ((fp = fopen("timer.flag", "r")) != NULL) {
+        fclose(fp);
+        //timer_on = 1;
+    }
+    //timer_clear( 0 );
+    //if (timer_on) {
+    //    timer_clear( 1 );
+    //    timer_clear( 2 );
+    //    timer_clear( 3 );
+    //}
+
+    //if (timer_on) timer_start( 3 );
 
 
 /*  Initialize the verification arrays if a valid class */
-    for( i=0; i<TEST_ARRAY_SIZE; i++ )
-        switch( CLASS )
-        {
-            case 'S':
-                test_index_array[i] = S_test_index_array[i];
-                test_rank_array[i]  = S_test_rank_array[i];
-                break;
-            case 'A':
-                test_index_array[i] = A_test_index_array[i];
-                test_rank_array[i]  = A_test_rank_array[i];
-                break;
-            case 'W':
-                test_index_array[i] = W_test_index_array[i];
-                test_rank_array[i]  = W_test_rank_array[i];
-                break;
-            case 'B':
-                test_index_array[i] = B_test_index_array[i];
-                test_rank_array[i]  = B_test_rank_array[i];
-                break;
-            case 'C':
-                test_index_array[i] = C_test_index_array[i];
-                test_rank_array[i]  = C_test_rank_array[i];
-                break;
-        };
-
-
+    for( i=0; i<TEST_ARRAY_SIZE; i++ ){
+      test_index_array[i] = W_test_index_array[i];
+      test_rank_array[i]  = W_test_rank_array[i];
+    }
 
 /*  Printout initial NPB info */
     printf
@@ -836,45 +712,45 @@ main( argc, argv )
 /*  The final printout  */
     if( passed_verification != 5*MAX_ITERATIONS + 1 )
         passed_verification = 0;
-   // c_print_results( "IS",
-   //                  CLASS,
-   //                  TOTAL_KEYS,
-   //                  0,
-   //                  0,
-   //                  MAX_ITERATIONS,
-   //                  timecounter,
-   //                  ((double) (MAX_ITERATIONS*TOTAL_KEYS))
-   //                                               /timecounter/1000000.,
-   //                  "keys ranked",
-   //                  passed_verification,
-   //                  NPBVERSION,
-   //                  COMPILETIME,
-   //                  CC,
-   //                  CLINK,
-   //                  C_LIB,
-   //                  C_INC,
-   //                  CFLAGS,
-   //                  CLINKFLAGS );
+    //c_print_results( "IS",
+    //                 CLASS,
+    //                 TOTAL_KEYS,
+    //                 0,
+    //                 0,
+    //                 MAX_ITERATIONS,
+    //                 timecounter,
+    //                 ((double) (MAX_ITERATIONS*TOTAL_KEYS))
+    //                                              /timecounter/1000000.,
+    //                 "keys ranked",
+    //                 passed_verification,
+    //                 NPBVERSION,
+    //                 COMPILETIME,
+    //                 CC,
+    //                 CLINK,
+    //                 C_LIB,
+    //                 C_INC,
+    //                 CFLAGS,
+    //                 CLINKFLAGS );
 
 
 /*  Print additional timers  */
-   // if (timer_on) {
-   //    double t_total, t_percent;
+    //if (timer_on) {
+    //   double t_total, t_percent;
 
-   //    t_total = timer_read( 3 );
-   //    printf("\nAdditional timers -\n");
-   //    printf(" Total execution: %8.3f\n", t_total);
-   //    if (t_total == 0.0) t_total = 1.0;
-   //    timecounter = timer_read(1);
-   //    t_percent = timecounter/t_total * 100.;
-   //    printf(" Initialization : %8.3f (%5.2f%%)\n", timecounter, t_percent);
-   //    timecounter = timer_read(0);
-   //    t_percent = timecounter/t_total * 100.;
-   //    printf(" Benchmarking   : %8.3f (%5.2f%%)\n", timecounter, t_percent);
-   //    timecounter = timer_read(2);
-   //    t_percent = timecounter/t_total * 100.;
-   //    printf(" Sorting        : %8.3f (%5.2f%%)\n", timecounter, t_percent);
-   // }
+    //   t_total = timer_read( 3 );
+    //   printf("\nAdditional timers -\n");
+    //   printf(" Total execution: %8.3f\n", t_total);
+    //   if (t_total == 0.0) t_total = 1.0;
+    //   timecounter = timer_read(1);
+    //   t_percent = timecounter/t_total * 100.;
+    //   printf(" Initialization : %8.3f (%5.2f%%)\n", timecounter, t_percent);
+    //   timecounter = timer_read(0);
+    //   t_percent = timecounter/t_total * 100.;
+    //   printf(" Benchmarking   : %8.3f (%5.2f%%)\n", timecounter, t_percent);
+    //   timecounter = timer_read(2);
+    //   t_percent = timecounter/t_total * 100.;
+    //   printf(" Sorting        : %8.3f (%5.2f%%)\n", timecounter, t_percent);
+    //}
 
 
          /**************************/
