@@ -63,11 +63,10 @@ void kernel_gemm(int ni, int nj, int nk,
     double B[nk][nj])
 {
   int i, j, k;
-
-#pragma scop
-#pragma omp parallel
-{
-  #pragma omp for private (j,k)
+//#pragma scop
+//#pragma omp parallel
+//{
+  //#pragma omp for private (j,k)
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
     {
@@ -75,8 +74,8 @@ void kernel_gemm(int ni, int nj, int nk,
       for (k = 0; k < nk; ++k)
         C[i][j] += alpha * A[i][k] * B[k][j];
     }
-}
-#pragma endscop
+//}
+//#pragma endscop
 
 }
 
@@ -88,6 +87,13 @@ int main(int argc, char** argv)
   int ni = atoi(argv[2]);
   int nj = atoi(argv[3]);
   int nk = atoi(argv[4]);
+
+  __builtin_assume(ni>0);
+  __builtin_assume(nj>0);
+  __builtin_assume(nk>0);
+  __builtin_assume(ni<0x7FFFFFFE);
+  __builtin_assume(nj<0x7FFFFFFE);
+  __builtin_assume(nk<0x7FFFFFFE);
 
   double alpha;
   double beta;
