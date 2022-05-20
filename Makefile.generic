@@ -1,4 +1,5 @@
-#POLLY=true
+POLLY=true
+POLLY_FLAGS+=-mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -mllvm -polly-tiling=false
 ifdef SPEC_DEFAULTS
 OBJFILES_BC = $(OBJS)
 else
@@ -16,7 +17,8 @@ LINK_FLAGS+=-fopenmp
 
 ifdef POLLY
 %.bc: %.c
-	clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -g -c -emit-llvm $< -o $@
+	clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize $(POLLY_FLAGS) -g -c -emit-llvm $< -o $@
+	#clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly-overflow-tracking=never -mllvm -polly-ignore-aliasing -mllvm -polly-use-runtime-alias-checks=0 -mllvm -polly-codegen-emit-rtc-print -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -mllvm -polly-tiling=false -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
 else
 %.bc: %.c
