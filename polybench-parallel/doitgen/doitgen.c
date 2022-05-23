@@ -56,10 +56,6 @@ void kernel_doitgen(int nr, int nq, int np,
 {
   int r, q, p, s;
 
-#pragma scop
-#pragma omp parallel
-{
-  #pragma omp for private (q, p, s)
   for (r = 0; r < nr; r++)
     for (q = 0; q < nq; q++) {
       for (p = 0; p < np; p++) {
@@ -70,8 +66,6 @@ void kernel_doitgen(int nr, int nq, int np,
       for (p = 0; p < np; p++)
         A[r][q][p] = sum[r][q][p];
     }
-}
-#pragma endscop
 
 }
 
@@ -89,6 +83,9 @@ int main(int argc, char** argv)
   double (*C4)[np][np]; C4 = (double(*)[np][np])malloc((np) * (np) * sizeof(double));;
 
 
+  //__builtin_assume(nq>-1);
+  //__builtin_assume(np>-1);
+  __builtin_assume((np | nq) > -1);
   init_array (nr, nq, np,
       *A,
       *C4);

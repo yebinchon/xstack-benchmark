@@ -67,10 +67,10 @@ void kernel_3mm(int ni, int nj, int nk, int nl, int nm,
 {
   int i, j, k;
 
-#pragma scop
-#pragma omp parallel private (j, k)
-{
-  #pragma omp for
+//#pragma scop
+//#pragma omp parallel private (j, k)
+//{
+  //#pragma omp for
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
     {
@@ -79,7 +79,7 @@ void kernel_3mm(int ni, int nj, int nk, int nl, int nm,
         E[i][j] += A[i][k] * B[k][j];
     }
 
-  #pragma omp for
+  //#pragma omp for
   for (i = 0; i < nj; i++)
     for (j = 0; j < nl; j++)
     {
@@ -88,7 +88,7 @@ void kernel_3mm(int ni, int nj, int nk, int nl, int nm,
         F[i][j] += C[i][k] * D[k][j];
     }
 
-  #pragma omp for
+  //#pragma omp for
   for (i = 0; i < ni; i++)
     for (j = 0; j < nl; j++)
     {
@@ -96,8 +96,8 @@ void kernel_3mm(int ni, int nj, int nk, int nl, int nm,
       for (k = 0; k < nj; ++k)
         G[i][j] += E[i][k] * F[k][j];
     }
-}
-#pragma endscop
+//}
+//#pragma endscop
 
 }
 
@@ -111,6 +111,17 @@ int main(int argc, char** argv)
   int nk = atoi(argv[4]);
   int nl = atoi(argv[5]);
   int nm = atoi(argv[6]);
+
+  __builtin_assume(ni>-1);
+  __builtin_assume(nj>-1);
+  __builtin_assume(nk>0);
+  __builtin_assume(nl>0);
+  __builtin_assume(nm>0);
+  __builtin_assume(ni<0x7FFFFFFE);
+  __builtin_assume(nj<0x7FFFFFFE);
+  __builtin_assume(nk<0x7FFFFFFE);
+  __builtin_assume(nl<0x7FFFFFFE);
+  __builtin_assume(nm<0x7FFFFFFE);
 
 
   double (*E)[ni][nj]; E = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;

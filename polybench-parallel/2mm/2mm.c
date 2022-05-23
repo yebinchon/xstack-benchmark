@@ -71,11 +71,11 @@ void kernel_2mm(int ni, int nj, int nk, int nl,
 {
   int i, j, k;
 
-#pragma scop
+//#pragma scop
 
-#pragma omp parallel
+//#pragma omp parallel
   {
-  #pragma omp for private (j, k)
+  //#pragma omp for private (j, k)
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
     {
@@ -83,7 +83,7 @@ void kernel_2mm(int ni, int nj, int nk, int nl,
       for (k = 0; k < nk; ++k)
         tmp[i][j] += alpha * A[i][k] * B[k][j];
     }
-  #pragma omp for private (j, k)
+  //#pragma omp for private (j, k)
   for (i = 0; i < ni; i++)
     for (j = 0; j < nl; j++)
     {
@@ -92,7 +92,7 @@ void kernel_2mm(int ni, int nj, int nk, int nl,
         D[i][j] += tmp[i][k] * C[k][j];
     }
   }
-#pragma endscop
+//#pragma endscop
 }
 
 
@@ -113,6 +113,16 @@ int main(int argc, char** argv)
   double (*C)[nl][nj]; C = (double(*)[nl][nj])malloc((nl) * (nj) * sizeof(double));
   double (*D)[ni][nl]; D = (double(*)[ni][nl])malloc((ni) * (nl) * sizeof(double));
 
+
+  __builtin_assume(ni>0);
+  __builtin_assume(nj>0);
+  __builtin_assume(nk>0);
+  __builtin_assume(nl>0);
+  __builtin_assume(ni<0x7FFFFFFE);
+  __builtin_assume(nj<0x7FFFFFFE);
+  __builtin_assume(nk<0x7FFFFFFE);
+  __builtin_assume(nl<0x7FFFFFFE);
+  __builtin_assume(nj>=nl);
 
   init_array (ni, nj, nk, nl, &alpha, &beta,
       *A,
