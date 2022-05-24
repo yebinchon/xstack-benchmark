@@ -69,13 +69,8 @@ void kernel_bicg(int nx, int ny,
 {
   int i, j;
 
-#pragma scop
-#pragma omp parallel
-{
-  #pragma omp for
   for (i = 0; i < ny; i++)
     s[i] = 0;
-  #pragma omp for private (j)
   for (i = 0; i < nx; i++)
     {
       q[i] = 0;
@@ -85,8 +80,6 @@ void kernel_bicg(int nx, int ny,
 	  q[i] = q[i] + A[i][j] * p[j];
 	}
     }
-}
-#pragma endscop
 
 }
 
