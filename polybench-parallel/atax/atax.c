@@ -61,13 +61,8 @@ void kernel_atax(int nx, int ny,
 {
   int i, j;
 
-#pragma scop
-#pragma omp parallel
-{
-  #pragma omp for
   for (i= 0; i < nx; i++)
     y[i] = 0;
-  #pragma omp for private (j)
   for (i = 0; i < ny; i++)
     {
       tmp[i] = 0;
@@ -76,8 +71,6 @@ void kernel_atax(int nx, int ny,
       for (j = 0; j < ny; j++)
 	y[j] = y[j] + A[i][j] * tmp[i];
     }
-}
-#pragma endscop
 
 }
 
