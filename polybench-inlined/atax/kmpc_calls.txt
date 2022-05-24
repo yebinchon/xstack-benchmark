@@ -1,8 +1,0 @@
-60: __kmpc_fork_call
-145: __kmpc_for_static_init_4
-186: __kmpc_for_static_fini
-198: __kmpc_fork_call
-209: __kmpc_for_static_init_4
-211: __kmpc_for_static_fini
-243: __kmpc_fork_call
-294: __kmpc_fork_call
