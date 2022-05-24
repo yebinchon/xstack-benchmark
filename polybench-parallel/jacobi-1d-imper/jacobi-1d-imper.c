@@ -12,7 +12,7 @@
 #include <math.h>
 
 #define TSTEPS 100
-#define N 10000
+#define N 100000000
 
 /* Array initialization. */
   static
@@ -55,15 +55,15 @@ void print_array(int n,
    int t, i, j;
 
  #pragma scop
-   #pragma omp parallel private(t)
+   //#pragma omp parallel private(t)
    {
    for (t = 0; t < tsteps; t++)
      {
-       #pragma omp for schedule(static){
+       //#pragma omp for schedule(static){
        for (i = 1; i < n - 1; i++)
    B[i] = 0.33333 * (A[i-1] + A[i] + A[i + 1]);
 
-       #pragma omp for schedule(static)
+       //#pragma omp for schedule(static)
        for (j = 1; j < n - 1; j++)
    A[j] = B[j];
      }
