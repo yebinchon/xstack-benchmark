@@ -14,7 +14,7 @@
 
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-#define N 4000
+#define N 30000
 
 /* Array initialization. */
 static
@@ -69,19 +69,19 @@ void kernel_mvt(int n,
 {
   int i, j;
 
-#pragma scop
-#pragma omp parallel private (j)
+//#pragma scop
+//#pragma omp parallel private (j)
 {
-  #pragma omp for
+  //#pragma omp for
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
       x1[i] = x1[i] + A[i][j] * y_1[j];
-  #pragma omp for
+  //#pragma omp for
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
       x2[i] = x2[i] + A[j][i] * y_2[j];
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
