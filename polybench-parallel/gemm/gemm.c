@@ -97,9 +97,9 @@ int main(int argc, char** argv)
 
   double alpha;
   double beta;
-  double (*C)[ni][nj]; C = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
-  double (*A)[ni][nk]; A = (double(*)[ni][nk])malloc((ni) * (nk) * sizeof(double));;
-  double (*B)[nk][nj]; B = (double(*)[nk][nj])malloc((nk) * (nj) * sizeof(double));;
+  double (*C)[ni][nj] = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
+  double (*A)[ni][nk] = (double(*)[ni][nk])malloc((ni) * (nk) * sizeof(double));;
+  double (*B)[nk][nj] = (double(*)[nk][nj])malloc((nk) * (nj) * sizeof(double));;
 
 
   init_array (ni, nj, nk, &alpha, &beta,
