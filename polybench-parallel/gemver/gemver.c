@@ -11,7 +11,7 @@
 #include <string.h>
 #include <math.h>
 
-#define N 3
+#define N 30000
 
 
 /* Array initialization. */
@@ -83,29 +83,29 @@ void kernel_gemver(int n,
 {
   int i, j;
 
-#pragma scop
-#pragma omp parallel
-{
-  #pragma omp for private (j)
+//#pragma scop
+//#pragma omp parallel
+//{
+  //#pragma omp for private (j)
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
       A[i][j] = A[i][j] + u1[i] * v1[j] + u2[i] * v2[j];
 
-  #pragma omp for private (j)
+  //#pragma omp for private (j)
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
       x[i] = x[i] + beta * A[j][i] * y[j];
 
-  #pragma omp for
+  //#pragma omp for
   for (i = 0; i < n; i++)
     x[i] = x[i] + z[i];
 
-  #pragma omp for private (j)
+  //#pragma omp for private (j)
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
       w[i] = w[i] +  alpha * A[i][j] * x[j];
-}
-#pragma endscop
+//}
+//#pragma endscop
 }
 
 
@@ -128,6 +128,8 @@ int main(int argc, char** argv)
   double (*y)[n]; y = (double(*)[n])malloc(n*sizeof(double));
   double (*z)[n]; z = (double(*)[n])malloc(n*sizeof(double));
 
+  __builtin_assume(n>-1);
+  __builtin_assume(n<0x7FFFFFFE);
 
   /* Initialize array(s). */
   init_array (n, &alpha, &beta,
