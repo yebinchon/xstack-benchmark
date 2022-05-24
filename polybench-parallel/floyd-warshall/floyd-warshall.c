@@ -53,28 +53,14 @@ void kernel_floyd_warshall(int n,
   int i, j, k;
   double path_new, path_old;
 
-#pragma scop
-#pragma omp master
-{
-  #pragma omp parallel
-  {
   for (k = 0; k < n; k++)
     {
-      #pragma omp for shared(k) private(j)
       for(i = 0; i < n; i++)
 	      for (j = 0; j < n; j++) {
-          path_old = path[i][j];
-          path_new = path[i][k] + path[k][j];
-          #pragma omp critical
-	        path[i][j] = path[i][j] < path_new ?
-	          path[i][j] : path_new;
-	        //path[i][j] = path[i][j] < path[i][k] + path[k][j] ?
-	        //  path[i][j] : path[i][k] + path[k][j];
+	        path[i][j] = path[i][j] < path[i][k] + path[k][j] ?
+	          path[i][j] : path[i][k] + path[k][j];
         }
     }
-  }
-}
-#pragma endscop
 
 }
 
