@@ -83,6 +83,10 @@ int main(int argc, char** argv)
   double (*C4)[np][np]; C4 = (double(*)[np][np])malloc((np) * (np) * sizeof(double));;
 
 
+  //__builtin_assume(nq>-1);
+  //__builtin_assume(np>-1);
+  __builtin_assume((np | nq) > -1);
+
   init_array (nr, nq, np,
       *A,
       *C4);
