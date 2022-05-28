@@ -14,8 +14,9 @@
 
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-#define NX 4000
-#define NY 4000
+// perf size 400000
+#define NX 40000
+#define NY 40000
 
 /* Array initialization. */
 static
