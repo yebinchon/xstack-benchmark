@@ -11,7 +11,7 @@
 #include <string.h>
 #include <math.h>
 
-#define N 4000
+#define N 40000
 
 /* Array initialization. */
 static
@@ -67,10 +67,6 @@ void kernel_gesummv(int n,
 {
   int i, j;
 
-#pragma scop
-#pragma omp parallel
-{
-  #pragma omp for private (j)
   for (i = 0; i < n; i++)
     {
       tmp[i] = 0;
@@ -82,8 +78,6 @@ void kernel_gesummv(int n,
 	}
       y[i] = alpha * tmp[i] + beta * y[i];
     }
-}
-#pragma endscop
 
 }
 
