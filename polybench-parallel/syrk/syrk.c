@@ -100,6 +100,10 @@ int main(int argc, char** argv)
 
 
 
+  __builtin_assume(nj>0);
+  __builtin_assume(ni>0);
+  __builtin_assume(ni < 214748364);
+  __builtin_assume(nj < 214748364);
   if (dump_code == 1) print_array(ni, *C);
 
 
