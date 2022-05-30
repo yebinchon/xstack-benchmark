@@ -83,10 +83,16 @@ int main(int argc, char** argv)
   int ni = atoi(argv[2]);
   int nj = atoi(argv[3]);
 
+  __builtin_assume(nj>0);
+  __builtin_assume(ni>0);
+  __builtin_assume(ni<2147483646);
+  __builtin_assume(nj<2147483646);
+
   double alpha;
   double beta;
   double (*C)[ni][ni]; C = (double(*)[ni][ni])malloc((ni) * (ni) * sizeof(double));;
   double (*A)[ni][nj]; A = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
+
 
 
   init_array (ni, nj, &alpha, &beta, *C, *A);
@@ -100,10 +106,6 @@ int main(int argc, char** argv)
 
 
 
-  __builtin_assume(nj>0);
-  __builtin_assume(ni>0);
-  __builtin_assume(ni < 214748364);
-  __builtin_assume(nj < 214748364);
   if (dump_code == 1) print_array(ni, *C);
 
 
