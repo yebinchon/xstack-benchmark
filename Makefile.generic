@@ -1,4 +1,4 @@
-POLLY=true
+#POLLY=true
 POLLY_FLAGS+=-mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -mllvm -polly-tiling=false
 ifdef SPEC_DEFAULTS
 OBJFILES_BC = $(OBJS)
@@ -6,6 +6,7 @@ else
 OBJFILES_BC?= $(shell find . -name \*.c -not -path \*.cbe.c | sed -e "s/\.c/.bc/" ) $(shell find . -name \*.C -not -path \*.cbe.C | sed -e "s/\.C/.bc/" ) $(shell find . -name \*.cpp -not -path \*.cbe.cpp | sed -e "s/\.cpp/.bc/" )  $(shell find . -name \*.cc -not -path \*.cbe.cc | sed -e "s/\.cc/.bc/" )
 endif
 
+RUN_TIMEOUT?=7200 # 2 hours.
 #ifdef SPEC_DEFAULTS
 #POLLY_OBJFILES_BC = $(OBJS)
 #else
@@ -32,9 +33,12 @@ $(PLAIN).bc : $(OBJFILES_BC)
 $(PLAIN).ll : $(PLAIN).bc
 	llvm-dis $^
 
-$(PLAIN).exe : $(PLAIN).ll
-	llc -filetype=obj $< -o $(PLAIN).bc
-	clang -g -O3 $(LINK_FLAGS) $< -o $@
+#$(PLAIN).exe : $(PLAIN).ll
+#	llc -filetype=obj $< -o $(PLAIN).bc
+#	clang -g -O3 $(LINK_FLAGS) $< -o $@
+
+$(PLAIN).exe : $(BMARK).c
+	clang -g -O3 -fopenmp $< -o $@
 
 $(PLAIN).polly.bc : $(OBJFILES_BC)
 	llvm-link $(LLVM_LINK_FLAGS) $^ -o $@
@@ -54,10 +58,19 @@ $(PLAIN).cbe.c: $(PLAIN).ll
 $(PLAIN).cbe.exe: $(PLAIN).cbe.c
 	clang -g -O3 $< $(LINK_FLAGS) -o $@
 
+$(PLAIN).gcc.cbe.exe: $(PLAIN).cbe.c
+	gcc -g -O3 $< $(LINK_FLAGS) -o $@
+
 check_correctness: $(PLAIN).cbe.exe $(PLAIN).exe
-	./$(PLAIN).exe $(ARGS) > $(PLAIN).out 2>&1
-	./$(PLAIN).cbe.exe $(ARGS) > $(PLAIN).cbe.out 2>&1
+	./$(PLAIN).exe $(TEST_ARGS) > $(PLAIN).out 2>&1
+	./$(PLAIN).cbe.exe $(TEST_ARGS) > $(PLAIN).cbe.out 2>&1
 	diff $(PLAIN).out $(PLAIN).cbe.out
+
+check_performance: $(PLAIN).cbe.exe $(PLAIN).exe $(PLAIN).gcc.cbe.exe
+	regressions-watchdog $(RUN_TIMEOUT) seq.time ./$(PLAIN).exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) clang.time ./$(PLAIN).cbe.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) gcc.time ./$(PLAIN).gcc.cbe.exe $(PERF_ARGS)
+	
 
 clean:
 	rm -rf *.bc *.out *.ll *.cbe.c *.exe *.o
