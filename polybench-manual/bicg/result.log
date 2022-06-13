@@ -1,0 +1,2 @@
+clang -g -O3 -fopenmp bicg.c -o benchmark.exe
+regressions-watchdog 7200  seq.time ./benchmark.exe 0 
