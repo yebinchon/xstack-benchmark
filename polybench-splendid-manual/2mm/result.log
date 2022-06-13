@@ -1,0 +1,48 @@
+gcc -g -O3 -fopenmp 2mm.c -o benchmark.exe
+2mm.c: In function ‘main’:
+2mm.c:160:32: warning: passing argument 2 of ‘strtol’ from incompatible pointer type [-Wincompatible-pointer-types]
+  160 |   dump_code = strtol(_argv[1], ((uint8_t**)0), 10);
+      |                                ^~~~~~~~~~~~~~
+      |                                |
+      |                                uint8_t ** {aka unsigned char **}
+In file included from 2mm.c:4:
+/usr/include/stdlib.h:177:22: note: expected ‘char ** restrict’ but argument is of type ‘uint8_t **’ {aka ‘unsigned char **’}
+  177 |    char **__restrict __endptr, int __base)
+      |    ~~~~~~~~~~~~~~~~~~^~~~~~~~
+2mm.c:162:25: warning: passing argument 2 of ‘strtol’ from incompatible pointer type [-Wincompatible-pointer-types]
+  162 |   ni = strtol(_argv[2], ((uint8_t**)0), 10);
+      |                         ^~~~~~~~~~~~~~
+      |                         |
+      |                         uint8_t ** {aka unsigned char **}
+In file included from 2mm.c:4:
+/usr/include/stdlib.h:177:22: note: expected ‘char ** restrict’ but argument is of type ‘uint8_t **’ {aka ‘unsigned char **’}
+  177 |    char **__restrict __endptr, int __base)
+      |    ~~~~~~~~~~~~~~~~~~^~~~~~~~
+2mm.c:164:25: warning: passing argument 2 of ‘strtol’ from incompatible pointer type [-Wincompatible-pointer-types]
+  164 |   nj = strtol(_argv[3], ((uint8_t**)0), 10);
+      |                         ^~~~~~~~~~~~~~
+      |                         |
+      |                         uint8_t ** {aka unsigned char **}
+In file included from 2mm.c:4:
+/usr/include/stdlib.h:177:22: note: expected ‘char ** restrict’ but argument is of type ‘uint8_t **’ {aka ‘unsigned char **’}
+  177 |    char **__restrict __endptr, int __base)
+      |    ~~~~~~~~~~~~~~~~~~^~~~~~~~
+2mm.c:166:25: warning: passing argument 2 of ‘strtol’ from incompatible pointer type [-Wincompatible-pointer-types]
+  166 |   nk = strtol(_argv[4], ((uint8_t**)0), 10);
+      |                         ^~~~~~~~~~~~~~
+      |                         |
+      |                         uint8_t ** {aka unsigned char **}
+In file included from 2mm.c:4:
+/usr/include/stdlib.h:177:22: note: expected ‘char ** restrict’ but argument is of type ‘uint8_t **’ {aka ‘unsigned char **’}
+  177 |    char **__restrict __endptr, int __base)
+      |    ~~~~~~~~~~~~~~~~~~^~~~~~~~
+2mm.c:168:25: warning: passing argument 2 of ‘strtol’ from incompatible pointer type [-Wincompatible-pointer-types]
+  168 |   nl = strtol(_argv[5], ((uint8_t**)0), 10);
+      |                         ^~~~~~~~~~~~~~
+      |                         |
+      |                         uint8_t ** {aka unsigned char **}
+In file included from 2mm.c:4:
+/usr/include/stdlib.h:177:22: note: expected ‘char ** restrict’ but argument is of type ‘uint8_t **’ {aka ‘unsigned char **’}
+  177 |    char **__restrict __endptr, int __base)
+      |    ~~~~~~~~~~~~~~~~~~^~~~~~~~
+regressions-watchdog 7200  gcc-seq.time ./benchmark.exe 0 2048 2048 2048 2048 
