@@ -1,4 +1,3 @@
-POLLY=1
 BMARK=syr2k
 CFILE=syr2k
 DIR=/scratch/yc0769/xstack-benchmark/xstack-benchmark/polybench-3.1

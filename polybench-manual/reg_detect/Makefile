@@ -1,4 +1,3 @@
-POLLY=1
 BMARK=reg_detect
 CFILE=reg_detect
 DIR=/scratch/yc0769/xstack-benchmark/xstack-benchmark/polybench-3.1

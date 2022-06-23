@@ -1,4 +1,3 @@
-POLLY=1
 BMARK=gemm
 CFILE=gemm
 DIR=/scratch/yc0769/xstack-benchmark/xstack-benchmark/polybench-3.1

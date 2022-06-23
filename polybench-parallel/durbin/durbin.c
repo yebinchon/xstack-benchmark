@@ -11,10 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 4000. */
-#define N 4000
-
 /* Array initialization. */
 static
 void init_array (int n,
@@ -88,7 +84,7 @@ void kernel_durbin(int n,
     }
   #pragma omp for
   for (i = 0; i < n; i++)
-    out[i] = y[i][N-1];
+    out[i] = y[i][n-1];
   }
 #pragma endscop
 
@@ -98,7 +94,7 @@ void kernel_durbin(int n,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = N;
+  int n = atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

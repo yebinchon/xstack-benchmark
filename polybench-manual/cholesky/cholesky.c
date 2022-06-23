@@ -11,9 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 4000. */
-#define N 1024
 
 /* Array initialization. */
 static
@@ -87,7 +84,7 @@ void kernel_cholesky(int n,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = N;
+  int n = atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

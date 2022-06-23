@@ -12,11 +12,6 @@
 #include <math.h>
 
 
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 10x1024x1024. */
-#define N 1024
-#define TSTEPS 50
-
 
 /* Array initialization. */
 static
@@ -116,8 +111,8 @@ void kernel_adi(int tsteps,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = N;
-  int tsteps = TSTEPS;
+  int n = atoi(argv[2]);
+  int tsteps = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

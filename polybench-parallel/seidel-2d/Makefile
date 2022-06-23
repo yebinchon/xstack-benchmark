@@ -1,3 +1,4 @@
+POLLY=1
 BMARK=seidel-2d
 CFILE=seidel-2d
 DIR=/scratch/yc0769/xstack-benchmark/xstack-benchmark/polybench-3.1

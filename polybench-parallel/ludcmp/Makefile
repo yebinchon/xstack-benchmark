@@ -1,3 +1,4 @@
+POLLY=1
 BMARK=ludcmp
 CFILE=ludcmp
 DIR=/scratch/yc0769/xstack-benchmark/xstack-benchmark/polybench-3.1
