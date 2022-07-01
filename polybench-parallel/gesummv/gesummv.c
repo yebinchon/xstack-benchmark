@@ -11,7 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-#define N 40000
 
 /* Array initialization. */
 static
@@ -85,7 +84,7 @@ void kernel_gesummv(int n,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = N;
+  int n = atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

@@ -1,0 +1,15 @@
+clang -g -O3 -fopenmp jacobi-1d-imper.c -o benchmark.exe
+jacobi-1d-imper.c:63:1: error: region cannot be closely nested inside 'master' region; perhaps you forget to enclose 'omp for' directive into a parallel region?
+#pragma omp for schedule(static)
+^
+jacobi-1d-imper.c:66:1: error: region cannot be closely nested inside 'master' region
+#pragma omp barrier
+^
+jacobi-1d-imper.c:68:1: error: region cannot be closely nested inside 'master' region; perhaps you forget to enclose 'omp for' directive into a parallel region?
+#pragma omp for schedule(static)
+^
+jacobi-1d-imper.c:71:1: error: region cannot be closely nested inside 'master' region
+#pragma omp barrier
+^
+4 errors generated.
+make: *** [../../Makefile.generic:41: benchmark.exe] Error 1

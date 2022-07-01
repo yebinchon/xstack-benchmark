@@ -11,11 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 50x1000x1000. */
-#define TMAX 50
-#define NX 1000
-#define NY 1000
 
 
 /* Array initialization. */
@@ -113,9 +108,9 @@ void kernel_fdtd_2d(int tmax,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int tmax = TMAX;
-  int nx = NX;
-  int ny = NY;
+  int tmax = atoi(argv[2]);
+  int nx = atoi(argv[3]);
+  int ny = atoi(argv[4]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

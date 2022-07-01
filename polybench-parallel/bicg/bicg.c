@@ -11,11 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-/* Include benchmark-specific header. */
-/* Default data type is double, default size is 4000. */
-//perf size 40000
-#define NX 40000
-#define NY 40000
 
 /* Array initialization. */
 static
@@ -88,8 +83,8 @@ void kernel_bicg(int nx, int ny,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int nx = NX;
-  int ny = NY;
+  int nx =atoi(argv[2]);
+  int ny = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

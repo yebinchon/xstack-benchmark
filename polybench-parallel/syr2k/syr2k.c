@@ -64,14 +64,14 @@ void kernel_syr2k(int ni, int nj,
 {
   int i, j, k;
 
-#pragma scop
-#pragma omp parallel
-{
-  #pragma omp for private (j) schedule(static)
+//#pragma scop
+//#pragma omp parallel
+//{
+//  #pragma omp for private (j) schedule(static)
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++)
       C[i][j] *= beta;
-  #pragma omp for private (j,k) schedule(static)
+//  #pragma omp for private (j,k) schedule(static)
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++)
       for (k = 0; k < nj; k++)
@@ -79,8 +79,8 @@ void kernel_syr2k(int ni, int nj,
         C[i][j] += alpha * A[i][k] * B[j][k];
         C[i][j] += alpha * B[i][k] * A[j][k];
       }
-}
-#pragma endscop
+//}
+//#pragma endscop
 
 }
 
@@ -98,10 +98,10 @@ int main(int argc, char** argv)
   double (*B)[ni][nj]; B = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
 
 
-  __builtin_assume(nj>0);
-  __builtin_assume(ni>0);
-  __builtin_assume(ni < 2147483646);
-  __builtin_assume(nj < 2147483646);
+//  __builtin_assume(nj>0);
+//  __builtin_assume(ni>0);
+//  __builtin_assume(ni < 2147483646);
+//  __builtin_assume(nj < 2147483646);
   init_array (ni, nj, &alpha, &beta,
       *C,
       *A,
