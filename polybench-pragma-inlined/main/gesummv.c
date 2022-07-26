@@ -1,5 +1,3 @@
-#define N 4000
-
 int main(int argc, char** argv)
 {
   int n = N;
@@ -31,8 +29,6 @@ int main(int argc, char** argv)
       (*y)[i] = alpha * (*tmp)[i] + beta * (*y)[i];
     }
 
-  /* Prevent dead-code elimination. All live-out data must be printed
-     by the function call in argument. */
   if(dump_code == 1){
   for (i = 0; i < n; i++) {
     fprintf (stderr, "%0.2lf ", (*y)[i]);
@@ -40,7 +36,6 @@ int main(int argc, char** argv)
   }
   }
 
-  /* Be clean. */
   free((void*)A);
   free((void*)B);
   free((void*)tmp);

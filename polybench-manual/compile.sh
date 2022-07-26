@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-for dir in */ ; do cd $dir ; make clean ; make check_correctness ; cd ../ ; done
+for dir in */ ; do cp ../polybench-splendid-manual/$dir/Makefile $dir ;  done

@@ -1,2 +1,0 @@
-clang -g -O3 -fopenmp syr2k.c -o benchmark.exe
-regressions-watchdog 7200  seq.time ./benchmark.exe 0 4096 4096 

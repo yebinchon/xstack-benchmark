@@ -6,8 +6,6 @@ int main(int argc, char ** argv) {
   uint8_t* X = malloc(33554432);
   uint8_t* A = malloc(33554432);
   uint8_t* B = malloc(33554432);
-//START OUTLINED
-//END OUTLINED
 for(uint64_t i = 0; i < 50;  i = i + 1){
 for(uint64_t j = 0; j < 2048;  j = j + 1){
   double __2e_phiops_2e_0 = *((double*)(B+(j << 14)));
@@ -22,8 +20,6 @@ for(uint64_t k = 0; k < 2047;  k = k + 1){
 for(uint64_t j = 0; j < 2048;  j = j + 1){
   *((double*)((X+16376)+(j << 14))) = *((double*)((X+16376)+(j << 14))) / *((double*)((B+16376)+(j << 14)));
 }
-//START OUTLINED
-//END OUTLINED
 for(uint64_t j = 0; j < 2047;  j = j + 1){
 for(uint64_t k = 0; k < 2048;  k = k + 1){
   *((double*)(((X+16384)+(j << 14))+(k << 3))) = (*((double*)(((X+16384)+(j << 14))+(k << 3))) - *((double*)((X+(j << 14))+(k << 3))) * *((double*)(((A+16384)+(j << 14))+(k << 3))) / *((double*)((B+(j << 14))+(k << 3))));
@@ -50,10 +46,6 @@ for(uint64_t j = 0; j < 2048;  j = j + 1){
 }
 }
   fputc(10, stderr);
-free(X);
-free(A);
-free(B);
-  return 0;
 }
 
 free(X);

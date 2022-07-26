@@ -19,7 +19,7 @@ void init_array (int nx, int ny,
 		 double r[nx],
 		 double p[ny])
 {
-  int i, j;
+  int i;//, j;
 
   for (i = 0; i < ny; i++)
     p[i] = i * M_PI;

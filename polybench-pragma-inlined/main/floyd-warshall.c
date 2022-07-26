@@ -1,10 +1,8 @@
 int main(int argc, char** argv)
 {
-  /* Retrieve problem size. */
   int n = N;
   int dump_code = atoi(argv[1]);
 
-  /* Variable declaration/allocation. */
   double (*path)[n][n]; path = (double(*)[n][n])malloc(n*n*sizeof(double));
 
 
@@ -30,7 +28,6 @@ int main(int argc, char** argv)
   fprintf (stderr, "\n");
   }
 
-  /* Be clean. */
   free((void*)path);
 
   return 0;

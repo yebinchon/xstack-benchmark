@@ -1,3 +1,4 @@
+
 int main(int argc, char ** argv) {
   uint32_t _argc = (uint32_t)argc;
   uint8_t** _argv = (uint8_t**)argv;
@@ -7,8 +8,6 @@ int main(int argc, char ** argv) {
   uint8_t* B = malloc((n << 3) * n);
   uint8_t* x = malloc((n << 32) >> 29);
   uint8_t* y = malloc((n << 32) >> 29);
-//START OUTLINED
-//END OUTLINED
 for(uint64_t i = 0; i < n;  i = i + 1){
   ((double*)y)[i] = 0;
   double _polly_2e_access_2e_call1799_2e_reload = 0;
@@ -27,11 +26,6 @@ for(uint64_t i = 0; i < n;  i = i + 1){
 }
 
 }
-free(A);
-free(B);
-free(x);
-free(y);
-  return 0;
 }
 
 free(A);

@@ -27,8 +27,6 @@ typedef unsigned char bool;
 /* Types Declarations */
 struct l_struct_struct_OC_ident_t;
 struct l_struct_struct_OC__IO_FILE;
-struct l_unnamed_1;
-struct l_unnamed_2;
 
 /* Function definitions */
 typedef void l_fptr_1(uint32_t*, uint32_t*, ...);
@@ -78,21 +76,6 @@ struct l_struct_struct_OC__IO_FILE {
   uint64_t field26;
   uint32_t field27;
   uint8_t field28[20];
-};
-struct l_unnamed_1 {
-  uint64_t field0;
-  uint64_t field1;
-  uint64_t field2;
-  uint8_t* field3;
-  uint8_t* field4;
-  uint8_t* field5;
-};
-struct l_unnamed_2 {
-  uint64_t field0;
-  uint64_t field1;
-  uint64_t field2;
-  double* field3;
-  uint8_t* field4;
 };
 
 /* External Global Variable Declarations */
@@ -145,121 +128,67 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
 int main(int argc, char ** argv) {
   uint32_t _argc = (uint32_t)argc;
   uint8_t** _argv = (uint8_t**)argv;
-  struct l_unnamed_1 _polly_2e_par_2e_userContext117;    /* Address-exposed local */
-  struct l_unnamed_2 _polly_2e_par_2e_userContext110;    /* Address-exposed local */
-  struct l_unnamed_2 _polly_2e_par_2e_userContext103;    /* Address-exposed local */
-  struct l_unnamed_2 _polly_2e_par_2e_userContext;    /* Address-exposed local */
-  double _conv5_2e_i_2e_s2a;    /* Address-exposed local */
-  uint64_t _call_2e_i;
-  uint64_t ni;
-  uint64_t nj;
-  uint64_t nk;
-  uint64_t _mul;
-  uint8_t* C;
-  uint8_t* _call17;
-  uint8_t* _call21;
-  uint64_t i;
-  uint32_t _mul_2e_i80;
-  int64_t j;
-  uint32_t _call_2e_i83;
-  uint32_t _fputc25_2e_i;
-  uint32_t _fputc_2e_i;
-
-  _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
-;
-  ni = strtol(_argv[2], ((uint8_t**)0), 10);
-;
-  nj = strtol(_argv[3], ((uint8_t**)0), 10);
-;
-  nk = strtol(_argv[4], ((uint8_t**)0), 10);
-;
-  _mul = (ni << 3);
-  C = malloc(nj * _mul & 34359738360);
-;
-  _call17 = malloc(nk * _mul & 34359738360);
-;
-  _call21 = malloc((nj << 3) * nk & 34359738360);
-;
-  _conv5_2e_i_2e_s2a = (double)(ni);
-  _polly_2e_par_2e_userContext.field0 = nj;
-  _polly_2e_par_2e_userContext.field1 = ni;
-  _polly_2e_par_2e_userContext.field2 = nk;
-  _polly_2e_par_2e_userContext.field3 = (&_conv5_2e_i_2e_s2a);
+  uint64_t _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
+  uint64_t ni = strtol(_argv[2], ((uint8_t**)0), 10);
+  uint64_t nj = strtol(_argv[3], ((uint8_t**)0), 10);
+  uint64_t nk = strtol(_argv[4], ((uint8_t**)0), 10);
+  uint8_t* C = malloc(nj * (ni << 3));
+  uint8_t* _call17 = malloc(nk * (ni << 3));
+  uint8_t* _call21 = malloc((nj << 3) * nk);
   #pragma omp parallel 
 {
 
-  uint64_t _1 = (nj << 3) & 34359738360;
 #pragma omp for
-for(uint64_t _polly_2e_indvar = 0; _polly_2e_indvar<=(ni - 1);_polly_2e_indvar+=1){
-for(uint64_t _polly_2e_indvar4 = 0; _polly_2e_indvar4 < nj;  _polly_2e_indvar4 = _polly_2e_indvar4 + 1){
-  *((double*)((C+_1 * _polly_2e_indvar)+(_polly_2e_indvar4 << 3))) = (double)(_polly_2e_indvar) * (double)(_polly_2e_indvar4) / _conv5_2e_i_2e_s2a;
+for(uint64_t i = 0; i<=(ni - 1);i+=1){
+for(uint64_t j = 0; j < nj;  j = j + 1){
+  *((double*)((C+(nj << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / ni;
 }
 }
 }
-  _polly_2e_par_2e_userContext103.field0 = nj;
-  _polly_2e_par_2e_userContext103.field1 = ni;
-  _polly_2e_par_2e_userContext103.field2 = nk;
-  _polly_2e_par_2e_userContext103.field3 = (&_conv5_2e_i_2e_s2a);
   #pragma omp parallel 
 {
 
-  uint64_t _2 = (nk << 3) & 34359738360;
 #pragma omp for
-for(uint64_t _polly_2e_indvar = 0; _polly_2e_indvar<=(ni - 1);_polly_2e_indvar+=1){
-for(uint64_t _polly_2e_indvar4 = 0; _polly_2e_indvar4 < nk;  _polly_2e_indvar4 = _polly_2e_indvar4 + 1){
-  *((double*)((_call17+_2 * _polly_2e_indvar)+(_polly_2e_indvar4 << 3))) = (double)(_polly_2e_indvar) * (double)(_polly_2e_indvar4) / _conv5_2e_i_2e_s2a;
+for(uint64_t i = 0; i<=(ni - 1);i+=1){
+for(uint64_t j = 0; j < nk;  j = j + 1){
+  *((double*)((_call17+(nk << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / ni;
 }
 }
 }
-  _polly_2e_par_2e_userContext110.field0 = nj;
-  _polly_2e_par_2e_userContext110.field1 = ni;
-  _polly_2e_par_2e_userContext110.field2 = nk;
-  _polly_2e_par_2e_userContext110.field3 = (&_conv5_2e_i_2e_s2a);
   #pragma omp parallel 
 {
 
-  uint64_t _3 = (nj << 3) & 34359738360;
 #pragma omp for
-for(uint64_t _polly_2e_indvar = 0; _polly_2e_indvar<=(nk - 1);_polly_2e_indvar+=1){
-for(uint64_t _polly_2e_indvar4 = 0; _polly_2e_indvar4 < nj;  _polly_2e_indvar4 = _polly_2e_indvar4 + 1){
-  *((double*)((_call21+_3 * _polly_2e_indvar)+(_polly_2e_indvar4 << 3))) = (double)(_polly_2e_indvar) * (double)(_polly_2e_indvar4) / _conv5_2e_i_2e_s2a;
+for(uint64_t i = 0; i<=(nk - 1);i+=1){
+for(uint64_t j = 0; j < nj;  j = j + 1){
+  *((double*)((_call21+(nj << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / ni;
 }
 }
 }
-  _polly_2e_par_2e_userContext117.field0 = nj;
-  _polly_2e_par_2e_userContext117.field1 = ni;
-  _polly_2e_par_2e_userContext117.field2 = nk;
   #pragma omp parallel 
 {
 
-  uint64_t _4 = (nj << 3);
-  uint64_t _5 = (nk << 3) & 34359738360;
-  uint64_t _6 = (nj << 3);
 #pragma omp for
-for(uint64_t _polly_2e_indvar = 0; _polly_2e_indvar<=(ni - 1);_polly_2e_indvar+=1){
-for(uint64_t _polly_2e_indvar4 = 0; _polly_2e_indvar4 < nj;  _polly_2e_indvar4 = _polly_2e_indvar4 + 1){
-  ((double*)C)[(_polly_2e_indvar * nj + _polly_2e_indvar4)] = *((double*)((C+_4 * _polly_2e_indvar)+(_polly_2e_indvar4 << 3))) * 2123;
-for(uint64_t _polly_2e_indvar14 = 0; _polly_2e_indvar14 < nk;  _polly_2e_indvar14 = _polly_2e_indvar14 + 1){
-  ((double*)C)[(_polly_2e_indvar * nj + _polly_2e_indvar4)] = (((double*)C)[(_polly_2e_indvar * nj + _polly_2e_indvar4)] + *((double*)((_call17+_5 * _polly_2e_indvar)+(_polly_2e_indvar14 << 3))) * 32412 * *((double*)((_call21+(_polly_2e_indvar4 << 3))+_6 * _polly_2e_indvar14)));
+for(uint64_t i = 0; i<=(ni - 1);i+=1){
+for(uint64_t j = 0; j < nj;  j = j + 1){
+  ((double*)C)[(i * nj + j)] = *((double*)((C+(nj << 3) * i)+(j << 3))) * 2123;
+for(uint64_t k = 0; k < nk;  k = k + 1){
+  ((double*)C)[(i * nj + j)] = (((double*)C)[(i * nj + j)] + *((double*)((_call17+(nk << 3) * i)+(k << 3))) * 32412 * *((double*)((_call21+(j << 3))+(nj << 3) * k)));
 }
 }
 }
 }
   if (_call_2e_i == 1) {
-for(uint64_t i = 0; i!=ni;  i = i + 1){
-  _mul_2e_i80 = i * ni;
-for(uint64_t j = 0; j!=nj;  j = j + 1){
-  _call_2e_i83 = fprintf(stderr, (_OC_str), (((double*)C)+i * nj)[j]);
-;
-  if ((int)(_mul_2e_i80 + j) % (int)20 == 0) {
-  _fputc25_2e_i = fputc(10, stderr);
-;
+for(uint64_t i = 0; i < ni;  i = i + 1){
+for(uint64_t j = 0; j < nj;  j = j + 1){
+  fprintf(stderr, (_OC_str), (((double*)C)+i * nj)[j]);
+  if ((int)(i * ni + j) % (int)20 == 0) {
+  fputc(10, stderr);
 }
 
 }
 }
-  _fputc_2e_i = fputc(10, stderr);
-;
+  fputc(10, stderr);
 free(C);
 free(_call17);
 free(_call21);

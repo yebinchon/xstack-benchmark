@@ -97,6 +97,8 @@ int main(int argc, char** argv)
   double (*y)[n]; y = (double(*)[n])malloc(n*sizeof(double));
 
 
+  __builtin_assume(n>0);
+  __builtin_assume(n<0x7FFFFFFE);
   /* Initialize array(s). */
   init_array (n, &alpha, &beta,
 	      *A,

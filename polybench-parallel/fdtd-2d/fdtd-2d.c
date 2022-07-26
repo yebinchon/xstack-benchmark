@@ -11,7 +11,9 @@
 #include <string.h>
 #include <math.h>
 
-
+#define TMAX 100
+#define NX 4000
+#define NY 4000
 
 /* Array initialization. */
 static
@@ -71,46 +73,30 @@ void kernel_fdtd_2d(int tmax,
 {
   int t, i, j;
 
-#pragma scop
-#pragma omp master
-{
-  #pragma omp parallel private (t,i,j)
-  {
   for(t = 0; t < tmax; t++)
     {
-      #pragma omp for
       for (j = 0; j < ny; j++)
 	      ey[0][j] = _fict_[t];
-      #pragma omp barrier
-      #pragma omp for collapse(2) schedule(static)
       for (i = 1; i < nx; i++)
 	      for (j = 0; j < ny; j++)
 	        ey[i][j] = ey[i][j] - 0.5*(hz[i][j]-hz[i-1][j]);
-      #pragma omp barrier
-      #pragma omp for collapse(2) schedule(static)
       for (i = 0; i < nx; i++)
 	      for (j = 1; j < ny; j++)
 	        ex[i][j] = ex[i][j] - 0.5*(hz[i][j]-hz[i][j-1]);
-      #pragma omp barrier
-      #pragma omp for collapse(2) schedule(static)
       for (i = 0; i < nx - 1; i++)
 	      for (j = 0; j < ny - 1; j++)
 	        hz[i][j] = hz[i][j] - 0.7*  (ex[i][j+1] - ex[i][j] +
 				       ey[i+1][j] - ey[i][j]);
-      #pragma omp barrier
     }
-  }
-}
-#pragma endscop
 }
 
 
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int tmax = atoi(argv[2]);
-  int nx = atoi(argv[3]);
-  int ny = atoi(argv[4]);
+  int tmax = TMAX;//atoi(argv[2]);
+  int nx = NX;//atoi(argv[3]);
+  int ny = NY;//atoi(argv[4]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

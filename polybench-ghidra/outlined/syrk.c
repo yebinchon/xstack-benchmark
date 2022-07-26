@@ -129,10 +129,6 @@ void main_polly_subfn_4(undefined4 *param_1,undefined8 param_2,long param_3,long
   return;
 }
 
-
-
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-
 void main_polly_subfn_7(undefined4 *param_1,undefined8 param_2,long param_3,long param_4,
                        long param_5,long param_6)
 

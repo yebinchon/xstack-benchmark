@@ -20,9 +20,6 @@ int main(int argc, char** argv)
   for (i = 0; i < np; i++)
     for (j = 0; j < np; j++)
       (*C4)[i][j] = ((double) i*j) / np;
-
-
-
   int r, q, p, s;
 
   if (dump_code == 1){

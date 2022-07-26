@@ -11,6 +11,8 @@
 #include <string.h>
 #include <math.h>
 
+#define N 2048
+#define TSTEP 50
 
 
 /* Array initialization. */
@@ -20,7 +22,7 @@ void init_array (int n,
 		 double A[n][n],
 		 double B[n][n])
 {
-  int i, j;
+  int i;//, j;
 
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
@@ -111,8 +113,8 @@ void kernel_adi(int tsteps,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = atoi(argv[2]);
-  int tsteps = atoi(argv[3]);
+  int n = N;//atoi(argv[2]);
+  int tsteps = TSTEP;//atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

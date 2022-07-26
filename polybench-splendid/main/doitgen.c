@@ -21,8 +21,6 @@ for(uint64_t j = 0; j < np;  j = j + 1){
   (((double*)C4)+i * np)[j] = (double)(i) * (double)(j) / (double)(np);
 }
 }
-//START OUTLINED
-//END OUTLINED
   if (dump_code == 1) {
 for(uint64_t i = 0; i < nr;  i = i + 1){
 for(uint64_t j = 0; j < nq;  j = j + 1){
@@ -36,10 +34,6 @@ for(uint64_t k = 0; k < np;  k = k + 1){
 }
 }
   fputc(10, stderr);
-free(A);
-free(sum);
-free(C4);
-  return 0;
 }
 
 free(A);

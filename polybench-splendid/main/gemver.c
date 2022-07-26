@@ -26,26 +26,7 @@ for(uint64_t j = 0; j < n;  j = j + 1){
   (((double*)A)+i * n)[j] = (double)(i) * (double)(j) / (double)(n);
 }
 }
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-  if (dump_code != 1 | ~(n > 0)) {
-free(A);
-free(u1);
-free(v1);
-free(u2);
-free(v2);
-free(w);
-free(x);
-free(y);
-free(z);
-  return 0;
-}
+  if (dump_code == 1) {
 for(uint64_t i = 0; i < n;  i = i + 1){
   fprintf(stderr, (_OC_str), ((double*)w)[i]);
   if (i % 20 == 0) {
@@ -53,16 +34,7 @@ for(uint64_t i = 0; i < n;  i = i + 1){
 }
 
 }
-free(A);
-free(u1);
-free(v1);
-free(u2);
-free(v2);
-free(w);
-free(x);
-free(y);
-free(z);
-  return 0;
+}
 
 free(A);
 free(u1);

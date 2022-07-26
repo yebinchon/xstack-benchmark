@@ -1,0 +1,31 @@
+clang -DPERF=1 -g -O3 -fopenmp bicg.c -o benchmark.exe
+bicg.c:86:10: warning: incompatible redeclaration of library function 'memset' [-Wincompatible-library-redeclaration]
+uint8_t* memset(uint8_t*, uint32_t, uint64_t);
+         ^
+bicg.c:86:10: note: 'memset' is a builtin with type 'void *(void *, int, unsigned long)'
+bicg.c:119:32: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  uint64_t _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
+                               ^~~~~~~~
+/usr/include/stdlib.h:176:48: note: passing argument to parameter '__nptr' here
+extern long int strtol (const char *__restrict __nptr,
+                                               ^
+bicg.c:119:42: warning: incompatible pointer types passing 'uint8_t **' (aka 'unsigned char **') to parameter of type 'char **' [-Wincompatible-pointer-types]
+  uint64_t _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
+                                         ^~~~~~~~~~~~~~
+/usr/include/stdlib.h:177:22: note: passing argument to parameter '__endptr' here
+                        char **__restrict __endptr, int __base)
+                                          ^
+bicg.c:159:19: warning: passing 'uint8_t [8]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  fprintf(stderr, (_OC_str), ((double*)s)[i]);
+                  ^~~~~~~~~
+/usr/include/stdio.h:327:30: note: passing argument to parameter '__format' here
+                    const char *__restrict __format, ...);
+                                           ^
+bicg.c:166:19: warning: passing 'uint8_t [8]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  fprintf(stderr, (_OC_str), ((double*)q)[i]);
+                  ^~~~~~~~~
+/usr/include/stdio.h:327:30: note: passing argument to parameter '__format' here
+                    const char *__restrict __format, ...);
+                                           ^
+5 warnings generated.
+regressions-watchdog 7200  clang-seq.time ./benchmark.exe 0 40000 40000 

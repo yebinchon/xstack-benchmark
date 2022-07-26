@@ -27,8 +27,6 @@ typedef unsigned char bool;
 /* Types Declarations */
 struct l_struct_struct_OC_ident_t;
 struct l_struct_struct_OC__IO_FILE;
-struct l_unnamed_1;
-struct l_unnamed_2;
 
 /* Function definitions */
 typedef void l_fptr_1(uint32_t*, uint32_t*, ...);
@@ -79,18 +77,6 @@ struct l_struct_struct_OC__IO_FILE {
   uint32_t field27;
   uint8_t field28[20];
 };
-struct l_unnamed_1 {
-  uint8_t* field0;
-  uint8_t* field1;
-  uint8_t* field2;
-};
-struct l_unnamed_2 {
-  uint8_t* field0;
-  uint8_t* field1;
-  uint8_t* field2;
-  uint8_t* field3;
-  uint8_t* field4;
-};
 
 /* External Global Variable Declarations */
 
@@ -131,47 +117,23 @@ static __forceinline uint16_t llvm_urem_u16(uint16_t a, uint16_t b) {
 int main(int argc, char ** argv) {
   uint32_t _argc = (uint32_t)argc;
   uint8_t** _argv = (uint8_t**)argv;
-  struct l_unnamed_1 _polly_2e_par_2e_userContext77;    /* Address-exposed local */
-  struct l_unnamed_1 _polly_2e_par_2e_userContext71;    /* Address-exposed local */
-  struct l_unnamed_2 _polly_2e_par_2e_userContext;    /* Address-exposed local */
-  uint64_t _call_2e_i;
-  uint8_t* A;
-  uint8_t* x1;
-  uint8_t* x2;
-  uint8_t* y_1;
-  uint8_t* y_2;
-  int64_t i;
-  uint32_t _i_2e_02_2e_i;
-  uint32_t _call_2e_i58;
-  uint32_t _call3_2e_i;
-  uint32_t _fputc_2e_i;
-  uint32_t _inc_2e_i;
-
-  _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
-;
-  A = malloc(12800000000);
-;
-  x1 = malloc(320000);
-;
-  x2 = malloc(320000);
-;
-  y_1 = malloc(320000);
-;
-  y_2 = malloc(320000);
-;
+  uint64_t _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
+  uint8_t* A = malloc(128000000);
+  uint8_t* x1 = malloc(32000);
+  uint8_t* x2 = malloc(32000);
+  uint8_t* y_1 = malloc(32000);
+  uint8_t* y_2 = malloc(32000);
   #pragma omp parallel 
 {
 
 #pragma omp for
-for(uint64_t _polly_2e_indvar = 0; _polly_2e_indvar<=(40000 - 1);_polly_2e_indvar+=1){
-  uint64_t _1 = (_polly_2e_indvar << 3);
-  *((double*)(x1+_1)) = (double)(_polly_2e_indvar) / 4.0E+4;
-  *((double*)(x2+_1)) = ((double)(_polly_2e_indvar) + 1) / 4.0E+4;
-  uint64_t _2 = (_polly_2e_indvar << 3);
-  *((double*)(y_1+_2)) = ((double)(_polly_2e_indvar) + 3) / 4.0E+4;
-  *((double*)(y_2+_2)) = ((double)(_polly_2e_indvar) + 4) / 4.0E+4;
-for(uint64_t _polly_2e_indvar11 = 0; _polly_2e_indvar11 < (39999 + 1);  _polly_2e_indvar11 = _polly_2e_indvar11 + 1){
-  *((double*)((A+_polly_2e_indvar * 320000)+(_polly_2e_indvar11 << 3))) = (double)(_polly_2e_indvar) * (double)(_polly_2e_indvar11) / 4.0E+4;
+for(uint64_t i = 0; i<=(4000 - 1);i+=1){
+  *((double*)(x1+(i << 3))) = (double)(i) / 4000;
+  *((double*)(x2+(i << 3))) = ((double)(i) + 1) / 4000;
+  *((double*)(y_1+(i << 3))) = ((double)(i) + 3) / 4000;
+  *((double*)(y_2+(i << 3))) = ((double)(i) + 4) / 4000;
+for(uint64_t j = 0; j < (3999 + 1);  j = j + 1){
+  *((double*)((A+i * 32000)+(j << 3))) = (double)(i) * (double)(j) / 4000;
 }
 }
 }
@@ -179,9 +141,9 @@ for(uint64_t _polly_2e_indvar11 = 0; _polly_2e_indvar11 < (39999 + 1);  _polly_2
 {
 
 #pragma omp for
-for(uint64_t _polly_2e_indvar = 0; _polly_2e_indvar<=(40000 - 1);_polly_2e_indvar+=1){
-for(uint64_t _polly_2e_indvar4 = 0; _polly_2e_indvar4 < (39999 + 1);  _polly_2e_indvar4 = _polly_2e_indvar4 + 1){
-  ((double*)x1)[_polly_2e_indvar] = (((double*)x1)[_polly_2e_indvar] + *((double*)((A+_polly_2e_indvar * 320000)+(_polly_2e_indvar4 << 3))) * *((double*)(y_1+(_polly_2e_indvar4 << 3))));
+for(uint64_t i = 0; i<=(4000 - 1);i+=1){
+for(uint64_t j = 0; j < (3999 + 1);  j = j + 1){
+  ((double*)x1)[i] = (((double*)x1)[i] + *((double*)((A+i * 32000)+(j << 3))) * *((double*)(y_1+(j << 3))));
 }
 }
 }
@@ -189,21 +151,18 @@ for(uint64_t _polly_2e_indvar4 = 0; _polly_2e_indvar4 < (39999 + 1);  _polly_2e_
 {
 
 #pragma omp for
-for(uint64_t _polly_2e_indvar = 0; _polly_2e_indvar<=(40000 - 1);_polly_2e_indvar+=1){
-for(uint64_t _polly_2e_indvar4 = 0; _polly_2e_indvar4 < (39999 + 1);  _polly_2e_indvar4 = _polly_2e_indvar4 + 1){
-  ((double*)x2)[_polly_2e_indvar] = (((double*)x2)[_polly_2e_indvar] + *((double*)((A+(_polly_2e_indvar << 3))+_polly_2e_indvar4 * 320000)) * *((double*)(y_2+(_polly_2e_indvar4 << 3))));
+for(uint64_t i = 0; i<=(4000 - 1);i+=1){
+for(uint64_t j = 0; j < (3999 + 1);  j = j + 1){
+  ((double*)x2)[i] = (((double*)x2)[i] + *((double*)((A+(i << 3))+j * 32000)) * *((double*)(y_2+(j << 3))));
 }
 }
 }
   if (_call_2e_i == 1) {
-for(uint64_t i = 0; i!=40000;  i = i + 1){
-  _call_2e_i58 = fprintf(stderr, (_OC_str), ((double*)x1)[i]);
-;
-  _call3_2e_i = fprintf(stderr, (_OC_str), ((double*)x2)[i]);
-;
+for(uint64_t i = 0; i < 4000;  i = i + 1){
+  fprintf(stderr, (_OC_str), ((double*)x1)[i]);
+  fprintf(stderr, (_OC_str), ((double*)x2)[i]);
   if (i % 20 == ((uint16_t)0)) {
-  _fputc_2e_i = fputc(10, stderr);
-;
+  fputc(10, stderr);
 }
 
 }

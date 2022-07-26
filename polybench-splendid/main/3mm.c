@@ -20,18 +20,6 @@ for(uint64_t j = 0; j < nk;  j = j + 1){
   (((double*)A)+i * nk)[j] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
   if (dump_code == 1) {
 for(uint64_t i = 0; i < ni;  i = i + 1){
 for(uint64_t j = 0; j < nl;  j = j + 1){
@@ -43,14 +31,6 @@ for(uint64_t j = 0; j < nl;  j = j + 1){
 }
 }
   fputc(10, stderr);
-free(E);
-free(A);
-free(B);
-free(F);
-free(C);
-free(D);
-free(G);
-  return 0;
 }
 
 free(E);

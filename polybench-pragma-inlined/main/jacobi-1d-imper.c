@@ -1,14 +1,9 @@
-#define TSTEPS 100
-#define N 10000
-
 int main(int argc, char** argv)
 {
-  /* Retrieve problem size. */
   int n = N;
   int tsteps = TSTEPS;
   int dump_code = atoi(argv[1]);
 
-  /* Variable declaration/allocation. */
   double (*A)[n]; A = (double(*)[n])malloc(n*sizeof(double));
   double (*B)[n]; B = (double(*)[n])malloc(n*sizeof(double));
 
@@ -25,8 +20,6 @@ int main(int argc, char** argv)
      {
      }
 
-  /* Prevent dead-code elimination. All live-out data must be printed
-     by the function call in argument. */
   if(dump_code == 1){
   for (i = 0; i < n; i++)
   {
@@ -36,7 +29,6 @@ int main(int argc, char** argv)
   fprintf(stderr, "\n");
   }
 
-  /* Be clean. */
   free((void*)A);
   free((void*)B);
 

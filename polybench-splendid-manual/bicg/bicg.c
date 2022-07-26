@@ -27,7 +27,6 @@ typedef unsigned char bool;
 /* Types Declarations */
 struct l_struct_struct_OC__IO_FILE;
 struct l_struct_struct_OC_ident_t;
-struct l_unnamed_1;
 
 /* Function definitions */
 typedef void l_fptr_1(uint32_t*, uint32_t*, ...);
@@ -78,10 +77,6 @@ struct l_struct_struct_OC_ident_t {
   uint32_t field3;
   uint8_t* field4;
 };
-struct l_unnamed_1 {
-  uint8_t* field0;
-  uint8_t* field1;
-};
 
 /* External Global Variable Declarations */
 
@@ -121,93 +116,60 @@ static __forceinline uint16_t llvm_urem_u16(uint16_t a, uint16_t b) {
 int main(int argc, char ** argv) {
   uint32_t _argc = (uint32_t)argc;
   uint8_t** _argv = (uint8_t**)argv;
-  struct l_unnamed_1 _polly_2e_par_2e_userContext;    /* Address-exposed local */
-  uint64_t _call_2e_i;
-  uint8_t* _call2;
-  uint8_t* s;
-  uint8_t* q;
-  uint8_t* p;
-  uint8_t* _call14;
-  int64_t i;
-  uint32_t _i_2e_010_2e_i;
-  uint32_t _call_2e_i58;
-  uint32_t _fputc6_2e_i;
-  uint32_t _inc_2e_i;
-  struct l_struct_struct_OC__IO_FILE* _1;
-  uint32_t _i_2e_19_2e_i;
-  uint32_t _call8_2e_i;
-  uint32_t _fputc3_2e_i;
-  uint32_t _inc15_2e_i;
-  uint32_t _fputc_2e_i;
-  uint8_t* _2;
-  uint64_t _polly_2e_indvar;
-  int64_t _polly_2e_indvar77;
-  double _polly_2e_access_2e_call890_2e_reload;
-  uint64_t _polly_2e_indvar86;
-  int64_t _3;
-
-  _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
-;
-  _call2 = malloc(12800000000);
-;
-  s = malloc(320000);
-;
-  q = malloc(320000);
-;
-  p = malloc(320000);
-;
-  _call14 = malloc(320000);
-;
-#pragma omp parallel for
-for(uint64_t _polly_2e_indvar = 0; _polly_2e_indvar<40000;  _polly_2e_indvar = _polly_2e_indvar + 1){
-  *((double*)(p+(_polly_2e_indvar << 3))) = (double)(_polly_2e_indvar) * 3.1415926535897931;
+  uint64_t _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
+  uint8_t* _call2 = malloc(12800000000);
+  uint8_t* s = malloc(320000);
+  uint8_t* q = malloc(320000);
+  uint8_t* p = malloc(320000);
+  uint8_t* _call14 = malloc(320000);
+for(uint64_t i = 0; i < 40000;  i = i + 1){
+  *((double*)(p+(i << 3))) = (double)(i) * 3.1415926535897931;
 }
   #pragma omp parallel 
 {
 
 #pragma omp for
-for(uint64_t _polly_2e_indvar = 0; _polly_2e_indvar<=(40000 - 1);_polly_2e_indvar+=1){
-  *((double*)(_call14+(_polly_2e_indvar << 3))) = (double)(_polly_2e_indvar) * 3.1415926535897931;
-for(uint64_t _polly_2e_indvar5 = 0; _polly_2e_indvar5 < (39999 + 1);  _polly_2e_indvar5 = _polly_2e_indvar5 + 1){
-  *((double*)((_call2+_polly_2e_indvar * 320000)+(_polly_2e_indvar5 << 3))) = (double)(_polly_2e_indvar) * (double)((_polly_2e_indvar5 + 1)) / 4.0E+4;
+for(uint64_t i = 0; i<=(40000 - 1);i+=1){
+  *((double*)(_call14+(i << 3))) = (double)(i) * 3.1415926535897931;
+for(uint64_t j = 0; j < (39999 + 1);  j = j + 1){
+  *((double*)((_call2+i * 320000)+(j << 3))) = (double)(i) * (double)((j + 1)) / 4.0E+4;
 }
 }
 }
-  _2 = memset(s, 0, 320000);
-;
-#pragma omp parallel for private(_polly_2e_access_2e_call890_2e_reload, _3)
-for(uint64_t _polly_2e_indvar77 = 0; _polly_2e_indvar77<40000;  _polly_2e_indvar77 = _polly_2e_indvar77 + 1){
-  ((double*)q)[_polly_2e_indvar77] = 0;
-  _polly_2e_access_2e_call890_2e_reload = 0;
-for(uint64_t _polly_2e_indvar86 = 0; _polly_2e_indvar86<40000;  _polly_2e_indvar86 = _polly_2e_indvar86 + 1){
-  _3 = (_polly_2e_indvar86 << 3);
-  *((double*)(s+_3)) = (*((double*)(s+_3)) + ((double*)_call14)[_polly_2e_indvar77] * *((double*)((_call2+_polly_2e_indvar77 * 320000)+_3)));
-  _polly_2e_access_2e_call890_2e_reload = (_polly_2e_access_2e_call890_2e_reload + *((double*)((_call2+_polly_2e_indvar77 * 320000)+_3)) * *((double*)(p+_3)));
+  memset(s, 0, 320000);
+#pragma omp parallel for
+for(uint64_t i = 0; i < 40000;  i = i + 1){
+  ((double*)q)[i] = 0;
+  double _polly_2e_access_2e_call890_2e_reload = 0;
+for(uint64_t j = 0; j < 40000;  j = j + 1){
+  _polly_2e_access_2e_call890_2e_reload += (*((double*)((_call2+i * 320000)+(j << 3))) * *((double*)(p+(j << 3))));
 }
-  ((double*)q)[_polly_2e_indvar77] = _polly_2e_access_2e_call890_2e_reload;
+  ((double*)q)[i] = _polly_2e_access_2e_call890_2e_reload;
 }
+
+for(uint64_t i = 0; i < 40000;  i = i + 1){
+#pragma omp parallel for
+for(uint64_t j = 0; j < 40000;  j = j + 1){
+  *((double*)(s+(j << 3))) = (*((double*)(s+(j << 3))) + ((double*)_call14)[i] * *((double*)((_call2+i * 320000)+(j << 3))));
+}
+}
+
   if (_call_2e_i == 1) {
-for(uint64_t i = 0; i!=40000;  i = i + 1){
-  _call_2e_i58 = fprintf(stderr, (_OC_str), ((double*)s)[i]);
-;
+for(uint64_t i = 0; i < 40000;  i = i + 1){
+  fprintf(stderr, (_OC_str), ((double*)s)[i]);
   if (i % 20 == ((uint16_t)0)) {
-  _fputc6_2e_i = fputc(10, stderr);
-;
+  fputc(10, stderr);
 }
 
 }
-  _1 = stderr;
-for(uint64_t i = 0; i!=40000;  i = i + 1){
-  _call8_2e_i = fprintf(_1, (_OC_str), ((double*)q)[i]);
-;
+for(uint64_t i = 0; i < 40000;  i = i + 1){
+  fprintf(stderr, (_OC_str), ((double*)q)[i]);
   if (i % 20 == ((uint16_t)0)) {
-  _fputc3_2e_i = fputc(10, stderr);
-;
+  fputc(10, stderr);
 }
 
 }
-  _fputc_2e_i = fputc(10, _1);
-;
+  fputc(10, stderr);
 free(_call2);
 free(s);
 free(q);

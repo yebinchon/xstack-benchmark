@@ -9,14 +9,6 @@ int main(int argc, char ** argv) {
   uint8_t* C = malloc(nj * (ni << 3));
   uint8_t* _call17 = malloc(nk * (ni << 3));
   uint8_t* _call21 = malloc((nj << 3) * nk);
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
   if (_call_2e_i == 1) {
 for(uint64_t i = 0; i < ni;  i = i + 1){
 for(uint64_t j = 0; j < nj;  j = j + 1){
@@ -28,10 +20,6 @@ for(uint64_t j = 0; j < nj;  j = j + 1){
 }
 }
   fputc(10, stderr);
-free(C);
-free(_call17);
-free(_call21);
-  return 0;
 }
 
 free(C);

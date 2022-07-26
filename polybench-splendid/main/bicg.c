@@ -11,8 +11,6 @@ int main(int argc, char ** argv) {
 for(uint64_t i = 0; i < 40000;  i = i + 1){
   *((double*)(p+(i << 3))) = (double)(i) * 3.1415926535897931;
 }
-//START OUTLINED
-//END OUTLINED
   memset(s, 0, 320000);
 for(uint64_t i = 0; i < 40000;  i = i + 1){
   ((double*)q)[i] = 0;
@@ -39,12 +37,6 @@ for(uint64_t i = 0; i < 40000;  i = i + 1){
 
 }
   fputc(10, stderr);
-free(_call2);
-free(s);
-free(q);
-free(p);
-free(_call14);
-  return 0;
 }
 
 free(_call2);

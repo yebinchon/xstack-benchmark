@@ -98,10 +98,10 @@ int main(int argc, char** argv)
   double (*B)[ni][nj]; B = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
 
 
-//  __builtin_assume(nj>0);
-//  __builtin_assume(ni>0);
-//  __builtin_assume(ni < 2147483646);
-//  __builtin_assume(nj < 2147483646);
+  __builtin_assume(nj>0);
+  __builtin_assume(ni>0);
+  __builtin_assume(ni < 2147483646);
+  __builtin_assume(nj < 2147483646);
   init_array (ni, nj, &alpha, &beta,
       *C,
       *A,

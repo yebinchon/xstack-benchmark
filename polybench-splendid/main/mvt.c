@@ -8,12 +8,6 @@ int main(int argc, char ** argv) {
   uint8_t* x2 = malloc(32000);
   uint8_t* y_1 = malloc(32000);
   uint8_t* y_2 = malloc(32000);
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
   if (_call_2e_i == 1) {
 for(uint64_t i = 0; i < 4000;  i = i + 1){
   fprintf(stderr, (_OC_str), ((double*)x1)[i]);
@@ -23,12 +17,6 @@ for(uint64_t i = 0; i < 4000;  i = i + 1){
 }
 
 }
-free(A);
-free(x1);
-free(x2);
-free(y_1);
-free(y_2);
-  return 0;
 }
 
 free(A);

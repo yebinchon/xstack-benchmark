@@ -8,14 +8,6 @@ int main(int argc, char ** argv) {
   uint8_t* C = malloc((ni << 3) * ni);
   uint8_t* A = malloc((ni << 32) * nj >> 29);
   uint8_t* B = malloc((ni << 32) * nj >> 29);
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
   if (_call_2e_i == 1) {
 for(uint64_t i = 0; i < ni;  i = i + 1){
 for(uint64_t j = 0; j < ni;  j = j + 1){
@@ -27,10 +19,6 @@ for(uint64_t j = 0; j < ni;  j = j + 1){
 }
 }
   fputc(10, stderr);
-free(C);
-free(A);
-free(B);
-  return 0;
 }
 
 free(C);

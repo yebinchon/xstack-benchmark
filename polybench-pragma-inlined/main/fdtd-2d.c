@@ -1,12 +1,10 @@
 int main(int argc, char** argv)
 {
-  /* Retrieve problem size. */
-  int tmax = TMAX;//atoi(argv[2]);
-  int nx = NX;//atoi(argv[3]);
-  int ny = NY;//atoi(argv[4]);
+  int tmax = TMAX;
+  int nx = NX;
+  int ny = NY;
   int dump_code = atoi(argv[1]);
 
-  /* Variable declaration/allocation. */
   double (*ex)[nx][ny]; ex = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
   double (*ey)[nx][ny]; ey = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
   double (*hz)[nx][ny]; hz = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
@@ -16,14 +14,14 @@ int main(int argc, char** argv)
 
   for (i = 0; i < ny; i++)
     _fict_[i] = (double) i;
-///////////
+
   int t;
 
   for(t = 0; t < tmax; t++)
     {
       for (j = 0; j < ny; j++)
 	      ey[0][j] = _fict_[t];
-      //////////
+
       for (i = 0; i < nx; i++)
 	      for (j = 1; j < ny; j++)
 	        ex[i][j] = ex[i][j] - 0.5*(hz[i][j]-hz[i][j-1]);
@@ -44,7 +42,6 @@ int main(int argc, char** argv)
   fprintf(stderr, "\n");
   }
 
-  /* Be clean. */
   free((void*)ex);
   free((void*)ey);
   free((void*)hz);

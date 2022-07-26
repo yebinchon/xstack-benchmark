@@ -5,8 +5,6 @@ int main(int argc, char ** argv) {
   uint64_t n = strtol(_argv[2], ((uint8_t**)0), 10);
   uint64_t _call_2e_i27 = strtol(_argv[1], ((uint8_t**)0), 10);
   uint8_t* path = malloc((n << 3) * n);
-//START OUTLINED
-//END OUTLINED
 for(uint64_t i = 0; i < n;  i = i + 1){
 for(uint64_t j = 0; j < n;  j = j + 1){
 for(uint64_t k = 0; k < n;  k = k + 1){
@@ -25,8 +23,6 @@ for(uint64_t j = 0; j < n;  j = j + 1){
 }
 }
   fputc(10, stderr);
-free(path);
-  return 0;
 }
 
 free(path);

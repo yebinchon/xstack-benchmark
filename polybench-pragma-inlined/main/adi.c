@@ -1,11 +1,9 @@
 int main(int argc, char** argv)
 {
-  /* Retrieve problem size. */
   int n = N;
   int tsteps = TSTEPS;
   int dump_code = atoi(argv[1]);
 
-  /* Variable declaration/allocation. */
 
   double (*X)[n][n]; X = (double(*)[n][n])malloc(n*n*sizeof(double));
   double (*A)[n][n]; A = (double(*)[n][n])malloc(n*n*sizeof(double));
@@ -52,7 +50,6 @@ int main(int argc, char** argv)
 
   }
 
-  /* Be clean. */
   free((void*)X);
   free((void*)A);
   free((void*)B);

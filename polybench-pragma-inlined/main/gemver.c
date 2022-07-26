@@ -1,10 +1,8 @@
 int main(int argc, char** argv)
 {
-  /* Retrieve problem size. */
   int n = N;
   int dump_code = atoi(argv[1]);
 
-  /* Variable declaration/allocation. */
   double alpha;
   double beta;
   double (*A)[n][n]; A = (double(*)[n][n])malloc(n*n*sizeof(double));
@@ -44,7 +42,6 @@ int main(int argc, char** argv)
 
   }
 
-  /* Be clean. */
   free((void*)A);
   free((void*)u1);
   free((void*)v1);

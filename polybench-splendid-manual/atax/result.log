@@ -1,0 +1,49 @@
+clang -DPERF=1 -g -O3 -fopenmp atax.c -o benchmark.exe
+atax.c:86:10: warning: incompatible redeclaration of library function 'memset' [-Wincompatible-library-redeclaration]
+uint8_t* memset(uint8_t*, uint32_t, uint64_t);
+         ^
+atax.c:86:10: note: 'memset' is a builtin with type 'void *(void *, int, unsigned long)'
+atax.c:123:24: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  uint64_t nx = strtol(_argv[2], ((uint8_t**)0), 10);
+                       ^~~~~~~~
+/usr/include/stdlib.h:176:48: note: passing argument to parameter '__nptr' here
+extern long int strtol (const char *__restrict __nptr,
+                                               ^
+atax.c:123:34: warning: incompatible pointer types passing 'uint8_t **' (aka 'unsigned char **') to parameter of type 'char **' [-Wincompatible-pointer-types]
+  uint64_t nx = strtol(_argv[2], ((uint8_t**)0), 10);
+                                 ^~~~~~~~~~~~~~
+/usr/include/stdlib.h:177:22: note: passing argument to parameter '__endptr' here
+                        char **__restrict __endptr, int __base)
+                                          ^
+atax.c:124:24: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  uint64_t ny = strtol(_argv[3], ((uint8_t**)0), 10);
+                       ^~~~~~~~
+/usr/include/stdlib.h:176:48: note: passing argument to parameter '__nptr' here
+extern long int strtol (const char *__restrict __nptr,
+                                               ^
+atax.c:124:34: warning: incompatible pointer types passing 'uint8_t **' (aka 'unsigned char **') to parameter of type 'char **' [-Wincompatible-pointer-types]
+  uint64_t ny = strtol(_argv[3], ((uint8_t**)0), 10);
+                                 ^~~~~~~~~~~~~~
+/usr/include/stdlib.h:177:22: note: passing argument to parameter '__endptr' here
+                        char **__restrict __endptr, int __base)
+                                          ^
+atax.c:125:31: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  uint64_t dump_code = strtol(_argv[1], ((uint8_t**)0), 10);
+                              ^~~~~~~~
+/usr/include/stdlib.h:176:48: note: passing argument to parameter '__nptr' here
+extern long int strtol (const char *__restrict __nptr,
+                                               ^
+atax.c:125:41: warning: incompatible pointer types passing 'uint8_t **' (aka 'unsigned char **') to parameter of type 'char **' [-Wincompatible-pointer-types]
+  uint64_t dump_code = strtol(_argv[1], ((uint8_t**)0), 10);
+                                        ^~~~~~~~~~~~~~
+/usr/include/stdlib.h:177:22: note: passing argument to parameter '__endptr' here
+                        char **__restrict __endptr, int __base)
+                                          ^
+atax.c:157:19: warning: passing 'uint8_t [8]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  fprintf(stderr, (_OC_str), ((double*)y)[i]);
+                  ^~~~~~~~~
+/usr/include/stdio.h:327:30: note: passing argument to parameter '__format' here
+                    const char *__restrict __format, ...);
+                                           ^
+8 warnings generated.
+regressions-watchdog 7200  clang-seq.time ./benchmark.exe 0 40000 40000 

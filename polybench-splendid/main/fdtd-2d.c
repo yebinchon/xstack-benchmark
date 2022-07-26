@@ -10,14 +10,10 @@ int main(int argc, char ** argv) {
 for(uint64_t i = 0; i < 4000;  i = i + 1){
   *((double*)(_fict_+(i << 3))) = (double)(i);
 }
-//START OUTLINED
-//END OUTLINED
 for(uint64_t i = 0; i < 100;  i = i + 1){
 for(uint64_t j = 0; j < 4000;  j = j + 1){
   *((uint64_t*)(ey+(j << 3))) = *((uint64_t*)(_fict_+(i << 3)));
 }
-//START OUTLINED
-//END OUTLINED
 for(uint64_t j = 0; j < 4000;  j = j + 1){
   double __2e_phiops_2e_0 = *((double*)(hz+j * 32000));
 for(uint64_t k = 0; k < 3999;  k = k + 1){
@@ -46,11 +42,6 @@ for(uint64_t j = 0; j < 4000;  j = j + 1){
 }
 }
   fputc(10, stderr);
-free(ex);
-free(ey);
-free(hz);
-free(_fict_);
-  return 0;
 }
 
 free(ex);

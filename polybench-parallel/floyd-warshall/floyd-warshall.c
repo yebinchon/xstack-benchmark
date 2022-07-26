@@ -74,6 +74,8 @@ int main(int argc, char** argv)
   double (*path)[n][n]; path = (double(*)[n][n])malloc(n*n*sizeof(double));
 
 
+  __builtin_assume(n > 0);
+  __builtin_assume(n<0x7FFFFFFE);
   /* Initialize array(s). */
   init_array (n, *path);
 

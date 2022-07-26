@@ -1,4 +1,5 @@
-#POLLY=true
+#CC=clang
+#CC=gcc
 POLLY_FLAGS+=-mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -mllvm -polly-tiling=false
 ifdef SPEC_DEFAULTS
 OBJFILES_BC = $(OBJS)
@@ -19,11 +20,11 @@ LINK_FLAGS+=-fopenmp
 ifdef POLLY
 %.bc: %.c
 	clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize $(POLLY_FLAGS) -g -c -emit-llvm $< -o $@
-	#clang -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly-overflow-tracking=never -mllvm -polly-ignore-aliasing -mllvm -polly-use-runtime-alias-checks=0 -mllvm -polly-codegen-emit-rtc-print -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -mllvm -polly-tiling=false -g -c -emit-llvm $< -o $@
+	#$(CC) -O2 -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -mllvm -polly-overflow-tracking=never -mllvm -polly-ignore-aliasing -mllvm -polly-use-runtime-alias-checks=0 -mllvm -polly-codegen-emit-rtc-print -mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -mllvm -polly-tiling=false -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
 else
 %.bc: %.c
-	clang -O2 -fopenmp -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -g -c -emit-llvm $< -o $@
+	$(CC) -O2 -fopenmp -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
 endif
 
@@ -35,10 +36,10 @@ $(PLAIN).ll : $(PLAIN).bc
 
 #$(PLAIN).exe : $(PLAIN).ll
 #	llc -filetype=obj $< -o $(PLAIN).bc
-#	clang -g -O3 $(LINK_FLAGS) $< -o $@
+#	$(CC) -g -O3 $(LINK_FLAGS) $< -o $@
 
 $(PLAIN).exe : $(BMARK).c
-	clang -g -O3 -fopenmp $< -o $@
+	$(CC) -DPERF=1 -g -O3 -fopenmp $< -o $@
 
 $(PLAIN).polly.bc : $(OBJFILES_BC)
 	llvm-link $(LLVM_LINK_FLAGS) $^ -o $@
@@ -48,7 +49,7 @@ $(PLAIN).polly.ll : $(PLAIN).bc
 
 $(PLAIN).polly.exe : $(PLAIN).ll
 	llc -filetype=obj $< -o $(PLAIN).bc
-	clang -g -O3 $(LINK_FLAGS) $< -o $@
+	$(CC) -g -O3 $(LINK_FLAGS) $< -o $@
 
 $(PLAIN).cbe.c: $(PLAIN).ll
 	opt $< -o $(PLAIN).bc
@@ -56,7 +57,7 @@ $(PLAIN).cbe.c: $(PLAIN).ll
 	llvm-dis $(PLAIN).bc #just for debugging
 
 $(PLAIN).cbe.exe: $(PLAIN).cbe.c
-	clang -g -O3 $< $(LINK_FLAGS) -o $@
+	$(CC) -g -O3 $< $(LINK_FLAGS) -o $@
 
 $(PLAIN).gcc.cbe.exe: $(PLAIN).cbe.c
 	gcc -g -O3 $< $(LINK_FLAGS) -o $@
@@ -66,11 +67,19 @@ check_correctness: $(PLAIN).cbe.exe $(PLAIN).exe
 	./$(PLAIN).cbe.exe $(TEST_ARGS) > $(PLAIN).cbe.out 2>&1
 	diff $(PLAIN).out $(PLAIN).cbe.out
 
-check_performance: $(PLAIN).cbe.exe $(PLAIN).exe $(PLAIN).gcc.cbe.exe
-	regressions-watchdog $(RUN_TIMEOUT) seq.time ./$(PLAIN).exe $(PERF_ARGS) 
-	regressions-watchdog $(RUN_TIMEOUT) clang.time ./$(PLAIN).cbe.exe $(PERF_ARGS)
-	regressions-watchdog $(RUN_TIMEOUT) gcc.time ./$(PLAIN).gcc.cbe.exe $(PERF_ARGS)
+check_performance: $(PLAIN).cbe.exe $(PLAIN).exe $(PLAIN).polly.exe
+	regressions-watchdog $(RUN_TIMEOUT) $(CC)-seq.time ./$(PLAIN).exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) $(CC)-polly.time ./$(PLAIN).polly.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) $(CC)-dec.time ./$(PLAIN).cbe.exe $(PERF_ARGS)
 	
+check_seq: $(PLAIN).exe
+	regressions-watchdog $(RUN_TIMEOUT) $(CC)-seq.time ./$(PLAIN).exe $(PERF_ARGS) 
+
+check_dec: $(PLAIN).cbe.exe #$(PLAIN).exe $(PLAIN).polly.exe
+	regressions-watchdog $(RUN_TIMEOUT) $(CC)-dec.time ./$(PLAIN).cbe.exe $(PERF_ARGS)
+
+check_out: $(PLAIN).exe
+	./$(PLAIN).exe $(TEST_ARGS) > $(PLAIN).out 2>&1
 
 clean:
 	rm -rf *.bc *.out *.ll *.cbe.c *.exe *.o

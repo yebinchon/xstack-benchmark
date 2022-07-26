@@ -25,8 +25,6 @@ int main(int argc, char** argv)
 	(*y)[j] = (*y)[j] + (*A)[i][j] * (*tmp)[i];
     }
 
-
-
   if(dump_code == 1){
   for (i = 0; i < nx; i++) {
     fprintf (stderr, "%0.2lf ", (*y)[i]);

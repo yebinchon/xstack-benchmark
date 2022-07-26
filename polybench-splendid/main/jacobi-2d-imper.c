@@ -14,10 +14,6 @@ for(uint64_t j = 0; j < n;  j = j + 1){
 }
 }
 for(uint64_t i = 0; i < tsteps;  i = i + 1){
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
 }
   if (dump_code == 1) {
 for(uint64_t i = 0; i < n;  i = i + 1){
@@ -30,9 +26,6 @@ for(uint64_t j = 0; j < n;  j = j + 1){
 }
 }
   fputc(10, stderr);
-free(A);
-free(B);
-  return 0;
 }
 
 free(A);

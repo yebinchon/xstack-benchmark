@@ -1,44 +1,37 @@
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(nk - 1);i+=1){
 for(uint64_t j = 0; j < nj;  j = j + 1){
   *((double*)((B+(nj << 3) * i)+(j << 3))) = (double)(i) * (double)((j + 1)) / nj;
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(nj - 1);i+=1){
 for(uint64_t j = 0; j < nm;  j = j + 1){
   *((double*)((C+(nm << 3) * i)+(j << 3))) = (double)(i) * (double)((j + 3)) / (double)(nl);
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(nm - 1);i+=1){
 for(uint64_t j = 0; j < nl;  j = j + 1){
   *((double*)((D+(nl << 3) * i)+(j << 3))) = (double)(i) * (double)((j + 2)) / (double)(nk);
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(ni - 1);i+=1){
 for(uint64_t j = 0; j < nj;  j = j + 1){
   *((double*)((E+(nj << 3) * i)+(j << 3))) = 0;
@@ -49,12 +42,10 @@ for(uint64_t k = 0; k < nk;  k = k + 1){
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(nj - 1);i+=1){
 for(uint64_t j = 0; j < nl;  j = j + 1){
   *((double*)((F+(nl << 3) * i)+(j << 3))) = 0;
@@ -65,12 +56,10 @@ for(uint64_t k = 0; k < nm;  k = k + 1){
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(ni - 1);i+=1){
 for(uint64_t j = 0; j < nl;  j = j + 1){
   *((double*)((G+(nl << 3) * i)+(j << 3))) = 0;
@@ -81,4 +70,3 @@ for(uint64_t k = 0; k < nj;  k = k + 1){
 }
 }
 }
-//END OUTLINED

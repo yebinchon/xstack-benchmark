@@ -1,20 +1,17 @@
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(n - 1);i+=1){
 for(uint64_t j = 0; j < n;  j = j + 1){
   (((double*)A)+i * n)[j] = (((((double*)A)+i * n)[j] + ((double*)u1)[i] * ((double*)v1)[j]) + ((double*)u2)[i] * ((double*)v2)[j]);
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(n - 1);i+=1){
   double __p_scalar_ = ((double*)x)[i];
 for(uint64_t j = 0; j < n;  j = j + 1){
@@ -23,22 +20,18 @@ for(uint64_t j = 0; j < n;  j = j + 1){
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(n - 1);i+=1){
   ((double*)x)[i] = (((double*)x)[i] + ((double*)z)[i]);
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(n - 1);i+=1){
   double __p_scalar_ = ((double*)w)[i];
 for(uint64_t j = 0; j < n;  j = j + 1){
@@ -47,4 +40,3 @@ for(uint64_t j = 0; j < n;  j = j + 1){
 }
 }
 }
-//END OUTLINED

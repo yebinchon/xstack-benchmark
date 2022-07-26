@@ -1,44 +1,37 @@
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(ni - 1);i+=1){
 for(uint64_t j = 0; j < nj;  j = j + 1){
   *((double*)((A+(nj << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / ni;
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(ni - 1);i+=1){
 for(uint64_t j = 0; j < ni;  j = j + 1){
   *((double*)((C+(ni << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / ni;
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(ni - 1);i+=1){
 for(uint64_t j = 0; j < ni;  j = j + 1){
   *((double*)((C+(ni << 3) * i)+(j << 3))) = *((double*)((C+(ni << 3) * i)+(j << 3))) * 2123;
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(ni - 1);i+=1){
 for(uint64_t j = 0; j < ni;  j = j + 1){
 for(uint64_t k = 0; k < nj;  k = k + 1){
@@ -47,4 +40,3 @@ for(uint64_t k = 0; k < nj;  k = k + 1){
 }
 }
 }
-//END OUTLINED

@@ -56,10 +56,10 @@ void kernel_jacobi_2d_imper(int tsteps,
   int t, i, j;
 
 #pragma scop
-#pragma omp master
-{
   #pragma omp parallel private (i,j,t)
   {
+#pragma omp master
+{
   for (t = 0; t < tsteps; t++)
   {
     #pragma omp for schedule(static)

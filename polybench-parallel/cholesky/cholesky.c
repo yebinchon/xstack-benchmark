@@ -40,7 +40,7 @@ void print_array(int n,
   for (i = 0; i < n; i++)
     for (i = 0; j < n; j++) {
     fprintf (stderr, "%0.2lf ", A[i][j]);
-    if ((i * N + j) % 20 == 0) fprintf (stderr, "\n");
+    if ((i * n + j) % 20 == 0) fprintf (stderr, "\n");
   }
 }
 

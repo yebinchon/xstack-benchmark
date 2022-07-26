@@ -67,7 +67,7 @@ void kernel_fdtd_2d(int tmax,
 		    double hz[nx][ny],
 		    double _fict_[ny])
 {
-  int t, i, j;
+  int t, i, //j;
 
 #pragma scop
 #pragma omp master

@@ -32,11 +32,6 @@ for(uint64_t j = 0; j < nl;  j = j + 1){
   (((double*)D)+i * nl)[j] = (double)(i) * (double)((j + 2)) / (double)(nk);
 }
 }
-//START OUTLINED
-
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
   if (dump_code == 1) {
 for(uint64_t i = 0; i < ni;  i = i + 1){
 for(uint64_t j = 0; j < nl;  j = j + 1){
@@ -48,12 +43,6 @@ for(uint64_t j = 0; j < nl;  j = j + 1){
 }
 }
   fputc(10, stderr);
-free(tmp);
-free(A);
-free(B);
-free(C);
-free(D);
-  return 0;
 }
 
 free(tmp);

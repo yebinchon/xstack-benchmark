@@ -62,9 +62,9 @@ void kernel_atax(int nx, int ny,
     {
       tmp[i] = 0;
       for (j = 0; j < ny; j++)
-	tmp[i] = tmp[i] + A[i][j] * x[j];
+      	tmp[i] = tmp[i] + A[i][j] * x[j];
       for (j = 0; j < ny; j++)
-	y[j] = y[j] + A[i][j] * tmp[i];
+      	y[j] = y[j] + A[i][j] * tmp[i];
     }
 
 }
@@ -83,6 +83,10 @@ int main(int argc, char** argv)
   double (*y)[nx]; y = (double(*)[nx])malloc(nx*sizeof(double));
   double (*tmp)[ny]; tmp = (double(*)[ny])malloc(ny*sizeof(double));
 
+  __builtin_assume(nx < 0x7FFFFFFE);
+  __builtin_assume(ny < 0x7FFFFFFE);
+  __builtin_assume(nx > 0);
+  __builtin_assume(ny > 0);
   /* Initialize array(s). */
   init_array (nx, ny, *A, *x);
 

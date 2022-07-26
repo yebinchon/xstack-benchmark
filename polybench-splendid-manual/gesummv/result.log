@@ -1,0 +1,44 @@
+clang -DPERF=1 -g -O3 -fopenmp gesummv.c -o benchmark.exe
+gesummv.c:118:23: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  uint64_t n = strtol(_argv[2], ((uint8_t**)0), 10);
+                      ^~~~~~~~
+/usr/include/stdlib.h:176:48: note: passing argument to parameter '__nptr' here
+extern long int strtol (const char *__restrict __nptr,
+                                               ^
+gesummv.c:118:33: warning: incompatible pointer types passing 'uint8_t **' (aka 'unsigned char **') to parameter of type 'char **' [-Wincompatible-pointer-types]
+  uint64_t n = strtol(_argv[2], ((uint8_t**)0), 10);
+                                ^~~~~~~~~~~~~~
+/usr/include/stdlib.h:177:22: note: passing argument to parameter '__endptr' here
+                        char **__restrict __endptr, int __base)
+                                          ^
+gesummv.c:119:31: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  uint64_t dump_code = strtol(_argv[1], ((uint8_t**)0), 10);
+                              ^~~~~~~~
+/usr/include/stdlib.h:176:48: note: passing argument to parameter '__nptr' here
+extern long int strtol (const char *__restrict __nptr,
+                                               ^
+gesummv.c:119:41: warning: incompatible pointer types passing 'uint8_t **' (aka 'unsigned char **') to parameter of type 'char **' [-Wincompatible-pointer-types]
+  uint64_t dump_code = strtol(_argv[1], ((uint8_t**)0), 10);
+                                        ^~~~~~~~~~~~~~
+/usr/include/stdlib.h:177:22: note: passing argument to parameter '__endptr' here
+                        char **__restrict __endptr, int __base)
+                                          ^
+gesummv.c:136:7: warning: logical not is only applied to the left hand side of this comparison [-Wlogical-not-parentheses]
+  if (!n == 0) {
+      ^  ~~
+gesummv.c:136:7: note: add parentheses after the '!' to evaluate the comparison first
+  if (!n == 0) {
+      ^
+       (     )
+gesummv.c:136:7: note: add parentheses around left hand side expression to silence this warning
+  if (!n == 0) {
+      ^
+      ( )
+gesummv.c:153:19: warning: passing 'uint8_t [8]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  fprintf(stderr, (_OC_str), ((double*)y)[i]);
+                  ^~~~~~~~~
+/usr/include/stdio.h:327:30: note: passing argument to parameter '__format' here
+                    const char *__restrict __format, ...);
+                                           ^
+6 warnings generated.
+regressions-watchdog 7200  clang-seq.time ./benchmark.exe 0 40000 

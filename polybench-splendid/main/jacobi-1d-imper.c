@@ -1,3 +1,11 @@
+
+void kernel_jacobi_1d_imper(uint32_t _tsteps, uint32_t _n, double* _A, double* _B) {
+for(uint64_t i = 0; i < _tsteps;  i = i + 1){
+}
+  return;
+}
+
+
 int main(int argc, char ** argv) {
   uint32_t _argc = (uint32_t)argc;
   uint8_t** _argv = (uint8_t**)argv;
@@ -12,10 +20,6 @@ for(uint64_t i = 0; i < n;  i = i + 1){
 }
   if (tsteps > 0) {
 for(uint64_t i = 0; i < (tsteps << 32) >> 32;  i = i + 1){
-//START OUTLINED
-//END OUTLINED
-//START OUTLINED
-//END OUTLINED
 }
 }
 
@@ -28,9 +32,6 @@ for(uint64_t i = 0; i < n;  i = i + 1){
 
 }
   fputc(10, stderr);
-free(A);
-free(B);
-  return 0;
 }
 
 free(A);

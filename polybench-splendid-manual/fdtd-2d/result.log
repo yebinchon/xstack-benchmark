@@ -1,0 +1,33 @@
+clang -DPERF=1 -g -O3 -fopenmp fdtd-2d.c -o benchmark.exe
+fdtd-2d.c:121:32: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  uint64_t _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
+                               ^~~~~~~~
+/usr/include/stdlib.h:176:48: note: passing argument to parameter '__nptr' here
+extern long int strtol (const char *__restrict __nptr,
+                                               ^
+fdtd-2d.c:121:42: warning: incompatible pointer types passing 'uint8_t **' (aka 'unsigned char **') to parameter of type 'char **' [-Wincompatible-pointer-types]
+  uint64_t _call_2e_i = strtol(_argv[1], ((uint8_t**)0), 10);
+                                         ^~~~~~~~~~~~~~
+/usr/include/stdlib.h:177:22: note: passing argument to parameter '__endptr' here
+                        char **__restrict __endptr, int __base)
+                                          ^
+fdtd-2d.c:177:19: warning: passing 'uint8_t [8]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  fprintf(stderr, (_OC_str), (((double*)ex)+i * 4000)[j]);
+                  ^~~~~~~~~
+/usr/include/stdio.h:327:30: note: passing argument to parameter '__format' here
+                    const char *__restrict __format, ...);
+                                           ^
+fdtd-2d.c:178:19: warning: passing 'uint8_t [8]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  fprintf(stderr, (_OC_str), (((double*)ey)+i * 4000)[j]);
+                  ^~~~~~~~~
+/usr/include/stdio.h:327:30: note: passing argument to parameter '__format' here
+                    const char *__restrict __format, ...);
+                                           ^
+fdtd-2d.c:179:19: warning: passing 'uint8_t [8]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  fprintf(stderr, (_OC_str), (((double*)hz)+i * 4000)[j]);
+                  ^~~~~~~~~
+/usr/include/stdio.h:327:30: note: passing argument to parameter '__format' here
+                    const char *__restrict __format, ...);
+                                           ^
+5 warnings generated.
+regressions-watchdog 7200  clang-seq.time ./benchmark.exe 0 100 4000 4000 

@@ -1,5 +1,6 @@
-
-#pragma omp parallel for
+#pragma omp parallel
+{
+#pragma omp for schedule(static) nowait
   for (r = 0; r < nr; r++)
     for (q = 0; q < nq; q++) {
       for (p = 0; p < np; p++) {
@@ -10,3 +11,4 @@
       for (p = 0; p < np; p++)
         (*A)[r][q][p] = (*sum)[r][q][p];
     }
+}

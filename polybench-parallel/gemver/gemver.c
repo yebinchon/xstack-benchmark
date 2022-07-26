@@ -126,7 +126,7 @@ int main(int argc, char** argv)
   double (*y)[n]; y = (double(*)[n])malloc(n*sizeof(double));
   double (*z)[n]; z = (double(*)[n])malloc(n*sizeof(double));
 
-  __builtin_assume(n>-1);
+  __builtin_assume(n>0);
   __builtin_assume(n<0x7FFFFFFE);
 
   /* Initialize array(s). */

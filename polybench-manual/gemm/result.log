@@ -1,2 +1,0 @@
-clang -g -O3 -fopenmp gemm.c -o benchmark.exe
-regressions-watchdog 7200  seq.time ./benchmark.exe 0 2048 2048 2048 

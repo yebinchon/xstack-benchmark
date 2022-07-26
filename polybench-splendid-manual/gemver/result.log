@@ -1,0 +1,52 @@
+clang -DPERF=1 -g -O3 -fopenmp gemver.c -o benchmark.exe
+gemver.c:89:10: warning: incompatible redeclaration of library function 'memset' [-Wincompatible-library-redeclaration]
+uint8_t* memset(uint8_t*, uint32_t, uint64_t);
+         ^
+gemver.c:89:10: note: 'memset' is a builtin with type 'void *(void *, int, unsigned long)'
+gemver.c:132:23: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  uint64_t n = strtol(_argv[2], ((uint8_t**)0), 10);
+                      ^~~~~~~~
+/usr/include/stdlib.h:176:48: note: passing argument to parameter '__nptr' here
+extern long int strtol (const char *__restrict __nptr,
+                                               ^
+gemver.c:132:33: warning: incompatible pointer types passing 'uint8_t **' (aka 'unsigned char **') to parameter of type 'char **' [-Wincompatible-pointer-types]
+  uint64_t n = strtol(_argv[2], ((uint8_t**)0), 10);
+                                ^~~~~~~~~~~~~~
+/usr/include/stdlib.h:177:22: note: passing argument to parameter '__endptr' here
+                        char **__restrict __endptr, int __base)
+                                          ^
+gemver.c:133:31: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  uint64_t dump_code = strtol(_argv[1], ((uint8_t**)0), 10);
+                              ^~~~~~~~
+/usr/include/stdlib.h:176:48: note: passing argument to parameter '__nptr' here
+extern long int strtol (const char *__restrict __nptr,
+                                               ^
+gemver.c:133:41: warning: incompatible pointer types passing 'uint8_t **' (aka 'unsigned char **') to parameter of type 'char **' [-Wincompatible-pointer-types]
+  uint64_t dump_code = strtol(_argv[1], ((uint8_t**)0), 10);
+                                        ^~~~~~~~~~~~~~
+/usr/include/stdlib.h:177:22: note: passing argument to parameter '__endptr' here
+                        char **__restrict __endptr, int __base)
+                                          ^
+gemver.c:199:22: warning: | has lower precedence than !=; != will be evaluated first [-Wparentheses]
+  if (dump_code != 1 | ~(n > 0)) {
+      ~~~~~~~~~~~~~~~^
+gemver.c:199:22: note: place parentheses around the '!=' expression to silence this warning
+  if (dump_code != 1 | ~(n > 0)) {
+                     ^
+      (             )
+gemver.c:199:22: note: place parentheses around the | expression to evaluate it first
+  if (dump_code != 1 | ~(n > 0)) {
+                     ^
+                   (           )
+gemver.c:199:24: warning: bitwise negation of a boolean expression; did you mean logical negation? [-Wbool-operation]
+  if (dump_code != 1 | ~(n > 0)) {
+                       ^~~~~~~~
+                       !
+gemver.c:212:19: warning: passing 'uint8_t [8]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  fprintf(stderr, (_OC_str), ((double*)w)[i]);
+                  ^~~~~~~~~
+/usr/include/stdio.h:327:30: note: passing argument to parameter '__format' here
+                    const char *__restrict __format, ...);
+                                           ^
+8 warnings generated.
+regressions-watchdog 7200  clang-seq.time ./benchmark.exe 0 30000 

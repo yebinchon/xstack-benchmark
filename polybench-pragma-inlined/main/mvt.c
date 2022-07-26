@@ -11,9 +11,6 @@ int main(int argc, char** argv)
 
 
   int i, j;
-
-
-
   if(dump_code == 1){
   for (i = 0; i < n; i++) {
     fprintf (stderr, "%0.2lf", (*x1)[i]);

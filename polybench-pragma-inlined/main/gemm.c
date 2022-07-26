@@ -12,7 +12,6 @@ int main(int argc, char** argv)
   double (*A)[ni][nk]; A = (double(*)[ni][nk])malloc((ni) * (nk) * sizeof(double));;
   double (*B)[nk][nj]; B = (double(*)[nk][nj])malloc((nk) * (nj) * sizeof(double));;
 
-
   int i, j, k;
 
   alpha = 32412;

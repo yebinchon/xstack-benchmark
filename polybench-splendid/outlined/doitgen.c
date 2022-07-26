@@ -1,9 +1,8 @@
-//START OUTLINED
   #pragma omp parallel 
 {
 uint64_t _2 = ((nr << 32) + -4294967296 >> 32) + 1;
 
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) nowait
 for(uint64_t i = 0; i<=(_2 - 1);i+=1){
 for(uint64_t j = 0; j < nq;  j = j + 1){
 for(uint64_t k = 0; k < np;  k = k + 1){
@@ -20,4 +19,3 @@ for(uint64_t k = 0; k < np;  k = k + 1){
 }
 }
 }
-//END OUTLINED
