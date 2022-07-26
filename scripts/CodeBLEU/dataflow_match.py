@@ -51,7 +51,7 @@ def corpus_dataflow_match(references, candidates, lang):
             normalized_ref_dfg = normalize_dataflow(ref_dfg)
 
             if len(normalized_ref_dfg) > 0:
-                total_count += len(normalized_ref_dfg)
+                total_count += len(normalized_cand_dfg)
                 for dataflow in normalized_ref_dfg:
                     if dataflow in normalized_cand_dfg:
                             match_count += 1

@@ -67,7 +67,7 @@ def corpus_syntax_match(references, candidates, lang):
             for sub_tree, depth in ref_sexps:
                 if sub_tree in cand_sexps:
                      match_count += 1
-            total_count += len(ref_sexps)          
+            total_count += len(cand_sexps)          
        
     score = match_count / total_count
     return score

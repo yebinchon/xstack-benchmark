@@ -48,3 +48,10 @@ try
 void
 volatile
 while
+pragma
+omp
+parallel
+for
+private
+schedule
+nowait
