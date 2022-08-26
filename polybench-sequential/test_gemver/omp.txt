@@ -1,0 +1,285 @@
+/* Provide Declarations */
+#include <stdint.h>
+#ifndef __cplusplus
+typedef unsigned char bool;
+#endif
+
+#ifndef _MSC_VER
+#define __forceinline __attribute__((always_inline)) inline
+#endif
+
+#if defined(__GNUC__)
+#define  __ATTRIBUTELIST__(x) __attribute__(x)
+#else
+#define  __ATTRIBUTELIST__(x)  
+#endif
+
+#ifdef _MSC_VER  /* Can only support "linkonce" vars with GCC */
+#define __attribute__(X)
+#endif
+
+
+
+/* Global Declarations */
+
+/* Types Declarations */
+struct l_struct_struct_OC_ident_t;
+struct l_struct_struct_OC__IO_FILE;
+
+/* Function definitions */
+typedef void l_fptr_1(uint32_t*, uint32_t*, ...);
+
+
+/* Types Definitions */
+struct l_struct_struct_OC_ident_t {
+  uint32_t field0;
+  uint32_t field1;
+  uint32_t field2;
+  uint32_t field3;
+  uint8_t* field4;
+};
+struct l_array_1_uint8_t {
+  uint8_t array[1];
+};
+struct l_array_20_uint8_t {
+  uint8_t array[20];
+};
+struct l_struct_struct_OC__IO_FILE {
+  uint32_t field0;
+  uint8_t* field1;
+  uint8_t* field2;
+  uint8_t* field3;
+  uint8_t* field4;
+  uint8_t* field5;
+  uint8_t* field6;
+  uint8_t* field7;
+  uint8_t* field8;
+  uint8_t* field9;
+  uint8_t* field10;
+  uint8_t* field11;
+  void* field12;
+  struct l_struct_struct_OC__IO_FILE* field13;
+  uint32_t field14;
+  uint32_t field15;
+  uint64_t field16;
+  uint16_t field17;
+  uint8_t field18;
+  uint8_t field19[1];
+  uint8_t* field20;
+  uint64_t field21;
+  void* field22;
+  void* field23;
+  struct l_struct_struct_OC__IO_FILE* field24;
+  uint8_t* field25;
+  uint64_t field26;
+  uint32_t field27;
+  uint8_t field28[20];
+};
+
+/* External Global Variable Declarations */
+extern struct l_struct_struct_OC__IO_FILE* stderr;
+
+/* Function Declarations */
+int main(int, char **) __ATTRIBUTELIST__((nothrow));
+uint64_t strtol(uint8_t*, uint8_t**, uint32_t) __ATTRIBUTELIST__((nothrow));
+uint8_t* malloc(uint64_t) __ATTRIBUTELIST__((nothrow));
+static void _OC_omp_outlined_OC_(uint32_t*, uint64_t, uint64_t, double**, uint64_t, double**, uint64_t, double**, uint64_t, double**, uint64_t, double**, uint64_t, double**, double*, uint64_t, double**, uint64_t, double**, uint64_t, double**, double*) __ATTRIBUTELIST__((nothrow));
+void __kmpc_fork_call(struct l_struct_struct_OC_ident_t*, uint32_t, l_fptr_1*, ...);
+uint32_t fprintf(struct l_struct_struct_OC__IO_FILE*, uint8_t*, ...) __ATTRIBUTELIST__((nothrow));
+uint32_t fputc(uint32_t, struct l_struct_struct_OC__IO_FILE*) __ATTRIBUTELIST__((nothrow));
+void free(uint8_t*) __ATTRIBUTELIST__((nothrow));
+void __kmpc_for_static_init_4(struct l_struct_struct_OC_ident_t*, uint32_t, uint32_t, uint32_t*, uint32_t*, uint32_t*, uint32_t*, uint32_t, uint32_t);
+void __kmpc_for_static_fini(struct l_struct_struct_OC_ident_t*, uint32_t);
+void __kmpc_barrier(struct l_struct_struct_OC_ident_t*, uint32_t);
+uint8_t* memset(uint8_t*, uint32_t, uint64_t);
+uint8_t* memcpy(uint8_t*, uint8_t*, uint64_t);
+
+
+/* Global Variable Definitions and Initialization */
+static uint8_t _5[31] = { ";gemver.c;kernel_gemver;87;1;;" };
+static uint8_t _OC_str_OC_1[8] = { "%0.2lf " };
+static uint8_t _8[31] = { ";gemver.c;kernel_gemver;89;3;;" };
+static uint8_t _9[32] = { ";gemver.c;kernel_gemver;89;30;;" };
+static uint8_t _10[31] = { ";gemver.c;kernel_gemver;94;3;;" };
+static uint8_t _11[32] = { ";gemver.c;kernel_gemver;94;30;;" };
+static uint8_t _12[31] = { ";gemver.c;kernel_gemver;99;3;;" };
+static uint8_t _13[32] = { ";gemver.c;kernel_gemver;99;18;;" };
+static uint8_t _14[32] = { ";gemver.c;kernel_gemver;103;3;;" };
+static uint8_t _15[33] = { ";gemver.c;kernel_gemver;103;30;;" };
+static uint8_t _OC_str[23] = { ";unknown;unknown;0;0;;" };
+static struct l_struct_struct_OC_ident_t _4 = { 0, 2, 0, 0, (_OC_str) };
+static struct l_struct_struct_OC_ident_t _16 = { 0, 514, 0, 0, (_OC_str) };
+
+
+/* LLVM Intrinsic Builtin Function Bodies */
+static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
+  uint32_t r = a + b;
+  return r;
+}
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
+static __forceinline uint64_t llvm_mul_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a * b;
+  return r;
+}
+static __forceinline uint8_t llvm_udiv_u8(uint8_t a, uint8_t b) {
+  uint8_t r = a / b;
+  return r;
+}
+static __forceinline uint8_t llvm_urem_u8(uint8_t a, uint8_t b) {
+  uint8_t r = a % b;
+  return r;
+}
+
+
+/* Function Bodies */
+
+int main(int argc, char ** argv) {
+  uint32_t llvm_argc = (uint32_t)argc;
+  uint8_t** llvm_argv = (uint8_t**)argv;
+  uint32_t n;    /* Address-exposed local */
+  double alpha;    /* Address-exposed local */
+  double beta;    /* Address-exposed local */
+  double* A_2e_addr_2e_i;    /* Address-exposed local */
+  double* u1_2e_addr_2e_i;    /* Address-exposed local */
+  double* v1_2e_addr_2e_i;    /* Address-exposed local */
+  double* u2_2e_addr_2e_i;    /* Address-exposed local */
+  double* v2_2e_addr_2e_i;    /* Address-exposed local */
+  double* w_2e_addr_2e_i;    /* Address-exposed local */
+  double* x_2e_addr_2e_i;    /* Address-exposed local */
+  double* y_2e_addr_2e_i;    /* Address-exposed local */
+  double* z_2e_addr_2e_i;    /* Address-exposed local */
+  struct l_struct_struct_OC_ident_t _2e_kmpc_loc_2e_addr_2e_i;    /* Address-exposed local */
+  uint64_t dump_code;
+  uint8_t* A;
+  uint8_t* u1;
+  uint8_t* u2;
+  uint8_t* v1;
+  uint8_t* v2;
+  uint8_t* w;
+  uint8_t* x;
+  uint8_t* y;
+  uint8_t* z;
+  uint8_t* _1;
+  uint8_t* _2;
+  int64_t i;
+  int64_t j;
+  uint8_t* _3;
+  uint32_t i_i;
+  uint32_t dump_code93;
+  uint32_t fputc_2e_i;
+
+  dump_code =  /*tail*/ strtol((llvm_argv[1]), ((uint8_t**)/*NULL*/0), 10);
+  A =  /*tail*/ malloc(72);
+  u1 =  /*tail*/ malloc(24);
+  u2 =  /*tail*/ malloc(24);
+  v1 =  /*tail*/ malloc(24);
+  v2 =  /*tail*/ malloc(24);
+  w =  /*tail*/ malloc(24);
+  x =  /*tail*/ malloc(24);
+  y =  /*tail*/ malloc(24);
+  z =  /*tail*/ malloc(24);
+  _1 = memset(x, 0, 24);
+  _2 = memset(w, 0, 24);
+
+  for(i = 0; i < 3;  i++){
+    ((double*)u1)[i] = ((double)(int32_t)((uint32_t)i));
+    ((double*)v1)[i] = ((double)(uint8_t)((uint8_t)(i + 1)) / 3) * 0.5;
+    ((double*)u2)[i] = ((double)(uint8_t)((uint8_t)(i + 1)) / 3) * 0.25;
+    ((double*)v2)[i] = ((double)(uint8_t)((uint8_t)(i + 1)) / 3) / 6;
+    ((double*)y)[i] = ((double)(uint8_t)((uint8_t)(i + 1)) / 3) * 0.125;
+    ((double*)z)[i] = ((double)(uint8_t)((uint8_t)(i + 1)) / 3) / 9;
+    for(j = 0; j < 3;  j++){
+      ((double*)A)[i*3+j] = ((double)(int32_t)((uint32_t)i)) * ((double)(int32_t)((uint32_t)j)) / 3;
+    }
+  }
+
+  _3 = memcpy(((uint8_t*)(&_2e_kmpc_loc_2e_addr_2e_i)), ((uint8_t*)(&_4)), 16);
+  n = 3;
+  alpha = 43532;
+  beta = 12313;
+  *((uint8_t**)(&A_2e_addr_2e_i)) = A;
+  *((uint8_t**)(&u1_2e_addr_2e_i)) = u1;
+  *((uint8_t**)(&v1_2e_addr_2e_i)) = u2;
+  *((uint8_t**)(&u2_2e_addr_2e_i)) = v1;
+  *((uint8_t**)(&v2_2e_addr_2e_i)) = v2;
+  *((uint8_t**)(&w_2e_addr_2e_i)) = w;
+  *((uint8_t**)(&x_2e_addr_2e_i)) = x;
+  *((uint8_t**)(&y_2e_addr_2e_i)) = y;
+  *((uint8_t**)(&z_2e_addr_2e_i)) = z;
+  _2e_kmpc_loc_2e_addr_2e_i.field4 = (_5);
+#pragma omp parallel 
+
+  _OC_omp_outlined_OC_((&n), 3, 3, (&A_2e_addr_2e_i), 3, (&u1_2e_addr_2e_i), 3, (&v1_2e_addr_2e_i), 3, (&u2_2e_addr_2e_i), 3, (&v2_2e_addr_2e_i), 3, (&x_2e_addr_2e_i), (&beta), 3, (&y_2e_addr_2e_i), 3, (&z_2e_addr_2e_i), 3, (&w_2e_addr_2e_i), (&alpha));
+
+  if (((uint32_t)dump_code) == 1) {
+    i_i = 0;
+    // i in for loop not used, i_i used instead
+    for(i = 0; i < 3;  i++){
+      dump_code93 = fprintf((stderr), (_OC_str_OC_1), (((double*)w)[i]));
+      if (((uint8_t)i_i) % 20 == ((uint8_t)0)) {
+        fputc_2e_i = fputc(10, (stderr));
+      }
+      i_i = (i_i + 1);
+    }
+    free(A);
+    free(u1);
+    free(u2);
+    free(v1);
+    free(v2);
+    free(w);
+    free(x);
+    free(y);
+    free(z);
+    return 0;
+  }
+
+  free(A);
+  free(u1);
+  free(u2);
+  free(v1);
+  free(v2);
+  free(w);
+  free(x);
+  free(y);
+  free(z);
+  return 0;
+}
+
+
+static void _OC_omp_outlined_OC_(uint32_t* n, uint64_t vla, uint64_t vla1, double** A, uint64_t vla3, double** u1, uint64_t vla5, double** v1, uint64_t vla7, double** u2, uint64_t vla9, double** v2, uint64_t vla11, double** x, double* beta, uint64_t vla13, double** y, uint64_t vla15, double** z, uint64_t vla17, double** w, double* alpha) {
+  int64_t j;
+  int64_t _omp_iv;
+  double _6;
+  int64_t i;
+  double _7;
+#pragma omp for private( j)
+  for(_omp_iv = 0; _omp_iv < (*n);_omp_iv+=1){
+    for(j = 0; j < ((int64_t)(int32_t)(*n));  j = (j + 1)){
+      ((*A)+_omp_iv * vla1)[j] = (((((*A)+_omp_iv * vla1)[j]) + ((*u1)[_omp_iv]) * ((*v1)[j])) + ((*u2)[_omp_iv]) * ((*v2)[j]));
+    }
+  }
+#pragma omp for private( _6, j)
+  for(_omp_iv = 0; _omp_iv < (*n);_omp_iv+=1){
+    _6 = ((*x)[_omp_iv]);
+    for(j = 0; j < ((uint64_t)(uint32_t)(*n));  j = (j + 1)){
+      _6 = (_6 + (*beta) * (((*A)+_omp_iv)[j * vla1]) * ((*y)[j]));
+      (*x)[_omp_iv] = _6;
+    }
+  }
+#pragma omp for
+  for(i = 0; i < (*n);i+=1){
+    (*x)[i] = (((*x)[i]) + ((*z)[i]));
+  }
+#pragma omp for private( _7, j)
+  for(_omp_iv = 0; _omp_iv < (*n);_omp_iv+=1){
+    _7 = ((*w)[_omp_iv]);
+    for(j = 0; j < ((uint64_t)(uint32_t)(*n));  j = (j + 1)){
+      _7 = (_7 + (*alpha) * (((*A)+_omp_iv * vla1)[j]) * ((*x)[j]));
+      (*w)[_omp_iv] = _7;
+    }
+  }
+}
+
