@@ -1,4 +1,4 @@
-POLLY=1
+#POLLY=1
 BMARK=floyd-warshall
 CFILE=floyd-warshall
 DIR=/scratch/yc0769/xstack-benchmark/xstack-benchmark/polybench-3.1

@@ -1,4 +1,4 @@
-POLLY=1
+#POLLY=1
 BMARK=adi
 CFILE=adi
 DIR=/scratch/yc0769/xstack-benchmark/xstack-benchmark/polybench-3.1
