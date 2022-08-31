@@ -53,7 +53,7 @@ def one_mode(path, bmark_name):
 
   print("Running %s" % (bmark_name))
   with open("result.log", "w") as fd:
-    make_process = subprocess.Popen(['make', 'check_dec'],
+    make_process = subprocess.Popen(['make', 'check_seq'],
        env=dict(os.environ, CC='gcc'), stdout=fd, stderr=fd)
 
     if make_process.wait() != 0:
@@ -180,4 +180,4 @@ if __name__ == "__main__":
   perf_dic, config['bmark_list']  = Postprocess(perf_dic, config['bmark_list'])
 
   os.chdir(config['result_path'])
-  Plot(perf_dic, config['bmark_list'])
+  #Plot(perf_dic, config['bmark_list'])
