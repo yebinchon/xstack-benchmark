@@ -54,25 +54,15 @@ def one_mode(path, bmark_name):
   print("Running %s" % (bmark_name))
   with open("result.log", "w") as fd:
     make_process = subprocess.Popen(['make', 'check_seq'],
-       env=dict(os.environ, CC='gcc'), stdout=fd, stderr=fd)
+       env=dict(os.environ, CC='clang'), stdout=fd, stderr=fd)
 
     if make_process.wait() != 0:
       print(colored("Failed for %s " % (bmark_name), 'red'))
     else:
       print(colored("Succeeded for %s " % (bmark_name), 'green'))
   
-  return Parse(dir_path)
+  return #Parse(dir_path)
 
-def one_bmark(path, bmark_name):
-  # Run sequential version separately
-
-  perf_one_bmark = { bmark_name : {} }
-  perf_one_bmark[bmark_name].update(one_mode(path, bmark_name))
-
-  if len(perf_one_bmark[bmark_name].keys()) == 0:
-    perf_one_bmark = {}
-
-  return perf_one_bmark
 
 def Postprocess(perf_dic, bmark_list):
   for bmark in bmark_list:
@@ -169,15 +159,11 @@ if __name__ == "__main__":
 
   clean_all_bmarks(os.path.join(config['root_path'], 'polybench-sequential'))
   
-  perf_list_gcc = []
-  perf_dic = {}
   for bmark in config['bmark_list']:
-      perf_list_gcc.append(one_bmark(config['root_path'], bmark))
-  for i in range(len(config['bmark_list'])):
-    perf_dic.update(perf_list_gcc[i])
+      one_mode(config['root_path'], bmark)
 
 
-  perf_dic, config['bmark_list']  = Postprocess(perf_dic, config['bmark_list'])
+  #perf_dic, config['bmark_list']  = Postprocess(perf_dic, config['bmark_list'])
 
   os.chdir(config['result_path'])
   #Plot(perf_dic, config['bmark_list'])
