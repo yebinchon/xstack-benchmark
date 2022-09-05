@@ -56,10 +56,7 @@ void kernel_cholesky(int n,
 
   double x;
 
-#pragma scop
-#pragma omp parallel
 {
-  #pragma omp for private (j,k)
   for (i = 0; i < n; ++i)
   {
     x = A[i][i];
@@ -75,7 +72,6 @@ void kernel_cholesky(int n,
       }
   }
 }
-#pragma endscop
 
 }
 

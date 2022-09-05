@@ -64,10 +64,7 @@ void kernel_symm(int ni, int nj,
   int i, j, k;
   double acc;
 
-#pragma scop
-#pragma omp parallel
 {
-  #pragma omp for private (j,acc,k)
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
     {
@@ -80,7 +77,6 @@ void kernel_symm(int ni, int nj,
       C[i][j] = beta * C[i][j] + alpha * A[i][i] * B[i][j] + alpha * acc;
     }
 }
-#pragma endscop
 
 }
 
