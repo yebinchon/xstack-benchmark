@@ -64,13 +64,10 @@ void kernel_durbin(int n,
 {
   int i, k;
 
-#pragma scop
   y[0][0] = r[0];
   beta[0] = 1;
   alpha[0] = r[0];
-  #pragma omp parallel
   {
-  #pragma omp for private (i)
   for (k = 1; k < n; k++)
     {
       beta[k] = beta[k-1] - alpha[k-1] * alpha[k-1] * beta[k-1];
@@ -82,12 +79,9 @@ void kernel_durbin(int n,
 	y[i][k] = y[i][k-1] + alpha[k] * y[k-i-1][k-1];
       y[k][k] = alpha[k];
     }
-  #pragma omp for
   for (i = 0; i < n; i++)
     out[i] = y[i][n-1];
   }
-#pragma endscop
-
 }
 
 

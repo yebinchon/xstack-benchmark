@@ -115,10 +115,7 @@ void kernel_fdtd_apml(int cz,
 {
   int iz, iy, ix;
 
-#pragma scop
-#pragma omp parallel
 {
-  #pragma omp for private (iy, ix)
   for (iz = 0; iz < cz; iz++)
     {
       for (iy = 0; iy < cym; iy++)
@@ -156,7 +153,6 @@ void kernel_fdtd_apml(int cz,
 	}
     }
 }
-#pragma endscop
 
 }
 

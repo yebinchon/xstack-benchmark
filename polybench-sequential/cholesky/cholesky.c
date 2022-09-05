@@ -12,66 +12,66 @@
 #include <math.h>
 
 /* Array initialization. */
-static
+  static
 void init_array(int n,
-		double p[n],
-		double A[n][n])
+    double p[n],
+    double A[n][n])
 {
   int i, j;
 
   for (i = 0; i < n; i++)
-    {
-      p[i] = 1.0 / n;
-      for (j = 0; j < n; j++)
-	A[i][j] = 1.0 / n;
-    }
+  {
+    p[i] = 1.0 / n;
+    for (j = 0; j < n; j++)
+      A[i][j] = 1.0 / n;
+  }
 }
 
 
 /* DCE code. Must scan the entire live-out data.
    Can be used also to check the correctness of the output. */
-static
+  static
 void print_array(int n,
-		 double A[n][n])
+    double A[n][n])
 
 {
   int i, j;
 
   for (i = 0; i < n; i++)
-    for (i = 0; j < n; j++) {
-    fprintf (stderr, "%0.2lf ", A[i][j]);
-    if ((i * n + j) % 20 == 0) fprintf (stderr, "\n");
-  }
+    for (j = 0; j < n; j++) {
+      fprintf (stderr, "%0.2lf ", A[i][j]);
+      if ((i * n + j) % 20 == 0) fprintf (stderr, "\n");
+    }
 }
 
 
 /* Main computational kernel. The whole function will be timed,
    including the call and return. */
-static
+  static
 void kernel_cholesky(int n,
-		     double p[n],
-		     double A[n][n])
+    double p[n],
+    double A[n][n])
 {
   int i, j, k;
 
   double x;
 
-{
-  for (i = 0; i < n; ++i)
   {
-    x = A[i][i];
-    for (j = 0; j <= i - 1; ++j)
-      x = x - A[i][j] * A[i][j];
-    p[i] = 1.0 / sqrt(x);
-    for (j = i + 1; j < n; ++j)
+    for (i = 0; i < n; ++i)
+    {
+      x = A[i][i];
+      for (j = 0; j <= i - 1; ++j)
+        x = x - A[i][j] * A[i][j];
+      p[i] = 1.0 / sqrt(x);
+      for (j = i + 1; j < n; ++j)
       {
-	x = A[i][j];
-	for (k = 0; k <= i - 1; ++k)
-	  x = x - A[j][k] * A[i][k];
-	A[j][i] = x * p[i];
+        x = A[i][j];
+        for (k = 0; k <= i - 1; ++k)
+          x = x - A[j][k] * A[i][k];
+        A[j][i] = x * p[i];
       }
+    }
   }
-}
 
 }
 
