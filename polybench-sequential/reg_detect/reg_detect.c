@@ -59,20 +59,15 @@ void kernel_reg_detect(int niter, int maxgrid, int length,
 {
   int t, i, j, cnt;
 
-#pragma scop
-  #pragma omp master
 {
-#pragma omp parallel
   {
   for (t = 0; t < niter; t++)
   {
-    #pragma omp for private (i, cnt) collapse(2) schedule (static)
     for (j = 0; j <= maxgrid - 1; j++)
       for (i = j; i <= maxgrid - 1; i++)
         for (cnt = 0; cnt <= length - 1; cnt++)
           diff[j][i][cnt] = sum_tang[j][i];
 
-    #pragma omp for private (i, cnt) collapse(2) schedule (static)
     for (j = 0; j <= maxgrid - 1; j++)
     {
       for (i = j; i <= maxgrid - 1; i++)
@@ -84,18 +79,15 @@ void kernel_reg_detect(int niter, int maxgrid, int length,
       }
     }
 
-    #pragma omp for
     for (i = 0; i <= maxgrid - 1; i++)
       path[0][i] = mean[0][i];
 
-    #pragma omp for private (i) collapse(2) schedule (static)
     for (j = 1; j <= maxgrid - 1; j++)
       for (i = j; i <= maxgrid - 1; i++)
         path[j][i] = path[j - 1][i - 1] + mean[j][i];
   }
   }
 }
-#pragma endscop
 
 }
 

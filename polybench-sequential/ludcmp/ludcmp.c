@@ -61,11 +61,8 @@ void kernel_ludcmp(int n,
 
   double w;
 
-#pragma scop
   b[0] = 1.0;
-#pragma omp parallel
 {
-  #pragma omp for private (j, k, w)
   for (i = 0; i < n; i++)
   {
     for (j = i+1; j <= n; j++)
@@ -75,7 +72,6 @@ void kernel_ludcmp(int n,
         w = w- A[j][k] * A[k][i];
       A[j][i] = w / A[i][i];
     }
-    #pragma omp barrier
     for (j = i+1; j <= n; j++)
     {
       w = A[i+1][j];
@@ -85,7 +81,6 @@ void kernel_ludcmp(int n,
     }
   }
   y[0] = b[0];
-  #pragma omp for private (j, w)
   for (i = 1; i <= n; i++)
   {
     w = b[i];
@@ -94,7 +89,6 @@ void kernel_ludcmp(int n,
     y[i] = w;
   }
   x[n] = y[n] / A[n][n];
-  #pragma omp for private (j, w)
   for (i = 0; i <= n - 1; i++)
   {
     w = y[n - 1 - (i)];
@@ -103,8 +97,6 @@ void kernel_ludcmp(int n,
     x[n - 1 - i] = w / A[n - 1 - (i)][n - 1-(i)];
   }
 }
-#pragma endscop
-
 }
 
 

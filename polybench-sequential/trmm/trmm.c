@@ -57,17 +57,13 @@ void kernel_trmm(int ni,
 {
   int i, j, k;
 
-#pragma scop
-#pragma omp parallel
 {
   /*  B := alpha*A'*B, A triangular */
-  #pragma omp for private (j,k)
   for (i = 1; i < ni; i++)
     for (j = 0; j < ni; j++)
       for (k = 0; k < i; k++)
         B[i][j] += alpha * A[i][k] * B[j][k];
 }
-#pragma endscop
 
 }
 

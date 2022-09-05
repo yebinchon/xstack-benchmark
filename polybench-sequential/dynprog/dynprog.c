@@ -48,19 +48,14 @@ void kernel_dynprog(int tsteps, int length,
 
   int out_l = 0;
 
-#pragma scop
-#pragma omp master
 {
-  #pragma omp parallel
   {
   for (iter = 0; iter < tsteps; iter++)
   {
-    #pragma omp for private (j)
     for (i = 0; i <= length - 1; i++)
       for (j = 0; j <= length - 1; j++)
         c[i][j] = 0;
 
-    #pragma omp for private (j,k)
     for (i = 0; i <= length - 2; i++)
     {
       for (j = i + 1; j <= length - 1; j++)
@@ -75,7 +70,6 @@ void kernel_dynprog(int tsteps, int length,
   }
   }
 }
-#pragma endscop
 
   *out = out_l;
 }

@@ -56,22 +56,17 @@ void kernel_trisolv(int n,
 {
   int i, j;
 
-#pragma scop
-#pragma omp master
 {
-  #pragma omp parallel private (i,j)
   {
   for (i = 0; i < n; i++)
     {
       x[i] = c[i];
-      #pragma omp for schedule(static)
       for (j = 0; j <= i - 1; j++)
         x[i] = x[i] - A[i][j] * x[j];
       x[i] = x[i] / A[i][i];
     }
   }
 }
-#pragma endscop
 
 }
 

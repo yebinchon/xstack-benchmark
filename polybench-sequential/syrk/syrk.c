@@ -59,20 +59,15 @@ void kernel_syrk(int ni, int nj,
 {
   int i, j, k;
 
-#pragma scop
-//#pragma omp parallel
 {
-  //#pragma omp for private (j)
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++)
       C[i][j] *= beta;
-  //#pragma omp for private (j,k)
   for (i = 0; i < ni; i++)
     for (j = 0; j < ni; j++)
       for (k = 0; k < nj; k++)
         C[i][j] += alpha * A[i][k] * A[j][k];
 }
-#pragma endscop
 
 }
 

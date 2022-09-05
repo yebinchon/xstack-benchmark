@@ -74,8 +74,6 @@ void kernel_gramschmidt(int ni, int nj,
 
   double nrm;
 
-#pragma scop
-#pragma omp parallel for private (i, j)
   for (k = 0; k < nj; k++)
   {
     nrm = 0;
@@ -93,7 +91,6 @@ void kernel_gramschmidt(int ni, int nj,
         A[i][j] = A[i][j] - Q[i][k] * R[k][j];
     }
   }
-#pragma endscop
 
 }
 

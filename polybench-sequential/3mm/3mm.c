@@ -67,10 +67,6 @@ void kernel_3mm(int ni, int nj, int nk, int nl, int nm,
 {
   int i, j, k;
 
-//#pragma scop
-//#pragma omp parallel private (j, k)
-//{
-  //#pragma omp for
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
     {
@@ -79,7 +75,6 @@ void kernel_3mm(int ni, int nj, int nk, int nl, int nm,
         E[i][j] += A[i][k] * B[k][j];
     }
 
-  //#pragma omp for
   for (i = 0; i < nj; i++)
     for (j = 0; j < nl; j++)
     {
@@ -88,7 +83,6 @@ void kernel_3mm(int ni, int nj, int nk, int nl, int nm,
         F[i][j] += C[i][k] * D[k][j];
     }
 
-  //#pragma omp for
   for (i = 0; i < ni; i++)
     for (j = 0; j < nl; j++)
     {
@@ -96,8 +90,6 @@ void kernel_3mm(int ni, int nj, int nk, int nl, int nm,
       for (k = 0; k < nj; ++k)
         G[i][j] += E[i][k] * F[k][j];
     }
-//}
-//#pragma endscop
 
 }
 

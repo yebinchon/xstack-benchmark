@@ -61,10 +61,7 @@ void kernel_correlation(int m, int n,
 
 
 
-#pragma scop
-#pragma omp parallel
 {
-  #pragma omp for private (i)
   for (j = 0; j < m; j++)
   {
     mean[j] = 0.0;
@@ -73,7 +70,6 @@ void kernel_correlation(int m, int n,
     mean[j] /= float_n;
   }
 
-  #pragma omp for private (i)
   for (j = 0; j < m; j++)
   {
     stddev[j] = 0.0;
@@ -87,7 +83,6 @@ void kernel_correlation(int m, int n,
     stddev[j] = stddev[j] <= eps ? 1.0 : stddev[j];
   }
 
-  #pragma omp for private (j)
   for (i = 0; i < n; i++)
     for (j = 0; j < m; j++)
     {
@@ -96,7 +91,6 @@ void kernel_correlation(int m, int n,
     }
 
 
-  #pragma omp for private (j2, i)
   for (j1 = 0; j1 < m-1; j1++)
   {
     symmat[j1][j1] = 1.0;
@@ -110,7 +104,6 @@ void kernel_correlation(int m, int n,
   }
 }
   symmat[m-1][m-1] = 1.0;
-#pragma endscop
 
 }
 

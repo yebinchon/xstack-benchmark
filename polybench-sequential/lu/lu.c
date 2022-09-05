@@ -49,10 +49,7 @@ void kernel_lu(int n,
 {
   int i, j, k;
 
-#pragma scop
-#pragma omp parallel
 {
-  #pragma omp for private (j, i)
   for (k = 0; k < n; k++)
   {
     for (j = k + 1; j < n; j++)
@@ -62,7 +59,6 @@ void kernel_lu(int n,
         A[i][j] = A[i][j] - A[i][k] * A[k][j];
   }
 }
-#pragma endscop
 
 }
 
