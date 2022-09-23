@@ -111,11 +111,11 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int ni = NI //atoi(argv[2]);
-  int nj = NJ //atoi(argv[3]);
-  int nk = NK //atoi(argv[4]);
-  int nl = NL //atoi(argv[5]);
-  int nm = NM //atoi(argv[6]);
+  int ni = NI; //atoi(argv[2]);
+  int nj = NJ; //atoi(argv[3]);
+  int nk = NK; //atoi(argv[4]);
+  int nl = NL; //atoi(argv[5]);
+  int nm = NM; //atoi(argv[6]);
 
   __builtin_assume(ni>-1);
   __builtin_assume(nj>-1);
