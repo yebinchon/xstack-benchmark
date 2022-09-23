@@ -11,6 +11,8 @@
 #include <string.h>
 #include <math.h>
 
+#define N 10000 
+
   static
 void init_array (int n,
     double A[n+1][n+1],
@@ -61,11 +63,11 @@ void kernel_ludcmp(int n,
 
   double w;
 
-#pragma scop
+//#pragma scop
   b[0] = 1.0;
-#pragma omp parallel
+//#pragma omp parallel
 {
-  #pragma omp for private (j, k, w)
+//  #pragma omp for private (j, k, w)
   for (i = 0; i < n; i++)
   {
     for (j = i+1; j <= n; j++)
@@ -75,7 +77,7 @@ void kernel_ludcmp(int n,
         w = w- A[j][k] * A[k][i];
       A[j][i] = w / A[i][i];
     }
-    #pragma omp barrier
+//    #pragma omp barrier
     for (j = i+1; j <= n; j++)
     {
       w = A[i+1][j];
@@ -85,7 +87,7 @@ void kernel_ludcmp(int n,
     }
   }
   y[0] = b[0];
-  #pragma omp for private (j, w)
+//  #pragma omp for private (j, w)
   for (i = 1; i <= n; i++)
   {
     w = b[i];
@@ -94,7 +96,7 @@ void kernel_ludcmp(int n,
     y[i] = w;
   }
   x[n] = y[n] / A[n][n];
-  #pragma omp for private (j, w)
+//  #pragma omp for private (j, w)
   for (i = 0; i <= n - 1; i++)
   {
     w = y[n - 1 - (i)];
@@ -103,7 +105,7 @@ void kernel_ludcmp(int n,
     x[n - 1 - i] = w / A[n - 1 - (i)][n - 1-(i)];
   }
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -112,7 +114,7 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int n = atoi(argv[2]);
+  int n = N;//atoi(argv[2]);
 
 
   double (*A)[n+1][n+1]; A = (double(*)[n+1][n+1])malloc((n+1) * (n+1) * sizeof(double));;

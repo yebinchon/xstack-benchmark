@@ -11,6 +11,10 @@
 #include <string.h>
 #include <math.h>
 
+#define NR 512 
+#define NQ 512 
+#define NP 512 
+
   static
 void init_array(int nr, int nq, int np,
     double A[nr][nq][np],
@@ -74,9 +78,9 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int nr = atoi(argv[2]);
-  int nq = atoi(argv[3]);
-  int np = atoi(argv[4]);
+  int nr = NR;//atoi(argv[2]);
+  int nq = NQ;//atoi(argv[3]);
+  int np = NP;//atoi(argv[4]);
 
   double (*A)[nr][nq][np]; A = (double(*)[nr][nq][np])malloc((nr) * (nq) * (np) * sizeof(double));;
   double (*sum)[nr][nq][np]; sum = (double(*)[nr][nq][np])malloc((nr) * (nq) * (np) * sizeof(double));;

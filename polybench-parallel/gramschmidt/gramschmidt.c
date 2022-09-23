@@ -11,6 +11,8 @@
 #include <string.h>
 #include <math.h>
 
+#define NI 2048 
+#define NJ 2048
 
   static
 void init_array(int ni, int nj,
@@ -74,8 +76,8 @@ void kernel_gramschmidt(int ni, int nj,
 
   double nrm;
 
-#pragma scop
-#pragma omp parallel for private (i, j)
+//#pragma scop
+//#pragma omp parallel for private (i, j)
   for (k = 0; k < nj; k++)
   {
     nrm = 0;
@@ -93,7 +95,7 @@ void kernel_gramschmidt(int ni, int nj,
         A[i][j] = A[i][j] - Q[i][k] * R[k][j];
     }
   }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -102,8 +104,8 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int ni = atoi(argv[2]);
-  int nj = atoi(argv[3]);
+  int ni = NI;//atoi(argv[2]);
+  int nj = NJ;//atoi(argv[3]);
 
   double (*A)[ni][nj]; A = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
   double (*R)[nj][nj]; R = (double(*)[nj][nj])malloc((nj) * (nj) * sizeof(double));;

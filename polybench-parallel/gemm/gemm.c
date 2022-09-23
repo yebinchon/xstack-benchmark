@@ -11,6 +11,10 @@
 #include <string.h>
 #include <math.h>
 
+#define NI 2048
+#define NJ 2048
+#define NK 2048
+
   static
 void init_array(int ni, int nj, int nk,
     double *alpha,
@@ -84,9 +88,9 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int ni = atoi(argv[2]);
-  int nj = atoi(argv[3]);
-  int nk = atoi(argv[4]);
+  int ni = NI;//atoi(argv[2]);
+  int nj = NJ;//atoi(argv[3]);
+  int nk = NK;//atoi(argv[4]);
 
   __builtin_assume(ni>0);
   __builtin_assume(nj>0);

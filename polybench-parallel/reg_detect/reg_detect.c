@@ -11,6 +11,9 @@
 #include <string.h>
 #include <math.h>
 
+#define NITER 100
+#define MAXGRID 6
+#define LENGTH 16
 
   static
 void init_array(int maxgrid,
@@ -59,20 +62,20 @@ void kernel_reg_detect(int niter, int maxgrid, int length,
 {
   int t, i, j, cnt;
 
-#pragma scop
-  #pragma omp master
+//#pragma scop
+  //#pragma omp master
 {
-#pragma omp parallel
+//#pragma omp parallel
   {
   for (t = 0; t < niter; t++)
   {
-    #pragma omp for private (i, cnt) collapse(2) schedule (static)
+    //#pragma omp for private (i, cnt) collapse(2) schedule (static)
     for (j = 0; j <= maxgrid - 1; j++)
       for (i = j; i <= maxgrid - 1; i++)
         for (cnt = 0; cnt <= length - 1; cnt++)
           diff[j][i][cnt] = sum_tang[j][i];
 
-    #pragma omp for private (i, cnt) collapse(2) schedule (static)
+    //#pragma omp for private (i, cnt) collapse(2) schedule (static)
     for (j = 0; j <= maxgrid - 1; j++)
     {
       for (i = j; i <= maxgrid - 1; i++)
@@ -84,18 +87,18 @@ void kernel_reg_detect(int niter, int maxgrid, int length,
       }
     }
 
-    #pragma omp for
+    //#pragma omp for
     for (i = 0; i <= maxgrid - 1; i++)
       path[0][i] = mean[0][i];
 
-    #pragma omp for private (i) collapse(2) schedule (static)
+    //#pragma omp for private (i) collapse(2) schedule (static)
     for (j = 1; j <= maxgrid - 1; j++)
       for (i = j; i <= maxgrid - 1; i++)
         path[j][i] = path[j - 1][i - 1] + mean[j][i];
   }
   }
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -104,9 +107,9 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int niter = atoi(argv[2]);
-  int maxgrid = atoi(argv[3]);
-  int length = atoi(argv[4]);
+  int niter = NITER;//atoi(argv[2]);
+  int maxgrid = MAXGRID;//atoi(argv[3]);
+  int length = LENGTH;//atoi(argv[4]);
 
   int (*sum_tang)[maxgrid][maxgrid]; sum_tang = (int(*)[maxgrid][maxgrid])malloc((maxgrid) * (maxgrid) * sizeof(int));;
   int (*mean)[maxgrid][maxgrid]; mean = (int(*)[maxgrid][maxgrid])malloc((maxgrid) * (maxgrid) * sizeof(int));;

@@ -11,6 +11,9 @@
 #include <string.h>
 #include <math.h>
 
+#define TSTEPS 50
+#define LENGTH 1000
+
 static
 void init_array(int length,
   int c[length][length],
@@ -48,19 +51,19 @@ void kernel_dynprog(int tsteps, int length,
 
   int out_l = 0;
 
-#pragma scop
-#pragma omp master
+//#pragma scop
+//#pragma omp master
 {
-  #pragma omp parallel
+//  #pragma omp parallel
   {
   for (iter = 0; iter < tsteps; iter++)
   {
-    #pragma omp for private (j)
+//    #pragma omp for private (j)
     for (i = 0; i <= length - 1; i++)
       for (j = 0; j <= length - 1; j++)
         c[i][j] = 0;
 
-    #pragma omp for private (j,k)
+//    #pragma omp for private (j,k)
     for (i = 0; i <= length - 2; i++)
     {
       for (j = i + 1; j <= length - 1; j++)
@@ -75,7 +78,7 @@ void kernel_dynprog(int tsteps, int length,
   }
   }
 }
-#pragma endscop
+//#pragma endscop
 
   *out = out_l;
 }
@@ -84,8 +87,8 @@ void kernel_dynprog(int tsteps, int length,
 int main(int argc, char** argv)
 {
   int dump_code = atoi(argv[1]);
-  int length = atoi(argv[2]);
-  int tsteps = atoi(argv[3]);
+  int length = LENGTH;//atoi(argv[2]);
+  int tsteps = TSTEPS;//atoi(argv[3]);
 
   int out;
   int (*sum_c)[length][length][length]; sum_c = (int(*)[length][length][length])malloc((length) * (length) * (length) * sizeof(int));;

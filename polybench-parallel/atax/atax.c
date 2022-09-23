@@ -11,6 +11,8 @@
 #include <string.h>
 #include <math.h>
 
+#define NX 40000 
+#define NY 40000 
 
 /* Array initialization. */
 static
@@ -73,8 +75,8 @@ void kernel_atax(int nx, int ny,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int nx = atoi(argv[2]);
-  int ny = atoi(argv[3]);
+  int nx = NX;//atoi(argv[2]);
+  int ny = NY;//atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

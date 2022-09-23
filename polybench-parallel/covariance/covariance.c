@@ -11,6 +11,9 @@
 #include <string.h>
 #include <math.h>
 
+#define N 4000
+#define M 4000
+
 static
 void init_array (int m, int n,
    double *float_n,
@@ -55,10 +58,10 @@ void kernel_covariance(int m, int n,
 {
   int i, j, j1, j2;
 
-#pragma scop
-#pragma omp parallel
+//#pragma scop
+//#pragma omp parallel
 {
-  #pragma omp for private (i)
+//  #pragma omp for private (i)
   for (j = 0; j < m; j++)
     {
       mean[j] = 0.0;
@@ -68,13 +71,13 @@ void kernel_covariance(int m, int n,
     }
 
 
-  #pragma omp for private (j)
+//  #pragma omp for private (j)
   for (i = 0; i < n; i++)
     for (j = 0; j < m; j++)
       data[i][j] -= mean[j];
 
 
-  #pragma omp for private (j2, i)
+//  #pragma omp for private (j2, i)
   for (j1 = 0; j1 < m; j1++)
     for (j2 = j1; j2 < m; j2++)
       {
@@ -84,7 +87,7 @@ void kernel_covariance(int m, int n,
         symmat[j2][j1] = symmat[j1][j2];
       }
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -93,8 +96,8 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int n = atoi(argv[2]);
-  int m = atoi(argv[3]);
+  int n = N;//atoi(argv[2]);
+  int m = M;//atoi(argv[3]);
 
   double float_n;
   double (*data)[m][n]; data = (double(*)[m][n])malloc((m) * (n) * sizeof(double));;

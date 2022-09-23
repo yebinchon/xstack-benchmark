@@ -11,6 +11,7 @@
 #include <string.h>
 #include <math.h>
 
+#define NI 1024
 
 /* Array initialization. */
 static
@@ -57,17 +58,17 @@ void kernel_trmm(int ni,
 {
   int i, j, k;
 
-#pragma scop
-#pragma omp parallel
+//#pragma scop
+//#pragma omp parallel
 {
   /*  B := alpha*A'*B, A triangular */
-  #pragma omp for private (j,k)
+  //#pragma omp for private (j,k)
   for (i = 1; i < ni; i++)
     for (j = 0; j < ni; j++)
       for (k = 0; k < i; k++)
         B[i][j] += alpha * A[i][k] * B[j][k];
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -75,7 +76,7 @@ void kernel_trmm(int ni,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int ni = atoi(argv[2]);
+  int ni = NI;//atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

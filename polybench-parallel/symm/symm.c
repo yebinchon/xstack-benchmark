@@ -11,6 +11,9 @@
 #include <string.h>
 #include <math.h>
 
+#define NI 1000
+#define NJ 1000
+
   static
 void init_array(int ni, int nj,
     double *alpha,
@@ -64,10 +67,10 @@ void kernel_symm(int ni, int nj,
   int i, j, k;
   double acc;
 
-#pragma scop
-#pragma omp parallel
+//#pragma scop
+//#pragma omp parallel
 {
-  #pragma omp for private (j,acc,k)
+  //#pragma omp for private (j,acc,k)
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
     {
@@ -80,7 +83,7 @@ void kernel_symm(int ni, int nj,
       C[i][j] = beta * C[i][j] + alpha * A[i][i] * B[i][j] + alpha * acc;
     }
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -88,8 +91,8 @@ void kernel_symm(int ni, int nj,
 int main(int argc, char** argv)
 {
   int dump_code = atoi(argv[1]);
-  int ni = atoi(argv[2]);
-  int nj = atoi(argv[3]);
+  int ni = NI;//atoi(argv[2]);
+  int nj = NJ;//atoi(argv[3]);
 
   double alpha;
   double beta;

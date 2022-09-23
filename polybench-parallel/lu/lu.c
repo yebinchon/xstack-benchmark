@@ -11,6 +11,8 @@
 #include <string.h>
 #include <math.h>
 
+#define N 10000
+
   static
 void init_array (int n,
     double A[n][n])
@@ -49,10 +51,10 @@ void kernel_lu(int n,
 {
   int i, j, k;
 
-#pragma scop
-#pragma omp parallel
+//#pragma scop
+//#pragma omp parallel
 {
-  #pragma omp for private (j, i)
+//  #pragma omp for private (j, i)
   for (k = 0; k < n; k++)
   {
     for (j = k + 1; j < n; j++)
@@ -62,7 +64,7 @@ void kernel_lu(int n,
         A[i][j] = A[i][j] - A[i][k] * A[k][j];
   }
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -71,7 +73,7 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int n = atoi(argv[2]);
+  int n = N;//atoi(argv[2]);
 
 
   double (*A)[n][n]; A = (double(*)[n][n])malloc((n) * (n) * sizeof(double));;

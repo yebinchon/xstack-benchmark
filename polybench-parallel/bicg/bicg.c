@@ -11,8 +11,8 @@
 #include <string.h>
 #include <math.h>
 
-//#define NX 40000
 #define NX 40000
+#define NY 40000
 
 /* Array initialization. */
 static
@@ -86,7 +86,7 @@ int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
   int nx =NX;//atoi(argv[2]);
-  int ny = NX;//atoi(argv[3]);
+  int ny = NY;//atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

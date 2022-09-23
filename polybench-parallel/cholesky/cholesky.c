@@ -11,6 +11,9 @@
 #include <string.h>
 #include <math.h>
 
+#define N 4000
+
+
 /* Array initialization. */
 static
 void init_array(int n,
@@ -56,10 +59,10 @@ void kernel_cholesky(int n,
 
   double x;
 
-#pragma scop
-#pragma omp parallel
+//#pragma scop
+//#pragma omp parallel
 {
-  #pragma omp for private (j,k)
+//  #pragma omp for private (j,k)
   for (i = 0; i < n; ++i)
   {
     x = A[i][i];
@@ -75,7 +78,7 @@ void kernel_cholesky(int n,
       }
   }
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -83,7 +86,7 @@ void kernel_cholesky(int n,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = atoi(argv[2]);
+  int n = N;//atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

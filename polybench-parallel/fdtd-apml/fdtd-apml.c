@@ -11,6 +11,10 @@
 #include <string.h>
 #include <math.h>
 
+#define CZ 256
+#define CYM 256
+#define CXM 256
+
 /* Array initialization. */
 static
 void init_array (int cz,
@@ -115,10 +119,10 @@ void kernel_fdtd_apml(int cz,
 {
   int iz, iy, ix;
 
-#pragma scop
-#pragma omp parallel
+//#pragma scop
+//#pragma omp parallel
 {
-  #pragma omp for private (iy, ix)
+//  #pragma omp for private (iy, ix)
   for (iz = 0; iz < cz; iz++)
     {
       for (iy = 0; iy < cym; iy++)
@@ -156,7 +160,7 @@ void kernel_fdtd_apml(int cz,
 	}
     }
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -164,9 +168,9 @@ void kernel_fdtd_apml(int cz,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int cz = atoi(argv[2]);
-  int cym = atoi(argv[3]);
-  int cxm = atoi(argv[4]);
+  int cz = CZ;//atoi(argv[2]);
+  int cym = CYM;//atoi(argv[3]);
+  int cxm = CXM;//atoi(argv[4]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

@@ -11,6 +11,7 @@
 #include <string.h>
 #include <math.h>
 
+#define N 4000
 
 /* Array initialization. */
 static
@@ -56,22 +57,22 @@ void kernel_trisolv(int n,
 {
   int i, j;
 
-#pragma scop
-#pragma omp master
+//#pragma scop
+//#pragma omp master
 {
-  #pragma omp parallel private (i,j)
+  //#pragma omp parallel private (i,j)
   {
   for (i = 0; i < n; i++)
     {
       x[i] = c[i];
-      #pragma omp for schedule(static)
+      //#pragma omp for schedule(static)
       for (j = 0; j <= i - 1; j++)
         x[i] = x[i] - A[i][j] * x[j];
       x[i] = x[i] / A[i][i];
     }
   }
 }
-#pragma endscop
+//#pragma endscop
 
 }
 
@@ -79,7 +80,7 @@ void kernel_trisolv(int n,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n =atoi(argv[2]);
+  int n = N;//atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
