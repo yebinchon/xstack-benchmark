@@ -11,9 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-#define N 4000
-#define M 4000
-
 static
 void init_array (int m, int n,
    double *float_n,
@@ -96,8 +93,8 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int n = N;//atoi(argv[2]);
-  int m = M;//atoi(argv[3]);
+  int n = atoi(argv[2]);
+  int m = atoi(argv[3]);
 
   double float_n;
   double (*data)[m][n]; data = (double(*)[m][n])malloc((m) * (n) * sizeof(double));;

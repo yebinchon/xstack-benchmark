@@ -11,9 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-#define NX 40000
-#define NY 40000
-
 /* Array initialization. */
 static
 void init_array (int nx, int ny,
@@ -85,8 +82,8 @@ void kernel_bicg(int nx, int ny,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int nx =NX;//atoi(argv[2]);
-  int ny = NY;//atoi(argv[3]);
+  int nx = atoi(argv[2]);
+  int ny = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

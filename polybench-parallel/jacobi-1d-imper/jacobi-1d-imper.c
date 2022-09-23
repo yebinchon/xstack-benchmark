@@ -11,9 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-#define N 100000000
-#define TSTEPS 100
-
 /* Array initialization. */
   static
 void init_array (int n,
@@ -69,8 +66,8 @@ void print_array(int n,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = N;//atoi(argv[3]);
-  int tsteps = TSTEPS;//atoi(argv[2]);
+  int n = atoi(argv[3]);
+  int tsteps = atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

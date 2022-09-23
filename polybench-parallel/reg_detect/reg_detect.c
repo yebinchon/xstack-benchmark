@@ -11,10 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-#define NITER 100
-#define MAXGRID 6
-#define LENGTH 16
-
   static
 void init_array(int maxgrid,
     int sum_tang[maxgrid][maxgrid],
@@ -107,9 +103,9 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int niter = NITER;//atoi(argv[2]);
-  int maxgrid = MAXGRID;//atoi(argv[3]);
-  int length = LENGTH;//atoi(argv[4]);
+  int niter = atoi(argv[2]);
+  int maxgrid = atoi(argv[3]);
+  int length = atoi(argv[4]);
 
   int (*sum_tang)[maxgrid][maxgrid]; sum_tang = (int(*)[maxgrid][maxgrid])malloc((maxgrid) * (maxgrid) * sizeof(int));;
   int (*mean)[maxgrid][maxgrid]; mean = (int(*)[maxgrid][maxgrid])malloc((maxgrid) * (maxgrid) * sizeof(int));;

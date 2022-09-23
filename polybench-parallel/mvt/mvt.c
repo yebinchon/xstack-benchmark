@@ -14,8 +14,6 @@
 
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-//#define N 40000
-#define N 40000
 
 /* Array initialization. */
 static
@@ -86,7 +84,7 @@ int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
   int dump_code = atoi(argv[1]);
-  int n = N;
+  int n = atoi(argv[2]);
 
   /* Variable declaration/allocation. */
   double (*A)[n][n]; A = (double(*)[n][n])malloc(n*n*sizeof(double));

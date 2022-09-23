@@ -11,9 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-#define TSTEPS 50
-#define LENGTH 1000
-
 static
 void init_array(int length,
   int c[length][length],
@@ -87,8 +84,8 @@ void kernel_dynprog(int tsteps, int length,
 int main(int argc, char** argv)
 {
   int dump_code = atoi(argv[1]);
-  int length = LENGTH;//atoi(argv[2]);
-  int tsteps = TSTEPS;//atoi(argv[3]);
+  int length = atoi(argv[2]);
+  int tsteps = atoi(argv[3]);
 
   int out;
   int (*sum_c)[length][length][length]; sum_c = (int(*)[length][length][length])malloc((length) * (length) * (length) * sizeof(int));;

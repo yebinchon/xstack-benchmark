@@ -11,8 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-#define NI 1024
-
 /* Array initialization. */
 static
 void init_array(int ni,
@@ -76,7 +74,7 @@ void kernel_trmm(int ni,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int ni = NI;//atoi(argv[2]);
+  int ni = atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */

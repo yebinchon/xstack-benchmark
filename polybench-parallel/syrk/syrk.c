@@ -11,9 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-#define NI 4096
-#define NJ 4096
-
   static
 void init_array(int ni, int nj,
     double *alpha,
@@ -83,8 +80,8 @@ void kernel_syrk(int ni, int nj,
 int main(int argc, char** argv)
 {
   int dump_code = atoi(argv[1]);
-  int ni = NI;//atoi(argv[2]);
-  int nj = NJ;//atoi(argv[3]);
+  int ni = atoi(argv[2]);
+  int nj = atoi(argv[3]);
 
   __builtin_assume(nj>0);
   __builtin_assume(ni>0);

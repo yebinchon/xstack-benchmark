@@ -11,8 +11,6 @@
 #include <string.h>
 #include <math.h>
 
-#define N 10000
-
   static
 void init_array (int n,
     double A[n][n])
@@ -73,7 +71,7 @@ int main(int argc, char** argv)
 {
 
   int dump_code = atoi(argv[1]);
-  int n = N;//atoi(argv[2]);
+  int n = atoi(argv[2]);
 
 
   double (*A)[n][n]; A = (double(*)[n][n])malloc((n) * (n) * sizeof(double));;
