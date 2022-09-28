@@ -11,6 +11,8 @@
 #include <string.h>
 #include <math.h>
 
+#define N 4000
+
 /* Array initialization. */
 static
 void init_array(int n,
@@ -83,7 +85,7 @@ void kernel_cholesky(int n,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = atoi(argv[2]);
+  int n = N;//atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
