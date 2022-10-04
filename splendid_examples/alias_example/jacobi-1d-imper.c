@@ -36,10 +36,10 @@ void init_array (int n,
            double * B)
  {
 
-   int t,i;
-   for (t = 0; t < tsteps; t++)
-       for (i = 1; i < N - 1; i++)
-          B[i] = (A[i-1] + A[i] + A[i + 1]) / 3;
+   int i,j;
+   for (i = 0; i < tsteps; i++)
+       for (j = 1; j < N - 1; j++)
+          B[j] = (A[j-1] + A[j] + A[j + 1]) / 3;
 
   for (uint64_t i = 0; i < N; i++)
   {
