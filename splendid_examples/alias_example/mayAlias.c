@@ -13,7 +13,6 @@
 #include <math.h>
 
 #define N 1000
-#define TSTEPS 10
 
 /* Array initialization. */
   static
@@ -33,12 +32,9 @@ void init_array (int n,
 }
 
 
- void MayAlias(int tsteps,
-           double * A,
-           double * B,
-           double * C)
+ void MayAlias(double * __restrict__ A, double * __restrict__ B, double * C)
  {
-   int i,j;
+   int i;
    for (i = 0; i < N; i++){
      A[i] = M_PI*B[i] + exp(C[i]);
    }
@@ -54,14 +50,13 @@ void init_array (int n,
 int main(int argc, char** argv)
 {
   int n = N;
-  int tsteps = TSTEPS;
   int dump_code = atoi(argv[1]);
-  double (*A)[n]; A = (double(*)[n])malloc(n*sizeof(double));
-  double (*B)[n]; B = (double(*)[n])malloc(n*sizeof(double));
-  double (*C)[n]; C = (double(*)[n])malloc(n*sizeof(double));
+  double *A = (double*) malloc(n * sizeof(double));
+  double *B = (double*) malloc(n * sizeof(double));
+  double *C = (double*) malloc(n * sizeof(double));
 
-  init_array (n, *A, *B, *C);
-  MayAlias (tsteps, *A, *B, *C);
+  init_array (n, A, B, C);
+  MayAlias (A, B, C);
 
   free((void*)A);
   free((void*)B);
