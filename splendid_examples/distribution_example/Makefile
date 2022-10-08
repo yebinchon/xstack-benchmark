@@ -16,7 +16,7 @@ $(PLAIN).bc : $(OBJFILES_BC)
 
 %.bc: %.c
 	#$(CC) -O2 -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -g -c -emit-llvm $< -o $@
-	$(CC) -O2 -mllvm -polly -mllvm -polly-tiling=false -fno-unroll-loops  -mllvm -enable-loop-distribute -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -g -c -emit-llvm $< -o $@
+	$(CC) -O2 -disable-llvm-passes -mllvm -polly -mllvm -polly-tiling=false -fno-unroll-loops  -mllvm -enable-loop-distribute -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -g -c -emit-llvm $< -o $@
 	opt -loop-simplify $@ -S -o $@
 
 $(PLAIN).ll : $(PLAIN).bc

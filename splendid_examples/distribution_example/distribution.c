@@ -36,7 +36,7 @@ int main(int argc, char** argv)
   for(int i=1; i<100; i++){
     for(int j=0; j<100; j++){
       A[i][j] = i + j;
-      B[i][j] = A[i-1][j];
+      B[i][j] = i*j - A[i-1][j];
     }
   }
 
