@@ -12,23 +12,6 @@
 #include <math.h>
 #include <stdint.h>
 
-
-
-
-  static
-void print_array(int ni, int nl,
-    double D[ni][nl])
-{
-  int i, j;
-
-  for (i = 0; i < ni; i++)
-    for (j = 0; j < nl; j++) {
-      fprintf (stderr, "%0.2lf ", D[i][j]);
-      if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
-    }
-  fprintf (stderr, "\n");
-}
-
 int main(int argc, char** argv)
 {
   uint8_t A[100][100];
@@ -41,7 +24,12 @@ int main(int argc, char** argv)
   }
 
 
-  print_array(100, 100, B);
+  for (int i = 0; i < 100; i++)
+    for (int j = 0; j < 100; j++) {
+      fprintf (stderr, "%d ", B[i][j]);
+      if ((i * 100 + 100) % 20 == 0) fprintf (stderr, "\n");
+    }
+  fprintf (stderr, "\n");
 
 
   return 0;

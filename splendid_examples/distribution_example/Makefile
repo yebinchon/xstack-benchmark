@@ -1,5 +1,5 @@
 POLLY=0
-BMARK=unrolling
+BMARK=distribution
 CFILE=mayAlias
 #POLLY_FLAGS+=-mllvm -polly-overflow-tracking=never -mllvm -polly-ignore-aliasing -mllvm -polly-parallel-force -mllvm -polly-position=early
 POLLY_FLAGS+= -ffast-math -mllvm -polly-process-unprofitable -mllvm -polly-overflow-tracking=never -mllvm -polly-parallel-force -mllvm -polly-position=early
