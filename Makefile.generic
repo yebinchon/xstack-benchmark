@@ -1,4 +1,4 @@
-#CC=clang
+CC=clang
 #CC=gcc
 POLLY_FLAGS+=-mllvm -polly -mllvm -polly-parallel -mllvm -polly-omp-backend=LLVM -mllvm -polly-scheduling=static -mllvm -polly-optimizer=none -mllvm -polly-tiling=false
 ifdef SPEC_DEFAULTS
@@ -39,7 +39,7 @@ $(PLAIN).ll : $(PLAIN).bc
 #	$(CC) -g -O3 $(LINK_FLAGS) $< -o $@
 
 $(PLAIN).exe : $(BMARK).c
-	$(CC) -DPERF=1 -g -O3 -fopenmp $< -o $@
+	$(CC) -DPERF=1 -lm -g -O3 -fopenmp $< -o $@
 
 $(PLAIN).polly.bc : $(OBJFILES_BC)
 	llvm-link $(LLVM_LINK_FLAGS) $^ -o $@
