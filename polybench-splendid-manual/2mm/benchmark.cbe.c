@@ -103,12 +103,20 @@ static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
   uint64_t r = a + b;
   return r;
 }
+static __forceinline uint32_t llvm_mul_u32(uint32_t a, uint32_t b) {
+  uint32_t r = a * b;
+  return r;
+}
 static __forceinline uint64_t llvm_mul_u64(uint64_t a, uint64_t b) {
   uint64_t r = a * b;
   return r;
 }
-static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
+static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
   uint32_t r = a % b;
+  return r;
+}
+static __forceinline uint64_t llvm_ashr_u64(int64_t a, int64_t b) {
+  uint64_t r = a >> b;
   return r;
 }
 
@@ -116,70 +124,72 @@ static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
 /* Function Bodies */
 
 int main(int argc, char ** argv) {
-  uint64_t _call_2e_i = strtol(argv[1], ((uint8_t**)0), 10);
-  uint8_t* ex = malloc(128000000);
-  uint8_t* ey = malloc(128000000);
-  uint8_t* hz = malloc(128000000);
-  uint8_t* _fict_ = malloc(32000);
-#pragma omp parallel for
-for(uint64_t i = 0; i < 4000;   i = i + 1){
-  *((double*)(_fict_+(i << 3))) = (double)(i);
+  uint64_t dump_code = strtol(argv[1], ((uint8_t**)0), 10);
+  uint64_t ni = strtol(argv[2], ((uint8_t**)0), 10);
+  uint64_t nj = strtol(argv[3], ((uint8_t**)0), 10);
+  uint64_t nk = strtol(argv[4], ((uint8_t**)0), 10);
+  uint64_t nl = strtol(argv[5], ((uint8_t**)0), 10);
+  uint8_t* tmp = malloc(nj * (ni << 32) >> 29);
+  uint8_t* A = malloc(nk * (ni << 32) >> 29);
+  uint8_t* B = malloc(nk * (nj << 32) >> 29);
+  uint8_t* C = malloc(nl * (nj << 32) >> 29);
+  uint8_t* D = malloc(nl * (ni << 32) >> 29);
+for(uint64_t i = 0; i < ni;   i = i + 1){
+for(uint64_t j = 0; j < nk;   j = j + 1){
+  (((double*)A)+i * nl)[j] = (double)(i) * (double)(j) / (double)(ni);
+}
+}
+for(uint64_t i = 0; i < nk;   i = i + 1){
+for(uint64_t j = 0; j < nj;   j = j + 1){
+  (((double*)B)+i * nj)[j] = (double)(i) * (double)((j + 1)) / (double)(nj);
+}
+}
+for(uint64_t i = 0; i < nl;   i = i + 1){
+for(uint64_t j = 0; j < nj;   j = j + 1){
+  (((double*)C)+i * nj)[j] = (double)(i) * (double)((j + 3)) / (double)(nl);
+}
+}
+for(uint64_t i = 0; i < ni;   i = i + 1){
+for(uint64_t j = 0; j < nl;   j = j + 1){
+  (((double*)D)+i * nl)[j] = (double)(i) * (double)((j + 2)) / (double)(nk);
+}
 }
 //START OUTLINED
   #pragma omp parallel 
 {
 
 #pragma omp for schedule(static) nowait
-for(uint64_t i = 0; i<=3999; i = i + 1){
-for(uint64_t j = 0; j < (3999 + 1);   j = j + 1){
-  *((double*)((ex+i * 32000)+(j << 3))) = (double)(i) * (double)((j + 1)) / 4000;
-  *((double*)((ey+i * 32000)+(j << 3))) = (double)(i) * (double)((j + 2)) / 4000;
-  *((double*)((hz+i * 32000)+(j << 3))) = (double)(i) * (double)((j + 3)) / 4000;
+for(uint64_t i = 0; i<=(ni - 1); i = i + 1){
+for(uint64_t j = 0; j < nj;   j = j + 1){
+  *((double*)((tmp+(nj << 3) * i)+(j << 3))) = 0;
+  ((double*)tmp)[(i * nj + j)] = 0;
+for(uint64_t k = 0; k < nk;   k = k + 1){
+  ((double*)tmp)[(i * nj + j)] = (((double*)tmp)[(i * nj + j)] + *((double*)((A+(nk << 3) * i)+(k << 3))) * 32412 * *((double*)((B+(j << 3))+(nj << 3) * k)));
+}
 }
 }
 }
 //END OUTLINED
-for(uint64_t i = 0; i < 100;   i = i + 1){
-#pragma omp parallel for
-for(uint64_t j = 0; j < 4000;   j = j + 1){
-  *((uint64_t*)(ey+(j << 3))) = *((uint64_t*)(_fict_+(i << 3)));
-}
 //START OUTLINED
   #pragma omp parallel 
 {
 
 #pragma omp for schedule(static) nowait
-for(uint64_t j = 0; j<=3998; j = j + 1){
-for(uint64_t k = 0; k < (3999 + 1);   k = k + 1){
-  *((double*)(((ey+32000)+j * 32000)+(k << 3))) = (*((double*)(((ey+32000)+j * 32000)+(k << 3))) - (*((double*)(((hz+32000)+j * 32000)+(k << 3))) - *((double*)((hz+j * 32000)+(k << 3)))) * 0.5);
+for(uint64_t i = 0; i<=(ni - 1); i = i + 1){
+for(uint64_t j = 0; j < nl;   j = j + 1){
+  ((double*)D)[(i * nl + j)] = *((double*)((D+(nl << 3) * i)+(j << 3))) * 2123;
+for(uint64_t k = 0; k < nj;   k = k + 1){
+  ((double*)D)[(i * nl + j)] = (((double*)D)[(i * nl + j)] + *((double*)((tmp+(nj << 3) * i)+(k << 3))) * *((double*)((C+(j << 3))+(nj << 3) * k)));
+}
 }
 }
 }
 //END OUTLINED
-#pragma omp parallel for
-for(uint64_t j = 0; j < 4000;   j = j + 1){
-  double __2e_phiops_2e_0 = *((double*)(hz+j * 32000));
-for(uint64_t k = 0; k < 3999;   k = k + 1){
-  *((double*)(((ex+8)+j * 32000)+(k << 3))) = (*((double*)(((ex+8)+j * 32000)+(k << 3))) - (*((double*)(((hz+8)+j * 32000)+(k << 3))) - __2e_phiops_2e_0) * 0.5);
-  __2e_phiops_2e_0 = *((double*)(((hz+8)+j * 32000)+(k << 3)));
-}
-}
-#pragma omp parallel for
-for(uint64_t j = 0; j < 3999;   j = j + 1){
-  double __2e_phiops135_2e_0 = *((double*)(ex+j * 32000));
-for(uint64_t k = 0; k < 3999;   k = k + 1){
-  *((double*)((hz+j * 32000)+(k << 3))) = (*((double*)((hz+j * 32000)+(k << 3))) - (((*((double*)(((ex+8)+j * 32000)+(k << 3))) - __2e_phiops135_2e_0) + *((double*)(((ey+32000)+j * 32000)+(k << 3)))) - *((double*)((ey+j * 32000)+(k << 3)))) * 0.69999999999999996);
-  __2e_phiops135_2e_0 = *((double*)(((ex+8)+j * 32000)+(k << 3)));
-}
-}
-}
-  if (_call_2e_i == 1) {
-for(uint64_t i = 0; i < 4000;   i = i + 1){
-for(uint64_t j = 0; j < 4000;   j = j + 1){
-  fprintf(stderr, (_OC_str), (((double*)ex)+i * 4000)[j]);
-  fprintf(stderr, (_OC_str), (((double*)ey)+i * 4000)[j]);
-  fprintf(stderr, (_OC_str), (((double*)hz)+i * 4000)[j]);
-  if ((j + i * 4000) % 20 == 0) {
+  if (dump_code == 1) {
+for(uint64_t i = 0; i < ni;   i = i + 1){
+for(uint64_t j = 0; j < nl;   j = j + 1){
+  fprintf(stderr, (_OC_str), (((double*)D)+i * nl)[j]);
+  if ((int)(i * ni + j) % (int)20 == 0) {
   fputc(10, stderr);
 }
 
@@ -188,10 +198,11 @@ for(uint64_t j = 0; j < 4000;   j = j + 1){
   fputc(10, stderr);
 }
 
-free(ex);
-free(ey);
-free(hz);
-free(_fict_);
+free(tmp);
+free(A);
+free(B);
+free(C);
+free(D);
   return 0;
 }
 

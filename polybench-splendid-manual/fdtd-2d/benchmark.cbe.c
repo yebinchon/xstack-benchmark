@@ -121,7 +121,6 @@ int main(int argc, char ** argv) {
   uint8_t* ey = malloc(128000000);
   uint8_t* hz = malloc(128000000);
   uint8_t* _fict_ = malloc(32000);
-#pragma omp parallel for
 for(uint64_t i = 0; i < 4000;   i = i + 1){
   *((double*)(_fict_+(i << 3))) = (double)(i);
 }
@@ -140,7 +139,6 @@ for(uint64_t j = 0; j < (3999 + 1);   j = j + 1){
 }
 //END OUTLINED
 for(uint64_t i = 0; i < 100;   i = i + 1){
-#pragma omp parallel for
 for(uint64_t j = 0; j < 4000;   j = j + 1){
   *((uint64_t*)(ey+(j << 3))) = *((uint64_t*)(_fict_+(i << 3)));
 }
@@ -156,7 +154,6 @@ for(uint64_t k = 0; k < (3999 + 1);   k = k + 1){
 }
 }
 //END OUTLINED
-#pragma omp parallel for
 for(uint64_t j = 0; j < 4000;   j = j + 1){
   double __2e_phiops_2e_0 = *((double*)(hz+j * 32000));
 for(uint64_t k = 0; k < 3999;   k = k + 1){
@@ -164,7 +161,6 @@ for(uint64_t k = 0; k < 3999;   k = k + 1){
   __2e_phiops_2e_0 = *((double*)(((hz+8)+j * 32000)+(k << 3)));
 }
 }
-#pragma omp parallel for
 for(uint64_t j = 0; j < 3999;   j = j + 1){
   double __2e_phiops135_2e_0 = *((double*)(ex+j * 32000));
 for(uint64_t k = 0; k < 3999;   k = k + 1){

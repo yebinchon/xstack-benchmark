@@ -20,7 +20,6 @@ typedef unsigned char bool;
 #define __attribute__(X)
 #endif
 
-static __forceinline int llvm_fcmp_olt(double X, double Y) { return X <  Y; }
 
 
 /* Global Declarations */
@@ -83,7 +82,7 @@ struct l_struct_struct_OC__IO_FILE {
 
 /* Function Declarations */
 int main(int, char **) __ATTRIBUTELIST__((nothrow));
-static void main_polly_subfn(uint64_t, uint64_t, uint64_t, uint8_t*);
+static void kernel_doitgen_polly_subfn(uint64_t, uint64_t, uint64_t, uint8_t*);
 
 
 /* Global Variable Definitions and Initialization */
@@ -93,15 +92,6 @@ static struct l_struct_struct_OC_ident_t _OC_loc_OC_dummy = { 0, 0, 0, 0, (_OC_s
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
-static __forceinline double llvm_select_f64(bool condition, double iftrue, double ifnot) {
-  double r;
-  r = condition ? iftrue : ifnot;
-  return r;
-}
-static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
-  uint32_t r = a + b;
-  return r;
-}
 static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
   uint64_t r = a + b;
   return r;
@@ -114,46 +104,75 @@ static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
   uint32_t r = a % b;
   return r;
 }
+static __forceinline uint64_t llvm_ashr_u64(int64_t a, int64_t b) {
+  uint64_t r = a >> b;
+  return r;
+}
 
 
 /* Function Bodies */
 
 int main(int argc, char ** argv) {
-  uint64_t _call_2e_i = strtol(argv[1], ((uint8_t**)0), 10);
-  uint8_t* path = malloc(128000000);
+  uint64_t dump_code = strtol(argv[1], ((uint8_t**)0), 10);
+  uint64_t nr = strtol(argv[2], ((uint8_t**)0), 10);
+  uint64_t nq = strtol(argv[3], ((uint8_t**)0), 10);
+  uint64_t np = strtol(argv[4], ((uint8_t**)0), 10);
+  uint8_t* A = malloc((nr << 32) * nq * np >> 29);
+  uint8_t* sum = malloc((nr << 32) * nq * np >> 29);
+  double* C4 = malloc((np << 3) * np);
+for(uint64_t i = 0; i < nr;   i = i + 1){
+for(uint64_t j = 0; j < nq;   j = j + 1){
+for(uint64_t k = 0; k < np;   k = k + 1){
+  ((((double*)A)+np * nq * i)+j * np)[k] = ((double)(i) * (double)(j) + (double)(k)) / (double)(np);
+}
+}
+}
+for(uint64_t i = 0; i < np;   i = i + 1){
+for(uint64_t j = 0; j < np;   j = j + 1){
+  (((double*)C4)+i * np)[j] = (double)(i) * (double)(j) / (double)(np);
+}
+}
 //START OUTLINED
   #pragma omp parallel 
 {
+uint64_t _2 = ((nr << 32) + -4294967296 >> 32) + 1;
 
 #pragma omp for schedule(static) nowait
-for(uint64_t i = 0; i<=3999; i = i + 1){
-for(uint64_t j = 0; j < (3999 + 1);   j = j + 1){
-  *((double*)((path+i * 32000)+(j << 3))) = (double)((i + 1)) * (double)((j + 1)) / 4000;
+for(uint64_t i = 0; i<=(_2 - 1); i = i + 1){
+for(uint64_t j = 0; j < nq;   j = j + 1){
+for(uint64_t k = 0; k < np;   k = k + 1){
+  *((double*)((sum+(np << 3) * (j + i * nq))+(k << 3))) = 0;
+  double __p_scalar_57 = 0;
+for(uint64_t l = 0; l < np;   l = l + 1){
+  __p_scalar_57 = (__p_scalar_57 + *((double*)((A+(np << 3) * (j + i * nq))+(l << 3))) * C4[l * np+k]);
+}
+  *((double*)((sum+(np << 3) * (j + i * nq))+(k << 3))) = __p_scalar_57;
+}
+for(uint64_t k = 0; k < np;   k = k + 1){
+  *((uint64_t*)((A+(np << 3) * (j + i * nq))+(k << 3))) = *((uint64_t*)((sum+(np << 3) * (j + i * nq))+(k << 3)));
+}
 }
 }
 }
 //END OUTLINED
-for(uint64_t i = 0; i < 4000;   i = i + 1){
-for(uint64_t j = 0; j < 4000;   j = j + 1){
-for(uint64_t k = 0; k < 4000;   k = k + 1){
-  *((double*)((path+j * 32000)+(k << 3))) = llvm_select_f64(llvm_fcmp_olt(*((double*)((path+j * 32000)+(k << 3))), (*((double*)((path+(i << 3))+j * 32000)) + *((double*)((path+i * 32000)+(k << 3))))), *((double*)((path+j * 32000)+(k << 3))), (*((double*)((path+(i << 3))+j * 32000)) + *((double*)((path+i * 32000)+(k << 3)))));
-}
-}
-}
-  if (_call_2e_i == 1) {
-for(uint64_t i = 0; i < 4000;   i = i + 1){
-for(uint64_t j = 0; j < 4000;   j = j + 1){
-  fprintf(stderr, (_OC_str), (((double*)path)+i * 4000)[j]);
-  if ((j + i * 4000) % 20 == 0) {
+  if (dump_code == 1) {
+for(uint64_t i = 0; i < nr;   i = i + 1){
+for(uint64_t j = 0; j < nq;   j = j + 1){
+for(uint64_t k = 0; k < np;   k = k + 1){
+  fprintf(stderr, (_OC_str), ((((double*)A)+np * nq * i)+j * np)[k]);
+  if (i % 20 == 0) {
   fputc(10, stderr);
 }
 
 }
 }
+}
   fputc(10, stderr);
 }
 
-free(path);
+free(A);
+free(sum);
+free(C4);
   return 0;
 }
 

@@ -84,20 +84,14 @@ struct l_struct_struct_OC__IO_FILE {
 int main(int, char **) __ATTRIBUTELIST__((nothrow));
 static void main_polly_subfn(uint64_t, uint64_t, uint64_t, uint8_t*);
 static void main_polly_subfn_4(uint64_t, uint64_t, uint64_t, uint8_t*);
-static void main_polly_subfn_7(uint64_t, uint64_t, uint64_t, uint8_t*);
-static void main_polly_subfn_10(uint64_t, uint64_t, uint64_t, uint8_t*);
 
 
 /* Global Variable Definitions and Initialization */
 static uint8_t _OC_str[8] = { "%0.2lf " };
-static uint8_t _OC_str_OC_ident_OC_8[23] = { "Source location dummy." };
-static uint8_t _OC_str_OC_ident_OC_5[23] = { "Source location dummy." };
 static uint8_t _OC_str_OC_ident_OC_2[23] = { "Source location dummy." };
 static uint8_t _OC_str_OC_ident[23] = { "Source location dummy." };
 static struct l_struct_struct_OC_ident_t _OC_loc_OC_dummy = { 0, 0, 0, 0, (_OC_str_OC_ident) };
 static struct l_struct_struct_OC_ident_t _OC_loc_OC_dummy_OC_3 = { 0, 0, 0, 0, (_OC_str_OC_ident_OC_2) };
-static struct l_struct_struct_OC_ident_t _OC_loc_OC_dummy_OC_6 = { 0, 0, 0, 0, (_OC_str_OC_ident_OC_5) };
-static struct l_struct_struct_OC_ident_t _OC_loc_OC_dummy_OC_9 = { 0, 0, 0, 0, (_OC_str_OC_ident_OC_8) };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -109,15 +103,11 @@ static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
   uint64_t r = a + b;
   return r;
 }
-static __forceinline uint32_t llvm_mul_u32(uint32_t a, uint32_t b) {
-  uint32_t r = a * b;
-  return r;
-}
 static __forceinline uint64_t llvm_mul_u64(uint64_t a, uint64_t b) {
   uint64_t r = a * b;
   return r;
 }
-static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
+static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
   uint32_t r = a % b;
   return r;
 }
@@ -127,68 +117,69 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
 
 int main(int argc, char ** argv) {
   uint64_t _call_2e_i = strtol(argv[1], ((uint8_t**)0), 10);
-  uint64_t ni = strtol(argv[2], ((uint8_t**)0), 10);
-  uint64_t nj = strtol(argv[3], ((uint8_t**)0), 10);
-  uint64_t nk = strtol(argv[4], ((uint8_t**)0), 10);
-  uint8_t* C = malloc(nj * (ni << 3));
-  uint8_t* _call17 = malloc(nk * (ni << 3));
-  uint8_t* _call21 = malloc((nj << 3) * nk);
+  uint8_t* X = malloc(33882912);
+  uint8_t* A = malloc(33882912);
+  uint8_t* B = malloc(33882912);
 //START OUTLINED
   #pragma omp parallel 
 {
 
 #pragma omp for schedule(static) nowait
-for(uint64_t i = 0; i<=(ni - 1); i = i + 1){
-for(uint64_t j = 0; j < nj;   j = j + 1){
-  *((double*)((C+(nj << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / ni;
+for(uint64_t i = 0; i<=2057; i = i + 1){
+for(uint64_t j = 0; j < (2057 + 1);   j = j + 1){
+  *((double*)((X+i * 16464)+(j << 3))) = ((double)(i) * (double)((j + 1)) + 1) / 2058;
+  *((double*)((A+i * 16464)+(j << 3))) = ((double)(i) * (double)((j + 2)) + 2) / 2058;
+  *((double*)((B+i * 16464)+(j << 3))) = ((double)(i) * (double)((j + 3)) + 3) / 2058;
 }
 }
 }
 //END OUTLINED
+for(uint64_t i = 0; i < 50;   i = i + 1){
+for(uint64_t j = 0; j < 2058;   j = j + 1){
+  double __2e_phiops_2e_0 = *((double*)(B+j * 16464));
+  double __2e_phiops73_2e_0 = *((double*)(X+j * 16464));
+for(uint64_t k = 0; k < 2057;   k = k + 1){
+  __2e_phiops73_2e_0 = (*((double*)(((X+8)+j * 16464)+(k << 3))) - __2e_phiops73_2e_0 * *((double*)(((A+8)+j * 16464)+(k << 3))) / __2e_phiops_2e_0);
+  *((double*)(((X+8)+j * 16464)+(k << 3))) = __2e_phiops73_2e_0;
+  __2e_phiops_2e_0 = (*((double*)(((B+8)+j * 16464)+(k << 3))) - *((double*)(((A+8)+j * 16464)+(k << 3))) * *((double*)(((A+8)+j * 16464)+(k << 3))) / __2e_phiops_2e_0);
+  *((double*)(((B+8)+j * 16464)+(k << 3))) = __2e_phiops_2e_0;
+}
+}
+for(uint64_t j = 0; j < 2058;   j = j + 1){
+  *((double*)((X+16456)+j * 16464)) = *((double*)((X+16456)+j * 16464)) / *((double*)((B+16456)+j * 16464));
+}
 //START OUTLINED
   #pragma omp parallel 
 {
 
 #pragma omp for schedule(static) nowait
-for(uint64_t i = 0; i<=(ni - 1); i = i + 1){
-for(uint64_t j = 0; j < nk;   j = j + 1){
-  *((double*)((_call17+(nk << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / ni;
+for(uint64_t j = 0; j<=2057; j = j + 1){
+for(uint64_t k = 0; k < (2055 + 1);   k = k + 1){
+  *((double*)(((X+16448)+j * 16464)+k * -8)) = (*((double*)(((X+16448)+j * 16464)+k * -8)) - *((double*)(((X+16440)+j * 16464)+k * -8)) * *((double*)(((A+16440)+j * 16464)+k * -8))) / *((double*)(((B+16440)+j * 16464)+k * -8));
 }
 }
 }
 //END OUTLINED
-//START OUTLINED
-  #pragma omp parallel 
-{
-
-#pragma omp for schedule(static) nowait
-for(uint64_t i = 0; i<=(nk - 1); i = i + 1){
-for(uint64_t j = 0; j < nj;   j = j + 1){
-  *((double*)((_call21+(nj << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / ni;
+for(uint64_t j = 0; j < 2057;   j = j + 1){
+for(uint64_t k = 0; k < 2058;   k = k + 1){
+  *((double*)(((X+16464)+j * 16464)+(k << 3))) = (*((double*)(((X+16464)+j * 16464)+(k << 3))) - *((double*)((X+j * 16464)+(k << 3))) * *((double*)(((A+16464)+j * 16464)+(k << 3))) / *((double*)((B+j * 16464)+(k << 3))));
+  *((double*)(((B+16464)+j * 16464)+(k << 3))) = (*((double*)(((B+16464)+j * 16464)+(k << 3))) - *((double*)(((A+16464)+j * 16464)+(k << 3))) * *((double*)(((A+16464)+j * 16464)+(k << 3))) / *((double*)((B+j * 16464)+(k << 3))));
+}
+}
+for(uint64_t j = 0; j < 2058;   j = j + 1){
+  *((double*)((X+33866448)+(j << 3))) = *((double*)((X+33866448)+(j << 3))) / *((double*)((B+33866448)+(j << 3)));
+}
+for(uint64_t j = 0; j < 2056;   j = j + 1){
+for(uint64_t k = 0; k < 2058;   k = k + 1){
+  *((double*)(((X+33849984)+j * -16464)+(k << 3))) = (*((double*)(((X+33849984)+j * -16464)+(k << 3))) - *((double*)(((X+33833520)+j * -16464)+(k << 3))) * *((double*)(((A+33833520)+j * -16464)+(k << 3)))) / *((double*)(((B+33849984)+j * -16464)+(k << 3)));
 }
 }
 }
-//END OUTLINED
-//START OUTLINED
-  #pragma omp parallel 
-{
-
-#pragma omp for schedule(static) nowait
-for(uint64_t i = 0; i<=(ni - 1); i = i + 1){
-for(uint64_t j = 0; j < nj;   j = j + 1){
-  ((double*)C)[(i * nj + j)] = *((double*)((C+(nj << 3) * i)+(j << 3))) * 2123;
-for(uint64_t k = 0; k < nk;   k = k + 1){
-  ((double*)C)[(i * nj + j)] = (((double*)C)[(i * nj + j)] + *((double*)((_call17+(nk << 3) * i)+(k << 3))) * 32412 * *((double*)((_call21+(j << 3))+(nj << 3) * k)));
-}
-}
-}
-}
-//END OUTLINED
   if (_call_2e_i == 1) {
-for(uint64_t i = 0; i < ni;   i = i + 1){
-for(uint64_t j = 0; j < nj;   j = j + 1){
-  fprintf(stderr, (_OC_str), (((double*)C)+i * nj)[j]);
-  if ((int)(i * ni + j) % (int)20 == 0) {
+for(uint64_t i = 0; i < 2058;   i = i + 1){
+for(uint64_t j = 0; j < 2058;   j = j + 1){
+  fprintf(stderr, (_OC_str), (((double*)X)+i * 2058)[j]);
+  if ((j + i * 2058) % 20 == 0) {
   fputc(10, stderr);
 }
 
@@ -197,9 +188,9 @@ for(uint64_t j = 0; j < nj;   j = j + 1){
   fputc(10, stderr);
 }
 
-free(C);
-free(_call17);
-free(_call21);
+free(X);
+free(A);
+free(B);
   return 0;
 }
 

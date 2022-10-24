@@ -25,14 +25,21 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct l_struct_struct_OC__IO_FILE;
 struct l_struct_struct_OC_ident_t;
+struct l_struct_struct_OC__IO_FILE;
 
 /* Function definitions */
 typedef void l_fptr_1(uint32_t*, uint32_t*, ...);
 
 
 /* Types Definitions */
+struct l_struct_struct_OC_ident_t {
+  uint32_t field0;
+  uint32_t field1;
+  uint32_t field2;
+  uint32_t field3;
+  uint8_t* field4;
+};
 struct l_array_1_uint8_t {
   uint8_t array[1];
 };
@@ -70,13 +77,6 @@ struct l_struct_struct_OC__IO_FILE {
   uint32_t field27;
   uint8_t field28[20];
 };
-struct l_struct_struct_OC_ident_t {
-  uint32_t field0;
-  uint32_t field1;
-  uint32_t field2;
-  uint32_t field3;
-  uint8_t* field4;
-};
 
 /* External Global Variable Declarations */
 
@@ -100,12 +100,8 @@ static __forceinline uint64_t llvm_mul_u64(uint64_t a, uint64_t b) {
   uint64_t r = a * b;
   return r;
 }
-static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
-  uint32_t r = a % b;
-  return r;
-}
-static __forceinline uint64_t llvm_ashr_u64(int64_t a, int64_t b) {
-  uint64_t r = a >> b;
+static __forceinline uint16_t llvm_urem_u16(uint16_t a, uint16_t b) {
+  uint16_t r = a % b;
   return r;
 }
 
@@ -113,54 +109,44 @@ static __forceinline uint64_t llvm_ashr_u64(int64_t a, int64_t b) {
 /* Function Bodies */
 
 int main(int argc, char ** argv) {
-  uint32_t _argc = (uint32_t)argc;
-  uint8_t** _argv = (uint8_t**)argv;
-  uint64_t n = strtol(_argv[2], ((uint8_t**)0), 10);
-  uint64_t dump_code = strtol(_argv[1], ((uint8_t**)0), 10);
-  uint8_t* A = malloc((n << 3) * n);
-  uint8_t* B = malloc((n << 3) * n);
-  uint8_t* x = malloc((n << 32) >> 29);
-  uint8_t* y = malloc((n << 32) >> 29);
+  uint64_t _call_2e_i = strtol(argv[1], ((uint8_t**)0), 10);
+  uint8_t* A = malloc(12800000000);
+  uint8_t* B = malloc(12800000000);
+  uint8_t* x = malloc(320000);
+  uint8_t* y = malloc(320000);
+//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for
-for(uint64_t i = 0; i<=(n - 1);i+=1){
-  *((double*)(x+(i << 3))) = (double)(i) / n;
-for(uint64_t j = 0; j < n;  j = j + 1){
-  *((double*)((A+(n << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / n;
-  *((double*)((B+(n << 3) * i)+(j << 3))) = (double)(i) * (double)(j) / n;
+#pragma omp for schedule(static) nowait
+for(uint64_t i = 0; i<=39999; i = i + 1){
+  *((double*)(x+(i << 3))) = (double)(i) / 4.0E+4;
+for(uint64_t j = 0; j < (39999 + 1);   j = j + 1){
+  *((double*)((A+i * 320000)+(j << 3))) = (double)(i) * (double)(j) / 4.0E+4;
+  *((double*)((B+i * 320000)+(j << 3))) = (double)(i) * (double)(j) / 4.0E+4;
 }
 }
 }
-  if (!n == 0) {
+//END OUTLINED
 #pragma omp parallel for
-for(uint64_t i = 0; i < n;  i = i + 1){
+for(uint64_t i = 0; i < 40000;   i = i + 1){
   ((double*)y)[i] = 0;
-  double _polly_2e_access_2e_call1796_2e_reload_2e_us = 0;
-  double _add_2e_i77_2e_phiops_2e_0_2e_us = 0;
-for(uint64_t j = 0; j < n;  j = j + 1){
-  _add_2e_i77_2e_phiops_2e_0_2e_us = (_add_2e_i77_2e_phiops_2e_0_2e_us + *((double*)((A+i * (n << 3))+(j << 3))) * *((double*)(x+(j << 3))));
-  _polly_2e_access_2e_call1796_2e_reload_2e_us = (_polly_2e_access_2e_call1796_2e_reload_2e_us + *((double*)(x+(j << 3))) * *((double*)((B+i * (n << 3))+(j << 3))));
+  double _polly_2e_access_2e_call1596_2e_reload = 0;
+  double _add_2e_i82_2e_phiops_2e_0 = 0;
+for(uint64_t j = 0; j < 40000;   j = j + 1){
+  _add_2e_i82_2e_phiops_2e_0 = (_add_2e_i82_2e_phiops_2e_0 + *((double*)((A+i * 320000)+(j << 3))) * *((double*)(x+(j << 3))));
+  _polly_2e_access_2e_call1596_2e_reload = (_polly_2e_access_2e_call1596_2e_reload + *((double*)(x+(j << 3))) * *((double*)((B+i * 320000)+(j << 3))));
 }
-  *((double*)(y+(i << 3))) = (_add_2e_i77_2e_phiops_2e_0_2e_us * 43532 + _polly_2e_access_2e_call1796_2e_reload_2e_us * 12313);
+  *((double*)(y+(i << 3))) = (_add_2e_i82_2e_phiops_2e_0 * 43532 + _polly_2e_access_2e_call1596_2e_reload * 12313);
 }
-}
-
-
-  if (dump_code == 1) {
-for(uint64_t i = 0; i < n;  i = i + 1){
+  if (_call_2e_i == 1) {
+for(uint64_t i = 0; i < 40000;   i = i + 1){
   fprintf(stderr, (_OC_str), ((double*)y)[i]);
-  if (i % 20 == 0) {
+  if (i % 20 == ((uint16_t)0)) {
   fputc(10, stderr);
 }
 
 }
-free(A);
-free(B);
-free(x);
-free(y);
-  return 0;
 }
 
 free(A);

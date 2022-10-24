@@ -135,7 +135,6 @@ int main(int argc, char ** argv) {
   double* z = malloc(240000);
   memset(x, 0, 240000);
   memset(w, 0, 240000);
-#pragma omp parallel for
 for(uint64_t i = 0; i < 30000;   i = i + 1){
   ((double*)u1)[i] = (double)(i);
   ((double*)u2)[i] = (double)((i + 1) / 30000) * 0.5;
