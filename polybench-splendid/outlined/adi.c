@@ -2,11 +2,11 @@
 {
 
 #pragma omp for schedule(static) nowait
-for(uint64_t i = 0; i<=(2048 - 1);i+=1){
-for(uint64_t j = 0; j < (2047 + 1);  j = j + 1){
-  *((double*)((X+(i << 14))+(j << 3))) = ((double)(i) * (double)((j + 1)) + 1) * 4.8828125E-4;
-  *((double*)((A+(i << 14))+(j << 3))) = ((double)(i) * (double)((j + 2)) + 2) * 4.8828125E-4;
-  *((double*)((B+(i << 14))+(j << 3))) = ((double)(i) * (double)((j + 3)) + 3) * 4.8828125E-4;
+for(uint64_t i = 0; i<=2057; i = i + 1){
+for(uint64_t j = 0; j < (2057 + 1);   j = j + 1){
+  *((double*)((X+i * 16464)+(j << 3))) = ((double)(i) * (double)((j + 1)) + 1) / 2058;
+  *((double*)((A+i * 16464)+(j << 3))) = ((double)(i) * (double)((j + 2)) + 2) / 2058;
+  *((double*)((B+i * 16464)+(j << 3))) = ((double)(i) * (double)((j + 3)) + 3) / 2058;
 }
 }
 }
@@ -14,9 +14,9 @@ for(uint64_t j = 0; j < (2047 + 1);  j = j + 1){
 {
 
 #pragma omp for schedule(static) nowait
-for(uint64_t i = 0; i<=(2048 - 1);i+=1){
-for(uint64_t j = 0; j < (2045 + 1);  j = j + 1){
-  *((double*)(((X+16368)+(i << 14))+j * -8)) = (*((double*)(((X+16368)+(i << 14))+j * -8)) - *((double*)(((X+16360)+(i << 14))+j * -8)) * *((double*)(((A+16360)+(i << 14))+j * -8))) / *((double*)(((B+16360)+(i << 14))+j * -8));
+for(uint64_t j = 0; j<=2057; j = j + 1){
+for(uint64_t k = 0; k < (2055 + 1);   k = k + 1){
+  *((double*)(((X+16448)+j * 16464)+k * -8)) = (*((double*)(((X+16448)+j * 16464)+k * -8)) - *((double*)(((X+16440)+j * 16464)+k * -8)) * *((double*)(((A+16440)+j * 16464)+k * -8))) / *((double*)(((B+16440)+j * 16464)+k * -8));
 }
 }
 }

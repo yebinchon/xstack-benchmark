@@ -106,15 +106,11 @@ static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
   uint64_t r = a + b;
   return r;
 }
-static __forceinline uint32_t llvm_mul_u32(uint32_t a, uint32_t b) {
-  uint32_t r = a * b;
-  return r;
-}
 static __forceinline uint64_t llvm_mul_u64(uint64_t a, uint64_t b) {
   uint64_t r = a * b;
   return r;
 }
-static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
+static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
   uint32_t r = a % b;
   return r;
 }
@@ -123,42 +119,38 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
 /* Function Bodies */
 
 int main(int argc, char ** argv) {
-  uint32_t _argc = (uint32_t)argc;
-  uint8_t** _argv = (uint8_t**)argv;
-  uint64_t n = strtol(_argv[2], ((uint8_t**)0), 10);
-  uint64_t _call_2e_i27 = strtol(_argv[1], ((uint8_t**)0), 10);
-  uint8_t* path = malloc((n << 3) * n);
+  uint64_t _call_2e_i = strtol(argv[1], ((uint8_t**)0), 10);
+  uint8_t* path = malloc(128000000);
+//START OUTLINED
   #pragma omp parallel 
 {
 
-#pragma omp for
-for(uint64_t i = 0; i<=(n - 1);i+=1){
-for(uint64_t j = 0; j < n;  j = j + 1){
-  *((double*)((path+(n << 3) * i)+(j << 3))) = (double)((i + 1)) * (double)((j + 1)) / n;
+#pragma omp for schedule(static) nowait
+for(uint64_t i = 0; i<=3999; i = i + 1){
+for(uint64_t j = 0; j < (3999 + 1);   j = j + 1){
+  *((double*)((path+i * 32000)+(j << 3))) = (double)((i + 1)) * (double)((j + 1)) / 4000;
 }
 }
 }
-//#pragma omp parallel for
-for(uint64_t i = 0; i < n;  i = i + 1){
-for(uint64_t j = 0; j < n;  j = j + 1){
-for(uint64_t k = 0; k < n;  k = k + 1){
-  *((double*)((path+j * (n << 3))+(k << 3))) = llvm_select_f64(llvm_fcmp_olt(*((double*)((path+j * (n << 3))+(k << 3))), (*((double*)((path+(i << 3))+j * (n << 3))) + *((double*)((path+i * (n << 3))+(k << 3))))), *((double*)((path+j * (n << 3))+(k << 3))), (*((double*)((path+(i << 3))+j * (n << 3))) + *((double*)((path+i * (n << 3))+(k << 3)))));
+//END OUTLINED
+for(uint64_t i = 0; i < 4000;   i = i + 1){
+for(uint64_t j = 0; j < 4000;   j = j + 1){
+for(uint64_t k = 0; k < 4000;   k = k + 1){
+  *((double*)((path+j * 32000)+(k << 3))) = llvm_select_f64(llvm_fcmp_olt(*((double*)((path+j * 32000)+(k << 3))), (*((double*)((path+(i << 3))+j * 32000)) + *((double*)((path+i * 32000)+(k << 3))))), *((double*)((path+j * 32000)+(k << 3))), (*((double*)((path+(i << 3))+j * 32000)) + *((double*)((path+i * 32000)+(k << 3)))));
 }
 }
 }
-  if (_call_2e_i27 == 1) {
-for(uint64_t i = 0; i < n;  i = i + 1){
-for(uint64_t j = 0; j < n;  j = j + 1){
-  fprintf(stderr, (_OC_str), (((double*)path)+i * n)[j]);
-  if ((int)(i * n + j) % (int)20 == 0) {
+  if (_call_2e_i == 1) {
+for(uint64_t i = 0; i < 4000;   i = i + 1){
+for(uint64_t j = 0; j < 4000;   j = j + 1){
+  fprintf(stderr, (_OC_str), (((double*)path)+i * 4000)[j]);
+  if ((j + i * 4000) % 20 == 0) {
   fputc(10, stderr);
 }
 
 }
 }
   fputc(10, stderr);
-free(path);
-  return 0;
 }
 
 free(path);
