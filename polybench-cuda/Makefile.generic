@@ -1,0 +1,18 @@
+
+%.ll: ${BMARK}.cu
+	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
+
+${BMARK}_linked.bc: ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll
+	llvm-link ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll -o ${BMARK}_linked.bc
+
+${BMARK}_cpu.bc: ${BMARK}_linked.bc
+	opt -load ~/noelle-workspace/CudaFE/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg ${BMARK}_linked.bc -o ${BMARK}_cpu.bc
+
+${BMARK}_cpu.cbe.c: ${BMARK}_cpu.bc
+	splendid ${BMARK}_cpu.bc 
+
+parallel.exe: ${BMARK}_cpu.cbe.c
+	clang -O3 ${BMARK}_cpu.cbe.c -o $@
+
+clean:
+	rm -rf *.ll *.bc *.cbe.c *.exe
