@@ -23,8 +23,7 @@ __global__ void kernel_A_mul_B(int ni, int nj, int nk, int nl,
 
   if (i < ni && j < nj) {
     for (int k = 0; k < nk; k++)
-      tmp[i * nj + j] += A[i * nk + k] * B[k * nj + j];
-    tmp[i * nj + j] *= alpha;
+      tmp[i * nj + j] += alpha * A[i * nk + k] * B[k * nj + j];
   }
 }
 
@@ -61,15 +60,10 @@ static void kernel(int ni, int nj, int nk, int nl,
 
 
   unsigned threadsPerBlock = 256;
-  dim3 block(threadsPerBlock / 32, 32, 1);
-  {
-    dim3 grid(num_blocks(ni, block.x), num_blocks(nj, block.y), 1);
-    kernel_A_mul_B<<<block, grid>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
-  }
-  {
-    dim3 grid(num_blocks(ni, block.x), num_blocks(nl, block.y), 1);
-    kernel_D_plus_tmp_mul_C<<<block, grid>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
-  }
+  dim3 block1(ni, nj, 1); 
+  kernel_A_mul_B<<<1, block1>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
+  dim3 block2(ni, nl, 1); 
+  kernel_D_plus_tmp_mul_C<<<1, block2>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
 }
 
 
@@ -94,7 +88,8 @@ static void init_array(int ni, int nj, int nk, int nl,
     double *A,
     double *B,
     double *C,
-    double *D)
+    double *D,
+    double *tmp)
 {
   int i, j;
 
@@ -112,6 +107,9 @@ static void init_array(int ni, int nj, int nk, int nl,
   for (i = 0; i < ni; i++)
     for (j = 0; j < nl; j++)
       D[i*ni+j] = ((double) i*(j+2)) / nk;
+  for (i = 0; i < ni; i++)
+    for (j = 0; j < nj; j++)
+      tmp[i*ni+j] = 0;
 }
 
 
@@ -124,14 +122,23 @@ int main(int argc, char** argv)
   int nl = atoi(argv[5]);
 
 
-  double alpha;
-  double beta;
+  double *alpha = (double*)malloc(sizeof(double));
+  double *beta = (double*)malloc(sizeof(double));
   double *A = (double*)malloc(ni*nk*sizeof(double));
   double *B = (double*)malloc(nk*nj*sizeof(double));
   double *C = (double*)malloc(nl*nj*sizeof(double));
   double *D = (double*)malloc(ni*nl*sizeof(double));
   double *tmp = (double*)malloc(ni*nj*sizeof(double));
 
+
+
+
+  init_array (ni, nj, nk, nl, alpha, beta,
+      A,
+      B,
+      C,
+      D,
+      tmp);
 
   double *dev_A;
   double *dev_B;
@@ -140,7 +147,6 @@ int main(int argc, char** argv)
   double *dev_tmp;
   double *dev_alpha;
   double *dev_beta;
-
   cudaMalloc(&dev_A, ni*nk*sizeof(double));
   cudaMalloc(&dev_B, nk*nj*sizeof(double));
   cudaMalloc(&dev_C, nl*nj*sizeof(double));
@@ -148,31 +154,26 @@ int main(int argc, char** argv)
   cudaMalloc(&dev_tmp, ni*nj*sizeof(double));
   cudaMalloc(&dev_alpha, sizeof(double));
   cudaMalloc(&dev_beta, sizeof(double));
-
   cudaMemcpy(dev_A, A, ni*nk*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_B, B, nk*nj*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_C, C, nl*nj*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_D, D, ni*nl*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_tmp, tmp, ni*nj*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_alpha, &alpha, sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_beta, &beta, sizeof(double), cudaMemcpyHostToDevice);
-
-  init_array (ni, nj, nk, nl, &alpha, &beta,
-      A,
-      B,
-      C,
-      D);
+  cudaMemcpy(dev_alpha, alpha, sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_beta, beta, sizeof(double), cudaMemcpyHostToDevice);
 
 
 
 
-  kernel(ni, nj, nk, nl, alpha, beta, dev_tmp, dev_A, dev_B, dev_C, dev_D);
+
+
+  kernel(ni, nj, nk, nl, *alpha, *beta, dev_tmp, dev_A, dev_B, dev_C, dev_D);
   cudaMemcpy(D, dev_D, ni*nl*sizeof(double), cudaMemcpyDeviceToHost);
 
 
 
 
-  if (dump_code == 1) print_array(ni, nl, D);
+  if (dump_code == 1) print_array(ni, nk, D);
 
 
   free((void*)tmp);;
