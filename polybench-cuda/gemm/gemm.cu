@@ -126,6 +126,7 @@ int main(int argc, char** argv)
 
 
   kernel(ni, nj, nk, *alpha, *beta, dev_C, dev_A, dev_B);
+  cudaMemcpy(C, dev_C, ni*nj*sizeof(double), cudaMemcpyDeviceToHost);
 
 
 
@@ -136,6 +137,8 @@ int main(int argc, char** argv)
   free((void*)C);;
   free((void*)A);;
   free((void*)B);;
+  free((void*)alpha);;
+  free((void*)beta);;
 
   cudaFree((void*)dev_A);
   cudaFree((void*)dev_B);
