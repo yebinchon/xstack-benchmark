@@ -60,10 +60,19 @@ static void kernel(int ni, int nj, int nk, int nl,
 
 
   unsigned threadsPerBlock = 256;
-  dim3 block1(ni, nj, 1); 
-  kernel_A_mul_B<<<1, block1>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
-  dim3 block2(ni, nl, 1); 
-  kernel_D_plus_tmp_mul_C<<<1, block2>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
+  dim3 block(threadsPerBlock / 32, 32, 1);
+
+  {
+    dim3 grid(num_blocks(ni, block.x), num_blocks(nj, block.y), 1);
+    kernel_A_mul_B<<<grid, block>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
+  }
+
+
+  {
+    dim3 grid(num_blocks(ni, block.x), num_blocks(nl, block.y), 1);
+    kernel_D_plus_tmp_mul_C<<<grid, block>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
+  }
+
 }
 
 
