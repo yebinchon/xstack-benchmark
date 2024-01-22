@@ -89,7 +89,7 @@ __global__ void kernel_x2(int n,
 }
 
 
-unsigned num_blocks(int num, int factor) {
+short num_blocks(short num, short factor) {
   return (num + factor - 1) / factor;
 }
 
@@ -99,8 +99,7 @@ void kernel(int n,
             double y_1[n],
             double y_2[n],
             double *A) {
-  const unsigned threadsPerBlock = 256;
-
+  short threadsPerBlock = 256;
 
   kernel_x1<<<threadsPerBlock, num_blocks(n, threadsPerBlock)>>>(n, x1, x2, y_1, y_2, A);
   kernel_x2<<<threadsPerBlock, num_blocks(n, threadsPerBlock)>>>(n, x1, x2, y_1, y_2, A);
