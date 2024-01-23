@@ -132,11 +132,11 @@ int main(int argc, char** argv)
   if (dump_code == 1) print_array(ni, nj, C);
 
 
-  free((void*)C);;
-  free((void*)A);;
-  free((void*)B);;
-  free((void*)alpha);;
-  free((void*)beta);;
+  free((void*)C);
+  free((void*)A);
+  free((void*)B);
+  free((void*)alpha);
+  free((void*)beta);
 
   cudaFree((void*)dev_A);
   cudaFree((void*)dev_B);
