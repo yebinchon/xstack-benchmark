@@ -94,9 +94,9 @@ void kernel_fdtd_2d(int tmax,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int tmax = TMAX;//atoi(argv[2]);
-  int nx = NX;//atoi(argv[3]);
-  int ny = NY;//atoi(argv[4]);
+  int tmax = atoi(argv[2]);
+  int nx = atoi(argv[3]);
+  int ny = atoi(argv[4]);
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
