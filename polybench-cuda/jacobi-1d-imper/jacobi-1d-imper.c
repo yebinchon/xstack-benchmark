@@ -44,22 +44,16 @@ void print_array(int n,
   fprintf(stderr, "\n");
 }
 
- void kernel_jacobi_1d_imper(int tsteps,
-           int n,
-           double A[n],
-           double B[n])
- {
-   int t, i, j;
-   for (t = 0; t < tsteps; t++)
-     {
-       for (i = 1; i < n - 1; i++)
-   B[i] = 0.33333 * (A[i-1] + A[i] + A[i + 1]);
 
-       for (j = 1; j < n - 1; j++)
-   A[j] = B[j];
-     }
-
- }
+static void kernel_jacobi_1d_imper(int tsteps, int n,
+                   double A[], double B[]) {
+  for (int t = 0; t < tsteps; t++) {
+    for (int i = 1; i < n - 1; i++)
+      B[i] = (A[i - 1] + A[i] + A[i + 1]) / 3;
+    for (int i = 1; i < n - 1; i++)
+      A[i] = (B[i - 1] + B[i] + B[i + 1]) / 3;
+  }
+}
 
 int main(int argc, char** argv)
 {
