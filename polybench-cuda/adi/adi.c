@@ -57,8 +57,8 @@ static void kernel(
   double DT = 1 / (double)tsteps;
   double B1 = 2;
   double B2 = 1;
-  double mul1 = B1 * DT / (DX * DX);
-  double mul2 = B2 * DT / (DY * DY);
+  double mul1 = B1 * DT / DX / DX;
+  double mul2 = B2 * DT / DY / DY;
 
   double a = -mul1 / 2;
   double b = 1 + mul1;
