@@ -21,10 +21,10 @@
 /* Array initialization. */
 static
 void init_array(int n,
-		double x1[n],
-		double x2[n],
-		double y_1[n],
-		double y_2[n],
+		double *x1,
+		double *x2,
+		double *y_1,
+		double *y_2,
 		double *A)
 {
   int i, j;
@@ -45,8 +45,8 @@ void init_array(int n,
    Can be used also to check the correctness of the output. */
 static
 void print_array(int n,
-		 double x1[n],
-		 double x2[n])
+		 double *x1,
+		 double *x2)
 
 {
   int i;
@@ -60,10 +60,10 @@ void print_array(int n,
 
 
 __global__ void kernel_x1(int n,
-                          double x1[n],
-                          double x2[n],
-                          double y_1[n],
-                          double y_2[n],
+                          double *x1,
+                          double *x2,
+                          double *y_1,
+                          double *y_2,
                           double *A) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
@@ -75,10 +75,10 @@ __global__ void kernel_x1(int n,
 
 
 __global__ void kernel_x2(int n,
-                          double x1[n],
-                          double x2[n],
-                          double y_1[n],
-                          double y_2[n],
+                          double *x1,
+                          double *x2,
+                          double *y_1,
+                          double *y_2,
                           double *A) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
@@ -94,10 +94,10 @@ short num_blocks(short num, short factor) {
 }
 
 void kernel(int n,
-            double x1[n],
-            double x2[n],
-            double y_1[n],
-            double y_2[n],
+            double *x1,
+            double *x2,
+            double *y_1,
+            double *y_2,
             double *A) {
   short threadsPerBlock = 256;
 
