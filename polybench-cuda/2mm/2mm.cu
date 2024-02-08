@@ -19,10 +19,11 @@ __global__ void kernel_A_mul_B(int ni, int nj, int nk, int nl,
                                double *B, double *C, double *D) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   int j = blockDim.y * blockIdx.y + threadIdx.y;
+  int k;
 
 
   if (i < ni && j < nj) {
-    for (int k = 0; k < nk; k++)
+    for (k = 0; k < nk; k++)
       tmp[i * nj + j] += alpha * A[i * nk + k] * B[k * nj + j];
   }
 }
@@ -36,13 +37,14 @@ __global__ void kernel_D_plus_tmp_mul_C(int ni, int nj, int nk, int nl,
                                         double *B, double *C, double *D) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   int l = blockDim.y * blockIdx.y + threadIdx.y;
+  int j;
 
 
   if (i < ni && l < nl) {
     D[i * nj + l] *= beta;
 
 
-    for (int j = 0; j < nj; j++)
+    for (j = 0; j < nj; j++)
       D[i * nl + l] += tmp[i * nj + j] * C[j * nl + l];
   }
 }

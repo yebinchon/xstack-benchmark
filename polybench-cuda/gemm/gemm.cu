@@ -17,13 +17,14 @@ __global__ void kernel_dev(int ni, int nj, int nk,
                            double *C, double *A, double *B) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   int j = blockDim.y * blockIdx.y + threadIdx.y;
+  int k;
 
 
   if (i < ni && j < nj) {
     C[i * nj + j] *= beta;
 
 
-    for (int k = 0; k < nk; k++)
+    for (k = 0; k < nk; k++)
       C[i * nj + j] += alpha * A[i * nk + k] * B[k * nj + j];
   }
 }
