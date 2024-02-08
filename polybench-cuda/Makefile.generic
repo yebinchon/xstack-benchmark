@@ -1,3 +1,4 @@
+RUN_TIMEOUT?=7200 # 2 hours.
 
 %.ll: ${BMARK}.cu
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
@@ -11,8 +12,17 @@ ${BMARK}_cpu.bc: ${BMARK}_linked.bc
 ${BMARK}_cpu.cbe.c: ${BMARK}_cpu.bc
 	splendid ${BMARK}_cpu.bc 2> debug
 
-parallel.exe: ${BMARK}_cpu.cbe.c
+${BMARK}.o: ${BMARK}.cu
+	/u/zujunt/noelle-workspace/polygeist-install-debug/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=/u/zujunt/noelle-workspace/polygeist-install-debug/lib/clang/18/ -O3 $< -c -o $@
+
+polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 $< -o $@
+
+tulip.clang.exe: ${BMARK}_cpu.cbe.c
+	clang -fopenmp -O3 $< -o $@
+
+tulip.gcc.exe: ${BMARK}_cpu.cbe.c
+	gcc -fopenmp -O3 $< -o $@
 
 cpu.exe: ${BMARK}_cpu.bc
 	clang -O3 $< -o $@
@@ -20,5 +30,16 @@ cpu.exe: ${BMARK}_cpu.bc
 seq.exe: ${BMARK}.c
 	clang -O3 $< -o $@
 
+run_seq: seq.exe
+	regressions-watchdog $(RUN_TIMEOUT) seq.time ./seq.exe $(PERF_ARGS)
+
+run_polygeist: polygeist.exe
+	regressions-watchdog $(RUN_TIMEOUT) polygeist.time ./polygeist.exe $(PERF_ARGS)
+
+run_tulip: tulip.clang.exe tulip.gcc.exe
+	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
+
+
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug
+	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o
