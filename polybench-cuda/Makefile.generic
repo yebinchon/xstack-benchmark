@@ -42,4 +42,4 @@ run_tulip: tulip.clang.exe tulip.gcc.exe
 
 
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o
+	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time
