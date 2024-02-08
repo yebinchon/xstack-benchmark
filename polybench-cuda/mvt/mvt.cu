@@ -15,8 +15,8 @@
 
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-//#define N 40000
-#define N 4000
+#define N 15000
+//#define N 4000
 
 /* Array initialization. */
 static
@@ -66,9 +66,9 @@ __global__ void kernel_x1(int n,
                           double y_2[n],
                           double *A) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
-
+  int j;
   if (i < n) {
-    for (int j = 0; j < n; j++)
+    for (j = 0; j < n; j++)
       x1[i] += A[i * n + j] * y_1[j];
   }
 }
@@ -81,9 +81,9 @@ __global__ void kernel_x2(int n,
                           double y_2[n],
                           double *A) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
-
+  int j;
   if (i < n) {
-    for (int j = 0; j < n; j++)
+    for (j = 0; j < n; j++)
       x2[i] += A[j * n + i] * y_2[j];
   }
 }
