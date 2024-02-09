@@ -15,9 +15,9 @@
 void init_array(int ni, int nj, int nk,
     double *alpha,
     double *beta,
-    double C[ni][nj],
-    double A[ni][nk],
-    double B[nk][nj])
+    double *C,
+    double *A,
+    double *B)
 {
   int i, j;
 
@@ -25,13 +25,13 @@ void init_array(int ni, int nj, int nk,
   *beta = 2123;
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
-      C[i][j] = ((double) i*j) / ni;
+      C[i*nj+j] = ((double) i*j) / ni;
   for (i = 0; i < ni; i++)
     for (j = 0; j < nk; j++)
-      A[i][j] = ((double) i*j) / ni;
+      A[i*nk+j] = ((double) i*j) / ni;
   for (i = 0; i < nk; i++)
     for (j = 0; j < nj; j++)
-      B[i][j] = ((double) i*j) / ni;
+      B[i*nj+j] = ((double) i*j) / ni;
 }
 
 
@@ -39,88 +39,74 @@ void init_array(int ni, int nj, int nk,
 
   static
 void print_array(int ni, int nj,
-    double C[ni][nj])
+    double *C)
 {
   int i, j;
 
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++) {
-      fprintf (stderr, "%0.2lf ", C[i][j]);
+      fprintf (stderr, "%0.2lf ", C[i*nj+j]);
       if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
     }
   fprintf (stderr, "\n");
 }
 
 
-
-
   static
 void kernel_gemm(int ni, int nj, int nk,
     double alpha,
     double beta,
-    double C[ni][nj],
-    double A[ni][nk],
-    double B[nk][nj])
+    double *C,
+    double *A,
+    double *B)
 {
-  int i, j, k;
-//#pragma scop
-//#pragma omp parallel
-//{
-  //#pragma omp for private (j,k)
-  for (i = 0; i < ni; i++)
-    for (j = 0; j < nj; j++)
+//#pragma omp target teams distribute parallel for map(to: A[0:ni][0:nk], B[0:nk][0:nj]) map (tofrom: C[0:ni][0:nj])
+  {
+  for (int i = 0; i < ni; i++)
+    for (int j = 0; j < nj; j++)
     {
-      C[i][j] *= beta;
-      for (k = 0; k < nk; ++k)
-        C[i][j] += alpha * A[i][k] * B[k][j];
+      C[i*nj+j] *= beta;
+      for (int k = 0; k < nk; ++k)
+        C[i*nj+j] += alpha * A[i*nk+k] * B[k*nj+j];
     }
-//}
-//#pragma endscop
-
+  }
 }
 
 
 int main(int argc, char** argv)
 {
 
+
   int dump_code = atoi(argv[1]);
   int ni = atoi(argv[2]);
   int nj = atoi(argv[3]);
   int nk = atoi(argv[4]);
 
- // __builtin_assume(ni>0);
- // __builtin_assume(nj>0);
- // __builtin_assume(nk>0);
- // __builtin_assume(ni<0x7FFFFFFE);
- // __builtin_assume(nj<0x7FFFFFFE);
- // __builtin_assume(nk<0x7FFFFFFE);
-
-  double alpha;
-  double beta;
-  double (*C)[ni][nj] = (double(*)[ni][nj])malloc((ni) * (nj) * sizeof(double));;
-  double (*A)[ni][nk] = (double(*)[ni][nk])malloc((ni) * (nk) * sizeof(double));;
-  double (*B)[nk][nj] = (double(*)[nk][nj])malloc((nk) * (nj) * sizeof(double));;
+  double *alpha = (double*)malloc(sizeof(double));
+  double *beta = (double*)malloc(sizeof(double));
+  double *A = (double*)malloc(ni*nk*sizeof(double));
+  double *B = (double*)malloc(nk*nj*sizeof(double));
+  double *C = (double*)malloc(ni*nj*sizeof(double));
 
 
-  init_array (ni, nj, nk, &alpha, &beta,
-      *C,
-      *A,
-      *B);
-
+  init_array (ni, nj, nk, alpha, beta,
+      C,
+      A,
+      B);
 
 
 
   kernel_gemm (ni, nj, nk,
-      alpha, beta,
-      *C,
-      *A,
-      *B);
+      *alpha, *beta,
+      C,
+      A,
+      B);
 
 
 
 
 
-  if (dump_code == 1) print_array(ni, nj, *C);
+  if (dump_code == 1) print_array(ni, nj, C);
 
 
   free((void*)C);;
