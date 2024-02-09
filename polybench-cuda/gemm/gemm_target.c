@@ -60,23 +60,16 @@ void kernel_gemm(int ni, int nj, int nk,
     double *A,
     double *B)
 {
-#pragma omp target data map(tofrom : C [0:ni * nj]) map(to : A [0:ni * nk]) map(to : B [0:nk * nj])
+  #pragma omp target teams distribute parallel for map(to: A[0:ni*nk], B[0:nk*nj]) map (tofrom: C[0:ni*nj])
+  {
+  for (int i = 0; i < ni; i++)
+    for (int j = 0; j < nj; j++)
     {
-        #pragma omp target teams distribute parallel for firstprivate(beta)
-        for (int i = 0; i < ni; i++)
-          for (int j = 0; j < nj; j++)
-          {
-                  C[i*nj+j] *= beta;
-                }
-
-        #pragma omp target teams distribute parallel for firstprivate(alpha)
-        for (int i = 0; i < ni; i++)
-          for (int j = 0; j < nj; j++)
-            for (int k = 0; k < nk; ++k)
-            {
-                      C[i*nj+j] += alpha * A[i*nk+k] * B[k*nj+j];
-                    }
-      }
+      C[i*nj+j] *= beta;
+      for (int k = 0; k < nk; ++k)
+        C[i*nj+j] += alpha * A[i*nk+k] * B[k*nj+j];
+    }
+  }
 }
 
 
