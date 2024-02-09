@@ -30,6 +30,10 @@ cpu.exe: ${BMARK}_cpu.bc
 seq.exe: ${BMARK}.c
 	clang -O3 $< -o $@
 
+target.exe: ${BMARK}_target.c
+	clang -fopenmp --offload-arch=native ${BMARK}_target.c -O3 -c -o ${BMARK}_target.o
+	clang --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_target.o -O3 -o $@
+
 run_seq: seq.exe
 	regressions-watchdog $(RUN_TIMEOUT) seq.time ./seq.exe $(PERF_ARGS)
 
