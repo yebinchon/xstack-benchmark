@@ -36,11 +36,25 @@ __global__ void kernel_sum(int nr, int nq, int np,
 static void kernel(int nr, int nq, int np,
                    double *A,
                    double *C4, double *sum) {
+  double *dev_A;
+  double *dev_sum;
+  double *dev_C4;
+  cudaMalloc(&dev_A, nr*nq*np*sizeof(double));
+  cudaMalloc(&dev_sum, nr*nq*np*sizeof(double));
+  cudaMalloc(&dev_C4, np*np*sizeof(double));
+  cudaMemcpy(dev_A, A, nr*nq*np*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_C4, C4, np*np*sizeof(double), cudaMemcpyHostToDevice);
+
+
   const unsigned threadsPerBlock = 256;
 
   dim3 block(1, threadsPerBlock / 32, 32);
   dim3 grid(num_blocks(nr, block.x), num_blocks(nq, block.y), num_blocks(np, block.z));
-  kernel_sum<<<grid, block>>>(nr, nq, np, A, C4, sum);
+  kernel_sum<<<grid, block>>>(nr, nq, np, dev_A, dev_C4, dev_sum);
+  cudaMemcpy(A, dev_sum, nr*nq*np*sizeof(double), cudaMemcpyDeviceToHost);
+  cudaFree((void*)dev_A);;
+  cudaFree((void*)dev_sum);;
+  cudaFree((void*)dev_C4);;
 }
 
   static
@@ -103,23 +117,13 @@ int main(int argc, char** argv)
       C4);
 
 
-  double *dev_A;
-  double *dev_sum;
-  double *dev_C4;
-  cudaMalloc(&dev_A, nr*nq*np*sizeof(double));
-  cudaMalloc(&dev_sum, nr*nq*np*sizeof(double));
-  cudaMalloc(&dev_C4, np*np*sizeof(double));
-  cudaMemcpy(dev_A, A, nr*nq*np*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_C4, C4, np*np*sizeof(double), cudaMemcpyHostToDevice);
-
 
   kernel (nr, nq, np,
-      dev_A,
-      dev_C4,
-      dev_sum);
+      A,
+      C4,
+      sum);
 
 
-  cudaMemcpy(A, dev_sum, nr*nq*np*sizeof(double), cudaMemcpyDeviceToHost);
 
 
 
@@ -129,9 +133,7 @@ int main(int argc, char** argv)
   free((void*)A);;
   free((void*)sum);;
   free((void*)C4);;
-  cudaFree((void*)dev_A);;
-  cudaFree((void*)dev_sum);;
-  cudaFree((void*)dev_C4);;
+
 
   return 0;
 }
