@@ -327,7 +327,7 @@ _Z9kernel_hziiiPdS_S_S_i4(tmax, nx, ny, ((double*)dev_ex), ((double*)dev_ey), ((
 }
   memcpy(((uint8_t*)ex), ((uint8_t*)((double*)dev_ex)), nx * ny * 8);
   memcpy(((uint8_t*)ey), ((uint8_t*)((double*)dev_ey)), nx * ny * 8);
-  memcpy(((uint8_t*)hz), ((uint8_t*)((double*)dev_hz)), ny * 8);
+  memcpy(((uint8_t*)hz), ((uint8_t*)((double*)dev_hz)), nx * ny * 8);
 }
 
 

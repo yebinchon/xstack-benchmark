@@ -113,7 +113,7 @@ static void kernel(int tmax,
   }
   cudaMemcpy(ex, dev_ex, nx*ny*sizeof(double), cudaMemcpyDeviceToHost);
   cudaMemcpy(ey, dev_ey, nx*ny*sizeof(double), cudaMemcpyDeviceToHost);
-  cudaMemcpy(hz, dev_hz, ny*sizeof(double), cudaMemcpyDeviceToHost);
+  cudaMemcpy(hz, dev_hz, nx*ny*sizeof(double), cudaMemcpyDeviceToHost);
 }
 
 /* Array initialization. */
