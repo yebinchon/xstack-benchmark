@@ -73,31 +73,47 @@ __global__ void kernel_hz(int tmax,
 static void kernel(int tmax,
                    int nx,
                    int ny,
-                   double *ex, double *ey, double *hz, double fict[]) {
+                   double *ex, double *ey, double *hz, double *fict) {
   const unsigned threadsPerBlock = 256;
 
+
+  double *dev_ex;
+  double *dev_ey;
+  double *dev_hz;
+  double *dev_fict;
+  cudaMalloc(&dev_ex, nx*ny*sizeof(double));
+  cudaMalloc(&dev_ey, nx*ny*sizeof(double));
+  cudaMalloc(&dev_hz, nx*ny*sizeof(double));
+  cudaMalloc(&dev_fict, ny*sizeof(double));
+  cudaMemcpy(dev_ex, ex, nx*ny*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_ey, ey, nx*ny*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_hz, hz, nx*ny*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_fict, fict, ny*sizeof(double), cudaMemcpyHostToDevice);
   for (int t = 0; t < tmax; t++) {
     kernel_splat<<<threadsPerBlock, num_blocks(ny, threadsPerBlock)>>>(tmax, nx, ny, ex, ey, hz, fict, t);
 
     {
       dim3 block(threadsPerBlock / 32, 32, 1);
       dim3 grid(num_blocks(nx - 1, block.x), num_blocks(ny, block.y), 1);
-      kernel_ey<<<grid, block>>>(tmax, nx, ny, ex, ey, hz, fict, t);
+      kernel_ey<<<grid, block>>>(tmax, nx, ny, dev_ex, dev_ey, dev_hz, dev_fict, t);
     }
 
 
     {
       dim3 block(threadsPerBlock / 32, 32, 1);
       dim3 grid(num_blocks(nx, block.x), num_blocks(ny - 1, block.y), 1);
-      kernel_ex<<<grid, block>>>(tmax, nx, ny, ex, ey, hz, fict, t);
+      kernel_ex<<<grid, block>>>(tmax, nx, ny, dev_ex, dev_ey, dev_hz, dev_fict, t);
     }
 
     {
       dim3 block(threadsPerBlock / 32, 32, 1);
       dim3 grid(num_blocks(nx - 1, block.x), num_blocks(ny - 1, block.y), 1);
-      kernel_hz<<<grid, block>>>(tmax, nx, ny, ex, ey, hz, fict, t);
+      kernel_hz<<<grid, block>>>(tmax, nx, ny, dev_ex, dev_ey, dev_hz, dev_fict, t);
     }
   }
+  cudaMemcpy(ex, dev_ex, nx*ny*sizeof(double), cudaMemcpyDeviceToHost);
+  cudaMemcpy(ey, dev_ey, nx*ny*sizeof(double), cudaMemcpyDeviceToHost);
+  cudaMemcpy(hz, dev_hz, ny*sizeof(double), cudaMemcpyDeviceToHost);
 }
 
 /* Array initialization. */
@@ -196,25 +212,10 @@ int main(int argc, char** argv)
 	      ey,
 	      hz,
 	      _fict_);
-
-  double *dev_ex;
-  double *dev_ey;
-  double *dev_hz;
-  double *dev__fict_;
-  cudaMalloc(&dev_ex, nx*ny*sizeof(double));
-  cudaMalloc(&dev_ey, nx*ny*sizeof(double));
-  cudaMalloc(&dev_hz, nx*ny*sizeof(double));
-  cudaMalloc(&dev__fict_, ny*sizeof(double));
-  cudaMemcpy(dev_ex, ex, nx*ny*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_ey, ey, nx*ny*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_hz, hz, nx*ny*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev__fict_, _fict_, ny*sizeof(double), cudaMemcpyHostToDevice);
   /* Run kernel. */
-  kernel(tmax, nx, ny, dev_ex, dev_ey, dev_hz, dev__fict_);
+  kernel(tmax, nx, ny, ex, ey, hz, _fict_);
 
-  cudaMemcpy(ex, dev_ex, nx*ny*sizeof(double), cudaMemcpyDeviceToHost);
-  cudaMemcpy(ey, dev_ey, nx*ny*sizeof(double), cudaMemcpyDeviceToHost);
-  cudaMemcpy(hz, dev_hz, ny*sizeof(double), cudaMemcpyDeviceToHost);
+
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
   if(dump_code == 1) print_array(nx, ny, ex, ey, hz);
