@@ -90,7 +90,7 @@ static void kernel(int tmax,
   cudaMemcpy(dev_hz, hz, nx*ny*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_fict, fict, ny*sizeof(double), cudaMemcpyHostToDevice);
   for (int t = 0; t < tmax; t++) {
-    kernel_splat<<<threadsPerBlock, num_blocks(ny, threadsPerBlock)>>>(tmax, nx, ny, ex, ey, hz, fict, t);
+    kernel_splat<<<threadsPerBlock, num_blocks(ny, threadsPerBlock)>>>(tmax, nx, ny, dev_ex, dev_ey, dev_hz, dev_fict, t);
 
     {
       dim3 block(threadsPerBlock / 32, 32, 1);

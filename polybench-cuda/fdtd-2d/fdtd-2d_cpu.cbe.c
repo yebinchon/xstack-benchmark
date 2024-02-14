@@ -246,7 +246,7 @@ for(int32_t t = 0; t < tmax;   t = t + 1){
 for(int32_t j = 0; j < 256;   j = j + 1){
 
 for(int32_t k = 0; k < call29;   k = k + 1){
-_Z12kernel_splatiiiPdS_S_S_i1(tmax, nx, ny, ex, ey, hz, fict, t, 256, 1, 1, call29, 1, 1, j, 0, 0, k, 0, 0);
+_Z12kernel_splatiiiPdS_S_S_i1(tmax, nx, ny, ((double*)dev_ex), ((double*)dev_ey), ((double*)dev_hz), ((double*)dev_fict), t, 256, 1, 1, call29, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
   block.field0 = 8;
