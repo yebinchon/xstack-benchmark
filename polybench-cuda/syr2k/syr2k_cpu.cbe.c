@@ -252,7 +252,7 @@ void _ZL6kerneliiPdS_S_S_S_(uint32_t n, uint32_t m, double* alpha, double* beta,
   memcpy(((uint8_t*)(&agg_2e_tmp28)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp28_2e_coerce)), ((uint8_t*)(&agg_2e_tmp28)), 12);
-#pragma omp target teams distribute parallel for map(to: dev_beta[0:8], dev_A[0:n * m * 8], dev_B[0:n * m * 8], dev_alpha[0:8]) map(tofrom: dev_C[0:n * m * 8])
+#pragma omp target teams distribute parallel for map(to: dev_A[0:n * m * 8], dev_B[0:n * m * 8], dev_alpha[0:8], dev_beta[0:8]) map(tofrom: dev_C[0:n * m * 8])
 for(int32_t i = 0; i < call26;   i = i + 1){
 
 for(int32_t j = 0; j < call27;   j = j + 1){
@@ -260,7 +260,7 @@ for(int32_t j = 0; j < call27;   j = j + 1){
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z11kernel_betaiiddPdS_S_1(n, m, *alpha, *beta, C, A, B, call26, call27, 1, 8, 32, 1, i, j, 0, k, l, 0);
+_Z11kernel_betaiiddPdS_S_1(n, m, *((double*)dev_alpha), *((double*)dev_beta), ((double*)dev_C), ((double*)dev_A), ((double*)dev_B), call26, call27, 1, 8, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
@@ -277,7 +277,7 @@ _Z11kernel_betaiiddPdS_S_1(n, m, *alpha, *beta, C, A, B, call26, call27, 1, 8, 3
   memcpy(((uint8_t*)(&agg_2e_tmp37)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp36_2e_coerce)), ((uint8_t*)(&agg_2e_tmp36)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp37_2e_coerce)), ((uint8_t*)(&agg_2e_tmp37)), 12);
-#pragma omp target teams distribute parallel for map(to: dev_beta[0:8], dev_A[0:n * m * 8], dev_B[0:n * m * 8], dev_alpha[0:8]) map(tofrom: dev_C[0:n * m * 8])
+#pragma omp target teams distribute parallel for map(to: dev_A[0:n * m * 8], dev_B[0:n * m * 8], dev_alpha[0:8], dev_beta[0:8]) map(tofrom: dev_C[0:n * m * 8])
 for(int32_t i = 0; i < call33;   i = i + 1){
 
 for(int32_t j = 0; j < call35;   j = j + 1){
@@ -285,7 +285,7 @@ for(int32_t j = 0; j < call35;   j = j + 1){
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z14kernel_productiiddPdS_S_2(n, m, *alpha, *beta, C, A, B, call33, call35, 1, 8, 32, 1, i, j, 0, k, l, 0);
+_Z14kernel_productiiddPdS_S_2(n, m, *((double*)dev_alpha), *((double*)dev_beta), ((double*)dev_C), ((double*)dev_A), ((double*)dev_B), call33, call35, 1, 8, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }

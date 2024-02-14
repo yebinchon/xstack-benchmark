@@ -72,13 +72,13 @@ static void kernel(int n, int m,
   {
     dim3 block(threadsPerBlock / 32, 32, 1);
     dim3 grid(num_blocks(n, block.x), num_blocks(n, block.y), 1);
-    kernel_beta<<<grid, block>>>(n, m, *alpha, *beta, C, A, B);
+    kernel_beta<<<grid, block>>>(n, m, *dev_alpha, *dev_beta, dev_C, dev_A, dev_B);
   }
 
   {
     dim3 block(threadsPerBlock / 32, 32, 1);
     dim3 grid(num_blocks(n, block.x), num_blocks(n, block.y), 1);
-    kernel_product<<<grid, block>>>(n, m, *alpha, *beta, C, A, B);
+    kernel_product<<<grid, block>>>(n, m, *dev_alpha, *dev_beta, dev_C, dev_A, dev_B);
   }
   cudaMemcpy(C, dev_C, n*m*sizeof(double), cudaMemcpyDeviceToHost);
   cudaFree((void*)dev_A);
