@@ -307,7 +307,7 @@ for(int32_t j = 0; j < call48;   j = j + 1){
 for(int32_t k = 0; k < div;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z14kernel_A_mul_BiiiiddPdS_S_S_S_1(ni, nj, nk, nl, *alpha, *beta, tmp, A, B, C, D, call44, call48, 1, div, 32, 1, i, j, 0, k, l, 0);
+_Z14kernel_A_mul_BiiiiddPdS_S_S_S_1(ni, nj, nk, nl, *((double*)dev_alpha), *((double*)dev_beta), ((double*)dev_tmp), ((double*)dev_A), ((double*)dev_B), ((double*)dev_C), ((double*)dev_D), call44, call48, 1, div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
@@ -329,7 +329,7 @@ for(int32_t j = 0; j < call61;   j = j + 1){
 for(int32_t k = 0; k < div;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z23kernel_D_plus_tmp_mul_CiiiiddPdS_S_S_S_2(ni, nj, nk, nl, *alpha, *beta, tmp, A, B, C, D, call56, call61, 1, div, 32, 1, i, j, 0, k, l, 0);
+_Z23kernel_D_plus_tmp_mul_CiiiiddPdS_S_S_S_2(ni, nj, nk, nl, *((double*)dev_alpha), *((double*)dev_beta), ((double*)dev_tmp), ((double*)dev_A), ((double*)dev_B), ((double*)dev_C), ((double*)dev_D), call56, call61, 1, div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
