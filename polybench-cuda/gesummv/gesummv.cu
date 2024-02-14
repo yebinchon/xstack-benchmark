@@ -39,18 +39,6 @@ __global__ void kernel_y(int n,
 }
 
 
-
-static void kernel(int n,
-                   double alpha, double beta,
-                   double *A,
-                   double *B,
-                   double *tmp,
-                   double *x,
-                   double *y) {
-  const unsigned threadsPerBlock = 256;
-  kernel_y<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(n, alpha, beta, A, B, tmp, x, y);
-}
-
 /* Array initialization. */
 static
 void init_array(int n,
@@ -137,12 +125,9 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_alpha, alpha, sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_beta, beta, sizeof(double), cudaMemcpyHostToDevice);
   /* Run kernel. */
-  kernel (n, *alpha, *beta,
-		  dev_A,
-		  dev_B,
-		  dev_tmp,
-		  dev_x,
-		  dev_y);
+
+  const unsigned threadsPerBlock = 256;
+  kernel_y<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(n, *dev_alpha, *dev_beta, dev_A, dev_B, dev_tmp, dev_x, dev_y);
   cudaMemcpy(y, dev_y, n*sizeof(double), cudaMemcpyDeviceToHost);
 
   /* Prevent dead-code elimination. All live-out data must be printed
