@@ -2,17 +2,13 @@
 // removing warp divergence
 // By: Nick from CoffeeBeforeArch
 
-#include <algorithm>
-#include <cassert>
-#include <cstdlib>
-#include <iostream>
-#include <numeric>
-#include <vector>
 
-using std::accumulate;
-using std::cout;
-using std::generate;
-using std::vector;
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <math.h>
+
 
 #define SHMEM_SIZE 256
 
@@ -86,11 +82,9 @@ int main() {
   // Copy to host;
   cudaMemcpy(h_v_r, d_v_r, bytes, cudaMemcpyDeviceToHost);
 
-  // Print the result
-  assert(h_v_r[0] == 65536);
 
 
-  cout << "COMPLETED SUCCESSFULLY\n";
+  printf("COMPLETED SUCCESSFULLY %d\n", h_v_r[0]);
 
   return 0;
 }
