@@ -4,10 +4,11 @@ RUN_TIMEOUT?=7200 # 2 hours.
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
 
 ${BMARK}_linked.bc: ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll
-	llvm-link ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll -o ${BMARK}_linked.bc
+	llvm-link-cudafe ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll -o ${BMARK}_linked.bc
 
 ${BMARK}_cpu.bc: ${BMARK}_linked.bc
-	opt -load ~/noelle-workspace/CudaFE/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg ${BMARK}_linked.bc -o ${BMARK}_cpu.bc
+	opt -load ~/noelle-workspace/CudaFE/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+	#opt -load ~/noelle-workspace/CudaFE/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
 
 ${BMARK}_cpu.cbe.c: ${BMARK}_cpu.bc
 	splendid ${BMARK}_cpu.bc 2> debug
