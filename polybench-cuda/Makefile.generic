@@ -1,4 +1,7 @@
 RUN_TIMEOUT?=7200 # 2 hours.
+CUDAFE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/CudaFE
+POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
+LLVM18=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-llvm-install
 
 %.ll: ${BMARK}.cu
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
@@ -7,14 +10,14 @@ ${BMARK}_linked.bc: ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll
 	llvm-link-cudafe ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll -o ${BMARK}_linked.bc
 
 ${BMARK}_cpu.bc: ${BMARK}_linked.bc
-	opt -load ~/noelle-workspace/CudaFE/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
-	#opt -load ~/noelle-workspace/CudaFE/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+	#opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
 
 ${BMARK}_cpu.cbe.c: ${BMARK}_cpu.bc
 	splendid ${BMARK}_cpu.bc 2> debug
 
 ${BMARK}.o: ${BMARK}.cu
-	/u/zujunt/noelle-workspace/polygeist-install-debug/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=/u/zujunt/noelle-workspace/polygeist-install-debug/lib/clang/18/ -O3 $< -c -o $@
+	${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
 
 polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 $< -o $@
