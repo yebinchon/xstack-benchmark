@@ -12,7 +12,10 @@ ${BMARK}_cpu.bc: ${BMARK}_linked.bc
 	#opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
 	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
 
-${BMARK}_reduced.bc: ${BMARK}_cpu.bc
+${BMARK}_loopid.bc: ${BMARK}_cpu.bc
+	noelle-meta-loop-embed $< -o $@
+
+${BMARK}_reduced.bc: ${BMARK}_loopid.bc
 	noelle-load -load ${CUDAFE}/build/NoelleReduction/libNoelleReduction.so -noelle-reduction $< -o $@
 
 ${BMARK}_cpu.cbe.c: ${BMARK}_cpu.bc
