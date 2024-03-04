@@ -14,14 +14,14 @@
 
 /* Array initialization. */
 static
-void init_array(int n,
+void init_array(long n,
 		double *alpha,
 		double *beta,
 		double A[n][n],
 		double B[n][n],
 		double x[n])
 {
-  int i, j;
+  long i, j;
 
   *alpha = 43532;
   *beta = 12313;
@@ -39,11 +39,11 @@ void init_array(int n,
 /* DCE code. Must scan the entire live-out data.
    Can be used also to check the correctness of the output. */
 static
-void print_array(int n,
+void print_array(long n,
 		 double y[n])
 
 {
-  int i;
+  long i;
 
   for (i = 0; i < n; i++) {
     fprintf (stderr, "%0.2lf ", y[i]);
@@ -55,7 +55,7 @@ void print_array(int n,
 /* Main computational kernel. The whole function will be timed,
    including the call and return. */
 static
-void kernel_gesummv(int n,
+void kernel_gesummv(long n,
 		    double alpha,
 		    double beta,
 		    double A[n][n],
@@ -64,7 +64,7 @@ void kernel_gesummv(int n,
 		    double x[n],
 		    double y[n])
 {
-  int i, j;
+  long i, j;
 
   for (i = 0; i < n; i++)
     {
@@ -84,8 +84,8 @@ void kernel_gesummv(int n,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int n = atoi(argv[2]);
-  int dump_code = atoi(argv[1]);
+  long n = atoi(argv[2]);
+  long dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
   double alpha;

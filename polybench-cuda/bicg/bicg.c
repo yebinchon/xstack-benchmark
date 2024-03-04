@@ -16,12 +16,12 @@
 
 /* Array initialization. */
 static
-void init_array (int nx, int ny,
+void init_array (long nx, long ny,
 		 double A[nx][ny],
 		 double r[nx],
 		 double p[ny])
 {
-  int i, j;
+  long i, j;
 
   for (i = 0; i < ny; i++)
     p[i] = i * M_PI;
@@ -36,12 +36,12 @@ void init_array (int nx, int ny,
 /* DCE code. Must scan the entire live-out data.
    Can be used also to check the correctness of the output. */
 static
-void print_array(int nx, int ny,
+void print_array(long nx, long ny,
 		 double s[ny],
 		 double q[nx])
 
 {
-  int i;
+  long i;
 
   for (i = 0; i < ny; i++) {
     fprintf (stderr, "%0.2lf ", s[i]);
@@ -58,14 +58,14 @@ void print_array(int nx, int ny,
 /* Main computational kernel. The whole function will be timed,
    including the call and return. */
 static
-void kernel_bicg(int nx, int ny,
+void kernel_bicg(long nx, long ny,
 		 double A[nx][ny],
 		 double s[ny],
 		 double q[nx],
 		 double p[ny],
 		 double r[nx])
 {
-  int i, j;
+  long i, j;
 
   for (i = 0; i < ny; i++)
     s[i] = 0;
@@ -85,9 +85,9 @@ void kernel_bicg(int nx, int ny,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int nx =atoi(argv[2]);
-  int ny = atoi(argv[3]);
-  int dump_code = atoi(argv[1]);
+  long nx =atoi(argv[2]);
+  long ny = atoi(argv[3]);
+  long dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
   double (*A)[nx][ny]; A = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));

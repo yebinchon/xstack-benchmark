@@ -14,11 +14,11 @@
 
 /* Array initialization. */
 static
-void init_array (int nx, int ny,
+void init_array (long nx, long ny,
 		 double A[nx][ny],
 		 double x[ny])
 {
-  int i, j;
+  long i, j;
 
   for (i = 0; i < ny; i++)
       x[i] = i * M_PI;
@@ -31,11 +31,11 @@ void init_array (int nx, int ny,
 /* DCE code. Must scan the entire live-out data.
    Can be used also to check the correctness of the output. */
 static
-void print_array(int nx,
+void print_array(long nx,
 		 double y[nx])
 
 {
-  int i;
+  long i;
 
   for (i = 0; i < nx; i++) {
     fprintf (stderr, "%0.2lf ", y[i]);
@@ -48,19 +48,22 @@ void print_array(int nx,
 /* Main computational kernel. The whole function will be timed,
    including the call and return. */
 static
-void kernel_atax(int nx, int ny,
+void kernel_atax(long nx, long ny,
 		 double A[nx][ny],
 		 double x[ny],
 		 double y[nx],
 		 double tmp[ny])
 {
-  int i, j;
+  long i, j;
 
   for (i= 0; i < nx; i++)
     y[i] = 0;
+  printf("Finished init y\n");
   for (i = 0; i < ny; i++)
     {
       tmp[i] = 0;
+      printf("%f\n", y[150000]);
+      printf("%f\n", A[150000][150000]);
       for (j = 0; j < ny; j++)
       	tmp[i] = tmp[i] + A[i][j] * x[j];
       for (j = 0; j < ny; j++)
@@ -73,23 +76,26 @@ void kernel_atax(int nx, int ny,
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
-  int nx = atoi(argv[2]);
-  int ny = atoi(argv[3]);
-  int dump_code = atoi(argv[1]);
+  long nx = atoi(argv[2]);
+  long ny = atoi(argv[3]);
+  long dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
   double (*A)[nx][ny]; A = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
   double (*x)[ny]; x = (double(*)[ny])malloc(ny*sizeof(double));
   double (*y)[nx]; y = (double(*)[nx])malloc(nx*sizeof(double));
   double (*tmp)[ny]; tmp = (double(*)[ny])malloc(ny*sizeof(double));
+  printf("After malloc\n");
 
   /* Initialize array(s). */
   init_array (nx, ny, *A, *x);
+  printf("After init\n");
 
 
   /* Run kernel. */
   kernel_atax (nx, ny,
         *A, *x, *y, *tmp);
+  printf("After kernel\n");
 
 
   /* Prevent dead-code elimination. All live-out data must be printed
