@@ -18,8 +18,8 @@ ${BMARK}_loopid.bc: ${BMARK}_cpu.bc
 ${BMARK}_reduced.bc: ${BMARK}_loopid.bc
 	noelle-load -load ${CUDAFE}/build/NoelleReduction/libNoelleReduction.so -noelle-reduction $< -o $@
 
-${BMARK}_cpu.cbe.c: ${BMARK}_cpu.bc
-	splendid ${BMARK}_cpu.bc 2> debug
+${BMARK}_cpu.cbe.c: ${BMARK}_reduced.bc
+	splendid $< 2> debug
 
 ${BMARK}.o: ${BMARK}.cu
 	${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
@@ -27,13 +27,13 @@ ${BMARK}.o: ${BMARK}.cu
 polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 $< -o $@
 
-tulip.clang.exe: ${BMARK}_cpu.cbe.c
+tulip.clang.exe: ${BMARK}_reduced.cbe.c
 	clang -fopenmp -O3 $< -o $@
 
-tulip.gcc.exe: ${BMARK}_cpu.cbe.c
+tulip.gcc.exe: ${BMARK}_reduced.cbe.c
 	gcc -fopenmp -O3 $< -o $@
 
-cpu.exe: ${BMARK}_cpu.bc
+cpu.exe: ${BMARK}_reduced.bc
 	clang -O3 $< -o $@
 
 seq.exe: ${BMARK}.c
