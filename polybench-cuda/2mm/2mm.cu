@@ -20,11 +20,13 @@ __global__ void kernel_A_mul_B(int ni, int nj, int nk, int nl,
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   int j = blockDim.y * blockIdx.y + threadIdx.y;
   int k;
+  double dot = 0.0;
 
 
   if (i < ni && j < nj) {
     for (k = 0; k < nk; k++)
-      tmp[i * nj + j] += alpha * A[i * nk + k] * B[k * nj + j];
+      dot += alpha * A[i * nk + k] * B[k * nj + j];
+    tmp[i*nj+j] = dot;
   }
 }
 
@@ -154,10 +156,10 @@ static void init_array(int ni, int nj, int nk, int nl,
 int main(int argc, char** argv)
 {
   int dump_code = atoi(argv[1]);
-  int ni = atoi(argv[2]);
-  int nj = atoi(argv[3]);
-  int nk = atoi(argv[4]);
-  int nl = atoi(argv[5]);
+  long  ni = atoi(argv[2]);
+  long  nj = atoi(argv[3]);
+  long  nk = atoi(argv[4]);
+  long  nl = atoi(argv[5]);
 
 
   double *alpha = (double*)malloc(sizeof(double));
