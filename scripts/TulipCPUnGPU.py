@@ -29,10 +29,10 @@ def clean_all_bmarks(root_path, bmark_list, result_path):
   print("Finish cleaning")
   return 0
 
-def get_time(root_path, bmark, test_types):
-  os.chdir(os.path.join(root_path, bmark))
+def get_time(paths, bmark, test_types):
   result = { bmark: {}}
   for test_type in test_types:
+    os.chdir(os.path.join(paths[test_type], bmark))
     f = open(test_type+".time", 'r')
     result[bmark][test_type] = float(f.readline())
     f.close()
@@ -66,11 +66,12 @@ def run_all(root_path, bmark, tests):
   return status
 
 def Postprocess(perf_dic_acc, perf_dic, bmark_list, run_num):
+  key_list = ['nvidia', 'amd', 'seq']
   for bmark in bmark_list:
-    for key in perf_dic[bmark].keys():
+    for key in key_list:
       perf_dic[bmark][key] = 0
       for i in range(run_num):
-        perf_dic[bmark][key] = perf_dic[bmark][key]+perf_dic_acc[i][bmark][key]/5
+        perf_dic[bmark][key] = perf_dic[bmark][key]+perf_dic_acc[i][bmark][key]/run_num
 
   for bmark in bmark_list:
     for key in perf_dic[bmark].keys():
@@ -80,14 +81,13 @@ def Postprocess(perf_dic_acc, perf_dic, bmark_list, run_num):
         perf_dic[bmark][key] = perf_dic[bmark]['seq']/perf_dic[bmark][key]
     del perf_dic[bmark]['seq']
 
-  mean = { 'geomean': {}}
-  for key in perf_dic['2mm'].keys():
+  key_list = ['nvidia', 'amd']
+  for key in key_list:
     geo = 1
     for bmark in bmark_list:
       geo = geo*pow(perf_dic[bmark][key], 1/len(bmark_list))
-    mean['geomean'][key] = geo
+    perf_dic['geomean'][key] = geo
 
-  perf_dic.update(mean)
   bmark_list.append('geomean')
 
   return perf_dic, bmark_list
@@ -156,7 +156,8 @@ def set_config():
   args = parser.parse_args()
   
   config = {}
-  config['root_path'] = os.path.join(os.getcwd(), "../polybench-cuda")
+  config['nvidia_path'] = os.path.join(os.getcwd(), "../polybench-cuda")
+  config['amd_path'] = os.path.join(os.getcwd(), "../../amd-benchmark/polybench-cuda")
 
   bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv']
   #bmark_list = ['syrk', '2mm']
@@ -165,19 +166,22 @@ def set_config():
   config['bmark_list'] = bmark_list
   config['run_num'] = 1
 
-  config['result_path'] = os.path.join(config['root_path'], "../", "tulip-results")
+  config['result_path'] = os.path.join(config['nvidia_path'], "../", "tulip-results")
 
   return config
 
 if __name__ == "__main__":
   tests = ["tulip", "polygeist", "seq"]
-  results = ['tulip.clang', 'tulip.gcc', 'polygeist', 'seq', 'nvidia', 'amd']
+  #results = ['tulip.clang', 'tulip.gcc', 'polygeist', 'seq', 'nvidia', 'amd']
+  results = ['seq', 'nvidia', 'amd']
   #tests = ['seq']
   
   config = set_config()
   if not config:
     print("Bad configuration, please start over.")
     sys.exit(1)
+
+  paths = {'nvidia': config['nvidia_path'], 'amd': config['amd_path'], 'seq': config['nvidia_path']}
 
   print("\n\n### Experiment Start ####")
 
@@ -190,19 +194,22 @@ if __name__ == "__main__":
   #clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
   
   perf_list = []
-  perf_dic_acc = {}
+  perf_dic_acc = {} 
+
   for j in range(config['run_num']):
     perf_dic = {}
     for bmark in config['bmark_list']:
       #run_all(config['root_path'], bmark, tests)
-      perf_list.append(get_time(config['root_path'], bmark, results))
+      perf_list.append(get_time(paths, bmark, results))
     for i, bmark in enumerate(config['bmark_list']):
       perf_dic.update(perf_list[i])
     perf_dic_acc[j] = perf_dic
 
-  perf_dic = {}
+  perf_dic = {'syrk': {'polygeist': 37.84385855385607, 'tulip.clang': 35.276621790861824, 'tulip.gcc': 37.83608662837262}, 'syr2k': {'polygeist': 37.26562850624855, 'tulip.clang': 36.78670426509259, 'tulip.gcc': 36.78485513733232}, 'gemm': {'polygeist': 20.020136443848653, 'tulip.clang': 17.960558076486574, 'tulip.gcc': 22.463481302711582}, '2mm': {'polygeist': 19.722244900222293, 'tulip.clang': 18.904315308596416, 'tulip.gcc': 19.217548017595302}, '3mm': {'polygeist': 19.196927540858535, 'tulip.clang': 20.824847724121753, 'tulip.gcc': 21.423542762134772}, 'doitgen': {'polygeist': 17.50627381580169, 'tulip.clang': 17.494177105342583, 'tulip.gcc': 17.58421200599132}, 'adi': {'polygeist': 6.766700091313313, 'tulip.clang': 4.462247687491627, 'tulip.gcc': 4.56052776409236}, 'fdtd-2d': {'polygeist': 2.2581482263810315, 'tulip.clang': 2.200812657065103, 'tulip.gcc': 2.2675531951821113}, 'gemver': {'polygeist': 2.681781018181293, 'tulip.clang': 2.2096945077645382, 'tulip.gcc': 2.267994036012618}, 'jacobi-1d-imper': {'polygeist': 6.070298931871572, 'tulip.clang': 5.740259637593046, 'tulip.gcc': 6.336592657151509}, 'jacobi-2d-imper': {'polygeist': 8.370159268820016, 'tulip.clang': 6.817627897602421, 'tulip.gcc': 7.514541876731434}, 'mvt': {'polygeist': 2.64660778433405, 'tulip.clang': 2.134424548795312, 'tulip.gcc': 2.240711440286401}, 'atax': {'polygeist': 0.7620986882921367, 'tulip.clang': 0.6218493356647895, 'tulip.gcc': 0.6418972108047382}, 'bicg': {'polygeist': 0.7659529000306102, 'tulip.clang': 0.6221526051091392, 'tulip.gcc': 0.6240837858467722}, 'gesummv': {'polygeist': 0.6739593169768455, 'tulip.clang': 0.5667761786392227, 'tulip.gcc': 0.5841516916741284}, 'geomean': {'polygeist': 5.941266696656526, 'tulip.clang': 5.251977064029069, 'tulip.gcc': 5.51430119117206}}
   for bmark in config['bmark_list']:
-    perf_dic[bmark] = {'seq': 0, 'polygeist': 0, 'tulip.clang': 0, 'tulip.gcc': 0, 'nvidia': 0, 'amd': 0}
+    perf_dic[bmark]['amd'] = 0
+    perf_dic[bmark]['nvidia'] = 0
+    perf_dic[bmark]['seq'] = 0
   temp_bmark_list = config['bmark_list']
   perf_dic, config['bmark_list'] = Postprocess(perf_dic_acc, perf_dic, config['bmark_list'], config['run_num'])
 
