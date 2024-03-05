@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -96,7 +97,6 @@ void _Z8kernel_AiddPdS_S_S_S_S_S_S_S__OC_1(uint32_t, double, double, double*, do
 void _Z8kernel_xiddPdS_S_S_S_S_S_S_S__OC_2(uint32_t, double, double, double*, double*, double*, double*, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z8kernel_yiddPdS_S_S_S_S_S_S_S__OC_3(uint32_t, double, double, double*, double*, double*, double*, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z8kernel_widdPdS_S_S_S_S_S_S_S__OC_4(uint32_t, double, double, double*, double*, double*, double*, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint8_t* memcpy(uint8_t*, uint8_t*, uint64_t);
 
 
 /* Global Variable Definitions and Initialization */
@@ -302,7 +302,7 @@ void _ZL6kerneliPdS_S_S_S_S_S_S_S_S_S_(uint32_t n, double* alpha, double* beta, 
   memcpy(((uint8_t*)(&agg_2e_tmp62)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp62_2e_coerce)), ((uint8_t*)(&agg_2e_tmp62)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_x[0:n * 8], dev_A[0:n * n * 8], dev_u1[0:n * 8], dev_v1[0:n * 8], dev_u2[0:n * 8], dev_v2[0:n * 8], dev_y[0:n * 8], dev_z[0:n * 8], dev_alpha[0:8], dev_beta[0:8]) map(tofrom: dev_w[0:n * 8])
 for(int32_t i = 0; i < call59;   i = i + 1){
 
 for(int32_t j = 0; j < call61;   j = j + 1){
@@ -324,7 +324,7 @@ _Z8kernel_AiddPdS_S_S_S_S_S_S_S__OC_1(n, *((double*)dev_alpha), *((double*)dev_b
   agg_2e_tmp66.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp64_2e_coerce)), ((uint8_t*)(&agg_2e_tmp64)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp66_2e_coerce)), ((uint8_t*)(&agg_2e_tmp66)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_x[0:n * 8], dev_A[0:n * n * 8], dev_u1[0:n * 8], dev_v1[0:n * 8], dev_u2[0:n * 8], dev_v2[0:n * 8], dev_y[0:n * 8], dev_z[0:n * 8], dev_alpha[0:8], dev_beta[0:8]) map(tofrom: dev_w[0:n * 8])
 for(int32_t i = 0; i < call65;   i = i + 1){
 
 for(int32_t j = 0; j < 256;   j = j + 1){
@@ -340,7 +340,7 @@ _Z8kernel_xiddPdS_S_S_S_S_S_S_S__OC_2(n, *((double*)dev_alpha), *((double*)dev_b
   agg_2e_tmp73.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp71_2e_coerce)), ((uint8_t*)(&agg_2e_tmp71)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp73_2e_coerce)), ((uint8_t*)(&agg_2e_tmp73)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_x[0:n * 8], dev_A[0:n * n * 8], dev_u1[0:n * 8], dev_v1[0:n * 8], dev_u2[0:n * 8], dev_v2[0:n * 8], dev_y[0:n * 8], dev_z[0:n * 8], dev_alpha[0:8], dev_beta[0:8]) map(tofrom: dev_w[0:n * 8])
 for(int32_t i = 0; i < call72;   i = i + 1){
 
 for(int32_t j = 0; j < 256;   j = j + 1){
@@ -356,7 +356,7 @@ _Z8kernel_yiddPdS_S_S_S_S_S_S_S__OC_3(n, *((double*)dev_alpha), *((double*)dev_b
   agg_2e_tmp80.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp78_2e_coerce)), ((uint8_t*)(&agg_2e_tmp78)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp80_2e_coerce)), ((uint8_t*)(&agg_2e_tmp80)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_x[0:n * 8], dev_A[0:n * n * 8], dev_u1[0:n * 8], dev_v1[0:n * 8], dev_u2[0:n * 8], dev_v2[0:n * 8], dev_y[0:n * 8], dev_z[0:n * 8], dev_alpha[0:8], dev_beta[0:8]) map(tofrom: dev_w[0:n * 8])
 for(int32_t i = 0; i < call79;   i = i + 1){
 
 for(int32_t j = 0; j < 256;   j = j + 1){

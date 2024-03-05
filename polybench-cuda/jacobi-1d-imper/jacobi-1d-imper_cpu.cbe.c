@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -95,7 +96,6 @@ uint32_t cudaFree(uint8_t*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z14kernel_stenciliPdS__OC_1(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z14kernel_stenciliPdS__OC_2(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint8_t* memcpy(uint8_t*, uint8_t*, uint64_t);
 
 
 /* Global Variable Definitions and Initialization */
@@ -202,7 +202,7 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   agg_2e_tmp11.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp11_2e_coerce)), ((uint8_t*)(&agg_2e_tmp11)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_B[0:n * 8]) map(tofrom: dev_A[0:n * 8])
 for(int32_t j = 0; j < call10;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){
@@ -218,7 +218,7 @@ _Z14kernel_stenciliPdS__OC_1(n, ((double*)dev_A), ((double*)dev_B), call10, 1, 1
   agg_2e_tmp15.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp13_2e_coerce)), ((uint8_t*)(&agg_2e_tmp13)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp15_2e_coerce)), ((uint8_t*)(&agg_2e_tmp15)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_B[0:n * 8]) map(tofrom: dev_A[0:n * 8])
 for(int32_t j = 0; j < call14;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){

@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -95,7 +96,6 @@ uint32_t cudaFree(uint8_t*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(uint32_t, uint32_t, double*, double*, double*, double*, double, double, double, double, double, double, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(uint32_t, uint32_t, double*, double*, double*, double*, double, double, double, double, double, double, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint8_t* memcpy(uint8_t*, uint8_t*, uint64_t);
 
 
 /* Global Variable Definitions and Initialization */
@@ -240,7 +240,7 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   agg_2e_tmp47.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&agg_2e_tmp47)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_p[0:n * n * 8], dev_q[0:n * n * 8], dev_v[0:n * n * 8]) map(tofrom: dev_u[0:n * n * 8])
 for(int32_t j = 0; j < call46;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){
@@ -256,7 +256,7 @@ _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(tsteps, n, ((double*)dev_u), ((doub
   agg_2e_tmp52.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp49_2e_coerce)), ((uint8_t*)(&agg_2e_tmp49)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp52_2e_coerce)), ((uint8_t*)(&agg_2e_tmp52)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_p[0:n * n * 8], dev_q[0:n * n * 8], dev_v[0:n * n * 8]) map(tofrom: dev_u[0:n * n * 8])
 for(int32_t j = 0; j < call51;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){

@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -93,7 +94,6 @@ void _ZL11print_arrayiPd(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t cudaFree(uint8_t*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z8kernel_yiddPdS_S_S_S__OC_1(uint32_t, double, double, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint8_t* memcpy(uint8_t*, uint8_t*, uint64_t);
 
 
 /* Global Variable Definitions and Initialization */
@@ -198,7 +198,7 @@ _ZL10init_arrayiPdS_S_S_S_(n, ((double*)alpha), ((double*)beta), ((double*)A), (
   agg_2e_tmp59.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp59_2e_coerce)), ((uint8_t*)(&agg_2e_tmp59)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_B[0:n * n * 8], dev_tmp[0:n * 8], dev_x[0:n * 8], dev_A[0:n * n * 8], dev_alpha[0:8], dev_beta[0:8]) map(tofrom: dev_y[0:n * 8])
 for(int32_t i = 0; i < call58;   i = i + 1){
 
 for(int32_t j = 0; j < 256;   j = j + 1){

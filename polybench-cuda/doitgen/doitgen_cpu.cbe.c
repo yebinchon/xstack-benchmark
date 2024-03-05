@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -94,7 +95,6 @@ uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, voi
 uint32_t cudaFree(uint8_t*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z10kernel_sumiiiPdS_S__OC_1(uint32_t, uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint8_t* memcpy(uint8_t*, uint8_t*, uint64_t);
 
 
 /* Global Variable Definitions and Initialization */
@@ -231,7 +231,7 @@ void _ZL6kerneliiiPdS_S_(uint32_t nr, uint32_t nq, uint32_t np, double* A, doubl
   memcpy(((uint8_t*)(&agg_2e_tmp24)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp24_2e_coerce)), ((uint8_t*)(&agg_2e_tmp24)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for map(to: dev_A[0:nr * nq * np * 8], dev_C4[0:np * np * 8]) map(from: dev_sum[0:nr * nq * np * 8])
 for(int32_t i = 0; i < call21;   i = i + 1){
 
 for(int32_t j = 0; j < call22;   j = j + 1){
