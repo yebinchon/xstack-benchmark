@@ -70,7 +70,7 @@ def Postprocess(perf_dic_acc, perf_dic, bmark_list, run_num):
     for key in perf_dic[bmark].keys():
       perf_dic[bmark][key] = 0
       for i in range(run_num):
-        perf_dic[bmark][key] = perf_dic[bmark][key]+perf_dic_acc[i][bmark][key]/5
+        perf_dic[bmark][key] = perf_dic[bmark][key]+perf_dic_acc[i][bmark][key]/run_num
 
   for bmark in bmark_list:
     for key in perf_dic[bmark].keys():
@@ -179,7 +179,7 @@ if __name__ == "__main__":
   os.chdir(config['result_path'])
   log_path = os.path.join(config['result_path'], "results.log")
 
-  clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
+  #clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
   
   perf_list = []
   perf_dic_acc = {}
@@ -201,7 +201,7 @@ if __name__ == "__main__":
   print(perf_dic)
 
   os.chdir(config['result_path'])
-  #Plot(perf_dic, config['bmark_list'])
+  Plot(perf_dic, config['bmark_list'])
     #for i, bmark in enumerate(config['bmark_list']):
       #perf_list_polygeist[i][bmark].update
 
