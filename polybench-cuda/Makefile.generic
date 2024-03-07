@@ -42,12 +42,12 @@ seq.exe: ${BMARK}.c
 		clang -O3 $< -o $@
 
 nvtarget.exe: #${BMARK}_target.c
-		clang -fopenmp --offload-arch=native ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_nvtarget.o
-		clang --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -o $@
+		clang -fopenmp --offload-arch=native -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_nvtarget.o
+		clang --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -o $@ -foffload-lto -lomptarget.devicertl 
 
 amdtarget.exe: #${BMARK}_target.c
-		clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_amdtarget.o
-		clang --offload-link ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
+		clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_amdtarget.o
+		clang --offload-link ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@ -foffload-lto -lomptarget.devicertl 
 
 run_seq: seq.exe
 		regressions-watchdog $(RUN_TIMEOUT) seq.time ./seq.exe $(PERF_ARGS)
@@ -59,6 +59,11 @@ run_tulip: tulip.clang.exe tulip.gcc.exe
 		regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
 		regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
 
+run_nvidia: nvtarget.exe
+		regressions-watchdog $(RUN_TIMEOUT) nvidia.time ./nvtarget.exe $(PERF_ARGS)
+
+run_amd: amdtarget.exe
+		regressions-watchdog $(RUN_TIMEOUT) seq.time ./amdtarget.exe $(PERF_ARGS)
 
 clean:
 		rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time
