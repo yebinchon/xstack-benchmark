@@ -1,69 +1,64 @@
 RUN_TIMEOUT?=7200 # 2 hours.
 CUDAFE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/CudaFE
-POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
 LLVM18=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-llvm-install
-
-nvtarget.exe: ${BMARK}_cpu.cbe.c
-	clang -fopenmp --offload-arch=native ${BMARK}_cpu.cbe.c -O3 -c -o ${BMARK}_nvtarget.o
-	clang --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -o $@
-
-amdtarget.exe: ${BMARK}_cpu.cbe.c
-	clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ ${BMARK}_cpu.cbe.c -O3 -c -o ${BMARK}_amdtarget.o
-	clang --offload-link ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
+POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
+NOELLE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/noelle-susan/install
 
 %.ll: ${BMARK}.cu
-	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
+		clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
 
 ${BMARK}_linked.bc: ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll
-	llvm-link-cudafe ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll -o ${BMARK}_linked.bc
+		llvm-link-cudafe ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll -o ${BMARK}_linked.bc
 
 ${BMARK}_cpu.bc: ${BMARK}_linked.bc
-	#opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
-	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+		#opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+		opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
 
-${BMARK}_cpu.cbe.c: ${BMARK}_cpu.bc
-	splendid ${BMARK}_cpu.bc 2> debug
+${BMARK}_loopid.bc: ${BMARK}_cpu.bc
+		noelle-meta-loop-embed $< -o $@
+
+${BMARK}_reduced.bc: ${BMARK}_loopid.bc
+		noelle-load -load ${NOELLE}/lib/ParallelizationTechnique.so -load ${NOELLE}/lib/DOALL.so -load ${NOELLE}/lib/DSWP.so -load ${NOELLE}/lib/Heuristics.so -load ${NOELLE}/lib/Parallelizer.so -load ${CUDAFE}/build/NoelleReduction/libNoelleReduction.so -noelle-reduction $< -o $@
+
+${BMARK}_reduced.cbe.c: ${BMARK}_reduced.bc
+		splendid $< 2> debug
 
 ${BMARK}.o: ${BMARK}.cu
-	${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
+		${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
 
 polygeist.exe: ${BMARK}.o
-	clang -fopenmp -O3 $< -o $@
+		clang -fopenmp -O3 $< -o $@
 
-tulip.clang.exe: ${BMARK}_cpu.cbe.c
-	clang -fopenmp -O3 $< -o $@
+tulip.clang.exe: ${BMARK}_reduced.cbe.c
+		clang -fopenmp -O3 $< -o $@
 
-tulip.gcc.exe: ${BMARK}_cpu.cbe.c
-	gcc -fopenmp -O3 $< -o $@
+tulip.gcc.exe: ${BMARK}_reduced.cbe.c
+		gcc -fopenmp -O3 $< -o $@
 
-cpu.exe: ${BMARK}_cpu.bc
-	clang -O3 $< -o $@
+cpu.exe: ${BMARK}_reduced.bc
+		clang -O3 $< -o $@
 
 seq.exe: ${BMARK}.c
-	clang -O3 $< -o $@
+		clang -O3 $< -o $@
 
-cuda.exe: ${BMARK}.cu
-	nvcc -O3 $< -o $@
+nvtarget.exe: ${BMARK}_target.c
+		clang -fopenmp --offload-arch=native ${BMARK}_target.c -O3 -c -o ${BMARK}_nvtarget.o
+			clang --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -o $@
+
+amdtarget.exe: ${BMARK}_target.c
+		clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ gemm_target.c -O3 -c -o ${BMARK}_amdtarget.o
+			clang --offload-link ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
 
 run_seq: seq.exe
-	regressions-watchdog $(RUN_TIMEOUT) seq.time ./seq.exe $(PERF_ARGS)
-
-run_cuda: cuda.exe
-	regressions-watchdog $(RUN_TIMEOUT) cuda.time ./cuda.exe $(PERF_ARGS)
-
-run_nvidia: nvtarget.exe
-	regressions-watchdog $(RUN_TIMEOUT) nvidia.time ./nvtarget.exe $(PERF_ARGS)
-
-run_amd: amdtarget.exe
-	regressions-watchdog $(RUN_TIMEOUT) amd.time ./amdtarget.exe $(PERF_ARGS)
+		regressions-watchdog $(RUN_TIMEOUT) seq.time ./seq.exe $(PERF_ARGS)
 
 run_polygeist: polygeist.exe
-	regressions-watchdog $(RUN_TIMEOUT) polygeist.time ./polygeist.exe $(PERF_ARGS)
+		regressions-watchdog $(RUN_TIMEOUT) polygeist.time ./polygeist.exe $(PERF_ARGS)
 
 run_tulip: tulip.clang.exe tulip.gcc.exe
-	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
-	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
+		regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
+			regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
 
 
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time
+		rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time

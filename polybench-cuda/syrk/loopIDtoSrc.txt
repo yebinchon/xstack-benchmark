@@ -1,0 +1,75 @@
+Loop with ID: 0
+in file: syrk_cpu.bc
+at function: _ZL10init_arrayiiPdS_S_S_
+with header terminator:   br i1 %cmp, label %for.body, label %for.end9, !dbg !766, !noelle.loop.id !767
+
+Loop with ID: 1
+in file: syrk_cpu.bc
+at function: _ZL10init_arrayiiPdS_S_S_
+with header terminator:   br i1 %cmp2, label %for.body3, label %for.end, !dbg !774, !noelle.loop.id !775
+
+Loop with ID: 2
+in file: syrk_cpu.bc
+at function: _ZL10init_arrayiiPdS_S_S_
+with header terminator:   br i1 %cmp11, label %for.body12, label %for.end30, !dbg !798, !noelle.loop.id !799
+
+Loop with ID: 3
+in file: syrk_cpu.bc
+at function: _ZL10init_arrayiiPdS_S_S_
+with header terminator:   br i1 %cmp14, label %for.body15, label %for.end27, !dbg !805, !noelle.loop.id !806
+
+Loop with ID: 4
+in file: syrk_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.0, label %header.1, label %kcall.end, !tulip.doall.loop.grid !824, !noelle.loop.id !825
+
+Loop with ID: 5
+in file: syrk_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.1, label %header.2, label %latch.0, !noelle.loop.id !826
+
+Loop with ID: 6
+in file: syrk_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.2, label %header.3, label %latch.1, !tulip.doall.loop.block !824, !noelle.loop.id !827
+
+Loop with ID: 7
+in file: syrk_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.3, label %kcall.configok, label %latch.2, !noelle.loop.id !828
+
+Loop with ID: 8
+in file: syrk_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.031, label %header.114, label %kcall.end33, !tulip.doall.loop.grid !824, !noelle.loop.id !843
+
+Loop with ID: 9
+in file: syrk_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.128, label %header.215, label %latch.020, !noelle.loop.id !844
+
+Loop with ID: 10
+in file: syrk_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.225, label %header.316, label %latch.119, !tulip.doall.loop.block !824, !noelle.loop.id !845
+
+Loop with ID: 11
+in file: syrk_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.322, label %kcall.configok32, label %latch.218, !noelle.loop.id !846
+
+Loop with ID: 12
+in file: syrk_cpu.bc
+at function: _ZL11print_arrayiPd
+with header terminator:   br i1 %cmp, label %for.body, label %for.end10, !dbg !760, !noelle.loop.id !761
+
+Loop with ID: 13
+in file: syrk_cpu.bc
+at function: _ZL11print_arrayiPd
+with header terminator:   br i1 %cmp2, label %for.body3, label %for.end, !dbg !768, !noelle.loop.id !769
+
+Loop with ID: 14
+in file: syrk_cpu.bc
+at function: _Z14kernel_productiiddPdS_.2
+with header terminator:   br i1 %cmp9, label %for.body, label %for.end, !dbg !776, !noelle.loop.id !777
+

@@ -1,0 +1,30 @@
+Loop with ID: 0
+in file: gesummv_cpu.bc
+at function: main
+with header terminator:   br i1 %exitCheck.0, label %header.1, label %kcall.end, !tulip.doall.loop.grid !853, !noelle.loop.id !814
+
+Loop with ID: 1
+in file: gesummv_cpu.bc
+at function: main
+with header terminator:   br i1 %exitCheck.1, label %kcall.configok, label %latch.0, !tulip.doall.loop.block !853, !noelle.loop.id !821
+
+Loop with ID: 2
+in file: gesummv_cpu.bc
+at function: _ZL10init_arrayiPdS_S_S_S_
+with header terminator:   br i1 %cmp, label %for.body, label %for.end23, !dbg !765, !noelle.loop.id !766
+
+Loop with ID: 3
+in file: gesummv_cpu.bc
+at function: _ZL10init_arrayiPdS_S_S_S_
+with header terminator:   br i1 %cmp3, label %for.body4, label %for.end, !dbg !779, !noelle.loop.id !780
+
+Loop with ID: 4
+in file: gesummv_cpu.bc
+at function: _ZL11print_arrayiPd
+with header terminator:   br i1 %cmp, label %for.body, label %for.end, !dbg !759, !noelle.loop.id !760
+
+Loop with ID: 5
+in file: gesummv_cpu.bc
+at function: _Z8kernel_yiddPdS_S_S_S_.1
+with header terminator:   br i1 %cmp5, label %for.body, label %for.end, !dbg !776, !noelle.loop.id !777
+

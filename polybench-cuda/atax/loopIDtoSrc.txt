@@ -1,0 +1,50 @@
+Loop with ID: 0
+in file: atax_cpu.bc
+at function: main
+with header terminator:   br i1 %exitCheck.021, label %header.114, label %kcall.end, !tulip.doall.loop.grid !827, !noelle.loop.id !800
+
+Loop with ID: 1
+in file: atax_cpu.bc
+at function: main
+with header terminator:   br i1 %exitCheck.118, label %kcall.configok, label %latch.016, !tulip.doall.loop.block !827, !noelle.loop.id !807
+
+Loop with ID: 2
+in file: atax_cpu.bc
+at function: main
+with header terminator:   br i1 %exitCheck.0, label %header.1, label %kcall.end51, !tulip.doall.loop.grid !827, !noelle.loop.id !813
+
+Loop with ID: 3
+in file: atax_cpu.bc
+at function: main
+with header terminator:   br i1 %exitCheck.1, label %kcall.configok50, label %latch.0, !tulip.doall.loop.block !827, !noelle.loop.id !819
+
+Loop with ID: 4
+in file: atax_cpu.bc
+at function: _ZL10init_arrayiiPdS_
+with header terminator:   br i1 %cmp, label %for.body, label %for.end, !dbg !762, !noelle.loop.id !763
+
+Loop with ID: 5
+in file: atax_cpu.bc
+at function: _ZL10init_arrayiiPdS_
+with header terminator:   br i1 %cmp2, label %for.body3, label %for.end20, !dbg !777, !noelle.loop.id !778
+
+Loop with ID: 6
+in file: atax_cpu.bc
+at function: _ZL10init_arrayiiPdS_
+with header terminator:   br i1 %cmp5, label %for.body6, label %for.end17, !dbg !785, !noelle.loop.id !786
+
+Loop with ID: 7
+in file: atax_cpu.bc
+at function: _ZL11print_arrayiPd
+with header terminator:   br i1 %cmp, label %for.body, label %for.end, !dbg !760, !noelle.loop.id !761
+
+Loop with ID: 8
+in file: atax_cpu.bc
+at function: _Z7kernel3iiPdS_S_S_.1
+with header terminator:   br i1 %cmp3, label %for.body, label %for.end, !dbg !771, !noelle.loop.id !772
+
+Loop with ID: 9
+in file: atax_cpu.bc
+at function: _Z7kernel4iiPdS_S_S_.2
+with header terminator:   br i1 %cmp3, label %for.body, label %for.end, !dbg !771, !noelle.loop.id !772
+

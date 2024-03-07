@@ -1,0 +1,65 @@
+Loop with ID: 0
+in file: adi_cpu.bc
+at function: _ZL10init_arrayiPdS_S_S_
+with header terminator:   br i1 %cmp, label %for.body, label %for.end20, !dbg !763, !noelle.loop.id !764
+
+Loop with ID: 1
+in file: adi_cpu.bc
+at function: _ZL10init_arrayiPdS_S_S_
+with header terminator:   br i1 %cmp2, label %for.body3, label %for.end, !dbg !771, !noelle.loop.id !772
+
+Loop with ID: 2
+in file: adi_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %cmp, label %for.body, label %for.end, !dbg !840, !noelle.loop.id !822
+
+Loop with ID: 3
+in file: adi_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.0, label %header.1, label %kcall.end, !tulip.doall.loop.grid !845, !noelle.loop.id !829
+
+Loop with ID: 4
+in file: adi_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.1, label %kcall.configok, label %latch.0, !tulip.doall.loop.block !845, !noelle.loop.id !846
+
+Loop with ID: 5
+in file: adi_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.021, label %header.114, label %kcall.end56, !tulip.doall.loop.grid !845, !noelle.loop.id !850
+
+Loop with ID: 6
+in file: adi_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_
+with header terminator:   br i1 %exitCheck.118, label %kcall.configok55, label %latch.016, !tulip.doall.loop.block !845, !noelle.loop.id !851
+
+Loop with ID: 7
+in file: adi_cpu.bc
+at function: _ZL11print_arrayiPd
+with header terminator:   br i1 %cmp, label %for.body, label %for.end10, !dbg !760, !noelle.loop.id !761
+
+Loop with ID: 8
+in file: adi_cpu.bc
+at function: _ZL11print_arrayiPd
+with header terminator:   br i1 %cmp2, label %for.body3, label %for.end, !dbg !768, !noelle.loop.id !769
+
+Loop with ID: 9
+in file: adi_cpu.bc
+at function: _Z19kernel_column_sweepiiPdS_S_S_dddddd.1
+with header terminator:   br i1 %cmp19, label %for.body, label %for.end, !dbg !795, !noelle.loop.id !796
+
+Loop with ID: 10
+in file: adi_cpu.bc
+at function: _Z19kernel_column_sweepiiPdS_S_S_dddddd.1
+with header terminator:   br i1 %cmp81, label %for.body82, label %for.end103, !dbg !863, !noelle.loop.id !864
+
+Loop with ID: 11
+in file: adi_cpu.bc
+at function: _Z16kernel_row_sweepiiPdS_S_S_dddddd.2
+with header terminator:   br i1 %cmp19, label %for.body, label %for.end, !dbg !795, !noelle.loop.id !796
+
+Loop with ID: 12
+in file: adi_cpu.bc
+at function: _Z16kernel_row_sweepiiPdS_S_S_dddddd.2
+with header terminator:   br i1 %cmp81, label %for.body82, label %for.end103, !dbg !863, !noelle.loop.id !864
+

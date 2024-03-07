@@ -1,0 +1,55 @@
+Loop with ID: 0
+in file: bicg_cpu.bc
+at function: _ZL10init_arrayiiPdS_S_
+with header terminator:   br i1 %cmp, label %for.body, label %for.end, !dbg !763, !noelle.loop.id !764
+
+Loop with ID: 1
+in file: bicg_cpu.bc
+at function: _ZL10init_arrayiiPdS_S_
+with header terminator:   br i1 %cmp2, label %for.body3, label %for.end24, !dbg !778, !noelle.loop.id !779
+
+Loop with ID: 2
+in file: bicg_cpu.bc
+at function: _ZL10init_arrayiiPdS_S_
+with header terminator:   br i1 %cmp9, label %for.body10, label %for.end21, !dbg !791, !noelle.loop.id !792
+
+Loop with ID: 3
+in file: bicg_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_S_
+with header terminator:   br i1 %exitCheck.0, label %header.1, label %kcall.end, !tulip.doall.loop.grid !810, !noelle.loop.id !796
+
+Loop with ID: 4
+in file: bicg_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_S_
+with header terminator:   br i1 %exitCheck.1, label %kcall.configok, label %latch.0, !tulip.doall.loop.block !810, !noelle.loop.id !802
+
+Loop with ID: 5
+in file: bicg_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_S_
+with header terminator:   br i1 %exitCheck.022, label %header.115, label %kcall.end39, !tulip.doall.loop.grid !810, !noelle.loop.id !813
+
+Loop with ID: 6
+in file: bicg_cpu.bc
+at function: _ZL6kerneliiPdS_S_S_S_
+with header terminator:   br i1 %exitCheck.119, label %kcall.configok38, label %latch.017, !tulip.doall.loop.block !810, !noelle.loop.id !814
+
+Loop with ID: 7
+in file: bicg_cpu.bc
+at function: _ZL11print_arrayiiPdS_
+with header terminator:   br i1 %cmp, label %for.body, label %for.end, !dbg !762, !noelle.loop.id !763
+
+Loop with ID: 8
+in file: bicg_cpu.bc
+at function: _ZL11print_arrayiiPdS_
+with header terminator:   br i1 %cmp4, label %for.body5, label %for.end16, !dbg !784, !noelle.loop.id !785
+
+Loop with ID: 9
+in file: bicg_cpu.bc
+at function: _Z8kernel_qiiPdS_S_S_S_.1
+with header terminator:   br i1 %cmp3, label %for.body, label %for.end, !dbg !774, !noelle.loop.id !775
+
+Loop with ID: 10
+in file: bicg_cpu.bc
+at function: _Z8kernel_siiPdS_S_S_S_.2
+with header terminator:   br i1 %cmp3, label %for.body, label %for.end, !dbg !774, !noelle.loop.id !775
+
