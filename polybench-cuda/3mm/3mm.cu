@@ -92,24 +92,54 @@ static void kernel(int ni, int nj, int nk, int nl, int nm,
                    double *C,
                    double *D,
                    double *G) {
+  double *dev_A;
+  double *dev_B;
+  double *dev_C;
+  double *dev_D;
+  double *dev_E;
+  double *dev_F;
+  double *dev_G;
+  cudaMalloc(&dev_A, ni*nk*sizeof(double));
+  cudaMalloc(&dev_B, nk*nj*sizeof(double));
+  cudaMalloc(&dev_C, nl*nj*sizeof(double));
+  cudaMalloc(&dev_D, ni*nl*sizeof(double));
+  cudaMalloc(&dev_E, ni*nj*sizeof(double));
+  cudaMalloc(&dev_F, nj*nl*sizeof(double));
+  cudaMalloc(&dev_G, ni*nl*sizeof(double));
+  cudaMemcpy(dev_A, A, ni*nk*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_B, B, nk*nj*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_C, C, nl*nj*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_D, D, ni*nl*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_E, E, ni*nj*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_F, F, nj*nl*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_G, G, ni*nl*sizeof(double), cudaMemcpyHostToDevice);
+
   unsigned threadsPerBlock = 256;
   dim3 block(threadsPerBlock / 32, 32, 1);
 
   {
     dim3 grid(num_blocks(ni, block.x), num_blocks(nj, block.y), 1);
-    kernel_A_mul_B<<<grid, block>>>(ni, nj, nk, E, A, B);
+    kernel_A_mul_B<<<grid, block>>>(ni, nj, nk, dev_E, dev_A, dev_B);
   }
 
 
   {
     dim3 grid(num_blocks(nj, block.x), num_blocks(nl, block.y), 1);
-    kernel_A_mul_B<<<grid, block>>>(nj, nl, nm, F, C, D);
+    kernel_A_mul_B<<<grid, block>>>(nj, nl, nm, dev_F, dev_C, dev_D);
   }
 
   {
     dim3 grid(num_blocks(ni, block.x), num_blocks(nl, block.y), 1);
-    kernel_A_mul_B<<<grid, block>>>(ni, nl, nj, G, E, F);
+    kernel_A_mul_B<<<grid, block>>>(ni, nl, nj, dev_G, dev_E, dev_F);
   }
+
+  cudaMemcpy(G, dev_G, ni * nl * sizeof(double), cudaMemcpyDeviceToHost);
+  cudaFree((void*)dev_A);
+  cudaFree((void*)dev_B);
+  cudaFree((void*)dev_C);
+  cudaFree((void*)dev_E);
+  cudaFree((void*)dev_F);
+  cudaFree((void*)dev_G);
 }
 
 int main(int argc, char** argv)
@@ -143,33 +173,11 @@ int main(int argc, char** argv)
 
 
 
-  double *dev_A;
-  double *dev_B;
-  double *dev_C;
-  double *dev_D;
-  double *dev_E;
-  double *dev_F;
-  double *dev_G;
-  cudaMalloc(&dev_A, ni*nk*sizeof(double));
-  cudaMalloc(&dev_B, nk*nj*sizeof(double));
-  cudaMalloc(&dev_C, nl*nj*sizeof(double));
-  cudaMalloc(&dev_D, ni*nl*sizeof(double));
-  cudaMalloc(&dev_E, ni*nj*sizeof(double));
-  cudaMalloc(&dev_F, nj*nl*sizeof(double));
-  cudaMalloc(&dev_G, ni*nl*sizeof(double));
-  cudaMemcpy(dev_A, A, ni*nk*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_B, B, nk*nj*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_C, C, nl*nj*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_D, D, ni*nl*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_E, E, ni*nj*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_F, F, nj*nl*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_G, G, ni*nl*sizeof(double), cudaMemcpyHostToDevice);
 
 
-  kernel(ni, nj, nk, nl, nm, dev_E, dev_A, dev_B, dev_F, dev_C, dev_D, dev_G);
+  kernel(ni, nj, nk, nl, nm, E, A, B, F, C, D, G);
 
 
-  cudaMemcpy(G, dev_G, ni * nl * sizeof(double), cudaMemcpyDeviceToHost);
 
   if (dump_code == 1) print_array(ni, nl, G);
 

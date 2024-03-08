@@ -31,14 +31,26 @@ __global__ void kernel_stencil(int n, double *A, double *B) {
 
 static void kernel(int tsteps, int n,
                    double *A, double *B) {
+
+  double *dev_A;
+  double *dev_B;
+  cudaMalloc(&dev_A, n*n*sizeof(double));
+  cudaMalloc(&dev_B, n*n*sizeof(double));
+  cudaMemcpy(dev_A, A, n*n*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_B, B, n*n*sizeof(double), cudaMemcpyHostToDevice);
+
   const unsigned int threadsPerBlock = 256;
 
   for (int t = 1; t <= tsteps; t++) {
     dim3 block(threadsPerBlock / 32, 32, 1);
     dim3 grid(num_blocks(n - 2, block.x), num_blocks(n - 2, block.y), 1);
-    kernel_stencil<<<grid, block>>>(n, A, B);
-    kernel_stencil<<<grid, block>>>(n, B, A);
+    kernel_stencil<<<grid, block>>>(n, dev_A, dev_B);
+    kernel_stencil<<<grid, block>>>(n, dev_B, dev_A);
   }
+
+  cudaMemcpy(A, dev_A, n*n*sizeof(double), cudaMemcpyDeviceToHost);
+  cudaFree((void*)dev_A);
+  cudaFree((void*)dev_B);
 }
 
   static
@@ -96,16 +108,8 @@ int main(int argc, char** argv)
   init_array (n, A, B);
 
 
-  double *dev_A;
-  double *dev_B;
-  cudaMalloc(&dev_A, n*n*sizeof(double));
-  cudaMalloc(&dev_B, n*n*sizeof(double));
-  cudaMemcpy(dev_A, A, n*n*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_B, B, n*n*sizeof(double), cudaMemcpyHostToDevice);
 
-
-  kernel(tsteps, n, dev_A, dev_B);
-  cudaMemcpy(A, dev_A, n*n*sizeof(double), cudaMemcpyDeviceToHost);
+  kernel(tsteps, n, A, B);
 
 
 
@@ -114,8 +118,6 @@ int main(int argc, char** argv)
 
   free((void*)A);;
   free((void*)B);;
-  cudaFree((void*)dev_A);
-  cudaFree((void*)dev_B);
 
   return 0;
 }

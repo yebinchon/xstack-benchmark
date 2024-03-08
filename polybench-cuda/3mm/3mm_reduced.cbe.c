@@ -87,11 +87,12 @@ uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
 uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void _ZL10init_arrayiiiiiPdS_S_S_S_S_S_(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void _ZL6kerneliiiiiPdS_S_S_S_S_S_(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void _ZL11print_arrayiiPd(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
+uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
+uint32_t cudaFree(uint8_t*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z14kernel_A_mul_BiiiPdS_S__OC_1(uint32_t, uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z14kernel_A_mul_BiiiPdS_S__OC_2(uint32_t, uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
@@ -154,21 +155,6 @@ int main(int argc, char ** argv) {
   uint8_t* E;
   uint8_t* F;
   uint8_t* G;
-  uint8_t* dev_A;
-  uint8_t* dev_B;
-  uint8_t* dev_C;
-  uint8_t* dev_D;
-  uint8_t* dev_E;
-  uint8_t* dev_F;
-  uint8_t* dev_G;
-  uint8_t* _1;
-  uint8_t* _2;
-  uint8_t* _3;
-  uint8_t* _4;
-  uint8_t* _5;
-  uint8_t* _6;
-  uint8_t* _7;
-  uint8_t* _8;
 
   dump_code = atoi(argv[1]);
   ni = atoi(argv[2]);
@@ -185,23 +171,8 @@ int main(int argc, char ** argv) {
   G = malloc(ni * nl * 8);
   _ZL10init_arrayiiiiiPdS_S_S_S_S_S_(ni, nj, nk, nl, nm, ((double*)A), ((double*)B), ((double*)C), ((double*)D), ((double*)E), ((double*)F), ((double*)G));
 ;
-  dev_A = malloc(ni * nk * 8);
-  dev_B = malloc(nk * nj * 8);
-  dev_C = malloc(nl * nj * 8);
-  dev_D = malloc(ni * nl * 8);
-  dev_E = malloc(ni * nj * 8);
-  dev_F = malloc(nj * nl * 8);
-  dev_G = malloc(ni * nl * 8);
-  _1 = memcpy(((uint8_t*)((double*)dev_A)), ((uint8_t*)((double*)A)), ni * nk * 8);
-  _2 = memcpy(((uint8_t*)((double*)dev_B)), ((uint8_t*)((double*)B)), nk * nj * 8);
-  _3 = memcpy(((uint8_t*)((double*)dev_C)), ((uint8_t*)((double*)C)), nl * nj * 8);
-  _4 = memcpy(((uint8_t*)((double*)dev_D)), ((uint8_t*)((double*)D)), ni * nl * 8);
-  _5 = memcpy(((uint8_t*)((double*)dev_E)), ((uint8_t*)((double*)E)), ni * nj * 8);
-  _6 = memcpy(((uint8_t*)((double*)dev_F)), ((uint8_t*)((double*)F)), nj * nl * 8);
-  _7 = memcpy(((uint8_t*)((double*)dev_G)), ((uint8_t*)((double*)G)), ni * nl * 8);
-  _ZL6kerneliiiiiPdS_S_S_S_S_S_(ni, nj, nk, nl, nm, ((double*)dev_E), ((double*)dev_A), ((double*)dev_B), ((double*)dev_F), ((double*)dev_C), ((double*)dev_D), ((double*)dev_G));
+  _ZL6kerneliiiiiPdS_S_S_S_S_S_(ni, nj, nk, nl, nm, ((double*)E), ((double*)A), ((double*)B), ((double*)F), ((double*)C), ((double*)D), ((double*)G));
 ;
-  _8 = memcpy(((uint8_t*)((double*)G)), ((uint8_t*)((double*)dev_G)), ni * nl * 8);
   if (dump_code == 1) {
 _ZL11print_arrayiiPd(ni, nl, ((double*)G));
   }
@@ -277,112 +248,147 @@ void _ZL6kerneliiiiiPdS_S_S_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32
   struct l_struct_struct_OC_dim3 block;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp2;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp56;    /* Address-exposed local */
   struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp2_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp9;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp10;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp9_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp10_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp20;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp21;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp20_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp21_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp56_2e_coerce;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp63;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp64;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp63_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp64_2e_coerce;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp74;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp75;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp74_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp75_2e_coerce;    /* Address-exposed local */
+  uint8_t* dev_A;
+  uint8_t* dev_B;
+  uint8_t* dev_C;
+  uint8_t* dev_D;
+  uint8_t* dev_E;
+  uint8_t* dev_F;
+  uint8_t* dev_G;
+  uint8_t* _1;
+  uint8_t* _2;
+  uint8_t* _3;
+  uint8_t* _4;
+  uint8_t* _5;
+  uint8_t* _6;
+  uint8_t* _7;
   uint32_t div;
-  int32_t call;
-  int32_t call1;
+  int32_t call54;
+  int32_t call55;
+  uint8_t* _8;
   uint8_t* _9;
   uint8_t* _10;
   uint8_t* _11;
-  uint8_t* _12;
   uint32_t i;
   uint32_t j;
   uint32_t k;
   uint32_t l;
-  int32_t call6;
-  int32_t call8;
+  int32_t call60;
+  int32_t call62;
+  uint8_t* _12;
   uint8_t* _13;
   uint8_t* _14;
   uint8_t* _15;
+  int32_t call71;
+  int32_t call73;
   uint8_t* _16;
-  int32_t call17;
-  int32_t call19;
   uint8_t* _17;
   uint8_t* _18;
   uint8_t* _19;
   uint8_t* _20;
 
+  dev_A = malloc(ni * nk * 8);
+  dev_B = malloc(nk * nj * 8);
+  dev_C = malloc(nl * nj * 8);
+  dev_D = malloc(ni * nl * 8);
+  dev_E = malloc(ni * nj * 8);
+  dev_F = malloc(nj * nl * 8);
+  dev_G = malloc(ni * nl * 8);
+  memcpy(((uint8_t*)((double*)dev_A)), ((uint8_t*)A), ni * nk * 8);
+  memcpy(((uint8_t*)((double*)dev_B)), ((uint8_t*)B), nk * nj * 8);
+  memcpy(((uint8_t*)((double*)dev_C)), ((uint8_t*)C), nl * nj * 8);
+  memcpy(((uint8_t*)((double*)dev_D)), ((uint8_t*)D), ni * nl * 8);
+  memcpy(((uint8_t*)((double*)dev_E)), ((uint8_t*)E), ni * nj * 8);
+  memcpy(((uint8_t*)((double*)dev_F)), ((uint8_t*)F), nj * nl * 8);
+  memcpy(((uint8_t*)((double*)dev_G)), ((uint8_t*)G), ni * nl * 8);
   div = (256 / 32);
   block.field0 = div;
   block.field1 = 32;
   block.field2 = 1;
-  call = _ZL10num_blocksii(ni, block.field0);
-  call1 = _ZL10num_blocksii(nj, block.field1);
-  grid.field0 = call;
-  grid.field1 = call1;
+  call54 = _ZL10num_blocksii(ni, block.field0);
+  call55 = _ZL10num_blocksii(nj, block.field1);
+  grid.field0 = call54;
+  grid.field1 = call55;
   grid.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp2)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp56)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&agg_2e_tmp2)), 12);
-#pragma omp target teams distribute
-for(int32_t i = 0; i < call;   i = i + 1){
+  memcpy(((uint8_t*)(&agg_2e_tmp56_2e_coerce)), ((uint8_t*)(&agg_2e_tmp56)), 12);
+#pragma omp target teams distribute map(to: dev_A[0:ni * nk * 8], dev_B[0:nk * nj * 8], dev_C[0:nl * nj * 8], dev_D[0:ni * nl * 8], dev_E[0:ni * nj * 8], dev_F[0:nj * nl * 8]) map(tofrom: dev_G[0:ni * nl * 8])
+for(int32_t i = 0; i < call54;   i = i + 1){
 
-for(int32_t j = 0; j < call1;   j = j + 1){
+for(int32_t j = 0; j < call55;   j = j + 1){
 #pragma omp parallel for
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z14kernel_A_mul_BiiiPdS_S__OC_1(ni, nj, nk, E, A, B, call, call1, 1, div, 32, 1, i, j, 0, k, l, 0);
+_Z14kernel_A_mul_BiiiPdS_S__OC_1(ni, nj, nk, ((double*)dev_E), ((double*)dev_A), ((double*)dev_B), call54, call55, 1, div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
 }
-  call6 = _ZL10num_blocksii(nj, block.field0);
-  call8 = _ZL10num_blocksii(nl, block.field1);
-  grid.field0 = call6;
-  grid.field1 = call8;
+  call60 = _ZL10num_blocksii(nj, block.field0);
+  call62 = _ZL10num_blocksii(nl, block.field1);
+  grid.field0 = call60;
+  grid.field1 = call62;
   grid.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp9)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp10)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp9_2e_coerce)), ((uint8_t*)(&agg_2e_tmp9)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp10_2e_coerce)), ((uint8_t*)(&agg_2e_tmp10)), 12);
-#pragma omp target teams distribute
-for(int32_t i = 0; i < call6;   i = i + 1){
+  memcpy(((uint8_t*)(&agg_2e_tmp63)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp64)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp63_2e_coerce)), ((uint8_t*)(&agg_2e_tmp63)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp64_2e_coerce)), ((uint8_t*)(&agg_2e_tmp64)), 12);
+#pragma omp target teams distribute map(to: dev_A[0:ni * nk * 8], dev_B[0:nk * nj * 8], dev_C[0:nl * nj * 8], dev_D[0:ni * nl * 8], dev_E[0:ni * nj * 8], dev_F[0:nj * nl * 8]) map(tofrom: dev_G[0:ni * nl * 8])
+for(int32_t i = 0; i < call60;   i = i + 1){
 
-for(int32_t j = 0; j < call8;   j = j + 1){
+for(int32_t j = 0; j < call62;   j = j + 1){
 #pragma omp parallel for
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z14kernel_A_mul_BiiiPdS_S__OC_2(nj, nl, nm, F, C, D, call6, call8, 1, div, 32, 1, i, j, 0, k, l, 0);
+_Z14kernel_A_mul_BiiiPdS_S__OC_2(nj, nl, nm, ((double*)dev_F), ((double*)dev_C), ((double*)dev_D), call60, call62, 1, div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
 }
-  call17 = _ZL10num_blocksii(ni, block.field0);
-  call19 = _ZL10num_blocksii(nl, block.field1);
-  grid.field0 = call17;
-  grid.field1 = call19;
+  call71 = _ZL10num_blocksii(ni, block.field0);
+  call73 = _ZL10num_blocksii(nl, block.field1);
+  grid.field0 = call71;
+  grid.field1 = call73;
   grid.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp20)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp21)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp20_2e_coerce)), ((uint8_t*)(&agg_2e_tmp20)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp21_2e_coerce)), ((uint8_t*)(&agg_2e_tmp21)), 12);
-#pragma omp target teams distribute
-for(int32_t i = 0; i < call17;   i = i + 1){
+  memcpy(((uint8_t*)(&agg_2e_tmp74)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp75)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp74_2e_coerce)), ((uint8_t*)(&agg_2e_tmp74)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp75_2e_coerce)), ((uint8_t*)(&agg_2e_tmp75)), 12);
+#pragma omp target teams distribute map(to: dev_A[0:ni * nk * 8], dev_B[0:nk * nj * 8], dev_C[0:nl * nj * 8], dev_D[0:ni * nl * 8], dev_E[0:ni * nj * 8], dev_F[0:nj * nl * 8]) map(tofrom: dev_G[0:ni * nl * 8])
+for(int32_t i = 0; i < call71;   i = i + 1){
 
-for(int32_t j = 0; j < call19;   j = j + 1){
+for(int32_t j = 0; j < call73;   j = j + 1){
 #pragma omp parallel for
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z14kernel_A_mul_BiiiPdS_S__OC_3(ni, nl, nj, G, E, F, call17, call19, 1, div, 32, 1, i, j, 0, k, l, 0);
+_Z14kernel_A_mul_BiiiPdS_S__OC_3(ni, nl, nj, ((double*)dev_G), ((double*)dev_E), ((double*)dev_F), call71, call73, 1, div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
 }
-  return;
+  memcpy(((uint8_t*)G), ((uint8_t*)((double*)dev_G)), ni * nl * 8);
+free(((uint8_t*)((double*)dev_A)));
+free(((uint8_t*)((double*)dev_B)));
+free(((uint8_t*)((double*)dev_C)));
+free(((uint8_t*)((double*)dev_E)));
+free(((uint8_t*)((double*)dev_F)));
+free(((uint8_t*)((double*)dev_G)));
 }
 
 
