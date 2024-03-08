@@ -271,7 +271,7 @@ for(int32_t j = 0; j < call27;   j = j + 1){
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z10kernel_deviiiddPdS_S__OC_1(ni, nj, nk, alpha, beta, C, A, B, call26, call27, 1, div, 32, 1, i, j, 0, k, l, 0);
+_Z10kernel_deviiiddPdS_S__OC_1(ni, nj, nk, alpha, beta, ((double*)dev_C), ((double*)dev_A), ((double*)dev_B), call26, call27, 1, div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
