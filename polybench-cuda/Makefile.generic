@@ -1,6 +1,7 @@
 RUN_TIMEOUT?=7200 # 2 hours.
 CUDAFE=/u/zujunt/noelle-workspace/CudaFE
 LLVM18=/u/zujunt/noelle-workspace/polygeist-llvm-install
+NOELLE=/u/zujunt/noelle-workspace/noelle/install
 
 nvtarget.exe: ${BMARK}_cpu.cbe.c
 	clang -fopenmp --offload-arch=native ${BMARK}_cpu.cbe.c -O3 -c -o ${BMARK}_nvtarget.o
@@ -18,13 +19,18 @@ ${BMARK}_linked.bc: ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll
 
 ${BMARK}_cpu.bc: ${BMARK}_linked.bc
 	#opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
-	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg -indvars ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+
+#${BMARK}_pdg_embed.bc:${BMARK}_cpu.bc
+#	noelle-load -PDGAnalysis -noelle-pdg-verbose=3 -noelle-pdg-embed ${BMARK}_svf.bc -o $@
 
 ${BMARK}_loopid.bc: ${BMARK}_cpu.bc
 	noelle-meta-loop-embed $< -o $@
+	noelle-parallel-load -load ${NOELLE}/lib/Planner.so -planner $@ -o $@ 
+
 
 ${BMARK}_reduced.bc: ${BMARK}_loopid.bc
-	noelle-load -load ${CUDAFE}/build/NoelleReduction/libNoelleReduction.so -noelle-reduction $< -o $@
+	noelle-load -load ${NOELLE}/lib/ParallelizationTechnique.so -load ${NOELLE}/lib/DOALL.so -load ${NOELLE}/lib/DSWP.so -load ${NOELLE}/lib/Heuristics.so -load ${NOELLE}/lib/Parallelizer.so -load ${CUDAFE}/build/NoelleDOALL/libNoelleDOALL.so -noelle-verbose=3 -noelle-doall $< -o $@
 
 ${BMARK}_reduced.cbe.c: ${BMARK}_reduced.bc
 	splendid $< 2> debug
