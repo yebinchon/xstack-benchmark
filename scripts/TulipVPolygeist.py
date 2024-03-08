@@ -20,14 +20,15 @@ def clean_all_bmarks(root_path, bmark_list, result_path):
   os.system("rm -rf *")
   for bmark in bmark_list:
     os.chdir(os.path.join(root_path, bmark))
+    print(os.getcwd())
     make_process = subprocess.Popen(["make", "clean"],
         stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
     if make_process.wait() != 0:
       print(colored("Clean failed for %s" % bmark, 'red'))
 
-    print("Finish cleaning")
-    return 0
+  print("Finish cleaning")
+  return 0
 
 def get_time(root_path, bmark, test_types):
   os.chdir(os.path.join(root_path, bmark))
@@ -152,8 +153,8 @@ def set_config():
   config = {}
   config['root_path'] = os.path.join(os.getcwd(), "../polybench-cuda")
 
-  #bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv']
-  bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv']
+  bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'adi', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv']
+  #bmark_list = ['syrk', 'syr2k', 'gemm', '2mm', '3mm', 'doitgen', 'fdtd-2d', 'gemver', 'jacobi-1d-imper', 'jacobi-2d-imper', 'mvt', 'atax', 'bicg', 'gesummv']
   #bmark_list = ['syrk', '2mm']
 
   config['core_num'] = args.core_num
