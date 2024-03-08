@@ -108,6 +108,10 @@ static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
   uint32_t r = a + b;
   return r;
 }
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
 static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
@@ -124,7 +128,7 @@ static __forceinline uint32_t llvm_sdiv_u32(int32_t a, int32_t b) {
   uint32_t r = a / b;
   return r;
 }
-static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
+static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
   uint32_t r = a % b;
   return r;
 }
@@ -168,17 +172,17 @@ free(((uint8_t*)((double*)r)));
 
 void _ZL10init_arrayiiPdS_S_(uint32_t nx, uint32_t ny, double* A, double* r, double* p) {
   int64_t i;
-  int32_t j;
+  int64_t j;
 
 #pragma omp parallel for
-for(int32_t i = 0; i < ny;   i = i + 1){
+for(int64_t i = 0; i < ny;   i = i + 1){
   p[i] = (double)(i) * 3.1415926535897931;
 }
-
-for(int32_t i = 0; i < nx;   i = i + 1){
+#pragma omp parallel for
+for(int64_t i = 0; i < nx;   i = i + 1){
   r[i] = (double)(i) * 3.1415926535897931;
 
-for(int32_t j = 0; j < ny;   j = j + 1){
+for(int64_t j = 0; j < ny;   j = j + 1){
   A[(i * ny + j)] = (double)(i) * (double)((j + 1)) / (double)(nx);
 }
 }
@@ -235,7 +239,7 @@ void _ZL6kerneliiPdS_S_S_S_(uint32_t m, uint32_t n, double* A, double* s, double
   agg_2e_tmp31.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp31_2e_coerce)), ((uint8_t*)(&agg_2e_tmp31)), 12);
-#pragma omp target teams distribute map(to: dev_p[0:n * 8], dev_r[0:m * 8], dev_A[0:m * n * 8]) map(tofrom: dev_s[0:n * 8], dev_q[0:m * 8])
+#pragma omp target teams distribute map(to: dev_A[0:m * n * 8], dev_p[0:n * 8], dev_r[0:m * 8]) map(tofrom: dev_s[0:n * 8], dev_q[0:m * 8])
 for(int32_t i = 0; i < call30;   i = i + 1){
 #pragma omp parallel for
 for(int32_t j = 0; j < 256;   j = j + 1){
@@ -251,7 +255,7 @@ _Z8kernel_qiiPdS_S_S_S__OC_1(m, n, ((double*)dev_A), ((double*)dev_s), ((double*
   agg_2e_tmp35.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp33_2e_coerce)), ((uint8_t*)(&agg_2e_tmp33)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp35_2e_coerce)), ((uint8_t*)(&agg_2e_tmp35)), 12);
-#pragma omp target teams distribute map(to: dev_p[0:n * 8], dev_r[0:m * 8], dev_A[0:m * n * 8]) map(tofrom: dev_s[0:n * 8], dev_q[0:m * 8])
+#pragma omp target teams distribute map(to: dev_A[0:m * n * 8], dev_p[0:n * 8], dev_r[0:m * 8]) map(tofrom: dev_s[0:n * 8], dev_q[0:m * 8])
 for(int32_t i = 0; i < call34;   i = i + 1){
 #pragma omp parallel for
 for(int32_t j = 0; j < 256;   j = j + 1){
@@ -273,16 +277,16 @@ void _ZL11print_arrayiiPdS_(uint32_t nx, uint32_t ny, double* s, double* q) {
   int32_t call17;
 
 
-for(int32_t i = 0; i < ny;   i = i + 1){
+for(int64_t i = 0; i < ny;   i = i + 1){
   uint32_t call = fprintf(stderr, _OC_str, s[i]);
-  if ((int)i % (int)20 == 0) {
+  if (i % 20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
   }
 }
 
-for(int32_t i = 0; i < nx;   i = i + 1){
+for(int64_t i = 0; i < nx;   i = i + 1){
   uint32_t call8 = fprintf(stderr, _OC_str, q[i]);
-  if ((int)i % (int)20 == 0) {
+  if (i % 20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
   }
 }
@@ -303,7 +307,7 @@ void _Z8kernel_qiiPdS_S_S_S__OC_1(uint32_t m, uint32_t n, double* A, double* s, 
   if (i < n) {
   q[i] = 0;
 
-for(int32_t j = 0; j < m;   j = j + 1){
+for(int64_t j = 0; j < m;   j = j + 1){
   q[i] = (q[i] + A[(i * m + j)] * p[j]);
 }
   }
@@ -319,7 +323,7 @@ void _Z8kernel_siiPdS_S_S_S__OC_2(uint32_t m, uint32_t n, double* A, double* s, 
   if (j < m) {
   s[j] = 0;
 
-for(int32_t i = 0; i < n;   i = i + 1){
+for(int64_t i = 0; i < n;   i = i + 1){
   s[j] = (s[j] + r[i] * A[(i * m + j)]);
 }
   }

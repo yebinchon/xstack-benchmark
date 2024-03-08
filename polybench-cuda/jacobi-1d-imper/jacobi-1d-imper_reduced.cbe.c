@@ -108,6 +108,10 @@ static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
   uint32_t r = a + b;
   return r;
 }
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
 static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
@@ -124,7 +128,7 @@ static __forceinline uint32_t llvm_sdiv_u32(int32_t a, int32_t b) {
   uint32_t r = a / b;
   return r;
 }
-static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
+static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
   uint32_t r = a % b;
   return r;
 }
@@ -161,7 +165,7 @@ void _ZL10init_arrayiPdS_(uint32_t n, double* A, double* B) {
   int64_t i;
 
 #pragma omp parallel for
-for(int32_t i = 0; i < n;   i = i + 1){
+for(int64_t i = 0; i < n;   i = i + 1){
   A[i] = ((double)(i) + 2) / (double)(n);
   B[i] = ((double)(i) + 3) / (double)(n);
 }
@@ -237,9 +241,9 @@ void _ZL11print_arrayiPd(uint32_t n, double* A) {
   int32_t call3;
 
 
-for(int32_t i = 0; i < n;   i = i + 1){
+for(int64_t i = 0; i < n;   i = i + 1){
   uint32_t call = fprintf(stderr, _OC_str, A[i]);
-  if ((int)i % (int)20 == 0) {
+  if (i % 20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
   }
 }

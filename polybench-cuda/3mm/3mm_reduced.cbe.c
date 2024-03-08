@@ -108,6 +108,10 @@ static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
   uint32_t r = a + b;
   return r;
 }
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
 static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
@@ -213,55 +217,55 @@ free(((uint8_t*)((double*)G)));
 
 
 void _ZL10init_arrayiiiiiPdS_S_S_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32_t nl, uint32_t nm, double* A, double* B, double* C, double* D, double* E, double* F, double* G) {
-  int32_t i;
-  int32_t j;
+  int64_t i;
+  int64_t j;
 
+#pragma omp parallel for
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t i = 0; i < ni;   i = i + 1){
-
-for(int32_t j = 0; j < nk;   j = j + 1){
+for(int64_t j = 0; j < nk;   j = j + 1){
   A[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < nk;   i = i + 1){
 
-for(int32_t i = 0; i < nk;   i = i + 1){
-
-for(int32_t j = 0; j < nj;   j = j + 1){
+for(int64_t j = 0; j < nj;   j = j + 1){
   B[(i * nk + j)] = (double)(i) * (double)((j + 1)) / (double)(nj);
 }
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < nj;   i = i + 1){
 
-for(int32_t i = 0; i < nj;   i = i + 1){
-
-for(int32_t j = 0; j < nm;   j = j + 1){
+for(int64_t j = 0; j < nm;   j = j + 1){
   C[(i * nj + j)] = (double)(i) * (double)((j + 3)) / (double)(nl);
 }
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < nm;   i = i + 1){
 
-for(int32_t i = 0; i < nm;   i = i + 1){
-
-for(int32_t j = 0; j < nl;   j = j + 1){
+for(int64_t j = 0; j < nl;   j = j + 1){
   D[(i * nm + j)] = (double)(i) * (double)((j + 2)) / (double)(nk);
 }
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t i = 0; i < ni;   i = i + 1){
-
-for(int32_t j = 0; j < nj;   j = j + 1){
+for(int64_t j = 0; j < nj;   j = j + 1){
   E[(i * ni + j)] = 0;
 }
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < nj;   i = i + 1){
 
-for(int32_t i = 0; i < nj;   i = i + 1){
-
-for(int32_t j = 0; j < nl;   j = j + 1){
+for(int64_t j = 0; j < nl;   j = j + 1){
   F[(i * nj + j)] = 0;
 }
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t i = 0; i < ni;   i = i + 1){
-
-for(int32_t j = 0; j < nl;   j = j + 1){
+for(int64_t j = 0; j < nl;   j = j + 1){
   G[(i * ni + j)] = 0;
 }
 }
@@ -326,7 +330,7 @@ for(int32_t i = 0; i < call;   i = i + 1){
 
 for(int32_t j = 0; j < call1;   j = j + 1){
 #pragma omp parallel for
-for(int32_t k = 0; k < div;   k = k + 1){
+for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
 _Z14kernel_A_mul_BiiiPdS_S__OC_1(ni, nj, nk, E, A, B, call, call1, 1, div, 32, 1, i, j, 0, k, l, 0);
@@ -348,7 +352,7 @@ for(int32_t i = 0; i < call6;   i = i + 1){
 
 for(int32_t j = 0; j < call8;   j = j + 1){
 #pragma omp parallel for
-for(int32_t k = 0; k < div;   k = k + 1){
+for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
 _Z14kernel_A_mul_BiiiPdS_S__OC_2(nj, nl, nm, F, C, D, call6, call8, 1, div, 32, 1, i, j, 0, k, l, 0);
@@ -370,7 +374,7 @@ for(int32_t i = 0; i < call17;   i = i + 1){
 
 for(int32_t j = 0; j < call19;   j = j + 1){
 #pragma omp parallel for
-for(int32_t k = 0; k < div;   k = k + 1){
+for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
 _Z14kernel_A_mul_BiiiPdS_S__OC_3(ni, nl, nj, G, E, F, call17, call19, 1, div, 32, 1, i, j, 0, k, l, 0);
@@ -383,14 +387,14 @@ _Z14kernel_A_mul_BiiiPdS_S__OC_3(ni, nl, nj, G, E, F, call17, call19, 1, div, 32
 
 
 void _ZL11print_arrayiiPd(uint32_t ni, uint32_t nl, double* G) {
-  int32_t i;
-  int32_t j;
+  int64_t i;
+  int64_t j;
   int32_t call11;
 
 
-for(int32_t i = 0; i < ni;   i = i + 1){
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t j = 0; j < nl;   j = j + 1){
+for(int64_t j = 0; j < nl;   j = j + 1){
   uint32_t call = fprintf(stderr, _OC_str, G[(i * ni + j)]);
   if ((int)(i * ni + j) % (int)20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
@@ -409,14 +413,14 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 void _Z14kernel_A_mul_BiiiPdS_S__OC_1(uint32_t ni, uint32_t nj, uint32_t nk, double* C, double* A, double* B, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int32_t j;
-  int32_t k;
+  int64_t k;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < ni) {
   if (j < nj) {
 
-for(int32_t k = 0; k < nk;   k = k + 1){
+for(int64_t k = 0; k < nk;   k = k + 1){
   C[(i * nj + j)] = (C[(i * nj + j)] + A[(i * nk + k)] * B[(k * nj + j)]);
 }
   }
@@ -428,14 +432,14 @@ for(int32_t k = 0; k < nk;   k = k + 1){
 void _Z14kernel_A_mul_BiiiPdS_S__OC_2(uint32_t ni, uint32_t nj, uint32_t nk, double* C, double* A, double* B, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int32_t j;
-  int32_t k;
+  int64_t k;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < ni) {
   if (j < nj) {
 
-for(int32_t k = 0; k < nk;   k = k + 1){
+for(int64_t k = 0; k < nk;   k = k + 1){
   C[(i * nj + j)] = (C[(i * nj + j)] + A[(i * nk + k)] * B[(k * nj + j)]);
 }
   }
@@ -447,14 +451,14 @@ for(int32_t k = 0; k < nk;   k = k + 1){
 void _Z14kernel_A_mul_BiiiPdS_S__OC_3(uint32_t ni, uint32_t nj, uint32_t nk, double* C, double* A, double* B, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int32_t j;
-  int32_t k;
+  int64_t k;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < ni) {
   if (j < nj) {
 
-for(int32_t k = 0; k < nk;   k = k + 1){
+for(int64_t k = 0; k < nk;   k = k + 1){
   C[(i * nj + j)] = (C[(i * nj + j)] + A[(i * nk + k)] * B[(k * nj + j)]);
 }
   }

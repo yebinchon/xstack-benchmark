@@ -108,6 +108,10 @@ static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
   uint32_t r = a + b;
   return r;
 }
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
 static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
@@ -164,22 +168,22 @@ free(((uint8_t*)((double*)beta)));
 
 
 void _ZL10init_arrayiiPdS_S_S_(uint32_t ni, uint32_t nj, double* alpha, double* beta, double* C, double* A) {
-  int32_t i;
-  int32_t j;
+  int64_t i;
+  int64_t j;
 
   *alpha = 32412;
   *beta = 2123;
+#pragma omp parallel for
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t i = 0; i < ni;   i = i + 1){
-
-for(int32_t j = 0; j < nj;   j = j + 1){
+for(int64_t j = 0; j < nj;   j = j + 1){
   A[(i * nj + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t i = 0; i < ni;   i = i + 1){
-
-for(int32_t j = 0; j < ni;   j = j + 1){
+for(int64_t j = 0; j < ni;   j = j + 1){
   C[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
@@ -291,14 +295,14 @@ free(((uint8_t*)((double*)dev_beta)));
 
 
 void _ZL11print_arrayiPd(uint32_t ni, double* C) {
-  int32_t i;
-  int32_t j;
+  int64_t i;
+  uint64_t j;
   int32_t call11;
 
 
-for(int32_t i = 0; i < ni;   i = i + 1){
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t j = 0; j < ni;   j = j + 1){
+for(int64_t j = 0; j < ni;   j = j + 1){
   uint32_t call = fprintf(stderr, _OC_str, C[(i * ni + j)]);
   if ((int)(i * ni + j) % (int)20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
@@ -332,14 +336,14 @@ void _Z11kernel_betaiiddPdS__OC_1(uint32_t n, uint32_t m, double alpha, double b
 void _Z14kernel_productiiddPdS__OC_2(uint32_t n, uint32_t m, double alpha, double beta, double* C, double* A, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int32_t j;
-  int32_t k;
+  int64_t k;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < n) {
   if (j <= i) {
 
-for(int32_t k = 0; k < m;   k = k + 1){
+for(int64_t k = 0; k < m;   k = k + 1){
   C[(i * n + j)] = (C[(i * n + j)] + alpha * A[(i * m + k)] * A[(j * m + k)]);
 }
   }

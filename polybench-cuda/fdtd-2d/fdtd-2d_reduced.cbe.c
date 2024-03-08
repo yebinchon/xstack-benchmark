@@ -109,6 +109,10 @@ static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
   uint32_t r = a + b;
   return r;
 }
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
 static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
@@ -168,16 +172,16 @@ free(((uint8_t*)((double*)_fict_)));
 
 void _ZL10init_arrayiiPdS_S_S_(uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* _fict_) {
   int64_t i;
-  int32_t j;
+  int64_t j;
 
 #pragma omp parallel for
-for(int32_t i = 0; i < ny;   i = i + 1){
+for(int64_t i = 0; i < ny;   i = i + 1){
   _fict_[i] = (double)(i);
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < nx;   i = i + 1){
 
-for(int32_t i = 0; i < nx;   i = i + 1){
-
-for(int32_t j = 0; j < ny;   j = j + 1){
+for(int64_t j = 0; j < ny;   j = j + 1){
   ex[(i * ny + j)] = (double)(i) * (double)((j + 1)) / (double)(nx);
   ey[(i * ny + j)] = (double)(i) * (double)((j + 2)) / (double)(ny);
   hz[(i * ny + j)] = (double)(i) * (double)((j + 3)) / (double)(nx);
@@ -332,14 +336,14 @@ _Z9kernel_hziiiPdS_S_S_i_OC_4(tmax, nx, ny, ((double*)dev_ex), ((double*)dev_ey)
 
 
 void _ZL11print_arrayiiPdS_S_(uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz) {
-  int32_t i;
-  int32_t j;
+  int64_t i;
+  int64_t j;
   int32_t call21;
 
 
-for(int32_t i = 0; i < nx;   i = i + 1){
+for(int64_t i = 0; i < nx;   i = i + 1){
 
-for(int32_t j = 0; j < ny;   j = j + 1){
+for(int64_t j = 0; j < ny;   j = j + 1){
   uint32_t call = fprintf(stderr, _OC_str, ex[(i * ny + j)]);
   uint32_t call8 = fprintf(stderr, _OC_str, ey[(i * ny + j)]);
   uint32_t call13 = fprintf(stderr, _OC_str, hz[(i * ny + j)]);

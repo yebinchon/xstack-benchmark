@@ -109,6 +109,10 @@ static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
   uint32_t r = a + b;
   return r;
 }
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
 static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
@@ -125,7 +129,7 @@ static __forceinline uint32_t llvm_sdiv_u32(int32_t a, int32_t b) {
   uint32_t r = a / b;
   return r;
 }
-static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
+static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
   uint32_t r = a % b;
   return r;
 }
@@ -183,12 +187,12 @@ free(((uint8_t*)((double*)z)));
 
 void _ZL10init_arrayiPdS_S_S_S_S_S_S_S_S_S_(uint32_t n, double* alpha, double* beta, double* A, double* u1, double* v1, double* u2, double* v2, double* w, double* x, double* y, double* z) {
   int64_t i;
-  int32_t j;
+  uint64_t j;
 
   *alpha = 43532;
   *beta = 12313;
-
-for(int32_t i = 0; i < n;   i = i + 1){
+#pragma omp parallel for
+for(int64_t i = 0; i < n;   i = i + 1){
   u1[i] = (double)(i);
   u2[i] = (double)((i + 1) / n) / 2;
   v1[i] = (double)((i + 1) / n) / 4;
@@ -198,7 +202,7 @@ for(int32_t i = 0; i < n;   i = i + 1){
   x[i] = 0;
   w[i] = 0;
 
-for(int32_t j = 0; j < n;   j = j + 1){
+for(int64_t j = 0; j < n;   j = j + 1){
   A[(i * n + j)] = (double)(i) * (double)(j) / (double)(n);
 }
 }
@@ -371,9 +375,9 @@ void _ZL11print_arrayiPd(uint32_t n, double* w) {
   int64_t i;
 
 
-for(int32_t i = 0; i < n;   i = i + 1){
+for(int64_t i = 0; i < n;   i = i + 1){
   uint32_t call = fprintf(stderr, _OC_str, w[i]);
-  if ((int)i % (int)20 == 0) {
+  if (i % 20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
   }
 }
@@ -408,7 +412,7 @@ void _Z8kernel_xiddPdS_S_S_S_S_S_S_S__OC_2(uint32_t n, double alpha, double beta
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   if (i < n) {
 
-for(int32_t j = 0; j < n;   j = j + 1){
+for(int64_t j = 0; j < n;   j = j + 1){
   x[i] = (x[i] + beta * A[(j * n + i)] * y[j]);
 }
   }
@@ -434,7 +438,7 @@ void _Z8kernel_widdPdS_S_S_S_S_S_S_S__OC_4(uint32_t n, double alpha, double beta
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   if (i < n) {
 
-for(int32_t j = 0; j < n;   j = j + 1){
+for(int64_t j = 0; j < n;   j = j + 1){
   w[i] = (w[i] + alpha * A[(i * n + j)] * x[j]);
 }
   }

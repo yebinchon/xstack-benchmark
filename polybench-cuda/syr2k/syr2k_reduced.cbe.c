@@ -108,6 +108,10 @@ static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
   uint32_t r = a + b;
   return r;
 }
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
 static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
@@ -167,23 +171,23 @@ free(((uint8_t*)((double*)beta)));
 
 
 void _ZL10init_arrayiiPdS_S_S_S_(uint32_t ni, uint32_t nj, double* alpha, double* beta, double* C, double* A, double* B) {
-  int32_t i;
-  int32_t j;
+  int64_t i;
+  int64_t j;
 
   *alpha = 32412;
   *beta = 2123;
+#pragma omp parallel for
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t i = 0; i < ni;   i = i + 1){
-
-for(int32_t j = 0; j < nj;   j = j + 1){
+for(int64_t j = 0; j < nj;   j = j + 1){
   A[(i * nj + j)] = (double)(i) * (double)(j) / (double)(ni);
   B[(i * nj + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t i = 0; i < ni;   i = i + 1){
-
-for(int32_t j = 0; j < ni;   j = j + 1){
+for(int64_t j = 0; j < ni;   j = j + 1){
   C[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
@@ -252,7 +256,7 @@ void _ZL6kerneliiPdS_S_S_S_(uint32_t n, uint32_t m, double* alpha, double* beta,
   memcpy(((uint8_t*)(&agg_2e_tmp28)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp28_2e_coerce)), ((uint8_t*)(&agg_2e_tmp28)), 12);
-#pragma omp target teams distribute map(to: dev_alpha[0:8], dev_beta[0:8], dev_A[0:n * m * 8], dev_B[0:n * m * 8]) map(tofrom: dev_C[0:n * m * 8])
+#pragma omp target teams distribute map(to: dev_A[0:n * m * 8], dev_B[0:n * m * 8], dev_alpha[0:8], dev_beta[0:8]) map(tofrom: dev_C[0:n * m * 8])
 for(int32_t i = 0; i < call26;   i = i + 1){
 
 for(int32_t j = 0; j < call27;   j = j + 1){
@@ -277,7 +281,7 @@ _Z11kernel_betaiiddPdS_S__OC_1(n, m, *((double*)dev_alpha), *((double*)dev_beta)
   memcpy(((uint8_t*)(&agg_2e_tmp37)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp36_2e_coerce)), ((uint8_t*)(&agg_2e_tmp36)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp37_2e_coerce)), ((uint8_t*)(&agg_2e_tmp37)), 12);
-#pragma omp target teams distribute map(to: dev_alpha[0:8], dev_beta[0:8], dev_A[0:n * m * 8], dev_B[0:n * m * 8]) map(tofrom: dev_C[0:n * m * 8])
+#pragma omp target teams distribute map(to: dev_A[0:n * m * 8], dev_B[0:n * m * 8], dev_alpha[0:8], dev_beta[0:8]) map(tofrom: dev_C[0:n * m * 8])
 for(int32_t i = 0; i < call33;   i = i + 1){
 
 for(int32_t j = 0; j < call35;   j = j + 1){
@@ -300,14 +304,14 @@ free(((uint8_t*)((double*)dev_beta)));
 
 
 void _ZL11print_arrayiPd(uint32_t ni, double* C) {
-  int32_t i;
-  int32_t j;
+  int64_t i;
+  uint64_t j;
   int32_t call11;
 
 
-for(int32_t i = 0; i < ni;   i = i + 1){
+for(int64_t i = 0; i < ni;   i = i + 1){
 
-for(int32_t j = 0; j < ni;   j = j + 1){
+for(int64_t j = 0; j < ni;   j = j + 1){
   uint32_t call = fprintf(stderr, _OC_str, C[(i * ni + j)]);
   if ((int)(i * ni + j) % (int)20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
@@ -341,14 +345,14 @@ void _Z11kernel_betaiiddPdS_S__OC_1(uint32_t n, uint32_t m, double alpha, double
 void _Z14kernel_productiiddPdS_S__OC_2(uint32_t n, uint32_t m, double alpha, double beta, double* C, double* A, double* B, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int32_t j;
-  int32_t k;
+  int64_t k;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < n) {
   if (j <= i) {
 
-for(int32_t k = 0; k < m;   k = k + 1){
+for(int64_t k = 0; k < m;   k = k + 1){
   C[(i * n + j)] = (C[(i * n + j)] + (A[(j * m + k)] * alpha * B[(i * m + k)] + B[(j * m + k)] * alpha * A[(i * m + k)]));
 }
   }

@@ -107,6 +107,10 @@ static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
   uint32_t r = a + b;
   return r;
 }
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
 static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
@@ -123,7 +127,7 @@ static __forceinline uint32_t llvm_sdiv_u32(int32_t a, int32_t b) {
   uint32_t r = a / b;
   return r;
 }
-static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
+static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
   uint32_t r = a % b;
   return r;
 }
@@ -162,24 +166,24 @@ free(((uint8_t*)((double*)C4)));
 
 
 void _ZL10init_arrayiiiPdS_(uint32_t nr, uint32_t nq, uint32_t np, double* A, double* C4) {
-  int32_t i;
-  int32_t j;
-  int32_t k;
+  int64_t i;
+  int64_t j;
+  int64_t k;
 
+#pragma omp parallel for
+for(int64_t i = 0; i < nr;   i = i + 1){
 
-for(int32_t i = 0; i < nr;   i = i + 1){
+for(int64_t j = 0; j < nq;   j = j + 1){
 
-for(int32_t j = 0; j < nq;   j = j + 1){
-
-for(int32_t k = 0; k < np;   k = k + 1){
+for(int64_t k = 0; k < np;   k = k + 1){
   A[((i * np * nq + j * nq) + k)] = ((double)(i) * (double)(j) + (double)(k)) / (double)(np);
 }
 }
 }
+#pragma omp parallel for
+for(int64_t i = 0; i < np;   i = i + 1){
 
-for(int32_t i = 0; i < np;   i = i + 1){
-
-for(int32_t j = 0; j < np;   j = j + 1){
+for(int64_t j = 0; j < np;   j = j + 1){
   C4[(i * np + j)] = (double)(i) * (double)(j) / (double)(np);
 }
 }
@@ -255,19 +259,19 @@ free(((uint8_t*)((double*)dev_C4)));
 
 
 void _ZL11print_arrayiiiPd(uint32_t nr, uint32_t nq, uint32_t np, double* A) {
-  int32_t i;
-  int32_t j;
-  int32_t k;
+  int64_t i;
+  int64_t j;
+  int64_t k;
   int32_t call18;
 
 
-for(int32_t i = 0; i < nr;   i = i + 1){
+for(int64_t i = 0; i < nr;   i = i + 1){
 
-for(int32_t j = 0; j < nq;   j = j + 1){
+for(int64_t j = 0; j < nq;   j = j + 1){
 
-for(int32_t k = 0; k < np;   k = k + 1){
+for(int64_t k = 0; k < np;   k = k + 1){
   uint32_t call = fprintf(stderr, _OC_str, A[((i * nq * np + j * nq) + k)]);
-  if ((int)i % (int)20 == 0) {
+  if (i % 20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
   }
 }
@@ -286,7 +290,7 @@ void _Z10kernel_sumiiiPdS_S__OC_1(uint32_t nr, uint32_t nq, uint32_t np, double*
   int32_t r;
   int32_t q;
   int32_t p;
-  int32_t s;
+  int64_t s;
 
   r = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   q = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
@@ -296,7 +300,7 @@ void _Z10kernel_sumiiiPdS_S__OC_1(uint32_t nr, uint32_t nq, uint32_t np, double*
   if (p < np) {
   sum[((r * nq + q) * np + p)] = 0;
 
-for(int32_t s = 0; s < np;   s = s + 1){
+for(int64_t s = 0; s < np;   s = s + 1){
   sum[((r * nq + q) * np + p)] = (sum[((r * nq + q) * np + p)] + A[((r * nq + q) * np + s)] * C4[(s * np + p)]);
 }
   }

@@ -108,6 +108,10 @@ static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
   uint32_t r = a + b;
   return r;
 }
+static __forceinline uint64_t llvm_add_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a + b;
+  return r;
+}
 static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
@@ -170,13 +174,13 @@ free(((uint8_t*)((double*)dev_B)));
 
 
 void _ZL10init_arrayiPdS_(uint32_t n, double* A, double* B) {
-  int32_t i;
-  int32_t j;
+  int64_t i;
+  uint64_t j;
 
+#pragma omp parallel for
+for(int64_t i = 0; i < n;   i = i + 1){
 
-for(int32_t i = 0; i < n;   i = i + 1){
-
-for(int32_t j = 0; j < n;   j = j + 1){
+for(int64_t j = 0; j < n;   j = j + 1){
   A[(i * n + j)] = ((double)(i) * (double)((j + 2)) + 2) / (double)(n);
   B[(i * n + j)] = ((double)(i) * (double)((j + 3)) + 3) / (double)(n);
 }
@@ -218,11 +222,11 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
 #pragma omp target teams distribute
 for(int32_t j = 0; j < call;   j = j + 1){
-#pragma omp parallel for
+
 for(int32_t k = 0; k < call2;   k = k + 1){
 #pragma omp parallel for
 for(int32_t l = 0; l < 8;   l = l + 1){
-#pragma omp parallel for
+
 for(int32_t m = 0; m < 32;   m = m + 1){
 _Z14kernel_stenciliPdS__OC_1(n, A, B, call, call2, 1, 8, 32, 1, j, k, 0, l, m, 0);
 }
@@ -235,11 +239,11 @@ _Z14kernel_stenciliPdS__OC_1(n, A, B, call, call2, 1, 8, 32, 1, j, k, 0, l, m, 0
   memcpy(((uint8_t*)(&agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&agg_2e_tmp6)), 12);
 #pragma omp target teams distribute
 for(int32_t j = 0; j < call;   j = j + 1){
-#pragma omp parallel for
+
 for(int32_t k = 0; k < call2;   k = k + 1){
 #pragma omp parallel for
 for(int32_t l = 0; l < 8;   l = l + 1){
-#pragma omp parallel for
+
 for(int32_t m = 0; m < 32;   m = m + 1){
 _Z14kernel_stenciliPdS__OC_2(n, B, A, call, call2, 1, 8, 32, 1, j, k, 0, l, m, 0);
 }
@@ -252,14 +256,14 @@ _Z14kernel_stenciliPdS__OC_2(n, B, A, call, call2, 1, 8, 32, 1, j, k, 0, l, m, 0
 
 
 void _ZL11print_arrayiPd(uint32_t n, double* A) {
-  int32_t i;
-  int32_t j;
+  int64_t i;
+  uint64_t j;
   int32_t call11;
 
 
-for(int32_t i = 0; i < n;   i = i + 1){
+for(int64_t i = 0; i < n;   i = i + 1){
 
-for(int32_t j = 0; j < n;   j = j + 1){
+for(int64_t j = 0; j < n;   j = j + 1){
   uint32_t call = fprintf(stderr, _OC_str, A[(i * n + j)]);
   if ((int)(i * n + j) % (int)20 == 0) {
   fprintf(stderr, _OC_str_OC_1);
