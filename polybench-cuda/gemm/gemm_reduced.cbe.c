@@ -87,7 +87,7 @@ uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
 uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void _ZL10init_arrayiiiPdS_S_S_S_(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-void _ZL6kerneliiiddPdS_S_(uint32_t, uint32_t, uint32_t, double, double, double*, double*, double*) __ATTRIBUTELIST__((noinline));
+void _ZL6kerneliiiPdS_S_S_S_(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void _ZL11print_arrayiiPd(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
@@ -161,7 +161,7 @@ int main(int argc, char ** argv) {
   C = malloc(ni * nj * 8);
   _ZL10init_arrayiiiPdS_S_S_S_(ni, nj, nk, ((double*)alpha), ((double*)beta), ((double*)C), ((double*)A), ((double*)B));
 ;
-  _ZL6kerneliiiddPdS_S_(ni, nj, nk, *((double*)alpha), *((double*)beta), ((double*)C), ((double*)A), ((double*)B));
+  _ZL6kerneliiiPdS_S_S_S_(ni, nj, nk, ((double*)alpha), ((double*)beta), ((double*)C), ((double*)A), ((double*)B));
 ;
   if (dump_code == 1) {
 _ZL11print_arrayiiPd(ni, nj, ((double*)C));
@@ -206,9 +206,7 @@ for(int64_t j = 0; j < nj;   j = j + 1){
 }
 
 
-void _ZL6kerneliiiddPdS_S_(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, double beta, double* C, double* A, double* B) {
-  double alpha;    /* Address-exposed local */
-  double beta;    /* Address-exposed local */
+void _ZL6kerneliiiPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, double* alpha, double* beta, double* C, double* A, double* B) {
   struct l_struct_struct_OC_dim3 block;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
@@ -238,8 +236,6 @@ void _ZL6kerneliiiddPdS_S_(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, 
   uint32_t l;
   uint8_t* _10;
 
-  alpha = alpha;
-  beta = beta;
   dev_A = malloc(ni * nk * 8);
   dev_B = malloc(nk * nj * 8);
   dev_C = malloc(ni * nj * 8);
@@ -248,8 +244,8 @@ void _ZL6kerneliiiddPdS_S_(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, 
   memcpy(((uint8_t*)((double*)dev_A)), ((uint8_t*)A), ni * nk * 8);
   memcpy(((uint8_t*)((double*)dev_B)), ((uint8_t*)B), nk * nj * 8);
   memcpy(((uint8_t*)((double*)dev_C)), ((uint8_t*)C), ni * nj * 8);
-  memcpy(((uint8_t*)((double*)dev_alpha)), ((uint8_t*)(&alpha)), 8);
-  memcpy(((uint8_t*)((double*)dev_beta)), ((uint8_t*)(&beta)), 8);
+  memcpy(((uint8_t*)((double*)dev_alpha)), ((uint8_t*)alpha), 8);
+  memcpy(((uint8_t*)((double*)dev_beta)), ((uint8_t*)beta), 8);
   div = (256 / 32);
   block.field0 = div;
   block.field1 = 32;
@@ -271,7 +267,7 @@ for(int32_t j = 0; j < call27;   j = j + 1){
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z10kernel_deviiiddPdS_S__OC_1(ni, nj, nk, alpha, beta, ((double*)dev_C), ((double*)dev_A), ((double*)dev_B), call26, call27, 1, div, 32, 1, i, j, 0, k, l, 0);
+_Z10kernel_deviiiddPdS_S__OC_1(ni, nj, nk, *((double*)dev_alpha), *((double*)dev_beta), ((double*)dev_C), ((double*)dev_A), ((double*)dev_B), call26, call27, 1, div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }

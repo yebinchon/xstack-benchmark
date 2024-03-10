@@ -35,8 +35,8 @@ static unsigned num_blocks(int num, int factor) {
 }
 
 static void kernel(int ni, int nj, int nk,
-                   double alpha,
-                   double beta,
+                   double *alpha,
+                   double *beta,
                    double *C, double *A, double *B) {
 
   double *dev_A;
@@ -52,13 +52,13 @@ static void kernel(int ni, int nj, int nk,
   cudaMemcpy(dev_A, A, ni*nk*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_B, B, nk*nj*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_C, C, ni*nj*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_alpha, &alpha, sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_beta, &beta, sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_alpha, alpha, sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_beta, beta, sizeof(double), cudaMemcpyHostToDevice);
 
   unsigned threadsPerBlock = 256;
   dim3 block(threadsPerBlock / 32, 32, 1);
   dim3 grid(num_blocks(ni, block.x), num_blocks(nj, block.y), 1);
-  kernel_dev<<<grid, block>>>(ni, nj, nk, alpha, beta, dev_C, dev_A, dev_B);
+  kernel_dev<<<grid, block>>>(ni, nj, nk, *dev_alpha, *dev_beta, dev_C, dev_A, dev_B);
 
   cudaMemcpy(C, dev_C, ni*nj*sizeof(double), cudaMemcpyDeviceToHost);
   cudaFree((void*)dev_A);
@@ -131,7 +131,7 @@ int main(int argc, char** argv)
 
 
 
-  kernel(ni, nj, nk, *alpha, *beta, C, A, B);
+  kernel(ni, nj, nk, alpha, beta, C, A, B);
 
 
 
