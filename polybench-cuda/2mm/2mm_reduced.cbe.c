@@ -88,7 +88,7 @@ uint32_t cudaLaunch(uint8_t*);
 int16_t _Z10num_blocksss(int16_t, int16_t) __ATTRIBUTELIST__((noinline, nothrow));
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void _ZL10init_arrayiiiiPdS_S_S_S_S_S_(uint32_t, uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-void _ZL6kerneliiiiPdS_S_S_S_S_S_(uint32_t, uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
+void _ZL6kerneliiiiddPdS_S_S_S_(uint32_t, uint32_t, uint32_t, uint32_t, double, double, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void _ZL11print_arrayiiPd(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
@@ -146,13 +146,13 @@ int16_t _Z10num_blocksss(int16_t num, int16_t factor) {
 
 
 int main(int argc, char ** argv) {
+  double alpha;    /* Address-exposed local */
+  double beta;    /* Address-exposed local */
   int32_t dump_code;
   int64_t call2;
   int64_t call4;
   int64_t call7;
   int64_t call10;
-  uint8_t* alpha;
-  uint8_t* beta;
   uint8_t* A;
   uint8_t* B;
   uint8_t* C;
@@ -164,16 +164,14 @@ int main(int argc, char ** argv) {
   call4 = atoi(argv[3]);
   call7 = atoi(argv[4]);
   call10 = atoi(argv[5]);
-  alpha = malloc(8);
-  beta = malloc(8);
   A = malloc(call2 * call7 * 8);
   B = malloc(call7 * call4 * 8);
   C = malloc(call10 * call4 * 8);
   D = malloc(call2 * call10 * 8);
   tmp = malloc(call2 * call4 * 8);
-  _ZL10init_arrayiiiiPdS_S_S_S_S_S_(call2, call4, call7, call10, ((double*)alpha), ((double*)beta), ((double*)A), ((double*)B), ((double*)C), ((double*)D), ((double*)tmp));
+  _ZL10init_arrayiiiiPdS_S_S_S_S_S_(call2, call4, call7, call10, (&alpha), (&beta), ((double*)A), ((double*)B), ((double*)C), ((double*)D), ((double*)tmp));
 ;
-  _ZL6kerneliiiiPdS_S_S_S_S_S_(call2, call4, call7, call10, ((double*)alpha), ((double*)beta), ((double*)tmp), ((double*)A), ((double*)B), ((double*)C), ((double*)D));
+  _ZL6kerneliiiiddPdS_S_S_S_(call2, call4, call7, call10, alpha, beta, ((double*)tmp), ((double*)A), ((double*)B), ((double*)C), ((double*)D));
 ;
   if (dump_code == 1) {
 _ZL11print_arrayiiPd(call2, call7, ((double*)D));
@@ -232,7 +230,7 @@ for(int64_t j = 0; j < nj;   j = j + 1){
 }
 
 
-void _ZL6kerneliiiiPdS_S_S_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32_t nl, double* alpha, double* beta, double* tmp, double* A, double* B, double* C, double* D) {
+void _ZL6kerneliiiiddPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32_t nl, double alpha, double beta, double* tmp, double* A, double* B, double* C, double* D) {
   struct l_struct_struct_OC_dim3 block;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
@@ -295,15 +293,15 @@ void _ZL6kerneliiiiPdS_S_S_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32_
   memcpy(((uint8_t*)(&agg_2e_tmp46)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp46_2e_coerce)), ((uint8_t*)(&agg_2e_tmp46)), 12);
-#pragma omp target teams distribute map(to: dev_tmp[0:ni * nj * 8], dev_B[0:nk * nj * 8], dev_C[0:nl * nj * 8], dev_A[0:ni * nk * 8]) map(tofrom: dev_D[0:ni * nl * 8])
+#pragma omp target teams distribute parallel for map(to: dev_tmp[0:ni * nj * 8], dev_B[0:nk * nj * 8], dev_C[0:nl * nj * 8], dev_A[0:ni * nk * 8]) map(tofrom: dev_D[0:ni * nl * 8])
 for(int32_t i = 0; i < call40;   i = i + 1){
 
 for(int32_t j = 0; j < call44;   j = j + 1){
-#pragma omp parallel for
+//#pragma omp parallel for
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(ni, nj, nk, nl, *alpha, *beta, ((double*)dev_tmp), ((double*)dev_A), ((double*)dev_B), ((double*)dev_C), ((double*)dev_D), call40, call44, 1, div, 32, 1, i, j, 0, k, l, 0);
+_Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(ni, nj, nk, nl, alpha, beta, ((double*)dev_tmp), ((double*)dev_A), ((double*)dev_B), ((double*)dev_C), ((double*)dev_D), call40, call44, 1, div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
@@ -317,15 +315,15 @@ _Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(ni, nj, nk, nl, *alpha, *beta, ((double*
   memcpy(((uint8_t*)(&agg_2e_tmp60)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp59_2e_coerce)), ((uint8_t*)(&agg_2e_tmp59)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp60_2e_coerce)), ((uint8_t*)(&agg_2e_tmp60)), 12);
-#pragma omp target teams distribute map(to: dev_tmp[0:ni * nj * 8], dev_B[0:nk * nj * 8], dev_C[0:nl * nj * 8], dev_A[0:ni * nk * 8]) map(tofrom: dev_D[0:ni * nl * 8])
+#pragma omp target teams distribute parallel for map(to: dev_tmp[0:ni * nj * 8], dev_B[0:nk * nj * 8], dev_C[0:nl * nj * 8], dev_A[0:ni * nk * 8]) map(tofrom: dev_D[0:ni * nl * 8])
 for(int32_t i = 0; i < call52;   i = i + 1){
 
 for(int32_t j = 0; j < call57;   j = j + 1){
-#pragma omp parallel for
+//#pragma omp parallel for
 for(int32_t k = 0; k < 8;   k = k + 1){
 
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z23kernel_D_plus_tmp_mul_CiiiiddPdS_S_S_S__OC_2(ni, nj, nk, nl, *alpha, *beta, ((double*)dev_tmp), ((double*)dev_A), ((double*)dev_B), ((double*)dev_C), ((double*)dev_D), call52, call57, 1, div, 32, 1, i, j, 0, k, l, 0);
+_Z23kernel_D_plus_tmp_mul_CiiiiddPdS_S_S_S__OC_2(ni, nj, nk, nl, alpha, beta, ((double*)dev_tmp), ((double*)dev_A), ((double*)dev_B), ((double*)dev_C), ((double*)dev_D), call52, call57, 1, div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
@@ -336,8 +334,6 @@ free(((uint8_t*)((double*)dev_B)));
 free(((uint8_t*)((double*)dev_C)));
 free(((uint8_t*)((double*)dev_D)));
 free(((uint8_t*)((double*)dev_tmp)));
-free(((uint8_t*)/*UNDEF*/((double*)0)));
-free(((uint8_t*)/*UNDEF*/((double*)0)));
 }
 
 
@@ -371,7 +367,7 @@ void _Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(uint32_t ni, uint32_t nj, uint32_t 
   if (i < ni) {
   if (j < nj) {
   dot = 0;
-#pragma omp parallel for#pragma omp simd reduction(+:dot)
+//#pragma omp parallel for#pragma omp simd reduction(+:dot)
 for(int64_t k = 0; k < nk;   k = k + 1){
   dot = (dot + alpha * A[(i * nk + k)] * B[(k * nj + j)]);
 }
