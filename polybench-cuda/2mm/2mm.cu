@@ -40,14 +40,17 @@ __global__ void kernel_D_plus_tmp_mul_C(int ni, int nj, int nk, int nl,
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   int l = blockDim.y * blockIdx.y + threadIdx.y;
   int j;
+  double dot = 0.0;
 
 
   if (i < ni && l < nl) {
-    D[i * nj + l] *= beta;
-
+    //D[i * nj + l] *= beta;
+    dot = D[i*nj+l]*beta;
 
     for (j = 0; j < nj; j++)
-      D[i * nl + l] += tmp[i * nj + j] * C[j * nl + l];
+      //D[i * nl + l] += tmp[i * nj + j] * C[j * nl + l];
+      dot += tmp[i * nj + j] * C[j * nl + l]; 
+    D[i*nl+l] = dot;
   }
 }
 
