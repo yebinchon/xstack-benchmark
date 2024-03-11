@@ -12,7 +12,7 @@
 #include <math.h>
 
 //#define NX 40000
-#define NX 40
+#define RUN 50
 
 static unsigned num_blocks(int num, int factor) {
   return (num + factor - 1) / factor;
@@ -118,6 +118,8 @@ int main(int argc, char** argv)
   int ny = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
+  for(int t = 0; t < RUN; t++) {
+
   /* Variable declaration/allocation. */
   double *A = (double*)malloc(nx*ny*sizeof(double));
   double *s = (double*)malloc(ny*sizeof(double));
@@ -141,6 +143,7 @@ int main(int argc, char** argv)
   free((void*)p);
   free((void*)r);
 
+  }
 
   return 0;
 }

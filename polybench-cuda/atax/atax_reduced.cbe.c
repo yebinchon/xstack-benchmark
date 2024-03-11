@@ -147,45 +147,29 @@ int main(int argc, char ** argv) {
   int32_t nx;
   int32_t ny;
   int32_t dump_code;
-  uint8_t* A;
-  uint8_t* x;
-  uint8_t* y;
-  uint8_t* tmp;
-  uint8_t* dev_A;
-  uint8_t* dev_x;
-  uint8_t* dev_y;
-  uint8_t* dev_tmp;
-  uint8_t* _1;
-  uint8_t* _2;
-  uint8_t* _3;
-  uint8_t* _4;
-  int32_t call42;
-  uint8_t* _5;
-  uint8_t* _6;
-  uint32_t i;
+  uint32_t t;
   uint32_t j;
-  int32_t call46;
-  uint8_t* _7;
-  uint8_t* _8;
-  uint8_t* _9;
+  uint32_t k;
 
   nx = atoi(argv[2]);
   ny = atoi(argv[3]);
   dump_code = atoi(argv[1]);
-  A = malloc(nx * ny * 8);
-  x = malloc(ny * 8);
-  y = malloc(ny * 8);
-  tmp = malloc(nx * 8);
+
+for(int32_t t = 0; t < 50;   t = t + 1){
+  uint8_t* A = malloc(nx * ny * 8);
+  uint8_t* x = malloc(ny * 8);
+  uint8_t* y = malloc(ny * 8);
+  uint8_t* tmp = malloc(nx * 8);
 _ZL10init_arrayiiPdS_(nx, ny, ((double*)A), ((double*)x));
-  dev_A = malloc(nx * ny * 8);
-  dev_x = malloc(ny * 8);
-  dev_y = malloc(ny * 8);
-  dev_tmp = malloc(nx * 8);
+  uint8_t* dev_A = malloc(nx * ny * 8);
+  uint8_t* dev_x = malloc(ny * 8);
+  uint8_t* dev_y = malloc(ny * 8);
+  uint8_t* dev_tmp = malloc(nx * 8);
   memcpy(((uint8_t*)((double*)dev_A)), ((uint8_t*)((double*)A)), nx * ny * 8);
   memcpy(((uint8_t*)((double*)dev_x)), ((uint8_t*)((double*)x)), ny * 8);
   memcpy(((uint8_t*)((double*)dev_y)), ((uint8_t*)((double*)y)), ny * 8);
   memcpy(((uint8_t*)((double*)dev_tmp)), ((uint8_t*)((double*)tmp)), nx * 8);
-  call42 = _ZL10num_blocksii(nx, 256);
+  uint32_t call42 = _ZL10num_blocksii(nx, 256);
   agg_2e_tmp.field0 = call42;
   agg_2e_tmp.field1 = 1;
   agg_2e_tmp.field2 = 1;
@@ -194,14 +178,14 @@ _ZL10init_arrayiiPdS_(nx, ny, ((double*)A), ((double*)x));
   agg_2e_tmp43.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp43_2e_coerce)), ((uint8_t*)(&agg_2e_tmp43)), 12);
-#pragma omp target teams distribute map(to: dev_tmp[0:nx * 8], dev_A[0:nx * ny * 8], dev_x[0:ny * 8]) map(tofrom: dev_y[0:ny * 8])
-for(int32_t i = 0; i < call42;   i = i + 1){
-#pragma omp parallel for
-for(int32_t j = 0; j < 256;   j = j + 1){
-_Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)dev_A), ((double*)dev_x), ((double*)dev_y), ((double*)dev_tmp), call42, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
+#pragma omp target teams distribute parallel for map(to: dev_x[0:ny * 8], dev_A[0:nx * ny * 8], dev_tmp[0:nx * 8]) map(tofrom: dev_y[0:ny * 8])
+for(int32_t j = 0; j < call42;   j = j + 1){
+//#pragma omp parallel for
+for(int32_t k = 0; k < 256;   k = k + 1){
+_Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)dev_A), ((double*)dev_x), ((double*)dev_y), ((double*)dev_tmp), call42, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
-  call46 = _ZL10num_blocksii(ny, 256);
+  uint32_t call46 = _ZL10num_blocksii(ny, 256);
   agg_2e_tmp45.field0 = call46;
   agg_2e_tmp45.field1 = 1;
   agg_2e_tmp45.field2 = 1;
@@ -210,17 +194,16 @@ _Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)dev_A), ((double*)dev_x), ((double*)
   agg_2e_tmp47.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp45_2e_coerce)), ((uint8_t*)(&agg_2e_tmp45)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&agg_2e_tmp47)), 12);
-#pragma omp target teams distribute map(to: dev_tmp[0:nx * 8], dev_A[0:nx * ny * 8], dev_x[0:ny * 8]) map(tofrom: dev_y[0:ny * 8])
-for(int32_t i = 0; i < call46;   i = i + 1){
-#pragma omp parallel for
-for(int32_t j = 0; j < 256;   j = j + 1){
-_Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)dev_A), ((double*)dev_x), ((double*)dev_y), ((double*)dev_tmp), call46, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
+#pragma omp target teams distribute parallel for map(to: dev_x[0:ny * 8], dev_A[0:nx * ny * 8], dev_tmp[0:nx * 8]) map(tofrom: dev_y[0:ny * 8])
+for(int32_t j = 0; j < call46;   j = j + 1){
+//#pragma omp parallel for
+for(int32_t k = 0; k < 256;   k = k + 1){
+_Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)dev_A), ((double*)dev_x), ((double*)dev_y), ((double*)dev_tmp), call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
-  _9 = memcpy(((uint8_t*)((double*)y)), ((uint8_t*)((double*)dev_y)), ny * 8);
+  uint8_t* _1 = memcpy(((uint8_t*)((double*)y)), ((uint8_t*)((double*)dev_y)), ny * 8);
   if (dump_code == 1) {
 _ZL11print_arrayiPd(nx, ((double*)y));
-  }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)x)));
 free(((uint8_t*)((double*)y)));
@@ -229,6 +212,8 @@ free(((uint8_t*)((double*)dev_A)));
 free(((uint8_t*)((double*)dev_x)));
 free(((uint8_t*)((double*)dev_y)));
 free(((uint8_t*)((double*)dev_tmp)));
+  }
+}
   return 0;
 }
 

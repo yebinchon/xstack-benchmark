@@ -140,32 +140,31 @@ int main(int argc, char ** argv) {
   int32_t nx;
   int32_t ny;
   int32_t dump_code;
-  uint8_t* A;
-  uint8_t* s;
-  uint8_t* q;
-  uint8_t* p;
-  uint8_t* r;
+  uint32_t t;
 
   nx = atoi(argv[2]);
   ny = atoi(argv[3]);
   dump_code = atoi(argv[1]);
-  A = malloc(nx * ny * 8);
-  s = malloc(ny * 8);
-  q = malloc(nx * 8);
-  p = malloc(ny * 8);
-  r = malloc(nx * 8);
+
+for(int32_t t = 0; t < 50;   t = t + 1){
+  uint8_t* A = malloc(nx * ny * 8);
+  uint8_t* s = malloc(ny * 8);
+  uint8_t* q = malloc(nx * 8);
+  uint8_t* p = malloc(ny * 8);
+  uint8_t* r = malloc(nx * 8);
   _ZL10init_arrayiiPdS_S_(nx, ny, ((double*)A), ((double*)r), ((double*)p));
 ;
   _ZL6kerneliiPdS_S_S_S_(nx, ny, ((double*)A), ((double*)s), ((double*)q), ((double*)p), ((double*)r));
 ;
   if (dump_code == 1) {
 _ZL11print_arrayiiPdS_(nx, ny, ((double*)s), ((double*)q));
-  }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)s)));
 free(((uint8_t*)((double*)q)));
 free(((uint8_t*)((double*)p)));
 free(((uint8_t*)((double*)r)));
+  }
+}
   return 0;
 }
 
@@ -239,9 +238,9 @@ void _ZL6kerneliiPdS_S_S_S_(uint32_t m, uint32_t n, double* A, double* s, double
   agg_2e_tmp31.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp31_2e_coerce)), ((uint8_t*)(&agg_2e_tmp31)), 12);
-#pragma omp target teams distribute map(to: dev_A[0:m * n * 8], dev_p[0:n * 8], dev_r[0:m * 8]) map(tofrom: dev_s[0:n * 8], dev_q[0:m * 8])
+#pragma omp target teams distribute parallel for map(to: dev_A[0:m * n * 8], dev_p[0:n * 8], dev_r[0:m * 8]) map(tofrom: dev_s[0:n * 8], dev_q[0:m * 8])
 for(int32_t i = 0; i < call30;   i = i + 1){
-#pragma omp parallel for
+//#pragma omp parallel for
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z8kernel_qiiPdS_S_S_S__OC_1(m, n, ((double*)dev_A), ((double*)dev_s), ((double*)dev_q), ((double*)dev_p), ((double*)dev_r), call30, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
 }
@@ -255,9 +254,9 @@ _Z8kernel_qiiPdS_S_S_S__OC_1(m, n, ((double*)dev_A), ((double*)dev_s), ((double*
   agg_2e_tmp35.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp33_2e_coerce)), ((uint8_t*)(&agg_2e_tmp33)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp35_2e_coerce)), ((uint8_t*)(&agg_2e_tmp35)), 12);
-#pragma omp target teams distribute map(to: dev_A[0:m * n * 8], dev_p[0:n * 8], dev_r[0:m * 8]) map(tofrom: dev_s[0:n * 8], dev_q[0:m * 8])
+#pragma omp target teams distribute parallel for map(to: dev_A[0:m * n * 8], dev_p[0:n * 8], dev_r[0:m * 8]) map(tofrom: dev_s[0:n * 8], dev_q[0:m * 8])
 for(int32_t i = 0; i < call34;   i = i + 1){
-#pragma omp parallel for
+//#pragma omp parallel for
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z8kernel_siiPdS_S_S_S__OC_2(m, n, ((double*)dev_A), ((double*)dev_s), ((double*)dev_q), ((double*)dev_p), ((double*)dev_r), call34, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
 }
