@@ -155,7 +155,7 @@ int main(int argc, char ** argv) {
   ny = atoi(argv[3]);
   dump_code = atoi(argv[1]);
 
-for(int32_t t = 0; t < 100;   t = t + 1){
+for(int32_t t = 0; t < 50;   t = t + 1){
   uint8_t* A = malloc(nx * ny * 8);
   uint8_t* x = malloc(ny * 8);
   uint8_t* y = malloc(ny * 8);
@@ -204,6 +204,7 @@ _Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)dev_A), ((double*)dev_x), ((double*)
   uint8_t* _1 = memcpy(((uint8_t*)((double*)y)), ((uint8_t*)((double*)dev_y)), ny * 8);
   if (dump_code == 1) {
 _ZL11print_arrayiPd(nx, ((double*)y));
+  }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)x)));
 free(((uint8_t*)((double*)y)));
@@ -212,7 +213,6 @@ free(((uint8_t*)((double*)dev_A)));
 free(((uint8_t*)((double*)dev_x)));
 free(((uint8_t*)((double*)dev_y)));
 free(((uint8_t*)((double*)dev_tmp)));
-  }
 }
   return 0;
 }

@@ -1,7 +1,8 @@
 RUN_TIMEOUT?=7200 # 2 hours.
-CUDAFE=/u/zujunt/noelle-workspace/CudaFE
-LLVM18=/u/zujunt/noelle-workspace/polygeist-llvm-install
-NOELLE=/u/zujunt/noelle-workspace/noelle/install
+CUDAFE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/CudaFE
+LLVM18=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-llvm-install
+POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
+NOELLE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/noelle-susan/install
 
 nvtarget.exe: #${BMARK}_cpu.cbe.c
 	clang -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_nvtarget.o
@@ -77,4 +78,4 @@ run_tulip: tulip.clang.exe tulip.gcc.exe
 
 
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time
+	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time loopIDtoSrc.txt
