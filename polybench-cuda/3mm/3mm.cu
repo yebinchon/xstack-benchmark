@@ -18,11 +18,13 @@ __global__ void kernel_A_mul_B(int ni, int nj, int nk,
                                double *B) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   int j = blockDim.y * blockIdx.y + threadIdx.y;
-
+  double dot = 0.0;
 
   if (i < ni && j < nj) {
     for (int k = 0; k < nk; k++)
-      C[i * nj + j] += A[i * nk + k] * B[k * nj + j];
+      //C[i * nj + j] += A[i * nk + k] * B[k * nj + j];
+      dot += A[i * nk + k] * B[k * nj + j];
+    C[i*nj+j] = dot;
   }
 }
 
