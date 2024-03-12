@@ -22,6 +22,9 @@ ${BMARK}_cpu.bc: ${BMARK}_linked.bc
 	#opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
 	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg -indvars -dce ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
 
+${BMARK}_cpu.cbe.c: ${BMARK}_cpu.bc
+	splendid $< 2> debug
+
 #${BMARK}_pdg_embed.bc:${BMARK}_cpu.bc
 #	noelle-load -PDGAnalysis -noelle-pdg-verbose=3 -noelle-pdg-embed ${BMARK}_svf.bc -o $@
 
@@ -42,10 +45,16 @@ ${BMARK}.o: ${BMARK}.cu
 polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 $< -o $@
 
-tulip.clang.exe: ${BMARK}_reduced.cbe.c
+tulip.reduced.clang.exe: ${BMARK}_reduced.cbe.c
 	clang -fopenmp -O3 $< -o $@
 
-tulip.gcc.exe: ${BMARK}_reduced.cbe.c
+tulip.reduced.gcc.exe: ${BMARK}_reduced.cbe.c
+	gcc -fopenmp -O3 $< -o $@
+
+tulip.clang.exe: ${BMARK}_cpu.cbe.c
+	clang -fopenmp -O3 $< -o $@
+
+tulip.gcc.exe: ${BMARK}_cpu.cbe.c
 	gcc -fopenmp -O3 $< -o $@
 
 cpu.exe: ${BMARK}_reduced.bc
@@ -76,6 +85,9 @@ run_tulip: tulip.clang.exe tulip.gcc.exe
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
 
+run_reduced: tulip.reduced.clang.exe tulip.reduced.gcc.exe
+	regressions-watchdog $(RUN_TIMEOUT) tulip.reduced.clang.time ./tulip.reduced.clang.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.reduced.gcc.time ./tulip.reduced.gcc.exe $(PERF_ARGS) 
 
 clean:
 	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time loopIDtoSrc.txt
