@@ -53,32 +53,22 @@ void print_array(int ni, int nj,
 
 
 
-  static
-void kernel_symm(int ni, int nj,
-    double alpha,
-    double beta,
-    double C[ni][nj],
-    double A[nj][nj],
-    double B[ni][nj])
-{
-  int i, j, k;
-  double acc;
-
-{
-  for (i = 0; i < ni; i++)
-    for (j = 0; j < nj; j++)
-    {
-      acc = 0;
-      for (k = 0; k < j - 1; k++)
-      {
-        C[k][j] += alpha * A[k][i] * B[i][j];
-        acc += B[k][j] * A[k][i];
+static void kernel(int ni, int nj,
+                   double alpha, double beta,
+                   double *C,
+                   double *A,
+                   double *B) {
+  for (int i = 0; i < ni; i++)
+    for (int j = 0; j < nj; j++) {
+      double temp2 = 0;
+      for (int k = 0; k < i; k++) {
+        C[k*nj+j] += alpha * B[i*nj+j] * A[i*nj+k];
+        temp2 += B[k*nj+j] * A[i*nj+k];
       }
-      C[i][j] = beta * C[i][j] + alpha * A[i][i] * B[i][j] + alpha * acc;
+      C[i*nj+j] = beta * C[i*nj+j] + alpha * B[i*nj+j] * A[i*nj+i] + alpha * temp2;
     }
 }
 
-}
 
 
 int main(int argc, char** argv)
@@ -102,7 +92,7 @@ int main(int argc, char** argv)
 
 
 
-  kernel_symm (ni, nj,
+  kernel (ni, nj,
       alpha, beta,
       *C,
       *A,
