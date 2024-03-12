@@ -11,6 +11,8 @@
 #include <string.h>
 #include <math.h>
 
+#define RUN 50
+
 
 __global__ void kernel3(int m, int n, double *A, double *x, double *y, double *tmp) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
@@ -78,6 +80,8 @@ int main(int argc, char** argv)
   int ny = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
+  for(int t = 0; t < RUN; t++) {
+
   /* Variable declaration/allocation. */
   double *A = (double*)malloc(nx*ny*sizeof(double));
   double *x = (double*)malloc(ny*sizeof(double));
@@ -109,7 +113,7 @@ int main(int argc, char** argv)
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  if(dump_code == 1) print_array(nx, y);
+  if(dump_code == 1) {print_array(nx, y);}
 
   /* Be clean. */
   free((void*)A);
@@ -120,6 +124,7 @@ int main(int argc, char** argv)
   cudaFree((void*)dev_x);
   cudaFree((void*)dev_y);
   cudaFree((void*)dev_tmp);
+  }
 
   return 0;
 }

@@ -11,6 +11,8 @@
 #include <string.h>
 #include <math.h>
 
+#define RUN 50
+
 
 /* Array initialization. */
 static
@@ -77,6 +79,8 @@ int main(int argc, char** argv)
   int ny = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
+  for(int t  = 0; t < RUN; t++) {
+
   /* Variable declaration/allocation. */
   double (*A)[nx][ny]; A = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
   double (*x)[ny]; x = (double(*)[ny])malloc(ny*sizeof(double));
@@ -101,6 +105,7 @@ int main(int argc, char** argv)
   free((void*)x);
   free((void*)y);
   free((void*)tmp);
+  }
 
   return 0;
 }
