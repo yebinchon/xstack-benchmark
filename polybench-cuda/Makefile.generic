@@ -43,16 +43,16 @@ polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 $< -o $@
 
 tulip.clang.exe: ${BMARK}_reduced.cbe.c
-	clang -fopenmp -O3 $< -o $@
+	clang -fopenmp -lm -O3 $< -o $@
 
 tulip.gcc.exe: ${BMARK}_reduced.cbe.c
-	gcc -fopenmp -O3 $< -o $@
+	gcc -fopenmp -lm -O3 $< -o $@
 
 cpu.exe: ${BMARK}_reduced.bc
-	clang -O3 $< -o $@
+	clang -O3 -lm  $< -o $@
 
 seq.exe: ${BMARK}.c
-	clang -O3 $< -o $@
+	clang -O3 -lm $< -o $@
 
 cuda.exe: ${BMARK}.cu
 	nvcc -O3 $< -o $@
@@ -78,4 +78,4 @@ run_tulip: tulip.clang.exe tulip.gcc.exe
 
 
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time loopIDtoSrc.txt
+	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe
