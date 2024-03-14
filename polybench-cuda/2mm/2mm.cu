@@ -155,13 +155,13 @@ int main(int argc, char** argv)
 
   {
     dim3 grid(num_blocks(ni, block.x), num_blocks(nj, block.y), 1);
-    kernel_A_mul_B<<<grid, block>>>(ni, nj, nk, nl, *alpha, *beta, dev_tmp, dev_A, dev_B, dev_C, dev_D);
+    kernel_A_mul_B<<<grid, block>>>(ni, nj, nk, nl, alpha, beta, dev_tmp, dev_A, dev_B, dev_C, dev_D);
   }
 
 
   {
     dim3 grid(num_blocks(ni, block.x), num_blocks(nl, block.y), 1);
-    kernel_D_plus_tmp_mul_C<<<grid, block>>>(ni, nj, nk, nl, *alpha, *beta, dev_tmp, dev_A, dev_B, dev_C, dev_D);
+    kernel_D_plus_tmp_mul_C<<<grid, block>>>(ni, nj, nk, nl, alpha, beta, dev_tmp, dev_A, dev_B, dev_C, dev_D);
   }
 
   cudaMemcpy(D, dev_D, ni*nl*sizeof(double), cudaMemcpyDeviceToHost);
