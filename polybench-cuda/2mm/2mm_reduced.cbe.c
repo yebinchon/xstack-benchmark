@@ -211,7 +211,7 @@ _ZL10init_arrayiiiiPdS_S_S_S_S_S_(call2, call4, call7, call10, ((double*)alpha),
   memcpy(((uint8_t*)(&agg_2e_tmp70)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp70_2e_coerce)), ((uint8_t*)(&agg_2e_tmp70)), 12);
-#pragma omp target teams distribute parallel for map(to: A[0:call2 * call7 * 8], B[0:call7 * call4 * 8], C[0:call10 * call4 * 8], tmp[0:call2 * call4 * 8])
+#pragma omp target teams distribute parallel for map(to: A[0:call2 * call7 * 8], B[0:call7 * call4 * 8], C[0:call10 * call4 * 8], tmp[0:call2 * call4 * 8]) map(tofrom: D[0:call2 * call10 * 8])
 for(int32_t i = 0; i < call64;   i = i + 1){
 
 for(int32_t j = 0; j < call68;   j = j + 1){
@@ -233,7 +233,7 @@ _Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(call2, call4, call7, call10, *((double*)
   memcpy(((uint8_t*)(&agg_2e_tmp88)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp87_2e_coerce)), ((uint8_t*)(&agg_2e_tmp87)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp88_2e_coerce)), ((uint8_t*)(&agg_2e_tmp88)), 12);
-#pragma omp target teams distribute parallel for map(to: A[0:call2 * call7 * 8], B[0:call7 * call4 * 8], C[0:call10 * call4 * 8], tmp[0:call2 * call4 * 8])
+#pragma omp target teams distribute parallel for map(to: A[0:call2 * call7 * 8], B[0:call7 * call4 * 8], C[0:call10 * call4 * 8], tmp[0:call2 * call4 * 8]) map(tofrom: D[0:call2 * call10 * 8])
 for(int32_t i = 0; i < call80;   i = i + 1){
 
 for(int32_t j = 0; j < call85;   j = j + 1){
