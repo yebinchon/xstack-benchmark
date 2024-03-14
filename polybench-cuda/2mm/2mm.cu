@@ -176,9 +176,6 @@ int main(int argc, char** argv)
 
 
 
-  kernel(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
-
-
 
 
   if (dump_code == 1) print_array(ni, nk, D);
