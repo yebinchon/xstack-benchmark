@@ -59,11 +59,78 @@ short num_blocks(short num, short factor) {
 }
 
 
-static void kernel(int ni, int nj, int nk, int nl,
-                   double *alpha, double *beta,
-                   double *tmp,
-                   double *A,
-                   double *B, double *C, double *D) {
+
+  static
+void print_array(int ni, int nl,
+    double *D)
+{
+  int i, j;
+
+  for (i = 0; i < ni; i++)
+    for (j = 0; j < nl; j++) {
+      fprintf (stderr, "%0.2lf ", D[i*ni+j]);
+      if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
+    }
+  fprintf (stderr, "\n");
+}
+
+
+static void init_array(int ni, int nj, int nk, int nl,
+    double *A,
+    double *B,
+    double *C,
+    double *D,
+    double *tmp)
+{
+  int i, j;
+
+  for (i = 0; i < ni; i++)
+    for (j = 0; j < nk; j++)
+      A[i*ni+j] = ((double) i*j) / ni;
+  for (i = 0; i < nk; i++)
+    for (j = 0; j < nj; j++)
+      B[i*nk+j] = ((double) i*(j+1)) / nj;
+  for (i = 0; i < nl; i++)
+    for (j = 0; j < nj; j++)
+      C[i*nl+j] = ((double) i*(j+3)) / nl;
+  for (i = 0; i < ni; i++)
+    for (j = 0; j < nl; j++)
+      D[i*ni+j] = ((double) i*(j+2)) / nk;
+  for (i = 0; i < ni; i++)
+    for (j = 0; j < nj; j++)
+      tmp[i*ni+j] = 0;
+}
+
+
+int main(int argc, char** argv)
+{
+  int dump_code = atoi(argv[1]);
+  long  ni = atoi(argv[2]);
+  long  nj = atoi(argv[3]);
+  long  nk = atoi(argv[4]);
+  long  nl = atoi(argv[5]);
+
+
+  double alpha = 32412.0;
+  double beta = 2123.0;
+  double *A = (double*)malloc(ni*nk*sizeof(double));
+  double *B = (double*)malloc(nk*nj*sizeof(double));
+  double *C = (double*)malloc(nl*nj*sizeof(double));
+  double *D = (double*)malloc(ni*nl*sizeof(double));
+  double *tmp = (double*)malloc(ni*nj*sizeof(double));
+
+
+
+
+  init_array (ni, nj, nk, nl,
+      A,
+      B,
+      C,
+      D,
+      tmp);
+
+
+
 
   double *dev_A;
   double *dev_B;
@@ -105,87 +172,6 @@ static void kernel(int ni, int nj, int nk, int nl,
   cudaFree((void*)dev_tmp);
   cudaFree((void*)dev_alpha);
   cudaFree((void*)dev_beta);
-
-
-}
-
-
-  static
-void print_array(int ni, int nl,
-    double *D)
-{
-  int i, j;
-
-  for (i = 0; i < ni; i++)
-    for (j = 0; j < nl; j++) {
-      fprintf (stderr, "%0.2lf ", D[i*ni+j]);
-      if ((i * ni + j) % 20 == 0) fprintf (stderr, "\n");
-    }
-  fprintf (stderr, "\n");
-}
-
-
-static void init_array(int ni, int nj, int nk, int nl,
-    double *alpha,
-    double *beta,
-    double *A,
-    double *B,
-    double *C,
-    double *D,
-    double *tmp)
-{
-  int i, j;
-
-  *alpha = 32412;
-  *beta = 2123;
-  for (i = 0; i < ni; i++)
-    for (j = 0; j < nk; j++)
-      A[i*ni+j] = ((double) i*j) / ni;
-  for (i = 0; i < nk; i++)
-    for (j = 0; j < nj; j++)
-      B[i*nk+j] = ((double) i*(j+1)) / nj;
-  for (i = 0; i < nl; i++)
-    for (j = 0; j < nj; j++)
-      C[i*nl+j] = ((double) i*(j+3)) / nl;
-  for (i = 0; i < ni; i++)
-    for (j = 0; j < nl; j++)
-      D[i*ni+j] = ((double) i*(j+2)) / nk;
-  for (i = 0; i < ni; i++)
-    for (j = 0; j < nj; j++)
-      tmp[i*ni+j] = 0;
-}
-
-
-int main(int argc, char** argv)
-{
-  int dump_code = atoi(argv[1]);
-  long  ni = atoi(argv[2]);
-  long  nj = atoi(argv[3]);
-  long  nk = atoi(argv[4]);
-  long  nl = atoi(argv[5]);
-
-
-  double *alpha = (double*)malloc(sizeof(double));
-  double *beta = (double*)malloc(sizeof(double));
-  double *A = (double*)malloc(ni*nk*sizeof(double));
-  double *B = (double*)malloc(nk*nj*sizeof(double));
-  double *C = (double*)malloc(nl*nj*sizeof(double));
-  double *D = (double*)malloc(ni*nl*sizeof(double));
-  double *tmp = (double*)malloc(ni*nj*sizeof(double));
-
-
-
-
-  init_array (ni, nj, nk, nl, alpha, beta,
-      A,
-      B,
-      C,
-      D,
-      tmp);
-
-
-
-
 
 
 
