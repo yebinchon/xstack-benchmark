@@ -164,7 +164,6 @@ int main(int argc, char ** argv) {
 _ZL10init_arrayiPdS_S_(n, ((double*)A), ((double*)B), ((double*)x));
 #pragma omp target data map(to: A[0:n * n * 8], B[0:n * n * 8], tmp[0:n * 8], x[0:n * 8]) map(tofrom: y[0:n * 8])
 {
-  cudaMemcpy(((uint8_t*)((double*)A)), ((uint8_t*)((double*)A)), n * n * 8, 1);
   call52 = _ZL10num_blocksii(n, 256);
   agg_2e_tmp.field0 = call52;
   agg_2e_tmp.field1 = 1;
