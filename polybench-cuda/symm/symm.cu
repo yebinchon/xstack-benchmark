@@ -13,8 +13,6 @@
 
   static
 void init_array(int ni, int nj,
-    double *alpha,
-    double *beta,
     double *C,
     double *A,
     double *B,
@@ -22,8 +20,7 @@ void init_array(int ni, int nj,
 {
   int i, j;
 
-  *alpha = 32412;
-  *beta = 2123;
+
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++) {
       C[i*nj+j] = ((double) i*j) / ni;
@@ -70,7 +67,7 @@ __global__ void kernel_tmp(int m, int n,
   if (i < m && j < n) {
     tmp[i * n + j] = 0;
     for (int k = 0; k < i; k++)
-      tmp[i * n + j] += B[k * n + j] * A[i * m + k];
+      tmp[i * n + j] += B[k * n + j] * A[i * n + k];
   }
 }
 
@@ -84,7 +81,7 @@ __global__ void kernel_C(int m, int n,
 
 
   if (i < m && j < n)
-    C[i * n + j] = beta * C[i * n + j] + alpha * B[i * n + j] * A[i * m + i] + alpha * tmp[i * n + j];
+    C[i * n + j] = beta * C[i * n + j] + alpha * B[i * n + j] * A[i * n + i] + alpha * tmp[i * n + j];
 }
 
 
@@ -99,7 +96,7 @@ __global__ void kernel_sum(int m, int n,
 
   if (k < m - 1 && j < n) {
     for (int i = k + 1; i < m; i++)
-      C[k * n + j] += alpha * B[i * n + j] * A[i * m + k];
+      C[k * n + j] += alpha * B[i * n + j] * A[i * n + k];
   }
 }
 
@@ -138,15 +135,15 @@ int main(int argc, char** argv)
   int ni = atoi(argv[2]);
   int nj = atoi(argv[3]);
 
-  double *alpha = (double*)malloc(sizeof(double));
-  double *beta = (double*)malloc(sizeof(double));
   double *A = (double*)malloc(nj*nj*sizeof(double));
   double *B = (double*)malloc(ni*nj*sizeof(double));
   double *C = (double*)malloc(ni*nj*sizeof(double));
   double *tmp = (double*)malloc(ni*nj*sizeof(double));
 
+  double alpha = 32412;
+  double beta = 2123;
 
-  init_array (ni, nj, alpha, beta,
+  init_array (ni, nj,
       C,
       A,
       B,
@@ -167,7 +164,7 @@ int main(int argc, char** argv)
 
 
 
-  kernel(ni, nj, *alpha, *beta, dev_C, dev_A, dev_B, dev_tmp);
+  kernel(ni, nj, alpha, beta, dev_C, dev_A, dev_B, dev_tmp);
   cudaMemcpy(C, dev_C, ni*nj*sizeof(double), cudaMemcpyDeviceToHost);
 
 
