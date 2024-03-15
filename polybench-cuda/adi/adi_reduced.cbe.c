@@ -288,48 +288,48 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 }
 
 
-void _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(uint32_t tsteps, uint32_t j, double* u, double* v, double* p, double* q, double a, double b, double c, double d, double e, double f, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+void _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(uint32_t tsteps, uint32_t n, double* u, double* v, double* p, double* q, double a, double b, double c, double d, double e, double f, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int64_t j;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x + 1;
-  if (i < (j - 1)) {
-  v[(0 * j + i)] = 1;
-  p[(i * j + 0)] = 0;
-  q[(i * j + 0)] = v[(0 * j + i)];
+  if (i < (n - 1)) {
+  v[(0 * n + i)] = 1;
+  p[(i * n + 0)] = 0;
+  q[(i * n + 0)] = v[(0 * n + i)];
 
-for(int64_t j = 1; j < (j - 1);   j = j + 1){
-  p[(i * j + j)] = -(c) / (a * p[((i * j + j) - 1)] + b);
-  q[(i * j + j)] = (((-(d) * u[((j * j + i) - 1)] + (1 + 2 * d) * u[(j * j + i)]) - f * u[((j * j + i) + 1)]) - a * q[((i * j + j) - 1)]) / (a * p[((i * j + j) - 1)] + b);
+for(int64_t j = 1; j < (n - 1);   j = j + 1){
+  p[(i * n + j)] = -(c) / (a * p[((i * n + j) - 1)] + b);
+  q[(i * n + j)] = (((-(d) * u[((j * n + i) - 1)] + (1 + 2 * d) * u[(j * n + i)]) - f * u[((j * n + i) + 1)]) - a * q[((i * n + j) - 1)]) / (a * p[((i * n + j) - 1)] + b);
 }
-  v[((j - 1) * j + i)] = 1;
+  v[((n - 1) * n + i)] = 1;
 
-for(int64_t j = j + -2; j >= 1;   j = j + -1){
-  v[(j * j + i)] = (p[(i * j + j)] * v[((j + 1) * j + i)] + q[(i * j + j)]);
+for(int64_t j = n + -2; j >= 1;   j = j + -1){
+  v[(j * n + i)] = (p[(i * n + j)] * v[((j + 1) * n + i)] + q[(i * n + j)]);
 }
   }
   return;
 }
 
 
-void _Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(uint32_t tsteps, uint32_t j, double* u, double* v, double* p, double* q, double a, double b, double c, double d, double e, double f, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+void _Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(uint32_t tsteps, uint32_t n, double* u, double* v, double* p, double* q, double a, double b, double c, double d, double e, double f, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int64_t j;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x + 1;
-  if (i < (j - 1)) {
-  u[(i * j + 0)] = 1;
-  p[((i + j) + 0)] = 0;
-  q[(i * j + 0)] = u[(i * j + 0)];
+  if (i < (n - 1)) {
+  u[(i * n + 0)] = 1;
+  p[((i + n) + 0)] = 0;
+  q[(i * n + 0)] = u[(i * n + 0)];
 
-for(int64_t j = 1; j < (j - 1);   j = j + 1){
-  p[(i * j + j)] = -(f) / (d * p[((i * j + j) - 1)] + e);
-  q[(i * j + j)] = (((-(a) * v[((i - 1) * j + j)] + (1 + 2 * a) * v[(i * j + j)]) - c * v[((i + 1) * j + j)]) - d * q[((i * j + j) - 1)]) / (d * p[((i * j + j) - 1)] + e);
+for(int64_t j = 1; j < (n - 1);   j = j + 1){
+  p[(i * n + j)] = -(f) / (d * p[((i * n + j) - 1)] + e);
+  q[(i * n + j)] = (((-(a) * v[((i - 1) * n + j)] + (1 + 2 * a) * v[(i * n + j)]) - c * v[((i + 1) * n + j)]) - d * q[((i * n + j) - 1)]) / (d * p[((i * n + j) - 1)] + e);
 }
-  u[((i * j + j) - 1)] = 1;
+  u[((i * n + n) - 1)] = 1;
 
-for(int64_t j = j + -2; j >= 1;   j = j + -1){
-  u[(i * j + j)] = (p[(i * j + j)] * u[((i * j + j) + 1)] + q[(i * j + j)]);
+for(int64_t j = n + -2; j >= 1;   j = j + -1){
+  u[(i * n + j)] = (p[(i * n + j)] * u[((i * n + j) + 1)] + q[(i * n + j)]);
 }
   }
   return;
