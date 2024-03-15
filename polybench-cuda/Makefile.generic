@@ -1,5 +1,5 @@
 RUN_TIMEOUT?=7200 # 2 hours.
-CUDAFE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/CudaFE
+CUDAFE=/u/zujunt/noelle-workspace/CudaFE
 LLVM18=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-llvm-install
 POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
 NOELLE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/noelle-susan/install
