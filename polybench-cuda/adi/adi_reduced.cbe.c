@@ -87,12 +87,12 @@ uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
 uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void _ZL10init_arrayiPdS_S_S_(uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-void _ZL6kerneliiPdS_S_S_(uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
-void _ZL11print_arrayiPd(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
+void _ZL6kerneliiPdS_S_S_(uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
+uint32_t cudaFree(uint8_t*);
+void _ZL11print_arrayiPd(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaFree(uint8_t*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(uint32_t, uint32_t, double*, double*, double*, double*, double, double, double, double, double, double, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(uint32_t, uint32_t, double*, double*, double*, double*, double, double, double, double, double, double, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
@@ -148,6 +148,8 @@ int main(int argc, char ** argv) {
   uint8_t* v;
   uint8_t* p;
   uint8_t* q;
+  int32_t call38;
+  int32_t call54;
 
   n = atoi(argv[2]);
   tsteps = atoi(argv[3]);
@@ -158,8 +160,12 @@ int main(int argc, char ** argv) {
   q = malloc(n * n * 8);
   _ZL10init_arrayiPdS_S_S_(n, ((double*)u), ((double*)v), ((double*)p), ((double*)q));
 ;
+#pragma omp target data map(to: v[0:n * n * 8], p[0:n * n * 8], q[0:n * n * 8]) map(tofrom: u[0:n * n * 8])
+{
   _ZL6kerneliiPdS_S_S_(tsteps, n, ((double*)u), ((double*)v), ((double*)p), ((double*)q));
 ;
+
+}
   if (dump_code == 1) {
 _ZL11print_arrayiPd(n, ((double*)u));
   }
@@ -191,13 +197,13 @@ for(int64_t j = 0; j < n;   j = j + 1){
 
 void _ZL6kerneliiPdS_S_S_(uint32_t tsteps, uint32_t n, double* u, double* v, double* p, double* q) {
   struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp47;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp15;    /* Address-exposed local */
   struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp47_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp49;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp52;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp49_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp52_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp15_2e_coerce;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp17;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp20;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp17_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp20_2e_coerce;    /* Address-exposed local */
   double DX;
   double DY;
   double DT;
@@ -207,11 +213,9 @@ void _ZL6kerneliiPdS_S_S_(uint32_t tsteps, uint32_t n, double* u, double* v, dou
   double b;
   double div12;
   double e;
-  int32_t call32;
   int32_t t;
   uint32_t j;
   uint32_t k;
-  int32_t call60;
 
   DX = 1 / (double)(n);
   DY = 1 / (double)(n);
@@ -222,45 +226,44 @@ void _ZL6kerneliiPdS_S_S_(uint32_t tsteps, uint32_t n, double* u, double* v, dou
   b = (1 + mul1);
   div12 = -(mul2) / 2;
   e = (1 + mul2);
-  cudaMemcpy(((uint8_t*)u), ((uint8_t*)u), n * n * 8, 1);
 
 for(int32_t t = 1; t <= tsteps;   t = t + 1){
-  uint32_t call46 = _ZL10num_blocksii((n - 2), 256);
-  agg_2e_tmp.field0 = call46;
+  uint32_t call = _ZL10num_blocksii((n - 2), 256);
+  agg_2e_tmp.field0 = call;
   agg_2e_tmp.field1 = 1;
   agg_2e_tmp.field2 = 1;
-  agg_2e_tmp47.field0 = 256;
-  agg_2e_tmp47.field1 = 1;
-  agg_2e_tmp47.field2 = 1;
+  agg_2e_tmp15.field0 = 256;
+  agg_2e_tmp15.field1 = 1;
+  agg_2e_tmp15.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&agg_2e_tmp47)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp15_2e_coerce)), ((uint8_t*)(&agg_2e_tmp15)), 12);
 #pragma omp target teams distribute parallel for
 
-for(int32_t j = 0; j < call46;   j = j + 1){
+for(int32_t j = 0; j < call;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){
-_Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+_Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
-  uint32_t call51 = _ZL10num_blocksii((n - 2), 256);
-  agg_2e_tmp49.field0 = call51;
-  agg_2e_tmp49.field1 = 1;
-  agg_2e_tmp49.field2 = 1;
-  agg_2e_tmp52.field0 = 256;
-  agg_2e_tmp52.field1 = 1;
-  agg_2e_tmp52.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp49_2e_coerce)), ((uint8_t*)(&agg_2e_tmp49)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp52_2e_coerce)), ((uint8_t*)(&agg_2e_tmp52)), 12);
+  uint32_t call19 = _ZL10num_blocksii((n - 2), 256);
+  agg_2e_tmp17.field0 = call19;
+  agg_2e_tmp17.field1 = 1;
+  agg_2e_tmp17.field2 = 1;
+  agg_2e_tmp20.field0 = 256;
+  agg_2e_tmp20.field1 = 1;
+  agg_2e_tmp20.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp17_2e_coerce)), ((uint8_t*)(&agg_2e_tmp17)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp20_2e_coerce)), ((uint8_t*)(&agg_2e_tmp20)), 12);
 #pragma omp target teams distribute parallel for
 
-for(int32_t j = 0; j < call51;   j = j + 1){
+for(int32_t j = 0; j < call19;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){
-_Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call51, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+_Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call19, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
 }
-  cudaMemcpy(((uint8_t*)u), ((uint8_t*)u), n * n * 8, 2);
+  return;
 }
 
 
