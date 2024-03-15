@@ -187,21 +187,21 @@ void _ZL10init_arrayiiiPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, double*
 
   *alpha = 32412;
   *beta = 2123;
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   C[(i * nj + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
   A[(i * nk + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
@@ -289,17 +289,19 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 void _Z10kernel_deviiiddPdS_S__OC_1(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, double beta, double* C, double* A, double* B, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int32_t j;
+  double dot;
   int64_t k;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < ni) {
   if (j < nj) {
-  C[(i * nj + j)] = C[(i * nj + j)] * beta;
+  dot = C[(i * nj + j)] * beta;
 
 for(int64_t k = 0; k < nk;   k = k + 1){
-  C[(i * nj + j)] = (C[(i * nj + j)] + alpha * A[(i * nk + k)] * B[(k * nj + j)]);
+  dot = (dot + alpha * A[(i * nk + k)] * B[(k * nj + j)]);
 }
+  C[(i * nj + j)] = dot;
   }
   }
   return;
