@@ -86,7 +86,7 @@ struct l_unnamed_1 {
 uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
 uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
-void _ZL10init_arrayiiPdS_S_(uint32_t, uint32_t, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
+void _ZL10init_arrayiiPdS_S_S_(uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
@@ -162,7 +162,7 @@ int main(int argc, char ** argv) {
   x = malloc(ny * 8);
   y = malloc(ny * 8);
   tmp = malloc(nx * 8);
-_ZL10init_arrayiiPdS_S_(nx, ny, ((double*)A), ((double*)x), ((double*)tmp));
+_ZL10init_arrayiiPdS_S_S_(nx, ny, ((double*)A), ((double*)x), ((double*)tmp), ((double*)y));
 
 for(int32_t t = 0; t < 50;   t = t + 1){
 #pragma omp target data map(to: A[0:nx * ny * 8], x[0:ny * 8], tmp[0:nx * 8]) map(tofrom: y[0:ny * 8])
@@ -215,13 +215,14 @@ free(((uint8_t*)((double*)tmp)));
 }
 
 
-void _ZL10init_arrayiiPdS_S_(uint32_t nx, uint32_t ny, double* A, double* x, double* tmp) {
+void _ZL10init_arrayiiPdS_S_S_(uint32_t nx, uint32_t ny, double* A, double* x, double* tmp, double* y) {
   int64_t i;
   int64_t j;
 
 
 for(int64_t i = 0; i < ny;   i = i + 1){
   x[i] = (double)(i) * 3.1415926535897931;
+  y[i] = 0;
 }
 
 for(int64_t i = 0; i < nx;   i = i + 1){

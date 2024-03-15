@@ -45,12 +45,15 @@ static
 void init_array (int nx, int ny,
 		 double *A,
 		 double *x,
-     double *tmp)
+     double *tmp,
+     double *y)
 {
   int i, j;
 
-  for (i = 0; i < ny; i++)
+  for (i = 0; i < ny; i++){
       x[i] = i * M_PI;
+      y[i] = 0;
+  }
   for (i = 0; i < nx; i++)
       tmp[i] = 0;
   for (i = 0; i < nx; i++)
@@ -89,7 +92,7 @@ int main(int argc, char** argv)
   double *y = (double*)malloc(ny*sizeof(double));
   double *tmp = (double*)malloc(nx*sizeof(double));
   /* Initialize array(s). */
-  init_array (nx, ny, A, x, tmp);
+  init_array (nx, ny, A, x, tmp, y);
 
 
   double *dev_A;
