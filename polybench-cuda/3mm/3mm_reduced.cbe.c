@@ -172,7 +172,6 @@ int main(int argc, char ** argv) {
 ;
 #pragma omp target data map(to: E[0:ni * nj * 8], F[0:nj * nl * 8], A[0:ni * nk * 8], B[0:nk * nj * 8], C[0:nj * nm * 8], D[0:nm * nl * 8]) map(tofrom: G[0:ni * nl * 8])
 {
-  call68 = cudaMemcpy(((uint8_t*)((double*)A)), ((uint8_t*)((double*)A)), ni * nk * 8, 1);
   _ZL6kerneliiiiiPdS_S_S_S_S_S_(ni, nj, nk, nl, nm, ((double*)E), ((double*)A), ((double*)B), ((double*)F), ((double*)C), ((double*)D), ((double*)G));
 ;
 
@@ -300,6 +299,7 @@ void _ZL6kerneliiiiiPdS_S_S_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32
   memcpy(((uint8_t*)(&agg_2e_tmp2)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&agg_2e_tmp2)), 12);
+#pragma omp target teams distribute parallel for
 
 for(int32_t i = 0; i < call;   i = i + 1){
 
@@ -322,6 +322,7 @@ _Z14kernel_A_mul_BiiiPdS_S__OC_1(ni, nj, nk, E, A, B, call, call1, 1, div, 32, 1
   memcpy(((uint8_t*)(&agg_2e_tmp10)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp9_2e_coerce)), ((uint8_t*)(&agg_2e_tmp9)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp10_2e_coerce)), ((uint8_t*)(&agg_2e_tmp10)), 12);
+#pragma omp target teams distribute parallel for
 
 for(int32_t i = 0; i < call6;   i = i + 1){
 
@@ -344,6 +345,7 @@ _Z14kernel_A_mul_BiiiPdS_S__OC_1(nj, nl, nm, F, C, D, call6, call8, 1, div, 32, 
   memcpy(((uint8_t*)(&agg_2e_tmp21)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp20_2e_coerce)), ((uint8_t*)(&agg_2e_tmp20)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp21_2e_coerce)), ((uint8_t*)(&agg_2e_tmp21)), 12);
+#pragma omp target teams distribute parallel for
 
 for(int32_t i = 0; i < call17;   i = i + 1){
 
