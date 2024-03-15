@@ -89,30 +89,15 @@ static void kernel(
 
 
 
-  double *dev_u;
-  double *dev_v;
-  double *dev_p;
-  double *dev_q;
-  cudaMalloc(&dev_u, n*n*sizeof(double));
-  cudaMalloc(&dev_v, n*n*sizeof(double));
-  cudaMalloc(&dev_p, n*n*sizeof(double));
-  cudaMalloc(&dev_q, n*n*sizeof(double));
-  cudaMemcpy(dev_u, u, n*n*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_v, v, n*n*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_p, p, n*n*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_q, q, n*n*sizeof(double), cudaMemcpyHostToDevice);
+
   for (int t = 1; t <= tsteps; t++) {
     // Column Sweep
-    kernel_column_sweep<<<num_blocks(n - 2, threadsPerBlock), threadsPerBlock>>>(tsteps, n, dev_u, dev_v, dev_p, dev_q, a, b, c, d, e, f);
+    kernel_column_sweep<<<num_blocks(n - 2, threadsPerBlock), threadsPerBlock>>>(tsteps, n, u, v, p, q, a, b, c, d, e, f);
 
     // Row Sweep
-    kernel_row_sweep<<<num_blocks(n - 2, threadsPerBlock), threadsPerBlock>>>(tsteps, n, dev_u, dev_v, dev_p, dev_q, a, b, c, d, e, f);
+    kernel_row_sweep<<<num_blocks(n - 2, threadsPerBlock), threadsPerBlock>>>(tsteps, n, u, v, p, q, a, b, c, d, e, f);
   }
-  cudaMemcpy(u, dev_u, n*n*sizeof(double), cudaMemcpyDeviceToHost);
-  cudaFree((void*)dev_u);
-  cudaFree((void*)dev_v);
-  cudaFree((void*)dev_p);
-  cudaFree((void*)dev_q);
+
 }
 
 /* Array initialization. */
@@ -168,10 +153,27 @@ int main(int argc, char** argv)
   init_array (n, u, v, p, q);
 
 
+  double *dev_u;
+  double *dev_v;
+  double *dev_p;
+  double *dev_q;
+  cudaMalloc(&dev_u, n*n*sizeof(double));
+  cudaMalloc(&dev_v, n*n*sizeof(double));
+  cudaMalloc(&dev_p, n*n*sizeof(double));
+  cudaMalloc(&dev_q, n*n*sizeof(double));
+  cudaMemcpy(dev_u, u, n*n*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_v, v, n*n*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_p, p, n*n*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_q, q, n*n*sizeof(double), cudaMemcpyHostToDevice);
 
   /* Run kernel. */
-  kernel(tsteps, n, u, v, p, q);
+  kernel(tsteps, n, dev_u, dev_v, dev_p, dev_q);
 
+  cudaMemcpy(u, dev_u, n*n*sizeof(double), cudaMemcpyDeviceToHost);
+  cudaFree((void*)dev_u);
+  cudaFree((void*)dev_v);
+  cudaFree((void*)dev_p);
+  cudaFree((void*)dev_q);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
