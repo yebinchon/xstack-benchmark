@@ -17,11 +17,12 @@
 __global__ void kernel3(int m, int n, double *A, double *x, double *y, double *tmp) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
-  for (i= 0; i < n; i++)
-    y[i] = 0;
+
   if (i < m) {
-    for (int j = 0; j < n; j++)
+    for (int j = 0; j < n; j++){
+      y[j] = 0;
       tmp[i] += A[i * n + j] * x[j];
+    }
   }
 }
 
