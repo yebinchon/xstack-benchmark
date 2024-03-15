@@ -104,8 +104,6 @@ int main(int argc, char** argv)
   double *dev_tmp;
   double *dev_x;
   double *dev_y;
-  double *dev_alpha;
-  double *dev_beta;
   cudaMalloc(&dev_A, n*n*sizeof(double));
   cudaMalloc(&dev_B, n*n*sizeof(double));
   cudaMalloc(&dev_tmp, n*sizeof(double));
@@ -138,7 +136,5 @@ int main(int argc, char** argv)
   cudaFree((void*)dev_tmp);
   cudaFree((void*)dev_x);
   cudaFree((void*)dev_y);
-  cudaFree((void*)dev_alpha);
-  cudaFree((void*)dev_beta);
   return 0;
 }
