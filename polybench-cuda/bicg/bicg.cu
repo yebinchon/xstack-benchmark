@@ -84,6 +84,30 @@ void print_array(int nx, int ny,
 
 
 static void kernel(int m, int n, double *A, double s[], double q[], double p[], double r[]) {
+
+  const unsigned threadsPerBlock = 256;
+  kernel_q<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(m, n, A, s, q, p, r);
+  kernel_s<<<num_blocks(m, threadsPerBlock), threadsPerBlock>>>(m, n, A, s, q, p, r);
+
+}
+
+int main(int argc, char** argv)
+{
+  /* Retrieve problem size. */
+  int m =atoi(argv[2]);
+  int n = atoi(argv[3]);
+  int dump_code = atoi(argv[1]);
+
+
+  /* Variable declaration/allocation. */
+  for(int t = 0; t < RUN; t++) {
+  double *A = (double*)malloc(m*n*sizeof(double));
+  double *s = (double*)malloc(n*sizeof(double));
+  double *q = (double*)malloc(m*sizeof(double));
+  double *p = (double*)malloc(n*sizeof(double));
+  double *r = (double*)malloc(m*sizeof(double));
+  /* Initialize array(s). */
+  init_array (m,n, A, r, p);
   double *dev_A;
   double *dev_s;
   double *dev_q;
@@ -99,50 +123,18 @@ static void kernel(int m, int n, double *A, double s[], double q[], double p[], 
   cudaMemcpy(dev_q, q, m*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_p, p, n*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_r, r, m*sizeof(double), cudaMemcpyHostToDevice);
-  const unsigned threadsPerBlock = 256;
-  kernel_q<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(m, n, dev_A, dev_s, dev_q, dev_p, dev_r);
-  kernel_s<<<num_blocks(m, threadsPerBlock), threadsPerBlock>>>(m, n, dev_A, dev_s, dev_q, dev_p, dev_r);
+  kernel(m,n, dev_A, dev_s, dev_q, dev_p, dev_r);
   cudaMemcpy(s, dev_s, n*sizeof(double), cudaMemcpyDeviceToHost);
   cudaMemcpy(q, dev_q, m*sizeof(double), cudaMemcpyDeviceToHost);
-  cudaFree((void*)dev_A);
-  cudaFree((void*)dev_s);
-  cudaFree((void*)dev_q);
-  cudaFree((void*)dev_p);
-  cudaFree((void*)dev_r);
-}
-
-int main(int argc, char** argv)
-{
-  /* Retrieve problem size. */
-  int nx =atoi(argv[2]);
-  int ny = atoi(argv[3]);
-  int dump_code = atoi(argv[1]);
-
-  for(int t = 0; t < RUN; t++) {
-
-  /* Variable declaration/allocation. */
-  double *A = (double*)malloc(nx*ny*sizeof(double));
-  double *s = (double*)malloc(ny*sizeof(double));
-  double *q = (double*)malloc(nx*sizeof(double));
-  double *p = (double*)malloc(ny*sizeof(double));
-  double *r = (double*)malloc(nx*sizeof(double));
-  /* Initialize array(s). */
-  init_array (nx, ny, A, r, p);
-
-
-  kernel(nx, ny, A, s, q, p, r);
-
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
-  if(dump_code == 1) print_array(nx, ny, s, q);
-
+  if(dump_code == 1) print_array(m, n, s, q);
   /* Be clean. */
   free((void*)A);
   free((void*)s);
   free((void*)q);
   free((void*)p);
   free((void*)r);
-
   }
 
   return 0;
