@@ -193,35 +193,35 @@ void _ZL10init_arrayiiiiPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32
   int64_t i;
   int64_t j;
 
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
   A[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   B[(i * nk + j)] = (double)(i) * (double)((j + 1)) / (double)(nj);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nl;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   C[(i * nl + j)] = (double)(i) * (double)((j + 3)) / (double)(nl);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
   D[(i * ni + j)] = (double)(i) * (double)((j + 2)) / (double)(nk);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
@@ -345,7 +345,7 @@ void _Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(uint32_t ni, uint32_t nj, uint32_t 
   if (i < ni) {
   if (j < nj) {
   dot = 0;
-
+#pragma omp parallel for reduction(+:dot)
 for(int64_t k = 0; k < nk;   k = k + 1){
   dot = (dot + alpha * A[(i * nk + k)] * B[(k * nj + j)]);
 }
@@ -367,7 +367,7 @@ void _Z23kernel_D_plus_tmp_mul_CiiiiddPdS_S_S_S__OC_2(uint32_t ni, uint32_t nj, 
   if (i < ni) {
   if (l < nl) {
   dot = D[(i * nj + l)] * beta;
-
+#pragma omp parallel for reduction(+:dot)
 for(int64_t j = 0; j < nj;   j = j + 1){
   dot = (dot + tmp[(i * nj + j)] * C[(j * nl + l)]);
 }
