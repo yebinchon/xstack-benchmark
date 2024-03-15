@@ -87,12 +87,11 @@ uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
 uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void _ZL10init_arrayiiiPdS_(uint32_t, uint32_t, uint32_t, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
+uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void _ZL6kerneliiiPdS_S_(uint32_t, uint32_t, uint32_t, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void _ZL11print_arrayiiiPd(uint32_t, uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaFree(uint8_t*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z10kernel_sumiiiPdS_S__OC_1(uint32_t, uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
@@ -143,6 +142,8 @@ int main(int argc, char ** argv) {
   uint8_t* A;
   uint8_t* sum;
   uint8_t* C4;
+  int32_t call37;
+  int32_t call51;
 
   dump_code = atoi(argv[1]);
   nr = atoi(argv[2]);
@@ -153,10 +154,14 @@ int main(int argc, char ** argv) {
   C4 = malloc(np * np * 8);
   _ZL10init_arrayiiiPdS_(nr, nq, np, ((double*)A), ((double*)C4));
 ;
+#pragma omp target data map(to: A[0:nr * nq * np * 8], C4[0:np * np * 8]) map(tofrom: sum[0:nr * nq * np * 8])
+{
   _ZL6kerneliiiPdS_S_(nr, nq, np, ((double*)A), ((double*)C4), ((double*)sum));
 ;
+
+}
   if (dump_code == 1) {
-_ZL11print_arrayiiiPd(nr, nq, np, ((double*)A));
+_ZL11print_arrayiiiPd(nr, nq, np, ((double*)sum));
   }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)sum)));
@@ -170,7 +175,7 @@ void _ZL10init_arrayiiiPdS_(uint32_t nr, uint32_t nq, uint32_t np, double* A, do
   int64_t j;
   int64_t k;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < nr;   i = i + 1){
 
 for(int64_t j = 0; j < nq;   j = j + 1){
@@ -180,7 +185,7 @@ for(int64_t k = 0; k < np;   k = k + 1){
 }
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < np;   i = i + 1){
 
 for(int64_t j = 0; j < np;   j = j + 1){
@@ -195,66 +200,53 @@ void _ZL6kerneliiiPdS_S_(uint32_t nr, uint32_t nq, uint32_t np, double* A, doubl
   struct l_struct_struct_OC_dim3 block;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp24;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp3;    /* Address-exposed local */
   struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp24_2e_coerce;    /* Address-exposed local */
-  uint8_t* dev_A;
-  uint8_t* dev_sum;
-  uint8_t* dev_C4;
+  struct l_unnamed_1 agg_2e_tmp3_2e_coerce;    /* Address-exposed local */
+  int32_t call;
+  int32_t call1;
+  int32_t call2;
   uint8_t* _1;
   uint8_t* _2;
-  int32_t call21;
-  int32_t call22;
-  int32_t call23;
   uint8_t* _3;
   uint8_t* _4;
-  uint8_t* _5;
-  uint8_t* _6;
   uint32_t i;
   uint32_t j;
   uint32_t k;
   uint32_t l;
   uint32_t m;
-  uint8_t* _7;
 
-  dev_A = malloc(nr * nq * np * 8);
-  dev_sum = malloc(nr * nq * np * 8);
-  dev_C4 = malloc(np * np * 8);
-  memcpy(((uint8_t*)((double*)dev_A)), ((uint8_t*)A), nr * nq * np * 8);
-  memcpy(((uint8_t*)((double*)dev_C4)), ((uint8_t*)C4), np * np * 8);
   block.field0 = 1;
   block.field1 = 8;
   block.field2 = 32;
-  call21 = _ZL10num_blocksii(nr, block.field0);
-  call22 = _ZL10num_blocksii(nq, block.field1);
-  call23 = _ZL10num_blocksii(np, block.field2);
-  grid.field0 = call21;
-  grid.field1 = call22;
-  grid.field2 = call23;
+  call = _ZL10num_blocksii(nr, block.field0);
+  call1 = _ZL10num_blocksii(nq, block.field1);
+  call2 = _ZL10num_blocksii(np, block.field2);
+  grid.field0 = call;
+  grid.field1 = call1;
+  grid.field2 = call2;
   memcpy(((uint8_t*)(&agg_2e_tmp)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp24)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp3)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp24_2e_coerce)), ((uint8_t*)(&agg_2e_tmp24)), 12);
-#pragma omp parallel for 
-for(int32_t i = 0; i < call21;   i = i + 1){
+  memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
+#pragma omp target teams distribute parallel for
 
-for(int32_t j = 0; j < call22;   j = j + 1){
+for(int32_t i = 0; i < call;   i = i + 1){
 
-for(int32_t k = 0; k < call23;   k = k + 1){
+for(int32_t j = 0; j < call1;   j = j + 1){
+
+for(int32_t k = 0; k < call2;   k = k + 1){
 
 for(int32_t l = 0; l < 8;   l = l + 1){
 
 for(int32_t m = 0; m < 32;   m = m + 1){
-_Z10kernel_sumiiiPdS_S__OC_1(nr, nq, np, ((double*)dev_A), ((double*)dev_C4), ((double*)dev_sum), call21, call22, call23, 1, 8, 32, i, j, k, 0, l, m);
+_Z10kernel_sumiiiPdS_S__OC_1(nr, nq, np, A, C4, sum, call, call1, call2, 1, 8, 32, i, j, k, 0, l, m);
 }
 }
 }
 }
 }
-  memcpy(((uint8_t*)A), ((uint8_t*)((double*)dev_sum)), nr * nq * np * 8);
-free(((uint8_t*)((double*)dev_A)));
-free(((uint8_t*)((double*)dev_sum)));
-free(((uint8_t*)((double*)dev_C4)));
+  return;
 }
 
 
