@@ -13,13 +13,13 @@
 
   static
 void init_array (int n,
-    double A[n][n])
+    double *A)
 {
   int i, j;
 
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++)
-      A[i][j] = ((double) (i+1)*(j+1)) / n;
+      A[i*n+j] = ((double) (i+1)*(j+1)) / n;
 }
 
 
@@ -27,14 +27,14 @@ void init_array (int n,
 
   static
 void print_array(int n,
-    double A[n][n])
+    double *A)
 
 {
   int i, j;
 
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++) {
-      fprintf (stderr, "%0.2lf ", A[i][j]);
+      fprintf (stderr, "%0.2lf ", A[i*n+j]);
       if ((i * n + j) % 20 == 0) fprintf (stderr, "\n");
     }
   fprintf (stderr, "\n");
@@ -68,22 +68,22 @@ int main(int argc, char** argv)
   int n = atoi(argv[2]);
 
 
-  double (*A)[n][n]; A = (double(*)[n][n])malloc((n) * (n) * sizeof(double));;
+  double *A = (double*)malloc(n*n*sizeof(double));
 
 
 
-  init_array (n, *A);
-
-
-
-
-  kernel_lu (n, *A);
+  init_array (n, A);
 
 
 
 
+  kernel_lu (n, A);
 
-  if (dump_code == 1) print_array(n, *A);
+
+
+
+
+  if (dump_code == 1) print_array(n, A);
 
 
   free((void*)A);;
