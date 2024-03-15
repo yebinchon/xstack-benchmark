@@ -175,7 +175,7 @@ void _ZL10init_arrayiPdS_S_S_(uint32_t n, double* u, double* v, double* p, doubl
   int64_t i;
   uint64_t j;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
@@ -207,18 +207,11 @@ void _ZL6kerneliiPdS_S_S_(uint32_t tsteps, uint32_t n, double* u, double* v, dou
   double b;
   double div12;
   double e;
-  uint8_t* dev_u;
-  uint8_t* dev_v;
-  uint8_t* dev_p;
-  uint8_t* dev_q;
-  uint8_t* _1;
-  uint8_t* _2;
-  uint8_t* _3;
-  uint8_t* _4;
+  int32_t call32;
   int32_t t;
   uint32_t j;
   uint32_t k;
-  uint8_t* _5;
+  int32_t call60;
 
   DX = 1 / (double)(n);
   DY = 1 / (double)(n);
@@ -229,14 +222,7 @@ void _ZL6kerneliiPdS_S_S_(uint32_t tsteps, uint32_t n, double* u, double* v, dou
   b = (1 + mul1);
   div12 = -(mul2) / 2;
   e = (1 + mul2);
-  dev_u = malloc(n * n * 8);
-  dev_v = malloc(n * n * 8);
-  dev_p = malloc(n * n * 8);
-  dev_q = malloc(n * n * 8);
-  memcpy(((uint8_t*)((double*)dev_u)), ((uint8_t*)u), n * n * 8);
-  memcpy(((uint8_t*)((double*)dev_v)), ((uint8_t*)v), n * n * 8);
-  memcpy(((uint8_t*)((double*)dev_p)), ((uint8_t*)p), n * n * 8);
-  memcpy(((uint8_t*)((double*)dev_q)), ((uint8_t*)q), n * n * 8);
+  cudaMemcpy(((uint8_t*)u), ((uint8_t*)u), n * n * 8, 1);
 
 for(int32_t t = 1; t <= tsteps;   t = t + 1){
   uint32_t call46 = _ZL10num_blocksii((n - 2), 256);
@@ -248,11 +234,12 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   agg_2e_tmp47.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&agg_2e_tmp47)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for
+
 for(int32_t j = 0; j < call46;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){
-_Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(tsteps, n, ((double*)dev_u), ((double*)dev_v), ((double*)dev_p), ((double*)dev_q), div10, b, div10, div12, e, div12, call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+_Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
   uint32_t call51 = _ZL10num_blocksii((n - 2), 256);
@@ -264,19 +251,16 @@ _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(tsteps, n, ((double*)dev_u), ((doub
   agg_2e_tmp52.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp49_2e_coerce)), ((uint8_t*)(&agg_2e_tmp49)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp52_2e_coerce)), ((uint8_t*)(&agg_2e_tmp52)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for
+
 for(int32_t j = 0; j < call51;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){
-_Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(tsteps, n, ((double*)dev_u), ((double*)dev_v), ((double*)dev_p), ((double*)dev_q), div10, b, div10, div12, e, div12, call51, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+_Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call51, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
 }
-  memcpy(((uint8_t*)u), ((uint8_t*)((double*)dev_u)), n * n * 8);
-free(((uint8_t*)((double*)dev_u)));
-free(((uint8_t*)((double*)dev_v)));
-free(((uint8_t*)((double*)dev_p)));
-free(((uint8_t*)((double*)dev_q)));
+  cudaMemcpy(((uint8_t*)u), ((uint8_t*)u), n * n * 8, 2);
 }
 
 
