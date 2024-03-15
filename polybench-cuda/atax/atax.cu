@@ -44,12 +44,15 @@ static int num_blocks(int num, int factor) {
 static
 void init_array (int nx, int ny,
 		 double *A,
-		 double *x)
+		 double *x,
+     double *tmp)
 {
   int i, j;
 
   for (i = 0; i < ny; i++)
       x[i] = i * M_PI;
+  for (i = 0; i < nx; i++)
+      tmp[i] = 0;
   for (i = 0; i < nx; i++)
     for (j = 0; j < ny; j++)
       A[i*ny+j] = ((double) i*(j+1)) / nx;
@@ -85,12 +88,8 @@ int main(int argc, char** argv)
   double *x = (double*)malloc(ny*sizeof(double));
   double *y = (double*)malloc(ny*sizeof(double));
   double *tmp = (double*)malloc(nx*sizeof(double));
-  for(int t = 0; t < RUN; t++) {
-
-
-
   /* Initialize array(s). */
-  init_array (nx, ny, A, x);
+  init_array (nx, ny, A, x, tmp);
 
 
   double *dev_A;
@@ -101,23 +100,23 @@ int main(int argc, char** argv)
   cudaMalloc(&dev_x, ny*sizeof(double));
   cudaMalloc(&dev_y, ny*sizeof(double));
   cudaMalloc(&dev_tmp, nx*sizeof(double));
+
+  for(int t = 0; t < RUN; t++) {
+
   cudaMemcpy(dev_A, A, nx*ny*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_x, x, ny*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_y, y, ny*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_tmp, tmp, nx*sizeof(double), cudaMemcpyHostToDevice);
 
-
   const int threadsPerBlock = 256;
   kernel3<<<num_blocks(nx, threadsPerBlock), threadsPerBlock>>>(nx, ny, dev_A, dev_x, dev_y, dev_tmp);
   kernel4<<<num_blocks(ny, threadsPerBlock), threadsPerBlock>>>(nx, ny, dev_A, dev_x, dev_y, dev_tmp);
-  cudaMemcpy(y, dev_y, ny*sizeof(double), cudaMemcpyDeviceToHost);
 
+  }
+  cudaMemcpy(y, dev_y, ny*sizeof(double), cudaMemcpyDeviceToHost);
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
   if(dump_code == 1) {print_array(nx, y);}
-
-
-  }
   /* Be clean. */
   free((void*)A);
   free((void*)x);

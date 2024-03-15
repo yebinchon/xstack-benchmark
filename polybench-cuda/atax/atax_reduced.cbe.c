@@ -153,6 +153,7 @@ int main(int argc, char ** argv) {
   uint32_t t;
   uint32_t j;
   uint32_t k;
+  int32_t call54;
 
   nx = atoi(argv[2]);
   ny = atoi(argv[3]);
@@ -161,11 +162,11 @@ int main(int argc, char ** argv) {
   x = malloc(ny * 8);
   y = malloc(ny * 8);
   tmp = malloc(nx * 8);
+_ZL10init_arrayiiPdS_S_(nx, ny, ((double*)A), ((double*)x), ((double*)tmp));
 
 for(int32_t t = 0; t < 50;   t = t + 1){
 #pragma omp target data map(to: A[0:nx * ny * 8], x[0:ny * 8], tmp[0:nx * 8]) map(tofrom: y[0:ny * 8])
 {
-_ZL10init_arrayiiPdS_S_(nx, ny, ((double*)A), ((double*)x), ((double*)tmp));
   uint32_t call42 = _ZL10num_blocksii(nx, 256);
   agg_2e_tmp.field0 = call42;
   agg_2e_tmp.field1 = 1;
@@ -200,12 +201,12 @@ for(int32_t k = 0; k < 256;   k = k + 1){
 _Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
+}
 
 }
   if (dump_code == 1) {
 _ZL11print_arrayiPd(nx, ((double*)y));
   }
-}
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)x)));
 free(((uint8_t*)((double*)y)));
