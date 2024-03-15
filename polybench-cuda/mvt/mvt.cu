@@ -15,8 +15,8 @@
 
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-#define N 15000
-//#define N 4000
+//#define N 15000
+#define N 40
 
 /* Array initialization. */
 static
@@ -99,34 +99,11 @@ void kernel(int n,
             double *y_1,
             double *y_2,
             double *A) {
-  double *dev_A;
-  double *dev_x1;
-  double *dev_x2;
-  double *dev_y_1;
-  double *dev_y_2;
-
-  cudaMalloc(&dev_A, n*n*sizeof(double));
-  cudaMalloc(&dev_x1, n*sizeof(double));
-  cudaMalloc(&dev_x2, n*sizeof(double));
-  cudaMalloc(&dev_y_1, n*sizeof(double));
-  cudaMalloc(&dev_y_2, n*sizeof(double));
-
-  cudaMemcpy(dev_A, A, n * n * sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_x1, x1, n * sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_x2, x2, n * sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_y_1, y_1, n * sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_y_2, y_2, n * sizeof(double), cudaMemcpyHostToDevice);
   short threadsPerBlock = 256;
 
-  kernel_x1<<<threadsPerBlock, num_blocks(n, threadsPerBlock)>>>(n, dev_x1, dev_x2, dev_y_1, dev_y_2, dev_A);
-  kernel_x2<<<threadsPerBlock, num_blocks(n, threadsPerBlock)>>>(n, dev_x1, dev_x2, dev_y_1, dev_y_2, dev_A);
-  cudaMemcpy(x1, dev_x1, n * sizeof(double), cudaMemcpyDeviceToHost);
-  cudaMemcpy(x2, dev_x2, n * sizeof(double), cudaMemcpyDeviceToHost);
-  cudaFree((void*)dev_A);
-  cudaFree((void*)dev_x1);
-  cudaFree((void*)dev_x2);
-  cudaFree((void*)dev_y_1);
-  cudaFree((void*)dev_y_2);
+  kernel_x1<<<threadsPerBlock, num_blocks(n, threadsPerBlock)>>>(n, x1, x2, y_1, y_2, A);
+  kernel_x2<<<threadsPerBlock, num_blocks(n, threadsPerBlock)>>>(n, x1, x2, y_1, y_2, A);
+
 }
 
 int main(int argc, char** argv)
@@ -151,12 +128,30 @@ int main(int argc, char** argv)
 	      A);
 
 
+  double *dev_A;
+  double *dev_x1;
+  double *dev_x2;
+  double *dev_y_1;
+  double *dev_y_2;
+
+  cudaMalloc(&dev_A, n*n*sizeof(double));
+  cudaMalloc(&dev_x1, n*sizeof(double));
+  cudaMalloc(&dev_x2, n*sizeof(double));
+  cudaMalloc(&dev_y_1, n*sizeof(double));
+  cudaMalloc(&dev_y_2, n*sizeof(double));
+
+  cudaMemcpy(dev_A, A, n * n * sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_x1, x1, n * sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_x2, x2, n * sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_y_1, y_1, n * sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_y_2, y_2, n * sizeof(double), cudaMemcpyHostToDevice);
 
   /* Run kernel. */
-  kernel(n, x1, x2, y_1, y_2, A);
+  kernel(n, dev_x1, dev_x2, dev_y_1, dev_y_2, dev_A);
 
+  cudaMemcpy(x1, dev_x1, n * sizeof(double), cudaMemcpyDeviceToHost);
+  cudaMemcpy(x2, dev_x2, n * sizeof(double), cudaMemcpyDeviceToHost);
 
-  cudaDeviceSynchronize();
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
