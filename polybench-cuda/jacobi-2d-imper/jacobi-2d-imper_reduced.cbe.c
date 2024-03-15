@@ -95,7 +95,6 @@ uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, noth
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z14kernel_stenciliPdS__OC_1(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z14kernel_stenciliPdS__OC_2(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -142,11 +141,8 @@ int main(int argc, char ** argv) {
   int32_t tsteps;
   uint8_t* A;
   uint8_t* B;
-  uint8_t* dev_A;
-  uint8_t* dev_B;
-  uint8_t* _1;
-  uint8_t* _2;
-  uint8_t* _3;
+  int32_t call22;
+  int32_t call30;
 
   dump_code = atoi(argv[1]);
   n = atoi(argv[2]);
@@ -155,20 +151,17 @@ int main(int argc, char ** argv) {
   B = malloc(n * n * 8);
   _ZL10init_arrayiPdS_(n, ((double*)A), ((double*)B));
 ;
-  dev_A = malloc(n * n * 8);
-  dev_B = malloc(n * n * 8);
-  _1 = memcpy(((uint8_t*)((double*)dev_A)), ((uint8_t*)((double*)A)), n * n * 8);
-  _2 = memcpy(((uint8_t*)((double*)dev_B)), ((uint8_t*)((double*)B)), n * n * 8);
-  _ZL6kerneliiPdS_(tsteps, n, ((double*)dev_A), ((double*)dev_B));
+#pragma omp target data map(to: B[0:n * n * 8]) map(tofrom: A[0:n * n * 8])
+{
+  _ZL6kerneliiPdS_(tsteps, n, ((double*)A), ((double*)B));
 ;
-  _3 = memcpy(((uint8_t*)((double*)A)), ((uint8_t*)((double*)dev_A)), n * n * 8);
+
+}
   if (dump_code == 1) {
 _ZL11print_arrayiPd(n, ((double*)A));
   }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)B)));
-free(((uint8_t*)((double*)dev_A)));
-free(((uint8_t*)((double*)dev_B)));
   return 0;
 }
 
@@ -177,7 +170,7 @@ void _ZL10init_arrayiPdS_(uint32_t n, double* A, double* B) {
   int64_t i;
   uint64_t j;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
@@ -220,7 +213,8 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   memcpy(((uint8_t*)(&agg_2e_tmp3)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for
+
 for(int32_t j = 0; j < call;   j = j + 1){
 
 for(int32_t k = 0; k < call2;   k = k + 1){
@@ -237,7 +231,8 @@ _Z14kernel_stenciliPdS__OC_1(n, A, B, call, call2, 1, 8, 32, 1, j, k, 0, l, m, 0
   memcpy(((uint8_t*)(&agg_2e_tmp6)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&agg_2e_tmp6)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for
+
 for(int32_t j = 0; j < call;   j = j + 1){
 
 for(int32_t k = 0; k < call2;   k = k + 1){
@@ -245,7 +240,7 @@ for(int32_t k = 0; k < call2;   k = k + 1){
 for(int32_t l = 0; l < 8;   l = l + 1){
 
 for(int32_t m = 0; m < 32;   m = m + 1){
-_Z14kernel_stenciliPdS__OC_2(n, B, A, call, call2, 1, 8, 32, 1, j, k, 0, l, m, 0);
+_Z14kernel_stenciliPdS__OC_1(n, B, A, call, call2, 1, 8, 32, 1, j, k, 0, l, m, 0);
 }
 }
 }
@@ -280,21 +275,6 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 
 
 void _Z14kernel_stenciliPdS__OC_1(uint32_t n, double* A, double* B, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
-  int32_t i;
-  int32_t j;
-
-  i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x + 1;
-  j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y + 1;
-  if (i < (n - 1)) {
-  if (j < (n - 1)) {
-  B[(i * n + j)] = ((((A[(i * n + j)] + A[((i * n + j) - 1)]) + A[((i * n + 1) + j)]) + A[((1 + i) * n + j)]) + A[((i - 1) * n + j)]) / 5;
-  }
-  }
-  return;
-}
-
-
-void _Z14kernel_stenciliPdS__OC_2(uint32_t n, double* A, double* B, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int32_t j;
 
