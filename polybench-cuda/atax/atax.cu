@@ -80,13 +80,14 @@ int main(int argc, char** argv)
   int ny = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
-  for(int t = 0; t < RUN; t++) {
-
   /* Variable declaration/allocation. */
   double *A = (double*)malloc(nx*ny*sizeof(double));
   double *x = (double*)malloc(ny*sizeof(double));
   double *y = (double*)malloc(ny*sizeof(double));
   double *tmp = (double*)malloc(nx*sizeof(double));
+  for(int t = 0; t < RUN; t++) {
+
+
 
   /* Initialize array(s). */
   init_array (nx, ny, A, x);
@@ -115,16 +116,13 @@ int main(int argc, char** argv)
      by the function call in argument. */
   if(dump_code == 1) {print_array(nx, y);}
 
+
+  }
   /* Be clean. */
   free((void*)A);
   free((void*)x);
   free((void*)y);
   free((void*)tmp);
-  cudaFree((void*)dev_A);
-  cudaFree((void*)dev_x);
-  cudaFree((void*)dev_y);
-  cudaFree((void*)dev_tmp);
-  }
 
   return 0;
 }

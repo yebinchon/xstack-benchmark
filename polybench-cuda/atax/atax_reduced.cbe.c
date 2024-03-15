@@ -91,7 +91,6 @@ uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 void _ZL11print_arrayiPd(uint32_t, double*) __ATTRIBUTELIST__((noinline));
-uint32_t cudaFree(uint8_t*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z7kernel3iiPdS_S_S__OC_1(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z7kernel4iiPdS_S_S__OC_2(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
@@ -147,6 +146,10 @@ int main(int argc, char ** argv) {
   int32_t nx;
   int32_t ny;
   int32_t dump_code;
+  uint8_t* A;
+  uint8_t* x;
+  uint8_t* y;
+  uint8_t* tmp;
   uint32_t t;
   uint32_t j;
   uint32_t k;
@@ -154,21 +157,16 @@ int main(int argc, char ** argv) {
   nx = atoi(argv[2]);
   ny = atoi(argv[3]);
   dump_code = atoi(argv[1]);
+  A = malloc(nx * ny * 8);
+  x = malloc(ny * 8);
+  y = malloc(ny * 8);
+  tmp = malloc(nx * 8);
 
 for(int32_t t = 0; t < 50;   t = t + 1){
-  uint8_t* A = malloc(nx * ny * 8);
-  uint8_t* x = malloc(ny * 8);
-  uint8_t* y = malloc(ny * 8);
-  uint8_t* tmp = malloc(nx * 8);
+#pragma omp target data map(to: A[0:nx * ny * 8], x[0:ny * 8], tmp[0:nx * 8]) map(tofrom: y[0:ny * 8])
+{
 _ZL10init_arrayiiPdS_(nx, ny, ((double*)A), ((double*)x));
-  uint8_t* dev_A = malloc(nx * ny * 8);
-  uint8_t* dev_x = malloc(ny * 8);
-  uint8_t* dev_y = malloc(ny * 8);
-  uint8_t* dev_tmp = malloc(nx * 8);
-  memcpy(((uint8_t*)((double*)dev_A)), ((uint8_t*)((double*)A)), nx * ny * 8);
-  memcpy(((uint8_t*)((double*)dev_x)), ((uint8_t*)((double*)x)), ny * 8);
-  memcpy(((uint8_t*)((double*)dev_y)), ((uint8_t*)((double*)y)), ny * 8);
-  memcpy(((uint8_t*)((double*)dev_tmp)), ((uint8_t*)((double*)tmp)), nx * 8);
+  cudaMemcpy(((uint8_t*)((double*)A)), ((uint8_t*)((double*)A)), nx * ny * 8, 1);
   uint32_t call42 = _ZL10num_blocksii(nx, 256);
   agg_2e_tmp.field0 = call42;
   agg_2e_tmp.field1 = 1;
@@ -178,11 +176,12 @@ _ZL10init_arrayiiPdS_(nx, ny, ((double*)A), ((double*)x));
   agg_2e_tmp43.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp43_2e_coerce)), ((uint8_t*)(&agg_2e_tmp43)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for
+
 for(int32_t j = 0; j < call42;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){
-_Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)dev_A), ((double*)dev_x), ((double*)dev_y), ((double*)dev_tmp), call42, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+_Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call42, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
   uint32_t call46 = _ZL10num_blocksii(ny, 256);
@@ -194,26 +193,24 @@ _Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)dev_A), ((double*)dev_x), ((double*)
   agg_2e_tmp47.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp45_2e_coerce)), ((uint8_t*)(&agg_2e_tmp45)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&agg_2e_tmp47)), 12);
-#pragma omp parallel for 
+#pragma omp target teams distribute parallel for
+
 for(int32_t j = 0; j < call46;   j = j + 1){
 
 for(int32_t k = 0; k < 256;   k = k + 1){
-_Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)dev_A), ((double*)dev_x), ((double*)dev_y), ((double*)dev_tmp), call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+_Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
-  uint8_t* _1 = memcpy(((uint8_t*)((double*)y)), ((uint8_t*)((double*)dev_y)), ny * 8);
+
+}
   if (dump_code == 1) {
 _ZL11print_arrayiPd(nx, ((double*)y));
   }
+}
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)x)));
 free(((uint8_t*)((double*)y)));
 free(((uint8_t*)((double*)tmp)));
-free(((uint8_t*)((double*)dev_A)));
-free(((uint8_t*)((double*)dev_x)));
-free(((uint8_t*)((double*)dev_y)));
-free(((uint8_t*)((double*)dev_tmp)));
-}
   return 0;
 }
 
@@ -222,11 +219,11 @@ void _ZL10init_arrayiiPdS_(uint32_t nx, uint32_t ny, double* A, double* x) {
   int64_t i;
   int64_t j;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < ny;   i = i + 1){
   x[i] = (double)(i) * 3.1415926535897931;
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < nx;   i = i + 1){
 
 for(int64_t j = 0; j < ny;   j = j + 1){
