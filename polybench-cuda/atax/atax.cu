@@ -17,6 +17,8 @@
 __global__ void kernel3(int m, int n, double *A, double *x, double *y, double *tmp) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
+  for (i= 0; i < n; i++)
+    y[i] = 0;
   if (i < m) {
     for (int j = 0; j < n; j++)
       tmp[i] += A[i * n + j] * x[j];
@@ -28,6 +30,7 @@ __global__ void kernel4(int m, int n, double *A, double *x, double *y, double *t
   int j = blockDim.x * blockIdx.x + threadIdx.x;
 
   if (j < n) {
+
     for (int i = 0; i < m; i++)
       y[j] += A[i * n + j] * tmp[i];
   }
@@ -110,6 +113,7 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_x, x, ny*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_y, y, ny*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_tmp, tmp, nx*sizeof(double), cudaMemcpyHostToDevice);
+
 
   const int threadsPerBlock = 256;
   kernel3<<<num_blocks(nx, threadsPerBlock), threadsPerBlock>>>(nx, ny, dev_A, dev_x, dev_y, dev_tmp);
