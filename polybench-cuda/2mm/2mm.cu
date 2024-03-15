@@ -59,6 +59,33 @@ short num_blocks(short num, short factor) {
 }
 
 
+static void kernel(int ni, int nj, int nk, int nl,
+                   double alpha, double beta,
+                   double *tmp,
+                   double *A,
+                   double *B, double *C, double *D) {
+
+
+
+  unsigned threadsPerBlock = 256;
+  dim3 block(threadsPerBlock / 32, 32, 1);
+
+  {
+    dim3 grid(num_blocks(ni, block.x), num_blocks(nj, block.y), 1);
+    kernel_A_mul_B<<<grid, block>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
+  }
+
+
+  {
+    dim3 grid(num_blocks(ni, block.x), num_blocks(nl, block.y), 1);
+    kernel_D_plus_tmp_mul_C<<<grid, block>>>(ni, nj, nk, nl, alpha, beta, tmp, A, B, C, D);
+  }
+
+
+
+
+}
+
 
   static
 void print_array(int ni, int nl,
@@ -111,8 +138,8 @@ int main(int argc, char** argv)
   long  nl = atoi(argv[5]);
 
 
-  double alpha = 32412.0;
-  double beta = 2123.0;
+  double alpha = 32412; 
+  double beta = 2123;
   double *A = (double*)malloc(ni*nk*sizeof(double));
   double *B = (double*)malloc(nk*nj*sizeof(double));
   double *C = (double*)malloc(nl*nj*sizeof(double));
@@ -128,7 +155,6 @@ int main(int argc, char** argv)
       C,
       D,
       tmp);
-
 
 
 
@@ -150,19 +176,12 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_D, D, ni*nl*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_tmp, tmp, ni*nj*sizeof(double), cudaMemcpyHostToDevice);
 
-  unsigned threadsPerBlock = 256;
-  dim3 block(threadsPerBlock / 32, 32, 1);
-
-  {
-    dim3 grid(num_blocks(ni, block.x), num_blocks(nj, block.y), 1);
-    kernel_A_mul_B<<<grid, block>>>(ni, nj, nk, nl, alpha, beta, dev_tmp, dev_A, dev_B, dev_C, dev_D);
-  }
 
 
-  {
-    dim3 grid(num_blocks(ni, block.x), num_blocks(nl, block.y), 1);
-    kernel_D_plus_tmp_mul_C<<<grid, block>>>(ni, nj, nk, nl, alpha, beta, dev_tmp, dev_A, dev_B, dev_C, dev_D);
-  }
+
+
+  kernel(ni, nj, nk, nl, alpha, beta, dev_tmp, dev_A, dev_B, dev_C, dev_D);
+
 
   cudaMemcpy(D, dev_D, ni*nl*sizeof(double), cudaMemcpyDeviceToHost);
   cudaFree((void*)dev_A);
@@ -172,10 +191,6 @@ int main(int argc, char** argv)
   cudaFree((void*)dev_tmp);
   cudaFree((void*)dev_alpha);
   cudaFree((void*)dev_beta);
-
-
-
-
 
 
   if (dump_code == 1) print_array(ni, nk, D);
