@@ -42,16 +42,12 @@ __global__ void kernel_y(int n,
 /* Array initialization. */
 static
 void init_array(int n,
-		double *alpha,
-		double *beta,
 		double *A,
 		double *B,
 		double *x)
 {
   int i, j;
 
-  *alpha = 43532;
-  *beta = 12313;
   for (i = 0; i < n; i++)
     {
       x[i] = ((double) i) / n;
@@ -86,8 +82,6 @@ int main(int argc, char** argv)
   int dump_code = atoi(argv[1]);
 
   /* Variable declaration/allocation. */
-  double *alpha = (double*)malloc(sizeof(double));
-  double *beta = (double*)malloc(sizeof(double));
   double *A = (double*)malloc(n*n*sizeof(double));
   double *B = (double*)malloc(n*n*sizeof(double));
   double *tmp = (double*)malloc(n*sizeof(double));
@@ -98,10 +92,12 @@ int main(int argc, char** argv)
   //__builtin_assume(n>0);
   //__builtin_assume(n<0x7FFFFFFE);
   /* Initialize array(s). */
-  init_array (n, alpha, beta,
+  init_array (n,
 	      A,
 	      B,
 	      x);
+  double alpha = 43532;
+  double beta = 12313;
 
   double *dev_A;
   double *dev_B;
@@ -115,19 +111,15 @@ int main(int argc, char** argv)
   cudaMalloc(&dev_tmp, n*sizeof(double));
   cudaMalloc(&dev_x, n*sizeof(double));
   cudaMalloc(&dev_y, n*sizeof(double));
-  cudaMalloc(&dev_alpha, sizeof(double));
-  cudaMalloc(&dev_beta, sizeof(double));
   cudaMemcpy(dev_A, A, n*n*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_B, B, n*n*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_tmp, tmp, n*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_x, x, n*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_y, y, n*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_alpha, alpha, sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_beta, beta, sizeof(double), cudaMemcpyHostToDevice);
   /* Run kernel. */
 
   const unsigned threadsPerBlock = 256;
-  kernel_y<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(n, *dev_alpha, *dev_beta, dev_A, dev_B, dev_tmp, dev_x, dev_y);
+  kernel_y<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(n, alpha, beta, dev_A, dev_B, dev_tmp, dev_x, dev_y);
   cudaMemcpy(y, dev_y, n*sizeof(double), cudaMemcpyDeviceToHost);
 
   /* Prevent dead-code elimination. All live-out data must be printed
@@ -140,8 +132,6 @@ int main(int argc, char** argv)
   free((void*)tmp);
   free((void*)x);
   free((void*)y);
-  free((void*)alpha);
-  free((void*)beta);
 
   cudaFree((void*)dev_A);
   cudaFree((void*)dev_B);
