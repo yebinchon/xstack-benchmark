@@ -20,7 +20,6 @@ __global__ void kernel3(int m, int n, double *A, double *x, double *y, double *t
 
   if (i < m) {
     for (int j = 0; j < n; j++){
-      y[j] = 0;
       tmp[i] += A[i * n + j] * x[j];
     }
   }
@@ -31,7 +30,7 @@ __global__ void kernel4(int m, int n, double *A, double *x, double *y, double *t
   int j = blockDim.x * blockIdx.x + threadIdx.x;
 
   if (j < n) {
-
+    y[j] = 0;
     for (int i = 0; i < m; i++)
       y[j] += A[i * n + j] * tmp[i];
   }
@@ -56,7 +55,6 @@ void init_array (int nx, int ny,
 
   for (i = 0; i < ny; i++){
       x[i] = i * M_PI;
-      y[i] = 0;
   }
   for (i = 0; i < nx; i++)
       tmp[i] = 0;
