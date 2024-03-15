@@ -51,7 +51,7 @@ tulip.reduced.clang.exe: ${BMARK}_reduced.cbe.c
 tulip.reduced.gcc.exe: ${BMARK}_reduced.cbe.c
 	gcc -fopenmp -O3 $< -o $@
 
-tulip.clang.exe: ${BMARK}_cpu.cbe.c
+tulip.clang.exe: ${BMARK}_reduced.cbe.c
 	clang -fopenmp -O3 $< -o $@
 
 tulip.gcc.exe: ${BMARK}_cpu.cbe.c
