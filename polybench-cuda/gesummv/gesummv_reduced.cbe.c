@@ -173,9 +173,10 @@ _ZL10init_arrayiPdS_S_(n, ((double*)A), ((double*)B), ((double*)x));
   agg_2e_tmp53.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp53_2e_coerce)), ((uint8_t*)(&agg_2e_tmp53)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t i = 0; i < call52;   i = i + 1){
+#pragma omp parallel for
 
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z8kernel_yiddPdS_S_S_S__OC_1(n, 43532, 12313, ((double*)A), ((double*)B), ((double*)tmp), ((double*)x), ((double*)y), call52, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
@@ -199,7 +200,7 @@ void _ZL10init_arrayiPdS_S_(uint32_t n, double* A, double* B, double* x) {
   int64_t i;
   uint64_t j;
 
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < n;   i = i + 1){
   x[i] = (double)(i) / (double)(n);
 
