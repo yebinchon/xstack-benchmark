@@ -87,9 +87,9 @@ uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
 uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void _ZL10init_arrayiiPdS_S_S_(uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
+uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void _ZL6kerneliiiPdS_S_S_(uint32_t, uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void _ZL11print_arrayiiPdS_S_(uint32_t, uint32_t, double*, double*, double*) __ATTRIBUTELIST__((noinline));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
@@ -146,6 +146,8 @@ int main(int argc, char ** argv) {
   uint8_t* ey;
   uint8_t* hz;
   uint8_t* _fict_;
+  int32_t call38;
+  int32_t call53;
 
   tmax = atoi(argv[2]);
   nx = atoi(argv[3]);
@@ -157,8 +159,12 @@ int main(int argc, char ** argv) {
   _fict_ = malloc(ny * 8);
   _ZL10init_arrayiiPdS_S_S_(nx, ny, ((double*)ex), ((double*)ey), ((double*)hz), ((double*)_fict_));
 ;
+#pragma omp target data map(to: _fict_[0:ny * 8]) map(tofrom: ex[0:nx * ny * 8], ey[0:nx * ny * 8], hz[0:nx * ny * 8])
+{
   _ZL6kerneliiiPdS_S_S_(tmax, nx, ny, ((double*)ex), ((double*)ey), ((double*)hz), ((double*)_fict_));
 ;
+
+}
   if (dump_code == 1) {
 _ZL11print_arrayiiPdS_S_(nx, ny, ((double*)ex), ((double*)ey), ((double*)hz));
   }
@@ -193,145 +199,132 @@ for(int64_t j = 0; j < ny;   j = j + 1){
 
 void _ZL6kerneliiiPdS_S_S_(uint32_t tmax, uint32_t nx, uint32_t ny, double* ex, double* ey, double* hz, double* fict) {
   struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp28;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp1;    /* Address-exposed local */
   struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp28_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp1_2e_coerce;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 block;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp5;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp6;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp5_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp6_2e_coerce;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp18;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp19;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp18_2e_coerce;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp19_2e_coerce;    /* Address-exposed local */
+  struct l_struct_struct_OC_dim3 agg_2e_tmp32;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 agg_2e_tmp33;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp34;    /* Address-exposed local */
+  struct l_unnamed_1 agg_2e_tmp32_2e_coerce;    /* Address-exposed local */
   struct l_unnamed_1 agg_2e_tmp33_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp34_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp46;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp47;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp46_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp47_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp60;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp61;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp60_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp61_2e_coerce;    /* Address-exposed local */
-  uint8_t* dev_ex;
-  uint8_t* dev_ey;
-  uint8_t* dev_hz;
-  uint8_t* dev_fict;
-  uint8_t* _1;
-  uint8_t* _2;
-  uint8_t* _3;
-  uint8_t* _4;
   int32_t t;
   uint32_t j;
   uint32_t k;
   uint32_t l;
   uint32_t m;
-  uint8_t* _5;
-  uint8_t* _6;
-  uint8_t* _7;
 
-  dev_ex = malloc(nx * ny * 8);
-  dev_ey = malloc(nx * ny * 8);
-  dev_hz = malloc(nx * ny * 8);
-  dev_fict = malloc(ny * 8);
-  memcpy(((uint8_t*)((double*)dev_ex)), ((uint8_t*)ex), nx * ny * 8);
-  memcpy(((uint8_t*)((double*)dev_ey)), ((uint8_t*)ey), nx * ny * 8);
-  memcpy(((uint8_t*)((double*)dev_hz)), ((uint8_t*)hz), nx * ny * 8);
-  memcpy(((uint8_t*)((double*)dev_fict)), ((uint8_t*)fict), ny * 8);
 
 for(int32_t t = 0; t < tmax;   t = t + 1){
   agg_2e_tmp.field0 = 256;
   agg_2e_tmp.field1 = 1;
   agg_2e_tmp.field2 = 1;
-  uint32_t call29 = _ZL10num_blocksii(ny, 256);
-  agg_2e_tmp28.field0 = call29;
-  agg_2e_tmp28.field1 = 1;
-  agg_2e_tmp28.field2 = 1;
+  uint32_t call = _ZL10num_blocksii(ny, 256);
+  agg_2e_tmp1.field0 = call;
+  agg_2e_tmp1.field1 = 1;
+  agg_2e_tmp1.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp28_2e_coerce)), ((uint8_t*)(&agg_2e_tmp28)), 12);
-#pragma omp parallel for 
+  memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
+#pragma omp target teams distribute
+
 for(int32_t j = 0; j < 256;   j = j + 1){
+#pragma omp parallel for
 
-for(int32_t k = 0; k < call29;   k = k + 1){
-_Z12kernel_splatiiiPdS_S_S_i_OC_1(tmax, nx, ny, ((double*)dev_ex), ((double*)dev_ey), ((double*)dev_hz), ((double*)dev_fict), t, 256, 1, 1, call29, 1, 1, j, 0, 0, k, 0, 0);
+for(int32_t k = 0; k < call;   k = k + 1){
+_Z12kernel_splatiiiPdS_S_S_i_OC_1(tmax, nx, ny, ex, ey, hz, fict, t, 256, 1, 1, call, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
   block.field0 = 8;
   block.field1 = 32;
   block.field2 = 1;
-  uint32_t call31 = _ZL10num_blocksii((nx - 1), block.field0);
-  uint32_t call32 = _ZL10num_blocksii(ny, block.field1);
-  grid.field0 = call31;
-  grid.field1 = call32;
+  uint32_t call3 = _ZL10num_blocksii((nx - 1), block.field0);
+  uint32_t call4 = _ZL10num_blocksii(ny, block.field1);
+  grid.field0 = call3;
+  grid.field1 = call4;
   grid.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp33)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp34)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp5)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp6)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&agg_2e_tmp6)), 12);
+#pragma omp target teams distribute collapse(2)
+
+for(int32_t j = 0; j < call3;   j = j + 1){
+
+for(int32_t k = 0; k < call4;   k = k + 1){
+#pragma omp parallel for collapse(2)
+
+for(int32_t l = 0; l < 8;   l = l + 1){
+
+for(int32_t m = 0; m < 32;   m = m + 1){
+_Z9kernel_eyiiiPdS_S_S_i_OC_2(tmax, nx, ny, ex, ey, hz, fict, t, call3, call4, 1, 8, 32, 1, j, k, 0, l, m, 0);
+}
+}
+}
+}
+  block.field0 = 8;
+  block.field1 = 32;
+  block.field2 = 1;
+  uint32_t call14 = _ZL10num_blocksii(nx, block.field0);
+  uint32_t call17 = _ZL10num_blocksii((ny - 1), block.field1);
+  grid.field0 = call14;
+  grid.field1 = call17;
+  grid.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp18)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp19)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp18_2e_coerce)), ((uint8_t*)(&agg_2e_tmp18)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp19_2e_coerce)), ((uint8_t*)(&agg_2e_tmp19)), 12);
+#pragma omp target teams distribute collapse(2)
+
+for(int32_t j = 0; j < call14;   j = j + 1){
+
+for(int32_t k = 0; k < call17;   k = k + 1){
+#pragma omp parallel for collapse(2)
+
+for(int32_t l = 0; l < 8;   l = l + 1){
+
+for(int32_t m = 0; m < 32;   m = m + 1){
+_Z9kernel_exiiiPdS_S_S_i_OC_3(tmax, nx, ny, ex, ey, hz, fict, t, call14, call17, 1, 8, 32, 1, j, k, 0, l, m, 0);
+}
+}
+}
+}
+  block.field0 = 8;
+  block.field1 = 32;
+  block.field2 = 1;
+  uint32_t call28 = _ZL10num_blocksii((nx - 1), block.field0);
+  uint32_t call31 = _ZL10num_blocksii((ny - 1), block.field1);
+  grid.field0 = call28;
+  grid.field1 = call31;
+  grid.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp32)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp33)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp32_2e_coerce)), ((uint8_t*)(&agg_2e_tmp32)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp33_2e_coerce)), ((uint8_t*)(&agg_2e_tmp33)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp34_2e_coerce)), ((uint8_t*)(&agg_2e_tmp34)), 12);
-#pragma omp parallel for 
-for(int32_t j = 0; j < call31;   j = j + 1){
+#pragma omp target teams distribute collapse(2)
 
-for(int32_t k = 0; k < call32;   k = k + 1){
+for(int32_t j = 0; j < call28;   j = j + 1){
 
-for(int32_t l = 0; l < 8;   l = l + 1){
-
-for(int32_t m = 0; m < 32;   m = m + 1){
-_Z9kernel_eyiiiPdS_S_S_i_OC_2(tmax, nx, ny, ((double*)dev_ex), ((double*)dev_ey), ((double*)dev_hz), ((double*)dev_fict), t, call31, call32, 1, 8, 32, 1, j, k, 0, l, m, 0);
-}
-}
-}
-}
-  block.field0 = 8;
-  block.field1 = 32;
-  block.field2 = 1;
-  uint32_t call42 = _ZL10num_blocksii(nx, block.field0);
-  uint32_t call45 = _ZL10num_blocksii((ny - 1), block.field1);
-  grid.field0 = call42;
-  grid.field1 = call45;
-  grid.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp46)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp47)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp46_2e_coerce)), ((uint8_t*)(&agg_2e_tmp46)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&agg_2e_tmp47)), 12);
-#pragma omp parallel for 
-for(int32_t j = 0; j < call42;   j = j + 1){
-
-for(int32_t k = 0; k < call45;   k = k + 1){
+for(int32_t k = 0; k < call31;   k = k + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t l = 0; l < 8;   l = l + 1){
 
 for(int32_t m = 0; m < 32;   m = m + 1){
-_Z9kernel_exiiiPdS_S_S_i_OC_3(tmax, nx, ny, ((double*)dev_ex), ((double*)dev_ey), ((double*)dev_hz), ((double*)dev_fict), t, call42, call45, 1, 8, 32, 1, j, k, 0, l, m, 0);
-}
-}
-}
-}
-  block.field0 = 8;
-  block.field1 = 32;
-  block.field2 = 1;
-  uint32_t call56 = _ZL10num_blocksii((nx - 1), block.field0);
-  uint32_t call59 = _ZL10num_blocksii((ny - 1), block.field1);
-  grid.field0 = call56;
-  grid.field1 = call59;
-  grid.field2 = 1;
-  memcpy(((uint8_t*)(&agg_2e_tmp60)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp61)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp60_2e_coerce)), ((uint8_t*)(&agg_2e_tmp60)), 12);
-  memcpy(((uint8_t*)(&agg_2e_tmp61_2e_coerce)), ((uint8_t*)(&agg_2e_tmp61)), 12);
-#pragma omp parallel for 
-for(int32_t j = 0; j < call56;   j = j + 1){
-
-for(int32_t k = 0; k < call59;   k = k + 1){
-
-for(int32_t l = 0; l < 8;   l = l + 1){
-
-for(int32_t m = 0; m < 32;   m = m + 1){
-_Z9kernel_hziiiPdS_S_S_i_OC_4(tmax, nx, ny, ((double*)dev_ex), ((double*)dev_ey), ((double*)dev_hz), ((double*)dev_fict), t, call56, call59, 1, 8, 32, 1, j, k, 0, l, m, 0);
+_Z9kernel_hziiiPdS_S_S_i_OC_4(tmax, nx, ny, ex, ey, hz, fict, t, call28, call31, 1, 8, 32, 1, j, k, 0, l, m, 0);
 }
 }
 }
 }
 }
-  memcpy(((uint8_t*)ex), ((uint8_t*)((double*)dev_ex)), nx * ny * 8);
-  memcpy(((uint8_t*)ey), ((uint8_t*)((double*)dev_ey)), nx * ny * 8);
-  memcpy(((uint8_t*)hz), ((uint8_t*)((double*)dev_hz)), nx * ny * 8);
+  return;
 }
 
 
