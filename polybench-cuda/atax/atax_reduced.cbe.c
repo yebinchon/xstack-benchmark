@@ -176,9 +176,10 @@ for(int32_t t = 0; t < 50;   t = t + 1){
   agg_2e_tmp43.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp43_2e_coerce)), ((uint8_t*)(&agg_2e_tmp43)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t j = 0; j < call42;   j = j + 1){
+#pragma omp parallel for
 
 for(int32_t k = 0; k < 256;   k = k + 1){
 _Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call42, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
@@ -193,9 +194,10 @@ _Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((do
   agg_2e_tmp47.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp45_2e_coerce)), ((uint8_t*)(&agg_2e_tmp45)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&agg_2e_tmp47)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t j = 0; j < call46;   j = j + 1){
+#pragma omp parallel for
 
 for(int32_t k = 0; k < 256;   k = k + 1){
 _Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
@@ -219,16 +221,15 @@ void _ZL10init_arrayiiPdS_S_S_(uint32_t nx, uint32_t ny, double* A, double* x, d
   int64_t i;
   int64_t j;
 
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ny;   i = i + 1){
   x[i] = (double)(i) * 3.1415926535897931;
-  y[i] = 0;
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nx;   i = i + 1){
   tmp[i] = 0;
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nx;   i = i + 1){
 
 for(int64_t j = 0; j < ny;   j = j + 1){
@@ -267,7 +268,6 @@ void _Z7kernel3iiPdS_S_S__OC_1(uint32_t m, uint32_t n, double* A, double* x, dou
   if (i < m) {
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  y[j] = 0;
   tmp[i] = (tmp[i] + A[(i * n + j)] * x[j]);
 }
   }
@@ -281,6 +281,7 @@ void _Z7kernel4iiPdS_S_S__OC_2(uint32_t m, uint32_t n, double* A, double* x, dou
 
   j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   if (j < n) {
+  y[j] = 0;
 
 for(int64_t i = 0; i < m;   i = i + 1){
   y[j] = (y[j] + A[(i * n + j)] * tmp[i]);
