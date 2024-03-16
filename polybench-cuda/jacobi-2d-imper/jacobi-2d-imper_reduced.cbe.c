@@ -170,7 +170,7 @@ void _ZL10init_arrayiPdS_(uint32_t n, double* A, double* B) {
   int64_t i;
   uint64_t j;
 
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
@@ -213,11 +213,12 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   memcpy(((uint8_t*)(&agg_2e_tmp3)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t j = 0; j < call;   j = j + 1){
 
 for(int32_t k = 0; k < call2;   k = k + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t l = 0; l < 8;   l = l + 1){
 
@@ -231,11 +232,12 @@ _Z14kernel_stenciliPdS__OC_1(n, A, B, call, call2, 1, 8, 32, 1, j, k, 0, l, m, 0
   memcpy(((uint8_t*)(&agg_2e_tmp6)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&agg_2e_tmp6)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t j = 0; j < call;   j = j + 1){
 
 for(int32_t k = 0; k < call2;   k = k + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t l = 0; l < 8;   l = l + 1){
 
