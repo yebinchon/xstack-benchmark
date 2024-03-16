@@ -163,7 +163,7 @@ int main(int argc, char ** argv) {
   C = malloc(ni * nj * 8);
   _ZL10init_arrayiiiPdS_S_S_S_(ni, nj, nk, ((double*)alpha), ((double*)beta), ((double*)C), ((double*)A), ((double*)B));
 ;
-#pragma acc data pcopyin(alpha[0:8], beta[0:8], A[0:ni * nk * 8], B[0:nk * nj * 8], C[0:ni * nj * 8]) copyout(C[0:ni * nj * 8])
+#pragma omp target data map(to: alpha[0:8], beta[0:8], A[0:ni * nk * 8], B[0:nk * nj * 8]) map(tofrom: C[0:ni * nj * 8])
 {
   _ZL6kerneliiiddPdS_S_(ni, nj, nk, *((double*)alpha), *((double*)beta), ((double*)C), ((double*)A), ((double*)B));
 ;
@@ -187,21 +187,21 @@ void _ZL10init_arrayiiiPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, double*
 
   *alpha = 32412;
   *beta = 2123;
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   C[(i * nj + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
   A[(i * nk + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
@@ -244,12 +244,11 @@ void _ZL6kerneliiiddPdS_S_(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, 
   memcpy(((uint8_t*)(&agg_2e_tmp2)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&agg_2e_tmp2)), 12);
-#pragma acc parallel loop gang
+#pragma omp target teams distribute parallel for collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
 
 for(int32_t j = 0; j < call1;   j = j + 1){
-#pragma acc loop worker
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
