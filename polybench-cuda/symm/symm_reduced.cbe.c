@@ -86,7 +86,7 @@ struct l_unnamed_1 {
 uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
 uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
-void _ZL10init_arrayiiPdS_S_S_S_S_(uint32_t, uint32_t, double*, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
+void _ZL10init_arrayiiPdS_S_S_(uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void _ZL6kerneliiddPdS_S_S_(uint32_t, uint32_t, double, double, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void _ZL11print_arrayiiPd(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
@@ -140,29 +140,25 @@ int main(int argc, char ** argv) {
   int32_t dump_code;
   int32_t ni;
   int32_t nj;
-  uint8_t* alpha;
-  uint8_t* beta;
   uint8_t* A;
   uint8_t* B;
   uint8_t* C;
   uint8_t* tmp;
-  int32_t call40;
-  int32_t call56;
+  int32_t call38;
+  int32_t call54;
 
   dump_code = atoi(argv[1]);
   ni = atoi(argv[2]);
   nj = atoi(argv[3]);
-  alpha = malloc(8);
-  beta = malloc(8);
   A = malloc(nj * nj * 8);
   B = malloc(ni * nj * 8);
   C = malloc(ni * nj * 8);
   tmp = malloc(ni * nj * 8);
-  _ZL10init_arrayiiPdS_S_S_S_S_(ni, nj, ((double*)alpha), ((double*)beta), ((double*)C), ((double*)A), ((double*)B), ((double*)tmp));
+  _ZL10init_arrayiiPdS_S_S_(ni, nj, ((double*)C), ((double*)A), ((double*)B), ((double*)tmp));
 ;
 #pragma omp target data map(to: A[0:nj * nj * 8], B[0:ni * nj * 8], tmp[0:ni * nj * 8]) map(tofrom: C[0:ni * nj * 8])
 {
-  _ZL6kerneliiddPdS_S_S_(ni, nj, *((double*)alpha), *((double*)beta), ((double*)C), ((double*)A), ((double*)B), ((double*)tmp));
+  _ZL6kerneliiddPdS_S_S_(ni, nj, 32412, 2123, ((double*)C), ((double*)A), ((double*)B), ((double*)tmp));
 ;
 
 }
@@ -176,13 +172,11 @@ free(((uint8_t*)((double*)B)));
 }
 
 
-void _ZL10init_arrayiiPdS_S_S_S_S_(uint32_t ni, uint32_t nj, double* alpha, double* beta, double* C, double* A, double* B, double* tmp) {
+void _ZL10init_arrayiiPdS_S_S_(uint32_t ni, uint32_t nj, double* C, double* A, double* B, double* tmp) {
   int64_t i;
   int64_t j;
 
-  *alpha = 32412;
-  *beta = 2123;
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
@@ -191,7 +185,7 @@ for(int64_t j = 0; j < nj;   j = j + 1){
   tmp[(i * nj + j)] = 0;
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nj;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
@@ -252,11 +246,12 @@ void _ZL6kerneliiddPdS_S_S_(uint32_t m, uint32_t n, double alpha, double beta, d
   memcpy(((uint8_t*)(&agg_2e_tmp2)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&agg_2e_tmp2)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
 
 for(int32_t j = 0; j < call1;   j = j + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
@@ -278,11 +273,12 @@ _Z10kernel_tmpiiddPdS_S_S__OC_1(m, n, alpha, beta, C, A, B, tmp, call, call1, 1,
   memcpy(((uint8_t*)(&agg_2e_tmp11)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp10_2e_coerce)), ((uint8_t*)(&agg_2e_tmp10)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp11_2e_coerce)), ((uint8_t*)(&agg_2e_tmp11)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t i = 0; i < call7;   i = i + 1){
 
 for(int32_t j = 0; j < call9;   j = j + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
@@ -304,11 +300,12 @@ _Z8kernel_CiiddPdS_S_S__OC_2(m, n, alpha, beta, C, A, B, tmp, call7, call9, 1, 8
   memcpy(((uint8_t*)(&agg_2e_tmp23)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp22_2e_coerce)), ((uint8_t*)(&agg_2e_tmp22)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp23_2e_coerce)), ((uint8_t*)(&agg_2e_tmp23)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t i = 0; i < call19;   i = i + 1){
 
 for(int32_t j = 0; j < call21;   j = j + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
@@ -358,7 +355,7 @@ void _Z10kernel_tmpiiddPdS_S_S__OC_1(uint32_t m, uint32_t n, double alpha, doubl
   tmp[(i * n + j)] = 0;
 
 for(int64_t k = 0; k < i;   k = k + 1){
-  tmp[(i * n + j)] = (tmp[(i * n + j)] + B[(k * n + j)] * A[(i * m + k)]);
+  tmp[(i * n + j)] = (tmp[(i * n + j)] + B[(k * n + j)] * A[(i * n + k)]);
 }
   }
   }
@@ -374,7 +371,7 @@ void _Z8kernel_CiiddPdS_S_S__OC_2(uint32_t m, uint32_t n, double alpha, double b
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < m) {
   if (j < n) {
-  C[(i * n + j)] = ((beta * C[(i * n + j)] + alpha * B[(i * n + j)] * A[(i * m + i)]) + alpha * tmp[(i * n + j)]);
+  C[(i * n + j)] = ((beta * C[(i * n + j)] + alpha * B[(i * n + j)] * A[(i * n + i)]) + alpha * tmp[(i * n + j)]);
   }
   }
   return;
@@ -394,7 +391,7 @@ void _Z10kernel_sumiiddPdS_S_S__OC_3(uint32_t m, uint32_t n, double alpha, doubl
   _13 = add + 1;
 
 for(int64_t i = add + 1; i < m;   i = i + 1){
-  C[(add * n + j)] = (C[(add * n + j)] + alpha * B[(i * n + j)] * A[(i * m + add)]);
+  C[(add * n + j)] = (C[(add * n + j)] + alpha * B[(i * n + j)] * A[(i * n + add)]);
 }
   }
   }
