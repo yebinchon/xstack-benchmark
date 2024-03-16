@@ -18,14 +18,14 @@ __global__ void kernel_dev(int ni, int nj, int nk,
   int i = blockDim.x * blockIdx.x + threadIdx.x;
   int j = blockDim.y * blockIdx.y + threadIdx.y;
   int k;
+  double dot = 0.0;
 
 
   if (i < ni && j < nj) {
-    C[i * nj + j] *= beta;
-
-
+    dot = C[i * nj + j] * beta;
     for (k = 0; k < nk; k++)
-      C[i * nj + j] += alpha * A[i * nk + k] * B[k * nj + j];
+      dot += alpha * A[i * nk + k] * B[k * nj + j];
+    C[i*nj+j] = dot;
   }
 }
 
@@ -47,16 +47,13 @@ static void kernel(int ni, int nj, int nk,
 
   static
 void init_array(int ni, int nj, int nk,
-    double *alpha,
-    double *beta,
     double *C,
     double *A,
     double *B)
 {
   int i, j;
 
-  *alpha = 32412;
-  *beta = 2123;
+
   for (i = 0; i < ni; i++)
     for (j = 0; j < nj; j++)
       C[i*nj+j] = ((double) i*j) / ni;
@@ -94,14 +91,14 @@ int main(int argc, char** argv)
   int nj = atoi(argv[3]);
   int nk = atoi(argv[4]);
 
-  double *alpha = (double*)malloc(sizeof(double));
-  double *beta = (double*)malloc(sizeof(double));
   double *A = (double*)malloc(ni*nk*sizeof(double));
   double *B = (double*)malloc(nk*nj*sizeof(double));
   double *C = (double*)malloc(ni*nj*sizeof(double));
 
+  double alpha = 32412;
+  double beta = 2123;
 
-  init_array (ni, nj, nk, alpha, beta,
+  init_array (ni, nj, nk,
       C,
       A,
       B);
@@ -110,21 +107,15 @@ int main(int argc, char** argv)
   double *dev_A;
   double *dev_B;
   double *dev_C;
-  double *dev_alpha;
-  double *dev_beta;
   cudaMalloc(&dev_A, ni*nk*sizeof(double));
   cudaMalloc(&dev_B, nk*nj*sizeof(double));
   cudaMalloc(&dev_C, ni*nj*sizeof(double));
-  cudaMalloc(&dev_alpha, sizeof(double));
-  cudaMalloc(&dev_beta, sizeof(double));
   cudaMemcpy(dev_A, A, ni*nk*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_B, B, nk*nj*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_C, C, ni*nj*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_alpha, alpha, sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_beta, beta, sizeof(double), cudaMemcpyHostToDevice);
 
 
-  kernel(ni, nj, nk, *alpha, *beta, dev_C, dev_A, dev_B);
+  kernel(ni, nj, nk, alpha, beta, dev_C, dev_A, dev_B);
   cudaMemcpy(C, dev_C, ni*nj*sizeof(double), cudaMemcpyDeviceToHost);
 
 
@@ -136,13 +127,5 @@ int main(int argc, char** argv)
   free((void*)C);
   free((void*)A);
   free((void*)B);
-  free((void*)alpha);
-  free((void*)beta);
-
-  cudaFree((void*)dev_A);
-  cudaFree((void*)dev_B);
-  cudaFree((void*)dev_C);
-  cudaFree((void*)dev_alpha);
-  cudaFree((void*)dev_beta);
   return 0;
 }
