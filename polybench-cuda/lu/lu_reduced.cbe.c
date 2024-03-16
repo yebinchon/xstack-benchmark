@@ -165,7 +165,7 @@ void _ZL10init_arrayiPd(uint32_t n, double* A) {
   int64_t i;
   uint64_t j;
 
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
@@ -204,9 +204,10 @@ for(int32_t iter = 0; iter < (n - 1);   iter = iter + 1){
   agg_2e_tmp2.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&agg_2e_tmp2)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t j = 0; j < call;   j = j + 1){
+#pragma omp parallel for
 
 for(int32_t k = 0; k < 256;   k = k + 1){
 _Z10kernel_diviPdi_OC_1(n, A, iter, call, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
@@ -224,11 +225,12 @@ _Z10kernel_diviPdi_OC_1(n, A, iter, call, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
   memcpy(((uint8_t*)(&agg_2e_tmp11)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp10_2e_coerce)), ((uint8_t*)(&agg_2e_tmp10)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp11_2e_coerce)), ((uint8_t*)(&agg_2e_tmp11)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t j = 0; j < call6;   j = j + 1){
 
 for(int32_t k = 0; k < call9;   k = k + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t l = 0; l < 8;   l = l + 1){
 
