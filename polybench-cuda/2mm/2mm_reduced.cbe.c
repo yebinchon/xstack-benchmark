@@ -171,7 +171,7 @@ int main(int argc, char ** argv) {
   tmp = malloc(call2 * call4 * 8);
   _ZL10init_arrayiiiiPdS_S_S_S_(call2, call4, call7, call10, ((double*)A), ((double*)B), ((double*)C), ((double*)D), ((double*)tmp));
 ;
-#pragma omp target data map(to: A[0:call2 * call7 * 8], B[0:call7 * call4 * 8], C[0:call10 * call4 * 8], tmp[0:call2 * call4 * 8]) map(tofrom: D[0:call2 * call10 * 8])
+#pragma acc data pcopyin(A[0:call2 * call7 * 8], B[0:call7 * call4 * 8], C[0:call10 * call4 * 8], tmp[0:call2 * call4 * 8], D[0:call2 * call10 * 8]) copyout(D[0:call2 * call10 * 8])
 {
   _ZL6kerneliiiiddPdS_S_S_S_(call2, call4, call7, call10, 32412, 2123, ((double*)tmp), ((double*)A), ((double*)B), ((double*)C), ((double*)D));
 ;
@@ -193,35 +193,35 @@ void _ZL10init_arrayiiiiPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32
   int64_t i;
   int64_t j;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
   A[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   B[(i * nk + j)] = (double)(i) * (double)((j + 1)) / (double)(nj);
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < nl;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   C[(i * nl + j)] = (double)(i) * (double)((j + 3)) / (double)(nl);
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
   D[(i * ni + j)] = (double)(i) * (double)((j + 2)) / (double)(nk);
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
@@ -274,12 +274,12 @@ void _ZL6kerneliiiiddPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32_t 
   memcpy(((uint8_t*)(&agg_2e_tmp7)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp7_2e_coerce)), ((uint8_t*)(&agg_2e_tmp7)), 12);
-#pragma omp target teams distribute collapse(2)
+#pragma acc loop worker collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
 
 for(int32_t j = 0; j < call5;   j = j + 1){
-#pragma omp parallel for collapse(2)
+#pragma acc parallel loop gang collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
@@ -298,12 +298,12 @@ _Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(ni, nj, nk, nl, alpha, beta, tmp, A, B, 
   memcpy(((uint8_t*)(&agg_2e_tmp21)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp20_2e_coerce)), ((uint8_t*)(&agg_2e_tmp20)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp21_2e_coerce)), ((uint8_t*)(&agg_2e_tmp21)), 12);
-#pragma omp target teams distribute collapse(2)
+#pragma acc loop worker collapse(2)
 
 for(int32_t i = 0; i < call13;   i = i + 1){
 
 for(int32_t j = 0; j < call18;   j = j + 1){
-#pragma omp parallel for collapse(2)
+#pragma acc parallel loop gang collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
