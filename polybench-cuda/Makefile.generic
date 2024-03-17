@@ -5,12 +5,18 @@ POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
 NOELLE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/noelle-susan/install
 
 nvtarget.exe: #${BMARK}_cpu.cbe.c
-	clang -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_nvtarget.o
-	clang --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -o $@ -foffload-lto -lomptarget.devicertl
+	clang -g -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_nvtarget.o
+	clang -g --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -lm -o $@ -foffload-lto -lomptarget.devicertl
 
 amdtarget.exe: #${BMARK}_cpu.cbe.c
 	clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_amdtarget.o
 	clang --offload-link ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
+
+openacc.gpu.exe:
+	nvc -acc=gpu -gpu=cc70 -Minfo=accel -O3 ${BMARK}_reduced.cbe.c -o $@
+
+openacc.cpu.exe:
+	nvc -acc=multicore -Minfo=accel -O3 ${BMARK}_reduced.cbe.c -o $@
 
 %.ll: ${BMARK}.cu
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
@@ -20,7 +26,10 @@ ${BMARK}_linked.bc: ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll
 
 ${BMARK}_cpu.bc: ${BMARK}_linked.bc
 	#opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
-	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg -indvars ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg -indvars -dce ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+
+${BMARK}_cpu.cbe.c: ${BMARK}_cpu.bc
+	splendid $< 2> debug
 
 #${BMARK}_pdg_embed.bc:${BMARK}_cpu.bc
 #	noelle-load -PDGAnalysis -noelle-pdg-verbose=3 -noelle-pdg-embed ${BMARK}_svf.bc -o $@
@@ -42,17 +51,23 @@ ${BMARK}.o: ${BMARK}.cu
 polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 $< -o $@
 
+tulip.reduced.clang.exe: ${BMARK}_reduced.cbe.c
+	clang -fopenmp -O3 $< -o $@
+
+tulip.reduced.gcc.exe: ${BMARK}_reduced.cbe.c
+	gcc -fopenmp -O3 $< -o $@
+
 tulip.clang.exe: ${BMARK}_reduced.cbe.c
 	clang -fopenmp -O3 $< -o $@
 
-tulip.gcc.exe: ${BMARK}_reduced.cbe.c
+tulip.gcc.exe: ${BMARK}_cpu.cbe.c
 	gcc -fopenmp -O3 $< -o $@
 
 cpu.exe: ${BMARK}_reduced.bc
-	clang -O3 $< -o $@
+	clang -O3 -lm  $< -o $@
 
 seq.exe: ${BMARK}.c
-	clang -O3 $< -o $@
+	clang -O3 -lm $< -o $@
 
 cuda.exe: ${BMARK}.cu
 	nvcc -O3 $< -o $@
@@ -76,6 +91,9 @@ run_tulip: tulip.clang.exe tulip.gcc.exe
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
 
+run_reduced: tulip.reduced.clang.exe tulip.reduced.gcc.exe
+	regressions-watchdog $(RUN_TIMEOUT) tulip.reduced.clang.time ./tulip.reduced.clang.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.reduced.gcc.time ./tulip.reduced.gcc.exe $(PERF_ARGS) 
 
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time loopIDtoSrc.txt
+	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe
