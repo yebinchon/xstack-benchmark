@@ -170,7 +170,7 @@ int main(int argc, char ** argv) {
   G = malloc(ni * nl * 8);
   _ZL10init_arrayiiiiiPdS_S_S_S_S_S_(ni, nj, nk, nl, nm, ((double*)A), ((double*)B), ((double*)C), ((double*)D), ((double*)E), ((double*)F), ((double*)G));
 ;
-#pragma acc data pcopyin(E[0:ni * nj * 8], F[0:nj * nl * 8], A[0:ni * nk * 8], B[0:nk * nj * 8], C[0:nj * nm * 8], D[0:nm * nl * 8], G[0:ni * nl * 8]) copyout(G[0:ni * nl * 8])
+#pragma omp target data map(to: E[0:ni * nj * 8], F[0:nj * nl * 8], A[0:ni * nk * 8], B[0:nk * nj * 8], C[0:nj * nm * 8], D[0:nm * nl * 8]) map(tofrom: G[0:ni * nl * 8])
 {
   _ZL6kerneliiiiiPdS_S_S_S_S_S_(ni, nj, nk, nl, nm, ((double*)E), ((double*)A), ((double*)B), ((double*)F), ((double*)C), ((double*)D), ((double*)G));
 ;
@@ -194,49 +194,49 @@ void _ZL10init_arrayiiiiiPdS_S_S_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, u
   int64_t i;
   int64_t j;
 
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
   A[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   B[(i * nk + j)] = (double)(i) * (double)((j + 1)) / (double)(nj);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nj;   i = i + 1){
 
 for(int64_t j = 0; j < nm;   j = j + 1){
   C[(i * nj + j)] = (double)(i) * (double)((j + 3)) / (double)(nl);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nm;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
   D[(i * nm + j)] = (double)(i) * (double)((j + 2)) / (double)(nk);
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   E[(i * ni + j)] = 0;
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < nj;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
   F[(i * nj + j)] = 0;
 }
 }
-
+#pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
@@ -299,12 +299,10 @@ void _ZL6kerneliiiiiPdS_S_S_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32
   memcpy(((uint8_t*)(&agg_2e_tmp2)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&agg_2e_tmp2)), 12);
-#pragma acc loop worker collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
 
 for(int32_t j = 0; j < call1;   j = j + 1){
-#pragma acc parallel loop gang collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
@@ -323,12 +321,10 @@ _Z14kernel_A_mul_BiiiPdS_S__OC_1(ni, nj, nk, E, A, B, call, call1, 1, div, 32, 1
   memcpy(((uint8_t*)(&agg_2e_tmp10)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp9_2e_coerce)), ((uint8_t*)(&agg_2e_tmp9)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp10_2e_coerce)), ((uint8_t*)(&agg_2e_tmp10)), 12);
-#pragma acc loop worker collapse(2)
 
 for(int32_t i = 0; i < call6;   i = i + 1){
 
 for(int32_t j = 0; j < call8;   j = j + 1){
-#pragma acc parallel loop gang collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
@@ -347,12 +343,10 @@ _Z14kernel_A_mul_BiiiPdS_S__OC_1(nj, nl, nm, F, C, D, call6, call8, 1, div, 32, 
   memcpy(((uint8_t*)(&agg_2e_tmp21)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp20_2e_coerce)), ((uint8_t*)(&agg_2e_tmp20)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp21_2e_coerce)), ((uint8_t*)(&agg_2e_tmp21)), 12);
-#pragma acc loop worker collapse(2)
 
 for(int32_t i = 0; i < call17;   i = i + 1){
 
 for(int32_t j = 0; j < call19;   j = j + 1){
-#pragma acc parallel loop gang collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 

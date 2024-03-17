@@ -219,10 +219,9 @@ void _ZL6kerneliiPdS_S_S_S_(uint32_t m, uint32_t n, double* A, double* s, double
   agg_2e_tmp1.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
-#pragma omp target teams distribute
+#pragma omp target teams distribute parallel for
 
 for(int32_t i = 0; i < call;   i = i + 1){
-#pragma omp parallel for
 
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z8kernel_qiiPdS_S_S_S__OC_1(m, n, A, s, q, p, r, call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
@@ -237,10 +236,9 @@ _Z8kernel_qiiPdS_S_S_S__OC_1(m, n, A, s, q, p, r, call, 1, 1, 256, 1, 1, i, 0, 0
   agg_2e_tmp5.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
-#pragma omp target teams distribute
+#pragma omp target teams distribute parallel for
 
 for(int32_t i = 0; i < call4;   i = i + 1){
-#pragma omp parallel for
 
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z8kernel_siiPdS_S_S_S__OC_2(m, n, A, s, q, p, r, call4, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
@@ -280,14 +278,17 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 void _Z8kernel_qiiPdS_S_S_S__OC_1(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int64_t i;
   int64_t j;
+  double dot;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   if (i < n) {
   q[i] = 0;
+  dot = 0;
 
 for(int64_t j = 0; j < m;   j = j + 1){
-  q[i] = (q[i] + A[(i * m + j)] * p[j]);
+  dot = (dot + A[(i * m + j)] * p[j]);
 }
+  q[i] = (q[i] + dot);
   }
   return;
 }
@@ -296,14 +297,17 @@ for(int64_t j = 0; j < m;   j = j + 1){
 void _Z8kernel_siiPdS_S_S_S__OC_2(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int64_t j;
   int64_t i;
+  double dot;
 
   j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   if (j < m) {
   s[j] = 0;
+  dot = 0;
 
 for(int64_t i = 0; i < n;   i = i + 1){
-  s[j] = (s[j] + r[i] * A[(i * m + j)]);
+  dot = (dot + r[i] * A[(i * m + j)]);
 }
+  s[j] = dot;
   }
   return;
 }

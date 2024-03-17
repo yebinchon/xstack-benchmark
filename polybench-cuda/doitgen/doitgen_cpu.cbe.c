@@ -175,7 +175,7 @@ void _ZL10init_arrayiiiPdS_(uint32_t nr, uint32_t nq, uint32_t np, double* A, do
   int64_t j;
   int64_t k;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < nr;   i = i + 1){
 
 for(int64_t j = 0; j < nq;   j = j + 1){
@@ -185,7 +185,7 @@ for(int64_t k = 0; k < np;   k = k + 1){
 }
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < np;   i = i + 1){
 
 for(int64_t j = 0; j < np;   j = j + 1){
@@ -229,7 +229,7 @@ void _ZL6kerneliiiPdS_S_(uint32_t nr, uint32_t nq, uint32_t np, double* A, doubl
   memcpy(((uint8_t*)(&agg_2e_tmp3)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
-#pragma omp parallel for 
+
 for(int32_t i = 0; i < call;   i = i + 1){
 
 for(int32_t j = 0; j < call1;   j = j + 1){
@@ -261,14 +261,14 @@ for(int64_t i = 0; i < nr;   i = i + 1){
 for(int64_t j = 0; j < nq;   j = j + 1){
 
 for(int64_t k = 0; k < np;   k = k + 1){
-  uint32_t call = fprintf(stderr, _OC_str, A[((i * nq * np + j * nq) + k)]);
+  uint32_t call = fprintf(stderr, (_OC_str), A[((i * nq * np + j * nq) + k)]);
   if (i % 20 == 0) {
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
   }
 }
 }
 }
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
 }
 
 

@@ -168,7 +168,7 @@ free(((uint8_t*)((double*)B)));
 void _ZL10init_arrayiPdS_(uint32_t n, double* A, double* B) {
   int64_t i;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < n;   i = i + 1){
   A[i] = ((double)(i) + 2) / (double)(n);
   B[i] = ((double)(i) + 3) / (double)(n);
@@ -237,12 +237,12 @@ void _ZL11print_arrayiPd(uint32_t n, double* A) {
 
 
 for(int64_t i = 0; i < n;   i = i + 1){
-  uint32_t call = fprintf(stderr, _OC_str, A[i]);
+  uint32_t call = fprintf(stderr, (_OC_str), A[i]);
   if (i % 20 == 0) {
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
   }
 }
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
 }
 
 
