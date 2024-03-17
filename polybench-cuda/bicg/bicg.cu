@@ -24,9 +24,11 @@ __global__ void kernel_q(int m, int n, double *A, double s[], double q[], double
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
   if (i < n) {
+    double dot = 0;
     q[i] = 0;
     for (int j = 0; j < m; j++)
-      q[i] += A[i * m + j] * p[j];
+      dot += A[i * m + j] * p[j];
+    q[i] += dot;
   }
 }
 
@@ -36,8 +38,10 @@ __global__ void kernel_s(int m, int n, double *A, double s[], double q[], double
 
   if (j < m) {
     s[j] = 0;
+    double dot = 0;
     for (int i = 0; i < n; i++)
-      s[j] += r[i] * A[i * m + j];
+      dot += r[i] * A[i * m + j];
+    s[j]= dot;
   }
 }
 
