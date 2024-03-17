@@ -5,15 +5,18 @@ POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
 NOELLE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/noelle-susan/install
 
 nvtarget.exe: #${BMARK}_cpu.cbe.c
-	clang -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_nvtarget.o
-	clang --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -lm -o $@ -foffload-lto -lomptarget.devicertl
+	clang -g -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_nvtarget.o
+	clang -g --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -lm -o $@ -foffload-lto -lomptarget.devicertl
 
 amdtarget.exe: #${BMARK}_cpu.cbe.c
 	clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_reduced.cbe.c -O3 -c -o ${BMARK}_amdtarget.o
 	clang --offload-link ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
 
-openacc.exe:
-	nvc -acc -gpu=cc70 -Minfo=accel -O3 ${BMARK}_reduced.cbe.c -o $@
+openacc.gpu.exe:
+	nvc -acc=gpu -gpu=cc70 -Minfo=accel -O3 ${BMARK}_reduced.cbe.c -o $@
+
+openacc.cpu.exe:
+	nvc -acc=multicore -Minfo=accel -O3 ${BMARK}_reduced.cbe.c -o $@
 
 %.ll: ${BMARK}.cu
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
