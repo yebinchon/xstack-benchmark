@@ -25,9 +25,11 @@ __global__ void kernel_sum(int nr, int nq, int np,
 
 
   if (r < nr && q < nq && p < np) {
+    double dot = 0.0;
     sum[(r * nq + q) * np + p] = 0;
     for (int s = 0; s < np; s++)
-      sum[(r * nq + q) * np + p] += A[(r * nq + q) * np + s] * C4[s * np + p];
+      dot += A[(r * nq + q) * np + s] * C4[s * np + p];
+    sum[(r * nq + q) * np + p] = dot;
   }
 }
 
