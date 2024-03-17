@@ -180,11 +180,11 @@ void _ZL10init_arrayiiPdS_S_S_(uint32_t nx, uint32_t ny, double* ex, double* ey,
   int64_t i;
   int64_t j;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < ny;   i = i + 1){
   _fict_[i] = (double)(i);
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < nx;   i = i + 1){
 
 for(int64_t j = 0; j < ny;   j = j + 1){
@@ -333,15 +333,15 @@ void _ZL11print_arrayiiPdS_S_(uint32_t nx, uint32_t ny, double* ex, double* ey, 
 for(int64_t i = 0; i < nx;   i = i + 1){
 
 for(int64_t j = 0; j < ny;   j = j + 1){
-  uint32_t call = fprintf(stderr, _OC_str, ex[(i * ny + j)]);
-  uint32_t call8 = fprintf(stderr, _OC_str, ey[(i * ny + j)]);
-  uint32_t call13 = fprintf(stderr, _OC_str, hz[(i * ny + j)]);
+  uint32_t call = fprintf(stderr, (_OC_str), ex[(i * ny + j)]);
+  uint32_t call8 = fprintf(stderr, (_OC_str), ey[(i * ny + j)]);
+  uint32_t call13 = fprintf(stderr, (_OC_str), hz[(i * ny + j)]);
   if ((int)(i * nx + j) % (int)20 == 0) {
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
   }
 }
 }
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
 }
 
 

@@ -175,7 +175,7 @@ void _ZL10init_arrayiiiPdS_(uint32_t nr, uint32_t nq, uint32_t np, double* A, do
   int64_t j;
   int64_t k;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < nr;   i = i + 1){
 
 for(int64_t j = 0; j < nq;   j = j + 1){
@@ -185,7 +185,7 @@ for(int64_t k = 0; k < np;   k = k + 1){
 }
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < np;   i = i + 1){
 
 for(int64_t j = 0; j < np;   j = j + 1){
@@ -262,14 +262,14 @@ for(int64_t i = 0; i < nr;   i = i + 1){
 for(int64_t j = 0; j < nq;   j = j + 1){
 
 for(int64_t k = 0; k < np;   k = k + 1){
-  uint32_t call = fprintf(stderr, _OC_str, A[((i * nq * np + j * nq) + k)]);
+  uint32_t call = fprintf(stderr, (_OC_str), A[((i * nq * np + j * nq) + k)]);
   if (i % 20 == 0) {
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
   }
 }
 }
 }
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
 }
 
 

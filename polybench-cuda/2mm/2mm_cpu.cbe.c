@@ -193,35 +193,35 @@ void _ZL10init_arrayiiiiPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32
   int64_t i;
   int64_t j;
 
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
   A[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   B[(i * nk + j)] = (double)(i) * (double)((j + 1)) / (double)(nj);
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < nl;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
   C[(i * nl + j)] = (double)(i) * (double)((j + 3)) / (double)(nl);
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
   D[(i * ni + j)] = (double)(i) * (double)((j + 2)) / (double)(nk);
 }
 }
-#pragma omp parallel for 
+
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
@@ -324,13 +324,13 @@ void _ZL11print_arrayiiPd(uint32_t ni, uint32_t nl, double* D) {
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
-  uint32_t call = fprintf(stderr, _OC_str, D[(i * ni + j)]);
+  uint32_t call = fprintf(stderr, (_OC_str), D[(i * ni + j)]);
   if ((int)(i * ni + j) % (int)20 == 0) {
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
   }
 }
 }
-  fprintf(stderr, _OC_str_OC_1);
+  fprintf(stderr, (_OC_str_OC_1));
 }
 
 
