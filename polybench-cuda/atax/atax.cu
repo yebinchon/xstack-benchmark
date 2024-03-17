@@ -17,22 +17,24 @@
 __global__ void kernel3(int m, int n, double *A, double *x, double *y, double *tmp) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
-
   if (i < m) {
+    double dot = 0.0;
     for (int j = 0; j < n; j++){
-      tmp[i] += A[i * n + j] * x[j];
+      dot += A[i * n + j] * x[j];
     }
+    tmp[i] = dot;
   }
 }
 
 
 __global__ void kernel4(int m, int n, double *A, double *x, double *y, double *tmp) {
   int j = blockDim.x * blockIdx.x + threadIdx.x;
-
   if (j < n) {
+    double dot = 0;
     y[j] = 0;
     for (int i = 0; i < m; i++)
-      y[j] += A[i * n + j] * tmp[i];
+      dot += A[i * n + j] * tmp[i];
+    y[j] = dot;
   }
 }
 
