@@ -96,4 +96,4 @@ run_reduced: tulip.reduced.clang.exe tulip.reduced.gcc.exe
 	regressions-watchdog $(RUN_TIMEOUT) tulip.reduced.gcc.time ./tulip.reduced.gcc.exe $(PERF_ARGS) 
 
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe
+	rm -rf *.ll *.bc *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe
