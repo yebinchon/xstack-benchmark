@@ -15,8 +15,8 @@
 
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-//#define N 15000
-#define N 40
+#define N 15000
+//#define N 40
 
 /* Array initialization. */
 static
