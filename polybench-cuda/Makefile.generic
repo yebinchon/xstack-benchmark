@@ -26,6 +26,9 @@ openacc.gpu.exe:
 openacc.cpu.exe:
 	nvc -acc=multicore -Minfo=accel -O3 ${BMARK}_reduced.cbe.c -o $@
 
+nvhpc.exe:
+	nvc -par=gpu -O3 ${BMARK}_reduced.cbe.c -o nvhpc.exe
+
 %.ll: ${BMARK}.cu
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
 
@@ -108,6 +111,9 @@ run_tulip: tulip.clang.exe tulip.gcc.exe
 run_reduced: tulip.reduced.clang.exe tulip.reduced.gcc.exe
 	regressions-watchdog $(RUN_TIMEOUT) tulip.reduced.clang.time ./tulip.reduced.clang.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.reduced.gcc.time ./tulip.reduced.gcc.exe $(PERF_ARGS) 
+
+run_nvhpc: nvhpc.exe
+	regressions-watchdog $(RUN_TIMEOUT) nvhpc.time ./nvhpc.exe $(PERF_ARGS)
 
 clean:
 	rm -rf *.ll *.bc *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe
