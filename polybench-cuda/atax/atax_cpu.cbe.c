@@ -176,9 +176,10 @@ for(int32_t t = 0; t < 50;   t = t + 1){
   agg_2e_tmp43.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp43_2e_coerce)), ((uint8_t*)(&agg_2e_tmp43)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t j = 0; j < call42;   j = j + 1){
+#pragma omp parallel for
 
 for(int32_t k = 0; k < 256;   k = k + 1){
 _Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call42, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
@@ -193,9 +194,10 @@ _Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((do
   agg_2e_tmp47.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp45_2e_coerce)), ((uint8_t*)(&agg_2e_tmp45)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&agg_2e_tmp47)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t j = 0; j < call46;   j = j + 1){
+#pragma omp parallel for
 
 for(int32_t k = 0; k < 256;   k = k + 1){
 _Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);

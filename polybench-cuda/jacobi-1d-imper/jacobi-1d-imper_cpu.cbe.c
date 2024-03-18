@@ -201,9 +201,10 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   agg_2e_tmp1.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t j = 0; j < call;   j = j + 1){
+#pragma omp parallel for
 
 for(int32_t k = 0; k < 256;   k = k + 1){
 _Z14kernel_stenciliPdS__OC_1(n, A, B, call, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
@@ -218,9 +219,10 @@ _Z14kernel_stenciliPdS__OC_1(n, A, B, call, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
   agg_2e_tmp5.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&agg_2e_tmp5)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t j = 0; j < call4;   j = j + 1){
+#pragma omp parallel for
 
 for(int32_t k = 0; k < 256;   k = k + 1){
 _Z14kernel_stenciliPdS__OC_1(n, B, A, call4, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);

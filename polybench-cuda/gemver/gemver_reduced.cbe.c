@@ -261,10 +261,12 @@ void _ZL6kerneliddPdS_S_S_S_S_S_S_S_(uint32_t n, double alpha, double beta, doub
   memcpy(((uint8_t*)(&agg_2e_tmp4)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp4_2e_coerce)), ((uint8_t*)(&agg_2e_tmp4)), 12);
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
 
 for(int32_t j = 0; j < call3;   j = j + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
@@ -283,9 +285,10 @@ _Z8kernel_AiddPdS_S_S_S_S_S_S_S__OC_1(n, alpha, beta, A, u1, v1, u2, v2, w, x, y
   agg_2e_tmp8.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&agg_2e_tmp6)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp8_2e_coerce)), ((uint8_t*)(&agg_2e_tmp8)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t i = 0; i < call7;   i = i + 1){
+#pragma omp parallel for
 
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z8kernel_xiddPdS_S_S_S_S_S_S_S__OC_2(n, alpha, beta, A, u1, v1, u2, v2, w, x, y, z, call7, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
@@ -300,9 +303,10 @@ _Z8kernel_xiddPdS_S_S_S_S_S_S_S__OC_2(n, alpha, beta, A, u1, v1, u2, v2, w, x, y
   agg_2e_tmp15.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp13_2e_coerce)), ((uint8_t*)(&agg_2e_tmp13)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp15_2e_coerce)), ((uint8_t*)(&agg_2e_tmp15)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t i = 0; i < call14;   i = i + 1){
+#pragma omp parallel for
 
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z8kernel_yiddPdS_S_S_S_S_S_S_S__OC_3(n, alpha, beta, A, u1, v1, u2, v2, w, x, y, z, call14, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
@@ -317,9 +321,10 @@ _Z8kernel_yiddPdS_S_S_S_S_S_S_S__OC_3(n, alpha, beta, A, u1, v1, u2, v2, w, x, y
   agg_2e_tmp22.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp20_2e_coerce)), ((uint8_t*)(&agg_2e_tmp20)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp22_2e_coerce)), ((uint8_t*)(&agg_2e_tmp22)), 12);
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute
 
 for(int32_t i = 0; i < call21;   i = i + 1){
+#pragma omp parallel for
 
 for(int32_t j = 0; j < 256;   j = j + 1){
 _Z8kernel_widdPdS_S_S_S_S_S_S_S__OC_4(n, alpha, beta, A, u1, v1, u2, v2, w, x, y, z, call21, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);

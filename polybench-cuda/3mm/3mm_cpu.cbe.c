@@ -299,10 +299,12 @@ void _ZL6kerneliiiiiPdS_S_S_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32
   memcpy(((uint8_t*)(&agg_2e_tmp2)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&agg_2e_tmp2)), 12);
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
 
 for(int32_t j = 0; j < call1;   j = j + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
@@ -321,10 +323,12 @@ _Z14kernel_A_mul_BiiiPdS_S__OC_1(ni, nj, nk, E, A, B, call, call1, 1, div, 32, 1
   memcpy(((uint8_t*)(&agg_2e_tmp10)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp9_2e_coerce)), ((uint8_t*)(&agg_2e_tmp9)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp10_2e_coerce)), ((uint8_t*)(&agg_2e_tmp10)), 12);
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t i = 0; i < call6;   i = i + 1){
 
 for(int32_t j = 0; j < call8;   j = j + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 
@@ -343,10 +347,12 @@ _Z14kernel_A_mul_BiiiPdS_S__OC_1(nj, nl, nm, F, C, D, call6, call8, 1, div, 32, 
   memcpy(((uint8_t*)(&agg_2e_tmp21)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp20_2e_coerce)), ((uint8_t*)(&agg_2e_tmp20)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp21_2e_coerce)), ((uint8_t*)(&agg_2e_tmp21)), 12);
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t i = 0; i < call17;   i = i + 1){
 
 for(int32_t j = 0; j < call19;   j = j + 1){
+#pragma omp parallel for collapse(2)
 
 for(int32_t k = 0; k < 8;   k = k + 1){
 

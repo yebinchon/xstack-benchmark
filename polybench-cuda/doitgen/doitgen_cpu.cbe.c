@@ -229,6 +229,7 @@ void _ZL6kerneliiiPdS_S_(uint32_t nr, uint32_t nq, uint32_t np, double* A, doubl
   memcpy(((uint8_t*)(&agg_2e_tmp3)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp3_2e_coerce)), ((uint8_t*)(&agg_2e_tmp3)), 12);
+#pragma omp target teams distribute collapse(2)
 
 for(int32_t i = 0; i < call;   i = i + 1){
 
