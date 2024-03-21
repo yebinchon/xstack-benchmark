@@ -14,8 +14,9 @@
 
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-//#define N 15000
-#define N 40
+#define RUN 100
+#define N 15000
+//#define N 40
 
 /* Array initialization. */
 static
@@ -88,6 +89,7 @@ int main(int argc, char** argv)
   int dump_code = atoi(argv[1]);
   int n = N;
 
+  for(int i = 0; i < RUN; i++) {
   /* Variable declaration/allocation. */
   double (*A)[n][n]; A = (double(*)[n][n])malloc(n*n*sizeof(double));
   double (*x1)[n]; x1 = (double(*)[n])malloc(n*sizeof(double));
@@ -122,6 +124,7 @@ int main(int argc, char** argv)
   free((void*)x2);
   free((void*)y_1);
   free((void*)y_2);
+  }
 
   return 0;
 }

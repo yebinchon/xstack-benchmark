@@ -89,8 +89,7 @@ int main(int argc, char** argv)
   int ny = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
-  for(int t = 0; t < RUN; t++) {
-
+  for(int i = 0; i < RUN; i++) {
   /* Variable declaration/allocation. */
   double (*A)[nx][ny]; A = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
   double (*s)[ny]; s = (double(*)[ny])malloc(ny*sizeof(double));

@@ -102,9 +102,8 @@ int main(int argc, char** argv)
   int n = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
-
+  for(int i = 0; i < RUN; i++) {
   /* Variable declaration/allocation. */
-  for(int t = 0; t < RUN; t++) {
   double *A = (double*)malloc(m*n*sizeof(double));
   double *s = (double*)malloc(n*sizeof(double));
   double *q = (double*)malloc(m*sizeof(double));
