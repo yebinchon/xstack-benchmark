@@ -3,6 +3,9 @@ CUDAFE=/u/zujunt/noelle-workspace/CudaFE
 LLVM18=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-llvm-install
 POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
 NOELLE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/noelle-susan/install
+SPLENDID_CPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-release/bin/splendid
+SPLENDID_GPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-debug/bin/splendid
+
 
 nvtarget.exe: #${BMARK}_cpu.cbe.c
 	clang -g -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_gpu.c -O3 -c -o ${BMARK}_nvtarget.o
@@ -49,7 +52,11 @@ ${BMARK}_cpu.bc: ${BMARK}_linked.bc
 	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg -indvars -dce ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
 
 ${BMARK}_cpu.c: ${BMARK}_cpu.bc
-	splendid $< 2> debug
+	$(SPLENDID_CPU) $< 2> debug
+	mv ${BMARK}_cpu.cbe.c $@
+
+${BMARK}_gpu.c: ${BMARK}_cpu.bc
+	$(SPLENDID_GPU) $< 2> debug
 	mv ${BMARK}_cpu.cbe.c $@
 
 #${BMARK}_pdg_embed.bc:${BMARK}_cpu.bc
@@ -64,7 +71,11 @@ ${BMARK}_reduced.bc: ${BMARK}_loopid.bc
 	noelle-load -load ${NOELLE}/lib/ParallelizationTechnique.so -load ${NOELLE}/lib/DOALL.so -load ${NOELLE}/lib/DSWP.so -load ${NOELLE}/lib/Heuristics.so -load ${NOELLE}/lib/Parallelizer.so -load ${CUDAFE}/build/NoelleDOALL/libNoelleDOALL.so -noelle-verbose=3 -noelle-doall $< -o $@
 
 ${BMARK}_cpu_noelle.c: ${BMARK}_reduced.bc
-	splendid $< 2> debug
+	$(SPLENDID_CPU) $< 2> debug
+	mv ${BMARK}_reduced.cbe.c $@
+
+${BMARK}_gpu_noelle.c: ${BMARK}_reduced.bc
+	$(SPLENDID_GPU) $< 2> debug
 	mv ${BMARK}_reduced.cbe.c $@
 
 ${BMARK}.o: ${BMARK}.cu
