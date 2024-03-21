@@ -14,16 +14,13 @@
   static
 void init_array (int m,
     int n,
-    double *float_n,
-    double data[m][n])
+    double *data)
 {
   int i, j;
 
-  *float_n = 1.2;
-
   for (i = 0; i < m; i++)
     for (j = 0; j < n; j++)
-      data[i][j] = ((double) i*j) / 1000;
+      data[i*n+j] = ((double) i*j) / 1000;
 }
 
 
@@ -31,14 +28,14 @@ void init_array (int m,
 
   static
 void print_array(int m,
-    double symmat[m][m])
+    double *corr)
 
 {
   int i, j;
 
   for (i = 0; i < m; i++)
     for (j = 0; j < m; j++) {
-      fprintf (stderr, "%0.2lf ", symmat[i][j]);
+      fprintf (stderr, "%0.2lf ", corr[i*m+j]);
       if ((i * m + j) % 20 == 0) fprintf (stderr, "\n");
     }
   fprintf (stderr, "\n");
@@ -46,65 +43,53 @@ void print_array(int m,
 
 
 
-
-  static
-void kernel_correlation(int m, int n,
-    double float_n,
-    double data[m][n],
-    double symmat[m][m],
-    double mean[m],
-    double stddev[m])
-{
-  int i, j, j1, j2;
-
-  double eps = 0.1f;
+static void kernel(int m, int n,
+                   double *data,
+                   double *corr,
+                   double *mean,
+                   double stddev[]) {
+  double eps = 0.1;
 
 
-
-{
-  for (j = 0; j < m; j++)
-  {
+  for (int j = 0; j < m; j++) {
     mean[j] = 0.0;
-    for (i = 0; i < n; i++)
-      mean[j] += data[i][j];
-    mean[j] /= float_n;
+    for (int i = 0; i < n; i++)
+      mean[j] += data[i*m+j];
+    mean[j] /= n;
   }
 
-  for (j = 0; j < m; j++)
-  {
+
+  for (int j = 0; j < m; j++) {
     stddev[j] = 0.0;
-    for (i = 0; i < n; i++)
-      stddev[j] += (data[i][j] - mean[j]) * (data[i][j] - mean[j]);
-    stddev[j] /= float_n;
+    for (int i = 0; i < n; i++)
+      stddev[j] += (data[i*m+j] - mean[j]) * (data[i*m+j] - mean[j]);
+    stddev[j] /= n;
     stddev[j] = sqrt(stddev[j]);
-
-
-
-    stddev[j] = stddev[j] <= eps ? 1.0 : stddev[j];
+    /* The following in an inelegant but usual way to handle
+       near-zero std. dev. values, which below would cause a zero-
+       divide. */
+    if (stddev[j] <= eps)
+      stddev[j] = 1.0;
   }
 
-  for (i = 0; i < n; i++)
-    for (j = 0; j < m; j++)
-    {
-      data[i][j] -= mean[j];
-      data[i][j] /= sqrt(float_n) * stddev[j];
+  /* Center and reduce the column vectors. */
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < m; j++) {
+      data[i*m+j] -= mean[j];
+      data[i*m+j] /= sqrt((double)n) * stddev[j];
     }
 
-
-  for (j1 = 0; j1 < m-1; j1++)
-  {
-    symmat[j1][j1] = 1.0;
-    for (j2 = j1+1; j2 < m; j2++)
-    {
-      symmat[j1][j2] = 0.0;
-      for (i = 0; i < n; i++)
-        symmat[j1][j2] += (data[i][j1] * data[i][j2]);
-      symmat[j2][j1] = symmat[j1][j2];
+  /* Calculate the m * m correlation matrix. */
+  for (int i = 0; i < m - 1; i++) {
+    corr[i*m+i] = 1.0;
+    for (int j = i + 1; j < m; j++) {
+      corr[i*m+j] = 0.0;
+      for (int k = 0; k < n; k++)
+        corr[i*m+j] += data[k*m+i] * data[k*m+j];
+      corr[j*m+i] = corr[i*m+j];
     }
   }
-}
-  symmat[m-1][m-1] = 1.0;
-
+  corr[(m - 1)*m+m - 1] = 1.0;
 }
 
 
@@ -115,33 +100,27 @@ int main(int argc, char** argv)
   int n = atoi(argv[2]);
   int m = atoi(argv[3]);
 
-  double float_n;
-  double (*data)[m][n]; data = (double(*)[m][n])malloc((m) * (n) * sizeof(double));;
-  double (*symmat)[m][m]; symmat = (double(*)[m][m])malloc((m) * (m) * sizeof(double));;
-  double (*mean)[m]; mean = (double(*)[m])malloc((m) * sizeof(double));;
-  double (*stddev)[m]; stddev = (double(*)[m])malloc((m) * sizeof(double));;
+  double *data = (double*)malloc(n*m*sizeof(double));
+  double *mean = (double*)malloc(m*sizeof(double));
+  double *stddev = (double*)malloc(m*sizeof(double));
+  double *corr = (double*)malloc(m*m*sizeof(double));
 
 
-  init_array (m, n, &float_n, *data);
-
-
-
-
-  kernel_correlation (m, n, float_n,
-      *data,
-      *symmat,
-      *mean,
-      *stddev);
+  init_array (m, n, data);
 
 
 
 
+  kernel(m, n, data, corr, mean, stddev);
 
-  if (dump_code == 1) print_array(m, *symmat);
+
+
+
+  if (dump_code == 1) print_array(m, corr);
 
 
   free((void*)data);;
-  free((void*)symmat);;
+  free((void*)corr);;
   free((void*)mean);;
   free((void*)stddev);;
 
