@@ -11,6 +11,8 @@
 #include <string.h>
 #include <math.h>
 
+#define  EPS 0.1
+
 static unsigned num_blocks(int num, int factor) {
   return (num + factor - 1) / factor;
 }
@@ -38,7 +40,6 @@ __global__ void kernel_stddev(int m, int n,
                               double mean[],
                               double stddev[]) {
   int j = blockDim.x * blockIdx.x + threadIdx.x;
-  const double eps = 0.1;
 
   if (j < m) {
     stddev[j] = 0.0;
@@ -49,7 +50,7 @@ __global__ void kernel_stddev(int m, int n,
     /* The following in an inelegant but usual way to handle
        near-zero std. dev. values, which below would cause a zero-
        divide. */
-    if (stddev[j] <= eps)
+    if (stddev[j] <= EPS)
       stddev[j] = 1.0;
   }
 }
