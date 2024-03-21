@@ -11,6 +11,7 @@
 #include <string.h>
 #include <math.h>
 
+#define RUN 50
 
 /* Array initialization. */
 static
@@ -113,6 +114,8 @@ int main(int argc, char** argv)
   int n = atoi(argv[2]);
   int dump_code = atoi(argv[1]);
 
+
+  for(int i  = 0; i < RUN; i++) {
   /* Variable declaration/allocation. */
   double alpha;
   double beta;
@@ -167,6 +170,7 @@ int main(int argc, char** argv)
   free((void*)x);
   free((void*)y);
   free((void*)z);
+  }
 
   return 0;
 }
