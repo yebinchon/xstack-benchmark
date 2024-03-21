@@ -50,6 +50,7 @@ ${BMARK}_cpu.bc: ${BMARK}_linked.bc
 
 ${BMARK}_cpu.c: ${BMARK}_cpu.bc
 	splendid $< 2> debug
+	mv ${BMARK}_cpu.cbe.c $@
 
 #${BMARK}_pdg_embed.bc:${BMARK}_cpu.bc
 #	noelle-load -PDGAnalysis -noelle-pdg-verbose=3 -noelle-pdg-embed ${BMARK}_svf.bc -o $@
@@ -64,6 +65,7 @@ ${BMARK}_reduced.bc: ${BMARK}_loopid.bc
 
 ${BMARK}_cpu_noelle.c: ${BMARK}_reduced.bc
 	splendid $< 2> debug
+	mv ${BMARK}_reduced.cbe.c $@
 
 ${BMARK}.o: ${BMARK}.cu
 	${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
@@ -109,13 +111,13 @@ run_amd: amdtarget.exe amdtarget_noelle.exe
 run_polygeist: polygeist.exe
 	regressions-watchdog $(RUN_TIMEOUT) polygeist.time ./polygeist.exe $(PERF_ARGS)
 
-run_tulip: tulip.clang.exe tulip.gcc.exe
+run_tulip: tulip.clang.exe tulip.gcc.exe tulip.clang.noelle.exe tulip.gcc.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.noelle.time ./tulip.clang.noelle.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.noelle.time ./tulip.gcc.noelle.exe $(PERF_ARGS) 
 
-run_nvhpc:# nvhpc.cpu.exe nvhpc.reduced.cpu.exe
+run_nvhpc: nvhpc.cpu.exe nvhpc.cpu.noelle.exe nvhpc.gpu.exe nvhpc.gpu.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.cpu.time ./nvhpc.cpu.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.cpu.reduced.time ./nvhpc.cpu.noelle.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.gpu.time ./nvhpc.gpu.exe $(PERF_ARGS)
