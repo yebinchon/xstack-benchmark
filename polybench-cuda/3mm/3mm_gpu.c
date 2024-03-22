@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -198,28 +199,28 @@ void _ZL10init_arrayiiiiiPdS_S_S_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, u
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
-  A[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
+  A[(i * ni + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
 
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
-  B[(i * nk + j)] = (double)(i) * (double)((j + 1)) / (double)(nj);
+  B[(i * nk + j)] = (((double)(i) * (double)((j + 1))) / (double)(nj));
 }
 }
 
 for(int64_t i = 0; i < nj;   i = i + 1){
 
 for(int64_t j = 0; j < nm;   j = j + 1){
-  C[(i * nj + j)] = (double)(i) * (double)((j + 3)) / (double)(nl);
+  C[(i * nj + j)] = (((double)(i) * (double)((j + 3))) / (double)(nl));
 }
 }
 
 for(int64_t i = 0; i < nm;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
-  D[(i * nm + j)] = (double)(i) * (double)((j + 2)) / (double)(nk);
+  D[(i * nm + j)] = (((double)(i) * (double)((j + 2))) / (double)(nk));
 }
 }
 
@@ -403,7 +404,7 @@ void _Z14kernel_A_mul_BiiiPdS_S__OC_1(uint32_t ni, uint32_t nj, uint32_t nk, dou
   dot = 0;
 
 for(int64_t k = 0; k < nk;   k = k + 1){
-  dot = (dot + A[(i * nk + k)] * B[(k * nj + j)]);
+  dot = (dot + (A[(i * nk + k)] * B[(k * nj + j)]));
 }
   C[(i * nj + j)] = dot;
   }

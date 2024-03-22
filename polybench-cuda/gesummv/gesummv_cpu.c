@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -196,11 +197,11 @@ void _ZL10init_arrayiPdS_S_(uint32_t n, double* A, double* B, double* x) {
 
 
 for(int64_t i = 0; i < n;   i = i + 1){
-  x[i] = (double)(i) / (double)(n);
+  x[i] = ((double)(i) / (double)(n));
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  A[(i * n + j)] = (double)(i) * (double)(j) / (double)(n);
-  B[(i * n + j)] = (double)(i) * (double)(j) / (double)(n);
+  A[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
+  B[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
 }
 }
   return;
@@ -236,10 +237,10 @@ void _Z8kernel_yiddPdS_S_S_S__OC_1(uint32_t n, double alpha, double beta, double
   y[i] = 0;
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  tmp[i] = (tmp[i] + A[(i * n + j)] * x[j]);
-  y[i] = (y[i] + B[(i * n + j)] * x[j]);
+  tmp[i] = (tmp[i] + (A[(i * n + j)] * x[j]));
+  y[i] = (y[i] + (B[(i * n + j)] * x[j]));
 }
-  y[i] = (alpha * tmp[i] + beta * y[i]);
+  y[i] = ((alpha * tmp[i]) + (beta * y[i]));
   }
   return;
 }

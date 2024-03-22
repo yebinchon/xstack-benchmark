@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -183,7 +184,7 @@ void _ZL10init_arrayiiPd(uint32_t m, uint32_t n, double* data) {
 for(int64_t i = 0; i < m;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  data[(i * n + j)] = (double)(i) * (double)(j) / 1000;
+  data[(i * n + j)] = (((double)(i) * (double)(j)) / 1000);
 }
 }
   return;
@@ -395,7 +396,7 @@ void _Z11kernel_meaniiPdS_S_S__OC_2(uint32_t m, uint32_t n, double* data, double
 for(int64_t i = 0; i < n;   i = i + 1){
   mean[j] = (mean[j] + data[(i * m + j)]);
 }
-  mean[j] = mean[j] / (double)(n);
+  mean[j] = (mean[j] / (double)(n));
   }
   return;
 }
@@ -411,9 +412,9 @@ void _Z13kernel_stddeviiPdS_S_S__OC_3(uint32_t m, uint32_t n, double* data, doub
   stddev[j] = 0;
 
 for(int64_t i = 0; i < n;   i = i + 1){
-  stddev[j] = (stddev[j] + (data[(i * m + j)] - mean[j]) * (data[(i * m + j)] - mean[j]));
+  stddev[j] = (stddev[j] + ((data[(i * m + j)] - mean[j]) * (data[(i * m + j)] - mean[j])));
 }
-  stddev[j] = stddev[j] / (double)(n);
+  stddev[j] = (stddev[j] / (double)(n));
   _17 = sqrt(stddev[j]);
   stddev[j] = _17;
   if (llvm_fcmp_ole(stddev[j], 0.10000000000000001)) {
@@ -435,7 +436,7 @@ void _Z13kernel_reduceiiPdS_S_S__OC_4(uint32_t m, uint32_t n, double* data, doub
   if (j < m) {
   data[(i * m + j)] = (data[(i * m + j)] - mean[j]);
   _18 = sqrt((double)(n));
-  data[(i * m + j)] = data[(i * m + j)] / _18 * stddev[j];
+  data[(i * m + j)] = (data[(i * m + j)] / (_18 * stddev[j]));
   }
   }
   return;
@@ -465,7 +466,7 @@ void _Z11kernel_corriiPdS_S_S__OC_6(uint32_t m, uint32_t n, double* data, double
   corr[(i * m + j)] = 0;
 
 for(int64_t k = 0; k < n;   k = k + 1){
-  corr[(i * m + j)] = (corr[(i * m + j)] + data[(k * m + i)] * data[(k * m + j)]);
+  corr[(i * m + j)] = (corr[(i * m + j)] + (data[(k * m + i)] * data[(k * m + j)]));
 }
   corr[(j * m + i)] = corr[(i * m + j)];
   }

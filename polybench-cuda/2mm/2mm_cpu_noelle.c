@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -83,17 +84,12 @@ struct l_unnamed_1 {
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int16_t _Z10num_blocksss(int16_t, int16_t) __ATTRIBUTELIST__((noinline, nothrow));
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void _ZL10init_arrayiiiiPdS_S_S_S_(uint32_t, uint32_t, uint32_t, uint32_t, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void _ZL6kerneliiiiddPdS_S_S_S_(uint32_t, uint32_t, uint32_t, uint32_t, double, double, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
-uint32_t cudaFree(uint8_t*);
 void _ZL11print_arrayiiPd(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void _Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(uint32_t, uint32_t, uint32_t, uint32_t, double, double, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z23kernel_D_plus_tmp_mul_CiiiiddPdS_S_S_S__OC_2(uint32_t, uint32_t, uint32_t, uint32_t, double, double, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
@@ -193,28 +189,28 @@ void _ZL10init_arrayiiiiPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
-  A[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
+  A[(i * ni + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
 #pragma omp parallel for 
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
-  B[(i * nk + j)] = (double)(i) * (double)((j + 1)) / (double)(nj);
+  B[(i * nk + j)] = (((double)(i) * (double)((j + 1))) / (double)(nj));
 }
 }
 #pragma omp parallel for 
 for(int64_t i = 0; i < nl;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
-  C[(i * nl + j)] = (double)(i) * (double)((j + 3)) / (double)(nl);
+  C[(i * nl + j)] = (((double)(i) * (double)((j + 3))) / (double)(nl));
 }
 }
 #pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
-  D[(i * ni + j)] = (double)(i) * (double)((j + 2)) / (double)(nk);
+  D[(i * ni + j)] = (((double)(i) * (double)((j + 2))) / (double)(nk));
 }
 }
 #pragma omp parallel for 
@@ -341,7 +337,7 @@ void _Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(uint32_t ni, uint32_t nj, uint32_t 
   dot = 0;
 #pragma omp simd reduction(+:dot)
 for(int64_t k = 0; k < nk;   k = k + 1){
-  dot = (dot + alpha * A[(i * nk + k)] * B[(k * nj + j)]);
+  dot = (dot + ((alpha * A[(i * nk + k)]) * B[(k * nj + j)]));
 }
   tmp[(i * nj + j)] = dot;
   }
@@ -360,10 +356,10 @@ void _Z23kernel_D_plus_tmp_mul_CiiiiddPdS_S_S_S__OC_2(uint32_t ni, uint32_t nj, 
   l = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < ni) {
   if (l < nl) {
-  dot = D[(i * nj + l)] * beta;
+  dot = (D[(i * nj + l)] * beta);
 #pragma omp simd reduction(+:dot)
 for(int64_t j = 0; j < nj;   j = j + 1){
-  dot = (dot + tmp[(i * nj + j)] * C[(j * nl + l)]);
+  dot = (dot + (tmp[(i * nj + j)] * C[(j * nl + l)]));
 }
   D[(i * nl + l)] = dot;
   }

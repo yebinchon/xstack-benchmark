@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -188,9 +189,9 @@ for(int64_t i = 0; i < ny;   i = i + 1){
 for(int64_t i = 0; i < nx;   i = i + 1){
 
 for(int64_t j = 0; j < ny;   j = j + 1){
-  ex[(i * ny + j)] = (double)(i) * (double)((j + 1)) / (double)(nx);
-  ey[(i * ny + j)] = (double)(i) * (double)((j + 2)) / (double)(ny);
-  hz[(i * ny + j)] = (double)(i) * (double)((j + 3)) / (double)(nx);
+  ex[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));
+  ey[(i * ny + j)] = (((double)(i) * (double)((j + 2))) / (double)(ny));
+  hz[(i * ny + j)] = (((double)(i) * (double)((j + 3))) / (double)(nx));
 }
 }
   return;
@@ -373,7 +374,7 @@ void _Z9kernel_eyiiiPdS_S_S_i_OC_2(uint32_t tmax, uint32_t nx, uint32_t ny, doub
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < nx) {
   if (j < ny) {
-  ey[(i * ny + j)] = (ey[(i * ny + j)] - 0.5 * (hz[(i * ny + j)] - hz[((i - 1) * ny + j)]));
+  ey[(i * ny + j)] = (ey[(i * ny + j)] - (0.5 * (hz[(i * ny + j)] - hz[((i - 1) * ny + j)])));
   }
   }
   return;
@@ -388,7 +389,7 @@ void _Z9kernel_exiiiPdS_S_S_i_OC_3(uint32_t tmax, uint32_t nx, uint32_t ny, doub
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y + 1;
   if (i < nx) {
   if (j < ny) {
-  ex[(i * ny + j)] = (ex[(i * ny + j)] - 0.5 * (hz[(i * ny + j)] - hz[((i * ny + j) - 1)]));
+  ex[(i * ny + j)] = (ex[(i * ny + j)] - (0.5 * (hz[(i * ny + j)] - hz[((i * ny + j) - 1)])));
   }
   }
   return;
@@ -403,7 +404,7 @@ void _Z9kernel_hziiiPdS_S_S_i_OC_4(uint32_t tmax, uint32_t nx, uint32_t ny, doub
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < (nx - 1)) {
   if (j < (ny - 1)) {
-  hz[(i * ny + j)] = (hz[(i * ny + j)] - 0.69999999999999996 * (((ex[((i * ny + j) + 1)] - ex[(i * ny + j)]) + ey[((i + 1) * ny + j)]) - ey[(i * ny + j)]));
+  hz[(i * ny + j)] = (hz[(i * ny + j)] - (0.69999999999999996 * (((ex[((i * ny + j) + 1)] - ex[(i * ny + j)]) + ey[((i + 1) * ny + j)]) - ey[(i * ny + j)])));
   }
   }
   return;

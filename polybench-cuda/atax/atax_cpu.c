@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -210,7 +211,7 @@ void _ZL10init_arrayiiPdS_S_S_(uint32_t nx, uint32_t ny, double* A, double* x, d
 
 
 for(int64_t i = 0; i < ny;   i = i + 1){
-  x[i] = (double)(i) * 3.1415926535897931;
+  x[i] = ((double)(i) * 3.1415926535897931);
 }
 
 for(int64_t i = 0; i < nx;   i = i + 1){
@@ -220,7 +221,7 @@ for(int64_t i = 0; i < nx;   i = i + 1){
 for(int64_t i = 0; i < nx;   i = i + 1){
 
 for(int64_t j = 0; j < ny;   j = j + 1){
-  A[(i * ny + j)] = (double)(i) * (double)((j + 1)) / (double)(nx);
+  A[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));
 }
 }
   return;
@@ -257,7 +258,7 @@ void _Z7kernel3iiPdS_S_S__OC_1(uint32_t m, uint32_t n, double* A, double* x, dou
   dot = 0;
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  dot = (dot + A[(i * n + j)] * x[j]);
+  dot = (dot + (A[(i * n + j)] * x[j]));
 }
   tmp[i] = dot;
   }
@@ -276,7 +277,7 @@ void _Z7kernel4iiPdS_S_S__OC_2(uint32_t m, uint32_t n, double* A, double* x, dou
   dot = 0;
 
 for(int64_t i = 0; i < m;   i = i + 1){
-  dot = (dot + A[(i * n + j)] * tmp[i]);
+  dot = (dot + (A[(i * n + j)] * tmp[i]));
 }
   y[j] = dot;
   }

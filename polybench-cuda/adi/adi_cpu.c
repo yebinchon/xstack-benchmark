@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -181,7 +182,7 @@ void _ZL10init_arrayiPdS_S_S_(uint32_t n, double* u, double* v, double* p, doubl
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  u[(i * n + j)] = (double)(((i + n) - j)) / (double)(n);
+  u[(i * n + j)] = ((double)(((i + n) - j)) / (double)(n));
   v[(i * n + j)] = 0;
   p[(i * n + j)] = 0;
   q[(i * n + j)] = 0;
@@ -213,14 +214,14 @@ void _ZL6kerneliiPdS_S_S_(uint32_t tsteps, uint32_t n, double* u, double* v, dou
   uint32_t j;
   uint32_t k;
 
-  DX = 1 / (double)(n);
-  DY = 1 / (double)(n);
-  DT = 1 / (double)(tsteps);
-  mul1 = 2 * DT / DX / DX;
-  mul2 = 1 * DT / DY / DY;
-  div10 = -(mul1) / 2;
+  DX = (1 / (double)(n));
+  DY = (1 / (double)(n));
+  DT = (1 / (double)(tsteps));
+  mul1 = (((2 * DT) / DX) / DX);
+  mul2 = (((1 * DT) / DY) / DY);
+  div10 = (-(mul1) / 2);
   b = (1 + mul1);
-  div12 = -(mul2) / 2;
+  div12 = (-(mul2) / 2);
   e = (1 + mul2);
 
 for(int32_t t = 1; t <= tsteps;   t = t + 1){
@@ -296,13 +297,13 @@ void _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(uint32_t tsteps, uint32_t n, d
   q[(i * n + 0)] = v[(0 * n + i)];
 
 for(int64_t j = 1; j < (n - 1);   j = j + 1){
-  p[(i * n + j)] = -(c) / (a * p[((i * n + j) - 1)] + b);
-  q[(i * n + j)] = (((-(d) * u[((j * n + i) - 1)] + (1 + 2 * d) * u[(j * n + i)]) - f * u[((j * n + i) + 1)]) - a * q[((i * n + j) - 1)]) / (a * p[((i * n + j) - 1)] + b);
+  p[(i * n + j)] = (-(c) / ((a * p[((i * n + j) - 1)]) + b));
+  q[(i * n + j)] = (((((-(d) * u[((j * n + i) - 1)]) + ((1 + (2 * d)) * u[(j * n + i)])) - (f * u[((j * n + i) + 1)])) - (a * q[((i * n + j) - 1)])) / ((a * p[((i * n + j) - 1)]) + b));
 }
   v[((n - 1) * n + i)] = 1;
 
 for(int64_t j = n + -2; j >= 1;   j = j + -1){
-  v[(j * n + i)] = (p[(i * n + j)] * v[((j + 1) * n + i)] + q[(i * n + j)]);
+  v[(j * n + i)] = ((p[(i * n + j)] * v[((j + 1) * n + i)]) + q[(i * n + j)]);
 }
   }
   return;
@@ -320,13 +321,13 @@ void _Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(uint32_t tsteps, uint32_t n, doub
   q[(i * n + 0)] = u[(i * n + 0)];
 
 for(int64_t j = 1; j < (n - 1);   j = j + 1){
-  p[(i * n + j)] = -(f) / (d * p[((i * n + j) - 1)] + e);
-  q[(i * n + j)] = (((-(a) * v[((i - 1) * n + j)] + (1 + 2 * a) * v[(i * n + j)]) - c * v[((i + 1) * n + j)]) - d * q[((i * n + j) - 1)]) / (d * p[((i * n + j) - 1)] + e);
+  p[(i * n + j)] = (-(f) / ((d * p[((i * n + j) - 1)]) + e));
+  q[(i * n + j)] = (((((-(a) * v[((i - 1) * n + j)]) + ((1 + (2 * a)) * v[(i * n + j)])) - (c * v[((i + 1) * n + j)])) - (d * q[((i * n + j) - 1)])) / ((d * p[((i * n + j) - 1)]) + e));
 }
   u[((i * n + n) - 1)] = 1;
 
 for(int64_t j = n + -2; j >= 1;   j = j + -1){
-  u[(i * n + j)] = (p[(i * n + j)] * u[((i * n + j) + 1)] + q[(i * n + j)]);
+  u[(i * n + j)] = ((p[(i * n + j)] * u[((i * n + j) + 1)]) + q[(i * n + j)]);
 }
   }
   return;

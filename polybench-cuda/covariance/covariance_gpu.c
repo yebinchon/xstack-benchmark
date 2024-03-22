@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -178,7 +179,7 @@ void _ZL10init_arrayiiPd(uint32_t m, uint32_t n, double* data) {
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < m;   j = j + 1){
-  data[(i * m + j)] = (double)(i) * (double)(j) / 1000;
+  data[(i * m + j)] = (((double)(i) * (double)(j)) / 1000);
 }
 }
   return;
@@ -331,7 +332,7 @@ void _Z11kernel_meaniiPdS_S__OC_1(uint32_t m, uint32_t n, double* data, double* 
 for(int64_t i = 0; i < n;   i = i + 1){
   mean[j] = (mean[j] + data[(i * m + j)]);
 }
-  mean[j] = mean[j] / (double)(n);
+  mean[j] = (mean[j] / (double)(n));
   }
   return;
 }
@@ -364,9 +365,9 @@ void _Z10kernel_coviiPdS_S__OC_3(uint32_t m, uint32_t n, double* data, double* c
   cov[(i * m + j)] = 0;
 
 for(int64_t k = 0; k < n;   k = k + 1){
-  cov[(i * m + j)] = (cov[(i * m + j)] + data[(k * m + i)] * data[(k * m + j)]);
+  cov[(i * m + j)] = (cov[(i * m + j)] + (data[(k * m + i)] * data[(k * m + j)]));
 }
-  cov[(i * m + j)] = cov[(i * m + j)] / ((double)(n) - 1);
+  cov[(i * m + j)] = (cov[(i * m + j)] / ((double)(n) - 1));
   cov[(j * m + i)] = cov[(i * m + j)];
   }
   }

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -177,8 +178,8 @@ void _ZL10init_arrayiiPdS_S_(uint32_t n, uint32_t m, double* alpha, double* A, d
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < m;   j = j + 1){
-  A[(i * m + j)] = (double)(i) * (double)(j) / (double)(m);
-  B[(j * n + j)] = (double)(i) * (double)(j) / (double)(n);
+  A[(i * m + j)] = (((double)(i) * (double)(j)) / (double)(m));
+  B[(j * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
 }
 }
   return;
@@ -292,10 +293,10 @@ void _Z15kernel_contractiidPdS__OC_1(uint32_t n, uint32_t m, double alpha, doubl
   j = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   if (j < n) {
 
-for(int64_t i = 0; i < m;   k = i + 1){
+for(int64_t i = 0; i < m;   i = i + 1){
 
 for(int64_t k = i; k < m;   k = k + 1){
-  B[(i * n + j)] = (B[(i * n + j)] + A[(k * m + i)] * B[(k * n + j)]);
+  B[(i * n + j)] = (B[(i * n + j)] + (A[(k * m + i)] * B[(k * n + j)]));
 }
 }
   }
@@ -311,7 +312,7 @@ void _Z12kernel_alphaiidPdS__OC_2(uint32_t n, uint32_t m, double alpha, double* 
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < m) {
   if (j < n) {
-  B[(i * n + j)] = B[(i * n + j)] * alpha;
+  B[(i * n + j)] = (B[(i * n + j)] * alpha);
   }
   }
   return;

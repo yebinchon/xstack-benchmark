@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -187,16 +188,16 @@ void _ZL10init_arrayiPdS_S_S_S_S_S_S_S_(uint32_t n, double* A, double* u1, doubl
 
 for(int64_t i = 0; i < n;   i = i + 1){
   u1[i] = (double)(i);
-  u2[i] = (double)((i + 1) / n) / 2;
-  v1[i] = (double)((i + 1) / n) / 4;
-  v2[i] = (double)((i + 1) / n) / 6;
-  y[i] = (double)((i + 1) / n) / 8;
-  z[i] = (double)((i + 1) / n) / 9;
+  u2[i] = ((double)((i + 1) / n) / 2);
+  v1[i] = ((double)((i + 1) / n) / 4);
+  v2[i] = ((double)((i + 1) / n) / 6);
+  y[i] = ((double)((i + 1) / n) / 8);
+  z[i] = ((double)((i + 1) / n) / 9);
   x[i] = 0;
   w[i] = 0;
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  A[(i * n + j)] = (double)(i) * (double)(j) / (double)(n);
+  A[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
 }
 }
   return;
@@ -354,7 +355,7 @@ void _Z8kernel_AiddPdS_S_S_S_S_S_S_S__OC_1(uint32_t n, double alpha, double beta
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < n) {
   if (j < n) {
-  A[(i * n + j)] = (A[(i * n + j)] + (u1[i] * v1[j] + u2[i] * v2[j]));
+  A[(i * n + j)] = (A[(i * n + j)] + ((u1[i] * v1[j]) + (u2[i] * v2[j])));
   }
   }
   return;
@@ -369,7 +370,7 @@ void _Z8kernel_xiddPdS_S_S_S_S_S_S_S__OC_2(uint32_t n, double alpha, double beta
   if (i < n) {
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  x[i] = (x[i] + beta * A[(j * n + i)] * y[j]);
+  x[i] = (x[i] + ((beta * A[(j * n + i)]) * y[j]));
 }
   }
   return;
@@ -395,7 +396,7 @@ void _Z8kernel_widdPdS_S_S_S_S_S_S_S__OC_4(uint32_t n, double alpha, double beta
   if (i < n) {
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  w[i] = (w[i] + alpha * A[(i * n + j)] * x[j]);
+  w[i] = (w[i] + ((alpha * A[(i * n + j)]) * x[j]));
 }
   }
   return;

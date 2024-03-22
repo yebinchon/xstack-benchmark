@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -181,13 +182,13 @@ void _ZL10init_arrayiPdS_S_(uint32_t n, double* table, double* oldtable, double*
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  table[(i * n + j)] = (double)(i) * (double)(j) / (double)(n);
-  oldtable[(i * n + j)] = (double)(i) * (double)(j) / (double)(n);
+  table[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
+  oldtable[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
 }
 }
 
 for(int64_t i = 0; i < n;   i = i + 1){
-  seq[i] = (double)(i) / (double)(n);
+  seq[i] = ((double)(i) / (double)(n));
 }
   return;
 }
@@ -252,28 +253,28 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t n, double* seq, double* table, double* oldtable, uint32_t w, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   uint32_t mul;
   int64_t j;
-  int64_t sub4;
+  int64_t i;
   double maximum;
   double upd;
   int64_t k;
 
   mul = blockDim_2e_x * blockIdx_2e_x;
   j = mul + threadIdx_2e_x;
-  sub4 = ((n - 1) + j - w);
-  if (0 <= sub4) {
-  if (sub4 < n) {
-  if (sub4 + 1 <= j) {
+  i = ((n - 1) + j - w);
+  if (0 <= i) {
+  if (i < n) {
+  if (i + 1 <= j) {
   if (j < n) {
   if ((j - 1) >= 0) {
-  maximum = _ZL3maxdd(maximum, table[(sub4 * n + (j - 1))]);
+  maximum = _ZL3maxdd(maximum, table[(i * n + (j - 1))]);
   }
-  if (sub4 + 1 < n) {
-  maximum = _ZL3maxdd(maximum, table[((sub4 + 1) * n + j)]);
+  if (i + 1 < n) {
+  maximum = _ZL3maxdd(maximum, table[((i + 1) * n + j)]);
   }
   if ((j - 1) >= 0) {
-  if (sub4 + 1 < n) {
-  if (sub4 < (j - 1)) {
-  upd = (upd + (llvm_fcmp_oeq((seq[sub4] + seq[j]), 3) ? 1 : 0));
+  if (i + 1 < n) {
+  if (i < (j - 1)) {
+  upd = (upd + (llvm_fcmp_oeq((seq[i] + seq[j]), 3) ? 1 : 0));
   maximum = _ZL3maxdd(maximum, upd);
   }
   maximum = _ZL3maxdd(maximum, upd);
@@ -281,9 +282,9 @@ void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t n, double* seq, double* table, d
   }
 
 for(int64_t k = (threadIdx_2e_x + n + mul - w); k < j;   k = k + 1){
-  maximum = _ZL3maxdd(maximum, (table[(sub4 * n + k)] + table[((k + 1) * n + j)]));
+  maximum = _ZL3maxdd(maximum, (table[(i * n + k)] + table[((k + 1) * n + j)]));
 }
-  table[(sub4 * n + j)] = maximum;
+  table[(i * n + j)] = maximum;
   }
   }
   }

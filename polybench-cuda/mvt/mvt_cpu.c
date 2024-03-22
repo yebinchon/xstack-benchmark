@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -229,13 +230,13 @@ void _ZL10init_arrayiPdS_S_S_S_(uint32_t n, double* x1, double* x2, double* y_1,
 
 
 for(int64_t i = 0; i < n;   i = i + 1){
-  x1[i] = (double)(i) / (double)(n);
-  x2[i] = ((double)(i) + 1) / (double)(n);
-  y_1[i] = ((double)(i) + 3) / (double)(n);
-  y_2[i] = ((double)(i) + 4) / (double)(n);
+  x1[i] = ((double)(i) / (double)(n));
+  x2[i] = (((double)(i) + 1) / (double)(n));
+  y_1[i] = (((double)(i) + 3) / (double)(n));
+  y_2[i] = (((double)(i) + 4) / (double)(n));
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  A[(i * n + j)] = (double)(i) * (double)(j) / (double)(n);
+  A[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
 }
 }
   return;
@@ -265,7 +266,7 @@ void _Z9kernel_x1iPdS_S_S_S__OC_1(uint32_t n, double* x1, double* x2, double* y_
   if (i < n) {
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  x1[i] = (x1[i] + A[(i * n + j)] * y_1[j]);
+  x1[i] = (x1[i] + (A[(i * n + j)] * y_1[j]));
 }
   }
   return;
@@ -280,7 +281,7 @@ void _Z9kernel_x2iPdS_S_S_S__OC_2(uint32_t n, double* x1, double* x2, double* y_
   if (i < n) {
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  x2[i] = (x2[i] + A[(j * n + i)] * y_2[j]);
+  x2[i] = (x2[i] + (A[(j * n + i)] * y_2[j]));
 }
   }
   return;

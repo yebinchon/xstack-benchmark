@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -178,14 +179,14 @@ void _ZL10init_arrayiiPdS_S_(uint32_t nx, uint32_t ny, double* A, double* r, dou
 
 
 for(int64_t i = 0; i < ny;   i = i + 1){
-  p[i] = (double)(i) * 3.1415926535897931;
+  p[i] = ((double)(i) * 3.1415926535897931);
 }
 
 for(int64_t i = 0; i < nx;   i = i + 1){
-  r[i] = (double)(i) * 3.1415926535897931;
+  r[i] = ((double)(i) * 3.1415926535897931);
 
 for(int64_t j = 0; j < ny;   j = j + 1){
-  A[(i * ny + j)] = (double)(i) * (double)((j + 1)) / (double)(nx);
+  A[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));
 }
 }
   return;
@@ -288,7 +289,7 @@ void _Z8kernel_qiiPdS_S_S_S__OC_1(uint32_t m, uint32_t n, double* A, double* s, 
   dot = 0;
 
 for(int64_t j = 0; j < m;   j = j + 1){
-  dot = (dot + A[(i * m + j)] * p[j]);
+  dot = (dot + (A[(i * m + j)] * p[j]));
 }
   q[i] = (q[i] + dot);
   }
@@ -307,7 +308,7 @@ void _Z8kernel_siiPdS_S_S_S__OC_2(uint32_t m, uint32_t n, double* A, double* s, 
   dot = 0;
 
 for(int64_t i = 0; i < n;   i = i + 1){
-  dot = (dot + r[i] * A[(i * m + j)]);
+  dot = (dot + (r[i] * A[(i * m + j)]));
 }
   s[j] = dot;
   }
