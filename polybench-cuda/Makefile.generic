@@ -30,16 +30,16 @@ openacc.cpu.noelle.exe:
 	nvc -acc=multicore -Minfo=accel -O3 ${BMARK}_gpu_noelle.c -o $@
 
 nvhpc.gpu.noelle.exe:
-	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu_noelle.c -o $@
+	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu_noelle.nvc.c -o $@
 
 nvhpc.gpu.exe:
-	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu.c -o $@
+	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu.nvc.c -o $@
 
 nvhpc.cpu.noelle.exe:
-	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu_noelle.c -o $@
+	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu_noelle.nvc.c -o $@
 
 nvhpc.cpu.exe:
-	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu.c -o $@
+	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu.nvc.c -o $@
 
 %.ll: ${BMARK}.cu
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
