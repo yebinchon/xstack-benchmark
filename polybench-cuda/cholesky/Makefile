@@ -1,5 +1,6 @@
 #POLLY=1
 BMARK=cholesky
+FLAGS=-lm
 TEST_ARGS=1 5
 PERF_ARGS= 0 4000
 

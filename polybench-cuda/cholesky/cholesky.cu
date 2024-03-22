@@ -44,6 +44,12 @@ void print_array(int n,
 
 
 
+__global__ void kernel0(int n, int j, double *A) {
+  A[j * n + j] = std::sqrt(A[j * n + j]);
+}
+
+
+
 __global__ void kernel1(int n, int j, double *A) {
   int i = blockDim.x * blockIdx.x + threadIdx.x;
 
@@ -61,11 +67,24 @@ __global__ void kernel2(int n, int j, double *A) {
     A[i * n + k] -= A[i * n + j] * A[k * n + j];
 }
 
-
 static unsigned num_blocks(int num, int factor) {
   return (num + factor - 1) / factor;
 }
 
+static void kernel_polly(int n, double *dev_A) {
+  const unsigned int threadsPerBlock = 256;
+
+
+  for (int iter = 0; iter < n; iter++) {
+    kernel0<<<1, 1>>>(n, iter, dev_A);
+
+    kernel1<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(n, iter, dev_A);
+
+    dim3 block(threadsPerBlock / 32, 32, 1);
+    dim3 grid(num_blocks(n, block.x), num_blocks(n, block.y), 1);
+    kernel2<<<block, grid>>>(n, iter, dev_A);
+  }
+}
 
 int main(int argc, char** argv)
 {
@@ -81,25 +100,13 @@ int main(int argc, char** argv)
   init_array (n, A);
 
   double *dev_A;
-  double *dev_p;
   cudaMalloc(&dev_A, n*n*sizeof(double));
+  cudaMemcpy(dev_A, A, n*n*sizeof(double), cudaMemcpyHostToDevice);
 
-  const unsigned int threadsPerBlock = 256;
-
-
-  /* Run kernel. */
-  for (int iter = 0; iter < n; iter++) {
-    A[iter*n+iter] = std::sqrt(A[iter*n+iter]);
-    cudaMemcpy(dev_A, A, n*n*sizeof(double), cudaMemcpyHostToDevice);
-
-    kernel1<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(n, iter, dev_A);
-
-    dim3 block(threadsPerBlock / 32, 32, 1);
-    dim3 grid(num_blocks(n, block.x), num_blocks(n, block.y), 1);
-    kernel2<<<block, grid>>>(n, iter, dev_A);
-  }
+  kernel_polly(n, dev_A);
 
   cudaMemcpy(A, dev_A, n*n*sizeof(double), cudaMemcpyDeviceToHost);
+
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
