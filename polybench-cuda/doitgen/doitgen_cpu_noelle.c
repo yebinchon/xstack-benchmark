@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -177,7 +178,7 @@ for(int64_t i = 0; i < nr;   i = i + 1){
 for(int64_t j = 0; j < nq;   j = j + 1){
 
 for(int64_t k = 0; k < np;   k = k + 1){
-  A[((i * np * nq + j * nq) + k)] = ((double)(i) * (double)(j) + (double)(k)) / (double)(np);
+  A[((i * np * nq + j * nq) + k)] = ((((double)(i) * (double)(j)) + (double)(k)) / (double)(np));
 }
 }
 }
@@ -185,7 +186,7 @@ for(int64_t k = 0; k < np;   k = k + 1){
 for(int64_t i = 0; i < np;   i = i + 1){
 
 for(int64_t j = 0; j < np;   j = j + 1){
-  C4[(i * np + j)] = (double)(i) * (double)(j) / (double)(np);
+  C4[(i * np + j)] = (((double)(i) * (double)(j)) / (double)(np));
 }
 }
   return;
@@ -290,7 +291,7 @@ void _Z10kernel_sumiiiPdS_S__OC_1(uint32_t nr, uint32_t nq, uint32_t np, double*
   dot = 0;
 #pragma omp simd reduction(+:dot)
 for(int64_t s = 0; s < np;   s = s + 1){
-  dot = (dot + A[((r * nq + q) * np + s)] * C4[(s * np + p)]);
+  dot = (dot + (A[((r * nq + q) * np + s)] * C4[(s * np + p)]));
 }
   sum[((r * nq + q) * np + p)] = dot;
   }

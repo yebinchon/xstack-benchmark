@@ -11,7 +11,7 @@
 #include <string.h>
 #include <math.h>
 
-#define RUN 50
+#define RUN 100
 
 
 /* Array initialization. */
@@ -79,7 +79,6 @@ int main(int argc, char** argv)
   int ny = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
-  for(int i = 0; i < RUN; i++) {
   /* Variable declaration/allocation. */
   double (*A)[nx][ny]; A = (double(*)[nx][ny])malloc(nx*ny*sizeof(double));
   double (*x)[ny]; x = (double(*)[ny])malloc(ny*sizeof(double));
@@ -89,8 +88,10 @@ int main(int argc, char** argv)
   /* Initialize array(s). */
   init_array (nx, ny, *A, *x);
   /* Run kernel. */
+  for(int i = 0; i < RUN; i++) {
   kernel_atax (nx, ny,
         *A, *x, *y, *tmp);
+  }
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
   if(dump_code == 1) print_array(nx, *y);
@@ -100,7 +101,6 @@ int main(int argc, char** argv)
   free((void*)x);
   free((void*)y);
   free((void*)tmp);
-  }
 
   return 0;
 }

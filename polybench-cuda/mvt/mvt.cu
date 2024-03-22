@@ -15,7 +15,7 @@
 
 /* Include benchmark-specific header. */
 /* Default data type is double, default size is 4000. */
-#define RUN 100
+#define RUN 200
 #define N 15000
 //#define N 40
 
@@ -113,7 +113,6 @@ int main(int argc, char** argv)
   int dump_code = atoi(argv[1]);
   int n = N;
 
-  for(int i = 0; i < RUN; i++) {
   /* Variable declaration/allocation. */
   double *A = (double*)malloc(N*N*sizeof(double));
   double *x1 = (double*)malloc(sizeof(double)*n);
@@ -148,8 +147,10 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_y_1, y_1, n * sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_y_2, y_2, n * sizeof(double), cudaMemcpyHostToDevice);
 
+  for(int i = 0; i < RUN; i++) {
   /* Run kernel. */
   kernel(n, dev_x1, dev_x2, dev_y_1, dev_y_2, dev_A);
+  }
 
   cudaMemcpy(x1, dev_x1, n * sizeof(double), cudaMemcpyDeviceToHost);
   cudaMemcpy(x2, dev_x2, n * sizeof(double), cudaMemcpyDeviceToHost);
@@ -165,7 +166,6 @@ int main(int argc, char** argv)
   free((void*)x2);
   free((void*)y_1);
   free((void*)y_2);
-  }
 
   return 0;
 }

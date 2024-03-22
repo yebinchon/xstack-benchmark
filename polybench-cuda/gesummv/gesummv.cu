@@ -11,6 +11,7 @@
 #include <string.h>
 #include <math.h>
 
+#define RUN 100
 
 static unsigned num_blocks(int num, int factor) {
   return (num + factor - 1) / factor;
@@ -116,8 +117,10 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_y, y, n*sizeof(double), cudaMemcpyHostToDevice);
   /* Run kernel. */
 
+  for(int i = 0; i < RUN; i++) {
   const unsigned threadsPerBlock = 256;
   kernel_y<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(n, alpha, beta, dev_A, dev_B, dev_tmp, dev_x, dev_y);
+  }
   cudaMemcpy(y, dev_y, n*sizeof(double), cudaMemcpyDeviceToHost);
 
   /* Prevent dead-code elimination. All live-out data must be printed

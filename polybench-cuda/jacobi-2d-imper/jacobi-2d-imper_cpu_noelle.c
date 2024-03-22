@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -170,8 +171,8 @@ void _ZL10init_arrayiPdS_(uint32_t n, double* A, double* B) {
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  A[(i * n + j)] = ((double)(i) * (double)((j + 2)) + 2) / (double)(n);
-  B[(i * n + j)] = ((double)(i) * (double)((j + 3)) + 3) / (double)(n);
+  A[(i * n + j)] = ((((double)(i) * (double)((j + 2))) + 2) / (double)(n));
+  B[(i * n + j)] = ((((double)(i) * (double)((j + 3))) + 3) / (double)(n));
 }
 }
   return;
@@ -276,7 +277,7 @@ void _Z14kernel_stenciliPdS__OC_1(uint32_t n, double* A, double* B, uint32_t gri
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y + 1;
   if (i < (n - 1)) {
   if (j < (n - 1)) {
-  B[(i * n + j)] = ((((A[(i * n + j)] + A[((i * n + j) - 1)]) + A[((i * n + 1) + j)]) + A[((1 + i) * n + j)]) + A[((i - 1) * n + j)]) / 5;
+  B[(i * n + j)] = (((((A[(i * n + j)] + A[((i * n + j) - 1)]) + A[((i * n + 1) + j)]) + A[((1 + i) * n + j)]) + A[((i - 1) * n + j)]) / 5);
   }
   }
   return;

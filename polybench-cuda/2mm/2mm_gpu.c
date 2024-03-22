@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -197,28 +198,28 @@ void _ZL10init_arrayiiiiPdS_S_S_S_(uint32_t ni, uint32_t nj, uint32_t nk, uint32
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
-  A[(i * ni + j)] = (double)(i) * (double)(j) / (double)(ni);
+  A[(i * ni + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
 
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
-  B[(i * nk + j)] = (double)(i) * (double)((j + 1)) / (double)(nj);
+  B[(i * nk + j)] = (((double)(i) * (double)((j + 1))) / (double)(nj));
 }
 }
 
 for(int64_t i = 0; i < nl;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
-  C[(i * nl + j)] = (double)(i) * (double)((j + 3)) / (double)(nl);
+  C[(i * nl + j)] = (((double)(i) * (double)((j + 3))) / (double)(nl));
 }
 }
 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nl;   j = j + 1){
-  D[(i * ni + j)] = (double)(i) * (double)((j + 2)) / (double)(nk);
+  D[(i * ni + j)] = (((double)(i) * (double)((j + 2))) / (double)(nk));
 }
 }
 
@@ -349,7 +350,7 @@ void _Z14kernel_A_mul_BiiiiddPdS_S_S_S__OC_1(uint32_t ni, uint32_t nj, uint32_t 
   dot = 0;
 
 for(int64_t k = 0; k < nk;   k = k + 1){
-  dot = (dot + alpha * A[(i * nk + k)] * B[(k * nj + j)]);
+  dot = (dot + ((alpha * A[(i * nk + k)]) * B[(k * nj + j)]));
 }
   tmp[(i * nj + j)] = dot;
   }
@@ -368,10 +369,10 @@ void _Z23kernel_D_plus_tmp_mul_CiiiiddPdS_S_S_S__OC_2(uint32_t ni, uint32_t nj, 
   l = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < ni) {
   if (l < nl) {
-  dot = D[(i * nj + l)] * beta;
+  dot = (D[(i * nj + l)] * beta);
 
 for(int64_t j = 0; j < nj;   j = j + 1){
-  dot = (dot + tmp[(i * nj + j)] * C[(j * nl + l)]);
+  dot = (dot + (tmp[(i * nj + j)] * C[(j * nl + l)]));
 }
   D[(i * nl + l)] = dot;
   }

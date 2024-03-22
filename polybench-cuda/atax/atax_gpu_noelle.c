@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -146,22 +147,28 @@ int main(int argc, char ** argv) {
   int32_t nx;
   int32_t ny;
   int32_t dump_code;
+  uint8_t* A;
+  uint8_t* x;
+  uint8_t* y;
+  uint8_t* tmp;
+  int32_t call32;
   uint32_t i;
   uint32_t j;
   uint32_t k;
+  int32_t call54;
 
   nx = atoi(argv[2]);
   ny = atoi(argv[3]);
   dump_code = atoi(argv[1]);
-
-for(int32_t i = 0; i < 50;   i = i + 1){
-  uint8_t* A = malloc(nx * ny * 8);
-  uint8_t* x = malloc(ny * 8);
-  uint8_t* y = malloc(ny * 8);
-  uint8_t* tmp = malloc(nx * 8);
+  A = malloc(nx * ny * 8);
+  x = malloc(ny * 8);
+  y = malloc(ny * 8);
+  tmp = malloc(nx * 8);
 _ZL10init_arrayiiPdS_S_S_(nx, ny, ((double*)A), ((double*)x), ((double*)tmp), ((double*)y));
 #pragma omp target data map(to: A[0:nx * ny * 8], x[0:ny * 8], tmp[0:nx * 8]) map(tofrom: y[0:ny * 8])
 {
+
+for(int32_t i = 0; i < 100;   i = i + 1){
   uint32_t call42 = _ZL10num_blocksii(nx, 256);
   agg_2e_tmp.field0 = call42;
   agg_2e_tmp.field1 = 1;
@@ -198,16 +205,16 @@ for(int32_t k = 0; k < 256;   k = k + 1){
 _Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
+}
 
 }
   if (dump_code == 1) {
 _ZL11print_arrayiPd(nx, ((double*)y));
+  }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)x)));
 free(((uint8_t*)((double*)y)));
 free(((uint8_t*)((double*)tmp)));
-  }
-}
   return 0;
 }
 
@@ -218,7 +225,7 @@ void _ZL10init_arrayiiPdS_S_S_(uint32_t nx, uint32_t ny, double* A, double* x, d
 
 #pragma omp parallel for 
 for(int64_t i = 0; i < ny;   i = i + 1){
-  x[i] = (double)(i) * 3.1415926535897931;
+  x[i] = ((double)(i) * 3.1415926535897931);
 }
 #pragma omp parallel for 
 for(int64_t i = 0; i < nx;   i = i + 1){
@@ -228,7 +235,7 @@ for(int64_t i = 0; i < nx;   i = i + 1){
 for(int64_t i = 0; i < nx;   i = i + 1){
 
 for(int64_t j = 0; j < ny;   j = j + 1){
-  A[(i * ny + j)] = (double)(i) * (double)((j + 1)) / (double)(nx);
+  A[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));
 }
 }
   return;
@@ -265,7 +272,7 @@ void _Z7kernel3iiPdS_S_S__OC_1(uint32_t m, uint32_t n, double* A, double* x, dou
   dot = 0;
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  dot = (dot + A[(i * n + j)] * x[j]);
+  dot = (dot + (A[(i * n + j)] * x[j]));
 }
   tmp[i] = dot;
   }
@@ -284,7 +291,7 @@ void _Z7kernel4iiPdS_S_S__OC_2(uint32_t m, uint32_t n, double* A, double* x, dou
   dot = 0;
 
 for(int64_t i = 0; i < m;   i = i + 1){
-  dot = (dot + A[(i * n + j)] * tmp[i]);
+  dot = (dot + (A[(i * n + j)] * tmp[i]));
 }
   y[j] = dot;
   }

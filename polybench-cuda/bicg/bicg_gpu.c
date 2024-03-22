@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -139,35 +140,40 @@ int main(int argc, char ** argv) {
   int32_t m;
   int32_t n;
   int32_t dump_code;
+  uint8_t* A;
+  uint8_t* s;
+  uint8_t* q;
+  uint8_t* p;
+  uint8_t* r;
+  int32_t call38;
   uint32_t i;
+  int32_t call53;
 
   m = atoi(argv[2]);
   n = atoi(argv[3]);
   dump_code = atoi(argv[1]);
-
-for(int32_t i = 0; i < 50;   i = i + 1){
-  uint8_t* A = malloc(m * n * 8);
-  uint8_t* s = malloc(n * 8);
-  uint8_t* q = malloc(m * 8);
-  uint8_t* p = malloc(n * 8);
-  uint8_t* r = malloc(m * 8);
-  _ZL10init_arrayiiPdS_S_(m, n, ((double*)A), ((double*)r), ((double*)p));
-;
+  A = malloc(m * n * 8);
+  s = malloc(n * 8);
+  q = malloc(m * 8);
+  p = malloc(n * 8);
+  r = malloc(m * 8);
+_ZL10init_arrayiiPdS_S_(m, n, ((double*)A), ((double*)r), ((double*)p));
 #pragma omp target data map(to: A[0:m * n * 8], p[0:n * 8], r[0:m * 8]) map(tofrom: s[0:n * 8], q[0:m * 8])
 {
-  _ZL6kerneliiPdS_S_S_S_(m, n, ((double*)A), ((double*)s), ((double*)q), ((double*)p), ((double*)r));
-;
+
+for(int32_t i = 0; i < 100;   i = i + 1){
+_ZL6kerneliiPdS_S_S_S_(m, n, ((double*)A), ((double*)s), ((double*)q), ((double*)p), ((double*)r));
+}
 
 }
   if (dump_code == 1) {
 _ZL11print_arrayiiPdS_(m, n, ((double*)s), ((double*)q));
+  }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)s)));
 free(((uint8_t*)((double*)q)));
 free(((uint8_t*)((double*)p)));
 free(((uint8_t*)((double*)r)));
-  }
-}
   return 0;
 }
 
@@ -178,14 +184,14 @@ void _ZL10init_arrayiiPdS_S_(uint32_t nx, uint32_t ny, double* A, double* r, dou
 
 
 for(int64_t i = 0; i < ny;   i = i + 1){
-  p[i] = (double)(i) * 3.1415926535897931;
+  p[i] = ((double)(i) * 3.1415926535897931);
 }
 
 for(int64_t i = 0; i < nx;   i = i + 1){
-  r[i] = (double)(i) * 3.1415926535897931;
+  r[i] = ((double)(i) * 3.1415926535897931);
 
 for(int64_t j = 0; j < ny;   j = j + 1){
-  A[(i * ny + j)] = (double)(i) * (double)((j + 1)) / (double)(nx);
+  A[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));
 }
 }
   return;
@@ -288,7 +294,7 @@ void _Z8kernel_qiiPdS_S_S_S__OC_1(uint32_t m, uint32_t n, double* A, double* s, 
   dot = 0;
 
 for(int64_t j = 0; j < m;   j = j + 1){
-  dot = (dot + A[(i * m + j)] * p[j]);
+  dot = (dot + (A[(i * m + j)] * p[j]));
 }
   q[i] = (q[i] + dot);
   }
@@ -307,7 +313,7 @@ void _Z8kernel_siiPdS_S_S_S__OC_2(uint32_t m, uint32_t n, double* A, double* s, 
   dot = 0;
 
 for(int64_t i = 0; i < n;   i = i + 1){
-  dot = (dot + r[i] * A[(i * m + j)]);
+  dot = (dot + (r[i] * A[(i * m + j)]));
 }
   s[j] = dot;
   }

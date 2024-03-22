@@ -11,7 +11,7 @@
 #include <string.h>
 #include <math.h>
 
-
+#define RUN 100
 /* Array initialization. */
 static
 void init_array(int n,
@@ -105,6 +105,7 @@ int main(int argc, char** argv)
 	      *B,
 	      *x);
 
+  for(int i = 0; i < RUN; i++) {
   /* Run kernel. */
   kernel_gesummv (n, alpha, beta,
 		  *A,
@@ -112,6 +113,7 @@ int main(int argc, char** argv)
 		  *tmp,
 		  *x,
 		  *y);
+  }
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */

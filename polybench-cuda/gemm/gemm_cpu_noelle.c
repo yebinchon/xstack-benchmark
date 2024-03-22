@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -178,21 +179,21 @@ void _ZL10init_arrayiiiPdS_S_(uint32_t ni, uint32_t nj, uint32_t nk, double* C, 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
-  C[(i * nj + j)] = (double)(i) * (double)(j) / (double)(ni);
+  C[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
 #pragma omp parallel for 
 for(int64_t i = 0; i < ni;   i = i + 1){
 
 for(int64_t j = 0; j < nk;   j = j + 1){
-  A[(i * nk + j)] = (double)(i) * (double)(j) / (double)(ni);
+  A[(i * nk + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
 #pragma omp parallel for 
 for(int64_t i = 0; i < nk;   i = i + 1){
 
 for(int64_t j = 0; j < nj;   j = j + 1){
-  B[(i * nj + j)] = (double)(i) * (double)(j) / (double)(ni);
+  B[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
   return;
@@ -282,10 +283,10 @@ void _Z10kernel_deviiiddPdS_S__OC_1(uint32_t ni, uint32_t nj, uint32_t nk, doubl
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
   if (i < ni) {
   if (j < nj) {
-  dot = C[(i * nj + j)] * beta;
+  dot = (C[(i * nj + j)] * beta);
 #pragma omp simd reduction(+:dot)
 for(int64_t k = 0; k < nk;   k = k + 1){
-  dot = (dot + alpha * A[(i * nk + k)] * B[(k * nj + j)]);
+  dot = (dot + ((alpha * A[(i * nk + k)]) * B[(k * nj + j)]));
 }
   C[(i * nj + j)] = dot;
   }

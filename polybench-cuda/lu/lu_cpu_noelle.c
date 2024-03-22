@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -165,7 +166,7 @@ void _ZL10init_arrayiPd(uint32_t n, double* A) {
 for(int64_t i = 0; i < n;   i = i + 1){
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  A[(i * n + j)] = (double)((i + 1)) * (double)((j + 1)) / (double)(n);
+  A[(i * n + j)] = (((double)((i + 1)) * (double)((j + 1))) / (double)(n));
 }
 }
   return;
@@ -266,7 +267,7 @@ void _Z10kernel_diviPdi_OC_1(uint32_t n, double* A, uint32_t k, uint32_t gridDim
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x + k + 1;
   if (i < n) {
-  A[(i * n + k)] = A[(i * n + k)] / A[(k * n + k)];
+  A[(i * n + k)] = (A[(i * n + k)] / A[(k * n + k)]);
   }
   return;
 }
@@ -280,7 +281,7 @@ void _Z8kernel_AiPdi_OC_2(uint32_t n, double* A, uint32_t k, uint32_t gridDim_2e
   j = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y + k + 1;
   if (i < n) {
   if (j < n) {
-  A[(i * n + j)] = (A[(i * n + j)] - A[(i * n + k)] * A[(k * n + j)]);
+  A[(i * n + j)] = (A[(i * n + j)] - (A[(i * n + k)] * A[(k * n + j)]));
   }
   }
   return;

@@ -17,11 +17,11 @@ nvtarget_noelle.exe: #${BMARK}_cpu.cbe.c
 
 amdtarget.exe: #${BMARK}_cpu.cbe.c
 	clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_gpu.c -O3 -c -o ${BMARK}_amdtarget.o
-	clang --offload-link ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
+	clang --offload-link $(FLAGS) ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
 
 amdtarget_noelle.exe: #${BMARK}_cpu.cbe.c
 	clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_gpu_noelle.c -O3 -c -o ${BMARK}_amdtarget.o
-	clang --offload-link ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
+	clang --offload-link $(FLAGS) ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
 
 openacc.gpu.noelle.exe:
 	nvc -acc=gpu -gpu=cc70 -Minfo=accel -O3 ${BMARK}_gpu_noelle.c -o $@
@@ -30,16 +30,16 @@ openacc.cpu.noelle.exe:
 	nvc -acc=multicore -Minfo=accel -O3 ${BMARK}_gpu_noelle.c -o $@
 
 nvhpc.gpu.noelle.exe:
-	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu_noelle.c -o $@
+	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu_noelle.nvc.c -o $@
 
 nvhpc.gpu.exe:
-	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu.c -o $@
+	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu.nvc.c -o $@
 
 nvhpc.cpu.noelle.exe:
-	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu_noelle.c -o $@
+	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu_noelle.nvc.c -o $@
 
 nvhpc.cpu.exe:
-	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu.c -o $@
+	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu.nvc.c -o $@
 
 %.ll: ${BMARK}.cu
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<

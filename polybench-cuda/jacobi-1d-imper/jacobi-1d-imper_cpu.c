@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -166,8 +167,8 @@ void _ZL10init_arrayiPdS_(uint32_t n, double* A, double* B) {
 
 
 for(int64_t i = 0; i < n;   i = i + 1){
-  A[i] = ((double)(i) + 2) / (double)(n);
-  B[i] = ((double)(i) + 3) / (double)(n);
+  A[i] = (((double)(i) + 2) / (double)(n));
+  B[i] = (((double)(i) + 3) / (double)(n));
 }
   return;
 }
@@ -250,7 +251,7 @@ void _Z14kernel_stenciliPdS__OC_1(uint32_t n, double* A, double* B, uint32_t gri
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x + 1;
   if (i < (n - 1)) {
-  B[i] = ((A[(i - 1)] + A[i]) + A[(i + 1)]) / 3;
+  B[i] = (((A[(i - 1)] + A[i]) + A[(i + 1)]) / 3);
   }
   return;
 }

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -147,11 +148,9 @@ int main(int argc, char ** argv) {
   uint8_t* x;
   uint8_t* y;
   int32_t call38;
-  int32_t call52;
-  uint8_t* _1;
-  uint8_t* _2;
   uint32_t i;
   uint32_t j;
+  uint32_t k;
   int32_t call57;
 
   n = atoi(argv[2]);
@@ -164,7 +163,9 @@ int main(int argc, char ** argv) {
 _ZL10init_arrayiPdS_S_(n, ((double*)A), ((double*)B), ((double*)x));
 #pragma omp target data map(to: A[0:n * n * 8], B[0:n * n * 8], tmp[0:n * 8], x[0:n * 8]) map(tofrom: y[0:n * 8])
 {
-  call52 = _ZL10num_blocksii(n, 256);
+
+for(int32_t i = 0; i < 100;   i = i + 1){
+  uint32_t call52 = _ZL10num_blocksii(n, 256);
   agg_2e_tmp.field0 = call52;
   agg_2e_tmp.field1 = 1;
   agg_2e_tmp.field2 = 1;
@@ -175,11 +176,12 @@ _ZL10init_arrayiPdS_S_(n, ((double*)A), ((double*)B), ((double*)x));
   memcpy(((uint8_t*)(&agg_2e_tmp53_2e_coerce)), ((uint8_t*)(&agg_2e_tmp53)), 12);
 #pragma omp target teams distribute
 
-for(int32_t i = 0; i < call52;   i = i + 1){
+for(int32_t j = 0; j < call52;   j = j + 1){
 #pragma omp parallel for
 
-for(int32_t j = 0; j < 256;   j = j + 1){
-_Z8kernel_yiddPdS_S_S_S__OC_1(n, 43532, 12313, ((double*)A), ((double*)B), ((double*)tmp), ((double*)x), ((double*)y), call52, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
+for(int32_t k = 0; k < 256;   k = k + 1){
+_Z8kernel_yiddPdS_S_S_S__OC_1(n, 43532, 12313, ((double*)A), ((double*)B), ((double*)tmp), ((double*)x), ((double*)y), call52, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+}
 }
 }
 
@@ -202,11 +204,11 @@ void _ZL10init_arrayiPdS_S_(uint32_t n, double* A, double* B, double* x) {
 
 #pragma omp parallel for 
 for(int64_t i = 0; i < n;   i = i + 1){
-  x[i] = (double)(i) / (double)(n);
+  x[i] = ((double)(i) / (double)(n));
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  A[(i * n + j)] = (double)(i) * (double)(j) / (double)(n);
-  B[(i * n + j)] = (double)(i) * (double)(j) / (double)(n);
+  A[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
+  B[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
 }
 }
   return;
@@ -242,10 +244,10 @@ void _Z8kernel_yiddPdS_S_S_S__OC_1(uint32_t n, double alpha, double beta, double
   y[i] = 0;
 
 for(int64_t j = 0; j < n;   j = j + 1){
-  tmp[i] = (tmp[i] + A[(i * n + j)] * x[j]);
-  y[i] = (y[i] + B[(i * n + j)] * x[j]);
+  tmp[i] = (tmp[i] + (A[(i * n + j)] * x[j]));
+  y[i] = (y[i] + (B[(i * n + j)] * x[j]));
 }
-  y[i] = (alpha * tmp[i] + beta * y[i]);
+  y[i] = ((alpha * tmp[i]) + (beta * y[i]));
   }
   return;
 }
