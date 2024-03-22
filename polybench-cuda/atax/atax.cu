@@ -11,7 +11,7 @@
 #include <string.h>
 #include <math.h>
 
-#define RUN 50
+#define RUN 100
 
 
 __global__ void kernel3(int m, int n, double *A, double *x, double *y, double *tmp) {
@@ -90,7 +90,6 @@ int main(int argc, char** argv)
   int ny = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
-  for(int i = 0; i < RUN; i++) {
   /* Variable declaration/allocation. */
   double *A = (double*)malloc(nx*ny*sizeof(double));
   double *x = (double*)malloc(ny*sizeof(double));
@@ -116,9 +115,11 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_tmp, tmp, nx*sizeof(double), cudaMemcpyHostToDevice);
 
 
+  for(int i = 0; i < RUN; i++) {
   const int threadsPerBlock = 256;
   kernel3<<<num_blocks(nx, threadsPerBlock), threadsPerBlock>>>(nx, ny, dev_A, dev_x, dev_y, dev_tmp);
   kernel4<<<num_blocks(ny, threadsPerBlock), threadsPerBlock>>>(nx, ny, dev_A, dev_x, dev_y, dev_tmp);
+  }
 
   cudaMemcpy(y, dev_y, ny*sizeof(double), cudaMemcpyDeviceToHost);
   /* Prevent dead-code elimination. All live-out data must be printed
@@ -129,7 +130,6 @@ int main(int argc, char** argv)
   free((void*)x);
   free((void*)y);
   free((void*)tmp);
-  }
 
   return 0;
 }
