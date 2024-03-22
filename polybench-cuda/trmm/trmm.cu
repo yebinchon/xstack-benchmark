@@ -29,16 +29,52 @@ void init_array(int n,int m,
     }
 }
 
+
+static unsigned num_blocks(int num, int factor) {
+  return (num + factor - 1) / factor;
+}
+
+
+__global__ void kernel_contract(int n, int m,
+                                double alpha,
+                                double *B, double *A) {
+  int j = blockDim.x * blockIdx.x + threadIdx.x;
+
+
+
+  if (j < n) {
+    for (int i = 0; i < m; i++)
+      for (int k = i + 1; k < m; k++)
+        B[i * n + j] += A[k * m + i] * B[k * n + j];
+  }
+}
+
+__global__ void kernel_alpha(int n, int m,
+                             double alpha,
+                             double *B, double *A) {
+  int i = blockDim.x * blockIdx.x + threadIdx.x;
+  int j = blockDim.y * blockIdx.y + threadIdx.y;
+
+
+  if (i < m && j < n)
+    B[i * n + j] *= alpha;
+}
+
+
 static void kernel(int n, int m,
                    double alpha,
-                   double *B,
-                   double *A) {
-  for (int i = 0; i < m; i++)
-    for (int j = 0; j < n; j++) {
-      for (int k = i + 1; k < m; k++)
-        B[i*n+j] += A[k*m+i] * B[k*n+j];
-      B[i*n+j] *= alpha;
-    }
+                   double *B, double *A) {
+  const unsigned int threadsPerBlock = 256;
+
+
+  kernel_contract<<<num_blocks(n, threadsPerBlock), threadsPerBlock>>>(n, m, alpha, B, A);
+
+
+  {
+    dim3 block(threadsPerBlock / 32, 32, 1);
+    dim3 grid(num_blocks(m, block.x), num_blocks(n, block.y), 1);
+    kernel_alpha<<<grid, block>>>(n, m, alpha, B, A);
+  }
 }
 
 /* DCE code. Must scan the entire live-out data.
@@ -58,27 +94,6 @@ void print_array(int m, int n,
 }
 
 
-/* Main computational kernel. The whole function will be timed,
-   including the call and return. */
-static
-void kernel_trmm(int ni,
-		 double alpha,
-		 double A[ni][ni],
-		 double B[ni][ni])
-{
-  int i, j, k;
-
-{
-  /*  B := alpha*A'*B, A triangular */
-  for (i = 1; i < ni; i++)
-    for (j = 0; j < ni; j++)
-      for (k = 0; k < i; k++)
-        B[i][j] += alpha * A[i][k] * B[j][k];
-}
-
-}
-
-
 int main(int argc, char** argv)
 {
   /* Retrieve problem size. */
@@ -94,8 +109,15 @@ int main(int argc, char** argv)
   /* Initialize array(s). */
   init_array (n,m, &alpha, A, B);
 
+  double *dev_A;
+  double *dev_B;
+  cudaMalloc(&dev_A, n*m*sizeof(double));
+  cudaMalloc(&dev_B, m*n*sizeof(double));
+  cudaMemcpy(dev_A, A, n*m*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_B, B, m*n*sizeof(double), cudaMemcpyHostToDevice);
   /* Run kernel. */
   kernel(n,m, alpha, A, B);
+  cudaMemcpy(B, dev_B, m*n*sizeof(double), cudaMemcpyDeviceToHost);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
