@@ -201,33 +201,38 @@ _Z9kernel_x2iPdS_S_S_S__OC_2(n, x1, x2, y_1, y_2, A, 256, 1, 1, call9, 1, 1, i, 
 
 int main(int argc, char ** argv) {
   int32_t dump_code;
+  uint8_t* A;
+  uint8_t* x1;
+  uint8_t* x2;
+  uint8_t* y_1;
+  uint8_t* y_2;
+  int32_t call31;
   uint32_t i;
+  int32_t call46;
 
   dump_code = atoi(argv[1]);
-
-for(int32_t i = 0; i < 100;   i = i + 1){
-  uint8_t* A = malloc(1800000000);
-  uint8_t* x1 = malloc(8 * 15000);
-  uint8_t* x2 = malloc(8 * 15000);
-  uint8_t* y_1 = malloc(8 * 15000);
-  uint8_t* y_2 = malloc(8 * 15000);
-  _ZL10init_arrayiPdS_S_S_S_(15000, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));
-;
+  A = malloc(1800000000);
+  x1 = malloc(8 * 15000);
+  x2 = malloc(8 * 15000);
+  y_1 = malloc(8 * 15000);
+  y_2 = malloc(8 * 15000);
+_ZL10init_arrayiPdS_S_S_S_(15000, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));
 #pragma omp target data map(to: A[0:1800000000], y_1[0:8 * 15000], y_2[0:8 * 15000]) map(tofrom: x1[0:8 * 15000], x2[0:8 * 15000])
 {
-  _Z6kerneliPdS_S_S_S_(15000, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));
-;
+
+for(int32_t i = 0; i < 200;   i = i + 1){
+_Z6kerneliPdS_S_S_S_(15000, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));
+}
 
 }
   if (dump_code == 1) {
 _ZL11print_arrayiPdS_(15000, ((double*)x1), ((double*)x2));
+  }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)x1)));
 free(((uint8_t*)((double*)x2)));
 free(((uint8_t*)((double*)y_1)));
 free(((uint8_t*)((double*)y_2)));
-  }
-}
   return 0;
 }
 
