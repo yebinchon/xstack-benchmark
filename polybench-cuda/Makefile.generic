@@ -68,7 +68,7 @@ ${BMARK}_loopid.bc: ${BMARK}_cpu.bc
 
 
 ${BMARK}_reduced.bc: ${BMARK}_loopid.bc
-	noelle-load -load ${NOELLE}/lib/ParallelizationTechnique.so -load ${NOELLE}/lib/DOALL.so -load ${NOELLE}/lib/DSWP.so -load ${NOELLE}/lib/Heuristics.so -load ${NOELLE}/lib/Parallelizer.so -load ${CUDAFE}/build/NoelleDOALL/libNoelleDOALL.so -noelle-verbose=3 -noelle-doall -dce -bdce --globaldce --unreachableblockelim -simplifycfg $< -o $@
+	noelle-load -load ${NOELLE}/lib/ParallelizationTechnique.so -load ${NOELLE}/lib/DOALL.so -load ${NOELLE}/lib/DSWP.so -load ${NOELLE}/lib/Heuristics.so -load ${NOELLE}/lib/Parallelizer.so -load ${CUDAFE}/build/NoelleDOALL/libNoelleDOALL.so -noelle-verbose=3 -noelle-doall ${ADDITIONAL_PASSES}  $< -o $@
 
 ${BMARK}_cpu_noelle.c: ${BMARK}_reduced.bc
 	$(SPLENDID_CPU) $< 2> debug
