@@ -140,35 +140,40 @@ int main(int argc, char ** argv) {
   int32_t m;
   int32_t n;
   int32_t dump_code;
+  uint8_t* A;
+  uint8_t* s;
+  uint8_t* q;
+  uint8_t* p;
+  uint8_t* r;
+  int32_t call38;
   uint32_t i;
+  int32_t call53;
 
   m = atoi(argv[2]);
   n = atoi(argv[3]);
   dump_code = atoi(argv[1]);
-
-for(int32_t i = 0; i < 50;   ++i){
-  uint8_t* A = malloc(m * n * 8);
-  uint8_t* s = malloc(n * 8);
-  uint8_t* q = malloc(m * 8);
-  uint8_t* p = malloc(n * 8);
-  uint8_t* r = malloc(m * 8);
-  _ZL10init_arrayiiPdS_S_(m, n, ((double*)A), ((double*)r), ((double*)p));
-;
+  A = malloc(m * n * 8);
+  s = malloc(n * 8);
+  q = malloc(m * 8);
+  p = malloc(n * 8);
+  r = malloc(m * 8);
+_ZL10init_arrayiiPdS_S_(m, n, ((double*)A), ((double*)r), ((double*)p));
 #pragma omp target data map(to: A[0:m * n * 8], p[0:n * 8], r[0:m * 8]) map(tofrom: s[0:n * 8], q[0:m * 8])
 {
-  _ZL6kerneliiPdS_S_S_S_(m, n, ((double*)A), ((double*)s), ((double*)q), ((double*)p), ((double*)r));
-;
+
+for(int32_t i = 0; i < 100;   ++i){
+_ZL6kerneliiPdS_S_S_S_(m, n, ((double*)A), ((double*)s), ((double*)q), ((double*)p), ((double*)r));
+}
 
 }
   if (dump_code == 1) {
 _ZL11print_arrayiiPdS_(m, n, ((double*)s), ((double*)q));
+  }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)s)));
 free(((uint8_t*)((double*)q)));
 free(((uint8_t*)((double*)p)));
 free(((uint8_t*)((double*)r)));
-  }
-}
   return 0;
 }
 
