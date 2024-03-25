@@ -7,7 +7,7 @@ SPLENDID_CPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-release/bin/splendid
 SPLENDID_GPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-debug/bin/splendid
 #SPLENDID_CPU=splendid
 #SPLENDID_GPU=splendid
-SPLENDID_ACC=splendid
+#SPLENDID_ACC=splendid
 
 
 nvtarget.exe: #${BMARK}_cpu.cbe.c
@@ -91,6 +91,9 @@ ${BMARK}.o: ${BMARK}.cu
 polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 $< -o $@
 
+icc.exe: ${BMARK}_cpu.c
+	icx -openmp -O3 $(FLAGS) $< -o $@
+
 tulip.clang.noelle.exe: ${BMARK}_cpu_noelle.c
 	clang -fopenmp -O3 $(FLAGS) $< -o $@
 
@@ -128,6 +131,9 @@ run_amd: amdtarget.exe amdtarget_noelle.exe
 
 run_polygeist: polygeist.exe
 	regressions-watchdog $(RUN_TIMEOUT) polygeist.time ./polygeist.exe $(PERF_ARGS)
+
+run_openacc: openacc.gpu.exe
+	regressions-watchdog $(RUN_TIMEOUT) openacc.time ./openacc.gpu.exe $(PERF_ARGS)
 
 run_tulip: tulip.clang.exe tulip.gcc.exe tulip.clang.noelle.exe tulip.gcc.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
