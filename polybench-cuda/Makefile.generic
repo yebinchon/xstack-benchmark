@@ -7,7 +7,7 @@ SPLENDID_CPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-release/bin/splendid
 SPLENDID_GPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-debug/bin/splendid
 #SPLENDID_CPU=splendid
 #SPLENDID_GPU=splendid
-#SPLENDID_ACC=splendid
+SPLENDID_ACC=splendid
 
 
 nvtarget.exe: #${BMARK}_cpu.cbe.c
@@ -56,15 +56,15 @@ ${BMARK}_cpu.bc: ${BMARK}_linked.bc
 
 ${BMARK}_openacc.c: ${BMARK}_cpu.bc
 	$(SPLENDID_ACC) $< 2> debug
-	mv ${BMARK}_cpu.cbe.c $@
+	cp ${BMARK}_cpu.cbe.c $@
 
 ${BMARK}_cpu.c: ${BMARK}_cpu.bc
 	$(SPLENDID_CPU) $< 2> debug
-	mv ${BMARK}_cpu.cbe.c $@
+	cp ${BMARK}_cpu.cbe.c $@
 
 ${BMARK}_gpu.c: ${BMARK}_cpu.bc
 	$(SPLENDID_GPU) $< 2> debug
-	mv ${BMARK}_cpu.cbe.c $@
+	cp ${BMARK}_cpu.cbe.c $@
 
 #${BMARK}_pdg_embed.bc:${BMARK}_cpu.bc
 #	noelle-load -PDGAnalysis -noelle-pdg-verbose=3 -noelle-pdg-embed ${BMARK}_svf.bc -o $@
