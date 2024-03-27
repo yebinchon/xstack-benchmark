@@ -217,7 +217,7 @@ int main(int argc, char ** argv) {
   y_1 = malloc(8 * 15000);
   y_2 = malloc(8 * 15000);
 _ZL10init_arrayiPdS_S_S_S_(15000, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));
-#pragma omp target data map(to: A[0:1800000000], y_1[0:8 * 15000], y_2[0:8 * 15000]) map(tofrom: x1[0:8 * 15000], x2[0:8 * 15000])
+#pragma acc data copy(A[0:1800000000], y_1[0:8 * 15000], y_2[0:8 * 15000], x1[0:8 * 15000], x2[0:8 * 15000])
 {
 
 for(int32_t i = 0; i < 200;   i = i + 1){

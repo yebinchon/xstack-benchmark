@@ -158,7 +158,7 @@ int main(int argc, char ** argv) {
   p = malloc(n * 8);
   r = malloc(m * 8);
 _ZL10init_arrayiiPdS_S_(m, n, ((double*)A), ((double*)r), ((double*)p));
-#pragma omp target data map(to: A[0:m * n * 8], p[0:n * 8], r[0:m * 8]) map(tofrom: s[0:n * 8], q[0:m * 8])
+#pragma acc data copy(A[0:m * n * 8], p[0:n * 8], r[0:m * 8], s[0:n * 8], q[0:m * 8])
 {
 
 for(int32_t i = 0; i < 100;   i = i + 1){
