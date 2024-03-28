@@ -148,9 +148,11 @@ int main(int argc, char ** argv) {
   uint8_t* x;
   uint8_t* y;
   int32_t call38;
+  int32_t call52;
+  uint8_t* _1;
+  uint8_t* _2;
   uint32_t i;
   uint32_t j;
-  uint32_t k;
   int32_t call57;
 
   n = atoi(argv[2]);
@@ -163,9 +165,7 @@ int main(int argc, char ** argv) {
 _ZL10init_arrayiPdS_S_(n, ((double*)A), ((double*)B), ((double*)x));
 #pragma omp target data map(to: A[0:n * n * 8], B[0:n * n * 8], tmp[0:n * 8], x[0:n * 8]) map(tofrom: y[0:n * 8])
 {
-
-for(int32_t i = 0; i < 100;   ++i){
-  uint32_t call52 = _ZL10num_blocksii(n, 256);
+  call52 = _ZL10num_blocksii(n, 256);
   agg_2e_tmp.field0 = call52;
   agg_2e_tmp.field1 = 1;
   agg_2e_tmp.field2 = 1;
@@ -176,12 +176,11 @@ for(int32_t i = 0; i < 100;   ++i){
   memcpy(((uint8_t*)(&agg_2e_tmp53_2e_coerce)), ((uint8_t*)(&agg_2e_tmp53)), 12);
 #pragma omp target teams distribute
 
-for(int32_t j = 0; j < call52;   ++j){
+for(int32_t i = 0; i < call52;   ++i){
 #pragma omp parallel for
 
-for(int32_t k = 0; k < 256;   ++k){
-_Z8kernel_yiddPdS_S_S_S__OC_1(n, 43532, 12313, ((double*)A), ((double*)B), ((double*)tmp), ((double*)x), ((double*)y), call52, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
-}
+for(int32_t j = 0; j < 256;   ++j){
+_Z8kernel_yiddPdS_S_S_S__OC_1(n, 43532, 12313, ((double*)A), ((double*)B), ((double*)tmp), ((double*)x), ((double*)y), call52, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
 }
 }
 

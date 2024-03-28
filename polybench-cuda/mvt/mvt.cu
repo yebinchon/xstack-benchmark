@@ -147,10 +147,8 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_y_1, y_1, n * sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_y_2, y_2, n * sizeof(double), cudaMemcpyHostToDevice);
 
-  for(int i = 0; i < RUN; i++) {
   /* Run kernel. */
   kernel(n, dev_x1, dev_x2, dev_y_1, dev_y_2, dev_A);
-  }
 
   cudaMemcpy(x1, dev_x1, n * sizeof(double), cudaMemcpyDeviceToHost);
   cudaMemcpy(x2, dev_x2, n * sizeof(double), cudaMemcpyDeviceToHost);

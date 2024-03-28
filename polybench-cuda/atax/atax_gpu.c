@@ -152,9 +152,14 @@ int main(int argc, char ** argv) {
   uint8_t* y;
   uint8_t* tmp;
   int32_t call32;
+  int32_t call42;
+  uint8_t* _1;
+  uint8_t* _2;
   uint32_t i;
   uint32_t j;
-  uint32_t k;
+  int32_t call46;
+  uint8_t* _3;
+  uint8_t* _4;
   int32_t call54;
 
   nx = atoi(argv[2]);
@@ -167,9 +172,7 @@ int main(int argc, char ** argv) {
 _ZL10init_arrayiiPdS_S_S_(nx, ny, ((double*)A), ((double*)x), ((double*)tmp), ((double*)y));
 #pragma omp target data map(to: A[0:nx * ny * 8], x[0:ny * 8], tmp[0:nx * 8]) map(tofrom: y[0:ny * 8])
 {
-
-for(int32_t i = 0; i < 100;   i = i + 1){
-  uint32_t call42 = _ZL10num_blocksii(nx, 256);
+  call42 = _ZL10num_blocksii(nx, 256);
   agg_2e_tmp.field0 = call42;
   agg_2e_tmp.field1 = 1;
   agg_2e_tmp.field2 = 1;
@@ -180,14 +183,14 @@ for(int32_t i = 0; i < 100;   i = i + 1){
   memcpy(((uint8_t*)(&agg_2e_tmp43_2e_coerce)), ((uint8_t*)(&agg_2e_tmp43)), 12);
 #pragma omp target teams distribute
 
-for(int32_t j = 0; j < call42;   j = j + 1){
+for(int32_t i = 0; i < call42;   i = i + 1){
 #pragma omp parallel for
 
-for(int32_t k = 0; k < 256;   k = k + 1){
-_Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call42, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+for(int32_t j = 0; j < 256;   j = j + 1){
+_Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call42, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
 }
 }
-  uint32_t call46 = _ZL10num_blocksii(ny, 256);
+  call46 = _ZL10num_blocksii(ny, 256);
   agg_2e_tmp45.field0 = call46;
   agg_2e_tmp45.field1 = 1;
   agg_2e_tmp45.field2 = 1;
@@ -198,12 +201,11 @@ _Z7kernel3iiPdS_S_S__OC_1(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((do
   memcpy(((uint8_t*)(&agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&agg_2e_tmp47)), 12);
 #pragma omp target teams distribute
 
-for(int32_t j = 0; j < call46;   j = j + 1){
+for(int32_t i = 0; i < call46;   i = i + 1){
 #pragma omp parallel for
 
-for(int32_t k = 0; k < 256;   k = k + 1){
-_Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call46, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
-}
+for(int32_t j = 0; j < 256;   j = j + 1){
+_Z7kernel4iiPdS_S_S__OC_2(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), call46, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
 }
 }
 

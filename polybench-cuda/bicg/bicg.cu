@@ -102,6 +102,7 @@ int main(int argc, char** argv)
   int n = atoi(argv[3]);
   int dump_code = atoi(argv[1]);
 
+//  for(int i = 0; i < RUN; i++) {
   /* Variable declaration/allocation. */
   double *A = (double*)malloc(m*n*sizeof(double));
   double *s = (double*)malloc(n*sizeof(double));
@@ -125,9 +126,7 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_q, q, m*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_p, p, n*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_r, r, m*sizeof(double), cudaMemcpyHostToDevice);
-  for(int i = 0; i < RUN; i++) {
   kernel(m,n, dev_A, dev_s, dev_q, dev_p, dev_r);
-  }
   cudaMemcpy(s, dev_s, n*sizeof(double), cudaMemcpyDeviceToHost);
   cudaMemcpy(q, dev_q, m*sizeof(double), cudaMemcpyDeviceToHost);
   /* Prevent dead-code elimination. All live-out data must be printed
@@ -139,6 +138,7 @@ int main(int argc, char** argv)
   free((void*)q);
   free((void*)p);
   free((void*)r);
+//  }
 
   return 0;
 }

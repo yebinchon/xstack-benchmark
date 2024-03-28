@@ -88,10 +88,8 @@ int main(int argc, char** argv)
   /* Initialize array(s). */
   init_array (nx, ny, *A, *x);
   /* Run kernel. */
-  for(int i = 0; i < RUN; i++) {
   kernel_atax (nx, ny,
         *A, *x, *y, *tmp);
-  }
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
   if(dump_code == 1) print_array(nx, *y);

@@ -115,11 +115,9 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_tmp, tmp, nx*sizeof(double), cudaMemcpyHostToDevice);
 
 
-  for(int i = 0; i < RUN; i++) {
   const int threadsPerBlock = 256;
   kernel3<<<num_blocks(nx, threadsPerBlock), threadsPerBlock>>>(nx, ny, dev_A, dev_x, dev_y, dev_tmp);
   kernel4<<<num_blocks(ny, threadsPerBlock), threadsPerBlock>>>(nx, ny, dev_A, dev_x, dev_y, dev_tmp);
-  }
 
   cudaMemcpy(y, dev_y, ny*sizeof(double), cudaMemcpyDeviceToHost);
   /* Prevent dead-code elimination. All live-out data must be printed

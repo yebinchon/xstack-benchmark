@@ -146,7 +146,6 @@ int main(int argc, char ** argv) {
   uint8_t* p;
   uint8_t* r;
   int32_t call38;
-  uint32_t i;
   int32_t call53;
 
   m = atoi(argv[2]);
@@ -157,11 +156,10 @@ int main(int argc, char ** argv) {
   q = malloc(m * 8);
   p = malloc(n * 8);
   r = malloc(m * 8);
-_ZL10init_arrayiiPdS_S_(m, n, ((double*)A), ((double*)r), ((double*)p));
-
-for(int32_t i = 0; i < 100;   i = i + 1){
-_ZL6kerneliiPdS_S_S_S_(m, n, ((double*)A), ((double*)s), ((double*)q), ((double*)p), ((double*)r));
-}
+  _ZL10init_arrayiiPdS_S_(m, n, ((double*)A), ((double*)r), ((double*)p));
+;
+  _ZL6kerneliiPdS_S_S_S_(m, n, ((double*)A), ((double*)s), ((double*)q), ((double*)p), ((double*)r));
+;
   if (dump_code == 1) {
 _ZL11print_arrayiiPdS_(m, n, ((double*)s), ((double*)q));
   }

@@ -105,7 +105,6 @@ int main(int argc, char** argv)
 	      *y_2,
 	      *A);
 
-  for(int i = 0; i < RUN; i++) {
   /* Run kernel. */
   kernel_mvt (n,
 	      *x1,
@@ -113,7 +112,6 @@ int main(int argc, char** argv)
 	      *y_1,
 	      *y_2,
 	      *A);
-  }
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
