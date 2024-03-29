@@ -89,10 +89,10 @@ ${BMARK}.o: ${BMARK}.cu
 	${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
 
 openmp.exe: ${BMARK}_omp.c
-	clang -fopenmp -O3 $< -o $@
+	clang -fopenmp -O3 ${FLAGS} $< -o $@
 
 polygeist.exe: ${BMARK}.o
-	clang -fopenmp -O3 $< -o $@
+	clang -fopenmp -O3 ${FLAGS} $< -o $@
 
 icc.exe: ${BMARK}_cpu.c
 	icx -openmp -O3 $(FLAGS) $< -o $@
