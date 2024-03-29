@@ -56,18 +56,23 @@ void kernel_atax(int nx, int ny,
 		 double y[nx],
 		 double tmp[ny])
 {
+  #pragma omp parallel
+  {
+#pragma omp for schedule(static) nowait
     for (int i = 0; i < nx; ++i)
       y[i] = 0;
+#pragma omp for schedule(static)
     for (int i = 0; i < ny; ++i) {
       tmp[i] = 0;
       for (int j = 0; j < ny; ++j)
         tmp[i] += A[i][j] * x[j];
     }
 
+#pragma omp for schedule(static)
     for (int j = 0; j < nx; ++j)
       for (int i = 0; i < ny; ++i)
         y[j] += A[i][j] * tmp[i];
-
+  }
 }
 
 
