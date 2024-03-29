@@ -101,7 +101,7 @@ int main(int argc, char** argv)
 
 
 
-  kernel (tsteps, n, A);
+  kernel (tsteps, n, dev_A);
 
 
   cudaMemcpy(A, dev_A, n*n*sizeof(double), cudaMemcpyDeviceToHost);

@@ -46,6 +46,17 @@ nvhpc.cpu.noelle.exe:
 nvhpc.cpu.exe:
 	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu.nvc.c -o $@
 
+manual.clang.amd.exe: ${BMARK}_amd_manual.c
+	clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_amd_manual.c -O3 -c -o ${BMARK}_amdtarget_m.o
+	clang --offload-link $(FLAGS) ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget_m.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
+
+manual.clang.gpu.exe: ${BMARK}_gpu_noelle_manual.c
+	clang -g -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_gpu_noelle_manual.c -O3 -c -o ${BMARK}_nvtarget_manual.o
+	clang -g --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget_manual.o -O3 -lm -o $@ -foffload-lto -lomptarget.devicertl
+
+manual.nvc.gpu.exe: ${BMARK}_gpu_noelle_manual.c
+	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu_noelle_manual.c -o $@
+
 manual.clang.cpu.exe: ${BMARK}_cpu_noelle_manual.c
 	clang -fopenmp -O3 $(FLAGS) $< -o $@
 
@@ -165,9 +176,16 @@ run_nvhpc: nvhpc.cpu.exe nvhpc.cpu.noelle.exe nvhpc.gpu.exe nvhpc.gpu.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.gpu.time ./nvhpc.gpu.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.gpu.reduced.time ./nvhpc.gpu.noelle.exe $(PERF_ARGS)
 
-run_manual: manual.clang.cpu.exe manual.gcc.cpu.exe 
+run_manual:  manual.clang.cpu.exe manual.gcc.cpu.exe 
 	regressions-watchdog $(RUN_TIMEOUT) manual.clang.cpu.time ./manual.clang.cpu.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) manual.gcc.cpu.time ./manual.gcc.cpu.exe $(PERF_ARGS) 
+
+run_nvmanual: manual.clang.gpu.exe manual.nvc.gpu.exe
+	regressions-watchdog $(RUN_TIMEOUT) manual.clang.gpu.time ./manual.clang.gpu.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) manual.nvc.gpu.time ./manual.nvc.gpu.exe $(PERF_ARGS) 
+
+run_amdmanual: manual.clang.amd.exe 
+	regressions-watchdog $(RUN_TIMEOUT) manual.clang.amd.time ./manual.clang.amd.exe $(PERF_ARGS) 
 
 clean:
 	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o loopIDtoSrc.txt debug_cudafe *.log
