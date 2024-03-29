@@ -209,7 +209,7 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_corr, corr, m*m*sizeof(double), cudaMemcpyHostToDevice);
 
 
-  kernel(m, n, data, corr, mean, stddev);
+  kernel(m, n, dev_data, dev_corr, dev_mean, dev_stddev);
   cudaMemcpy(corr, dev_corr, m*m*sizeof(double), cudaMemcpyDeviceToHost);
 
 
