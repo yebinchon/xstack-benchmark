@@ -5,6 +5,8 @@ POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
 NOELLE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/noelle-susan/install
 SPLENDID_CPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-release/bin/splendid
 SPLENDID_GPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-debug/bin/splendid
+SPLENDID_ACC=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-openacc/bin/splendid
+#ADDITIONAL_PASSES+=-O1
 #SPLENDID_CPU=splendid
 #SPLENDID_GPU=splendid
 #SPLENDID_ACC=splendid
@@ -43,6 +45,12 @@ nvhpc.cpu.noelle.exe:
 
 nvhpc.cpu.exe:
 	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu.nvc.c -o $@
+
+manual.clang.cpu.exe: ${BMARK}_cpu_noelle_manual.c
+	clang -fopenmp -O3 $(FLAGS) $< -o $@
+
+manual.gcc.cpu.exe: ${BMARK}_cpu_noelle_manual.c
+	gcc -fopenmp -O3 $(FLAGS) $< -o $@
 
 %.ll: ${BMARK}.cu
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
@@ -91,8 +99,11 @@ ${BMARK}.o: ${BMARK}.cu
 polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 $< -o $@
 
-icc.exe: ${BMARK}_cpu.c
-	icx -openmp -O3 $(FLAGS) $< -o $@
+icx.exe: ${BMARK}_cpu.c
+	icx -fopenmp -O3 $(FLAGS) $< -o $@
+
+icx.noelle.exe: ${BMARK}_cpu_noelle.c
+	icx -fopenmp -O3 $(FLAGS) $< -o $@
 
 tulip.clang.noelle.exe: ${BMARK}_cpu_noelle.c
 	clang -fopenmp -O3 $(FLAGS) $< -o $@
@@ -135,7 +146,11 @@ run_polygeist: polygeist.exe
 run_openacc: openacc.gpu.exe
 	regressions-watchdog $(RUN_TIMEOUT) openacc.time ./openacc.gpu.exe $(PERF_ARGS)
 
-run_tulip: tulip.clang.exe tulip.gcc.exe tulip.clang.noelle.exe tulip.gcc.noelle.exe
+run_icx: icx.exe icx.noelle.exe
+	regressions-watchdog $(RUN_TIMEOUT) tulip.icx.time ./icx.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) tulip.icx.noelle.time ./icx.noelle.exe $(PERF_ARGS)
+
+run_tulip: tulip.clang.noelle.exe tulip.gcc.noelle.exe tulip.clang.exe tulip.gcc.exe 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.noelle.time ./tulip.clang.noelle.exe $(PERF_ARGS) 
@@ -147,5 +162,9 @@ run_nvhpc: nvhpc.cpu.exe nvhpc.cpu.noelle.exe nvhpc.gpu.exe nvhpc.gpu.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.gpu.time ./nvhpc.gpu.exe $(PERF_ARGS)
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.gpu.reduced.time ./nvhpc.gpu.noelle.exe $(PERF_ARGS)
 
+run_manual: manual.clang.cpu.exe manual.gcc.cpu.exe 
+	regressions-watchdog $(RUN_TIMEOUT) manual.clang.cpu.time ./manual.clang.cpu.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) manual.gcc.cpu.time ./manual.gcc.cpu.exe $(PERF_ARGS) 
+
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o *.time loopIDtoSrc.txt debug_cudafe
+	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o loopIDtoSrc.txt debug_cudafe *.log
