@@ -152,9 +152,9 @@ int main(int argc, char** argv)
 
 
   kernel (m, n,
-       data,
-       cov,
-       mean);
+       dev_data,
+       dev_cov,
+       dev_mean);
   cudaMemcpy(cov, dev_cov, m*m*sizeof(double), cudaMemcpyDeviceToHost);
 
 

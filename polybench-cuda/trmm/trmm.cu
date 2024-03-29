@@ -116,7 +116,7 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_A, A, n*m*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_B, B, m*n*sizeof(double), cudaMemcpyHostToDevice);
   /* Run kernel. */
-  kernel(n,m, alpha, A, B);
+  kernel(n,m, alpha, dev_A, dev_B);
   cudaMemcpy(B, dev_B, m*n*sizeof(double), cudaMemcpyDeviceToHost);
 
   /* Prevent dead-code elimination. All live-out data must be printed
