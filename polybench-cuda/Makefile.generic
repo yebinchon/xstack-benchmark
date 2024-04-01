@@ -8,6 +8,7 @@ SPLENDID_GPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-debug/bin/splendid
 SPLENDID_ACC=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-openacc/bin/splendid
 #ADDITIONAL_PASSES+=-O1
 #SPLENDID_CPU=splendid
+#SPLENDID_LOC=splendid
 #SPLENDID_GPU=splendid
 #SPLENDID_ACC=splendid
 
@@ -85,6 +86,10 @@ ${BMARK}_gpu.c: ${BMARK}_cpu.bc
 	$(SPLENDID_GPU) $< 2> debug
 	cp ${BMARK}_cpu.cbe.c $@
 
+${BMARK}_loc.c: ${BMARK}_cpu.bc
+	opt ${LOC_PASSES} $< -o temp_loc.bc 
+	$(SPLENDID_LOC) temp_loc.bc 2> debug
+	cp temp_loc.cbe.c $@
 #${BMARK}_pdg_embed.bc:${BMARK}_cpu.bc
 #	noelle-load -PDGAnalysis -noelle-pdg-verbose=3 -noelle-pdg-embed ${BMARK}_svf.bc -o $@
 
