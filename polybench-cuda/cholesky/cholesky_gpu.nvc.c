@@ -84,16 +84,12 @@ struct l_unnamed_1 {
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void _ZL10init_arrayiPd(uint32_t, double*) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void _ZL12kernel_pollyiPd(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 void _ZL11print_arrayiPd(uint32_t, double*) __ATTRIBUTELIST__((noinline));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 double sqrt(double);
 void _Z7kernel0iiPd_OC_1(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void _Z7kernel1iiPd_OC_2(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
@@ -208,11 +204,8 @@ for(int32_t iter = 0; iter < n;   iter = iter + 1){
   agg_2e_tmp1.field0 = 1;
   agg_2e_tmp1.field1 = 1;
   agg_2e_tmp1.field2 = 1;
-  uint8_t* _1 = memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
-  uint8_t* _2 = memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
-  ;
-  if (0) {
-  } else {
+  memcpy(((uint8_t*)(&agg_2e_tmp_2e_coerce)), ((uint8_t*)(&agg_2e_tmp)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&agg_2e_tmp1)), 12);
 _Z7kernel0iiPd_OC_1(n, iter, dev_A, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0);
   uint32_t call3 = _ZL10num_blocksii(n, 256);
   agg_2e_tmp2.field0 = call3;
@@ -223,7 +216,44 @@ _Z7kernel0iiPd_OC_1(n, iter, dev_A, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0);
   agg_2e_tmp4.field2 = 1;
   memcpy(((uint8_t*)(&agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&agg_2e_tmp2)), 12);
   memcpy(((uint8_t*)(&agg_2e_tmp4_2e_coerce)), ((uint8_t*)(&agg_2e_tmp4)), 12);
-  }
+#pragma omp target teams distribute
+
+for(int32_t j = 0; j < call3;   ++j){
+#pragma omp parallel for
+
+for(int32_t k = 0; k < 256;   ++k){
+  _Z7kernel1iiPd_OC_2(n, iter, dev_A, call3, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+;
+}
+}
+  block.field0 = 8;
+  block.field1 = 32;
+  block.field2 = 1;
+  uint32_t call9 = _ZL10num_blocksii(n, block.field0);
+  uint32_t call10 = _ZL10num_blocksii(n, block.field1);
+  grid.field0 = call9;
+  grid.field1 = call10;
+  grid.field2 = 1;
+  memcpy(((uint8_t*)(&agg_2e_tmp11)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp12)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp11_2e_coerce)), ((uint8_t*)(&agg_2e_tmp11)), 12);
+  memcpy(((uint8_t*)(&agg_2e_tmp12_2e_coerce)), ((uint8_t*)(&agg_2e_tmp12)), 12);
+#pragma omp target teams distribute collapse(2)
+
+for(int32_t j = 0; j < 8;   ++j){
+
+for(int32_t k = 0; k < 32;   ++k){
+#pragma omp parallel for collapse(2)
+
+for(int32_t l = 0; l < call9;   ++l){
+
+for(int32_t m = 0; m < call10;   ++m){
+  _Z7kernel2iiPd_OC_3(n, iter, dev_A, 8, 32, 1, call9, call10, 1, j, k, 0, l, m, 0);
+;
+}
+}
+}
+}
 }
   return;
 }
@@ -253,10 +283,10 @@ uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
 
 
 void _Z7kernel0iiPd_OC_1(uint32_t n, uint32_t j, double* A, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
-  double _3;
+  double _1;
 
-  _3 = sqrt(A[(j * n + j)]);
-  A[(j * n + j)] = _3;
+  _1 = sqrt(A[(j * n + j)]);
+  A[(j * n + j)] = _1;
 }
 
 
@@ -264,10 +294,8 @@ void _Z7kernel1iiPd_OC_2(uint32_t n, uint32_t j, double* A, uint32_t gridDim_2e_
   int32_t i;
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
-  if (i < n) {
-  if (i > j) {
+  if (i < n & i > j) {
   A[(i * n + j)] = (A[(i * n + j)] / A[(j * n + j)]);
-  }
   }
   return;
 }
@@ -279,16 +307,8 @@ void _Z7kernel2iiPd_OC_3(uint32_t n, uint32_t j, double* A, uint32_t gridDim_2e_
 
   i = blockDim_2e_x * blockIdx_2e_x + threadIdx_2e_x;
   k = blockDim_2e_y * blockIdx_2e_y + threadIdx_2e_y;
-  if (j < n) {
-  if (j < i) {
-  if (i < n) {
-  if (j < k) {
-  if (k <= i) {
+  if (j < n & j < i & i < n & j < k & k <= i) {
   A[(i * n + k)] = (A[(i * n + k)] - (A[(i * n + j)] * A[(k * n + j)]));
-  }
-  }
-  }
-  }
   }
   return;
 }
