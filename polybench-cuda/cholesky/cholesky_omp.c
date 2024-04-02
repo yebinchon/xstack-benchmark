@@ -46,14 +46,15 @@ static void kernel_polly(int n, double *A) {
 
 #pragma omp parallel firstprivate(n)
 {
+#pragma omp for private(i, k)
   for (int j = 0; j < n; j++){
-    #pragma omp single
+    //#pragma omp single
     A[j*n+j] = sqrt(A[j*n+j]); // Stmt_if_then
-    #pragma omp for schedule(static)
+    //#pragma omp for schedule(static)
     for (int i = j + 1; i < n; i++)
       A[i*n+j] /= A[j*n+j]; // Stmt_if_else
 
-    #pragma omp for collapse(2)
+    //#pragma omp for collapse(2)
     for (int i = j + 1; i < n; i++)
       for (int k = j + 1; k <= i; k++) // c2
         A[i*n+k] -= A[i*n+j] * A[k*n+j];    // Stmt_for_body8
