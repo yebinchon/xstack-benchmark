@@ -44,9 +44,11 @@ void print_array(int n,
 
 static void kernel_polly(int n, double *A) {
 
+  //int i, j, k;
+
 #pragma omp parallel firstprivate(n)
 {
-#pragma omp for private(i, k)
+#pragma omp for //private(i, k)
   for (int j = 0; j < n; j++){
     //#pragma omp single
     A[j*n+j] = sqrt(A[j*n+j]); // Stmt_if_then
