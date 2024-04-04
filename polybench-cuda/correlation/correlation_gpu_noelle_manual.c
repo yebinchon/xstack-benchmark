@@ -163,7 +163,7 @@ int main(int argc, char ** argv) {
   corr = malloc(m * m * 8);
   _ZL10init_arrayiiPd(m, n, ((double*)data));
 ;
-#pragma omp target data map(to: data[0:n * m * 8], mean[0:m * 8], stddev[0:m * 8]) map(from: corr[0:m * m * 8])
+#pragma omp target data map(to: data[0:n * m * 8]) map(alloc:  mean[0:m * 8], stddev[0:m * 8]) map(from: corr[0:m * m * 8])
 {
   _ZL6kerneliiPdS_S_S_(m, n, ((double*)data), ((double*)corr), ((double*)mean), ((double*)stddev));
 ;
@@ -184,6 +184,7 @@ void _ZL10init_arrayiiPd(uint32_t m, uint32_t n, double* data) {
   int64_t i;
   int64_t j;
 
+#pragma omp parallel for
 for(int64_t i = 0; i < m;   ++i){
 
 for(int64_t j = 0; j < n;   ++j){
@@ -195,55 +196,25 @@ for(int64_t j = 0; j < n;   ++j){
 
 
 void _ZL6kerneliiPdS_S_S_(uint32_t m, uint32_t n, double* data, double* corr, double* mean, double* stddev) {
-  struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp1;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp1_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp3;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp5;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp3_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp5_2e_coerce;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 block;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp12;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp13;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp12_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp13_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp18;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp19;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp18_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp19_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp32;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp33;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp32_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp33_2e_coerce;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp38;    /* Address-exposed local */
-  struct l_struct_struct_OC_dim3 agg_2e_tmp39;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp38_2e_coerce;    /* Address-exposed local */
-  struct l_unnamed_1 agg_2e_tmp39_2e_coerce;    /* Address-exposed local */
-  int32_t call;
-  int32_t call4;
-  int32_t call10;
-  int32_t call11;
-  int32_t call20;
   int32_t call28;
   int32_t call31;
 
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute parallel for thread_limit(256)
 
 for(int32_t i = 0; i < m;   ++i){
 //#pragma omp parallel for
 
 _Z11kernel_meaniiPdS_S_S__OC_2(m, n, data, corr, mean, stddev, i);
-}
-#pragma omp target teams distribute parallel for
-
-for(int32_t i = 0; i < m;   ++i){
-//#pragma omp parallel for
+//}
+//#pragma omp target teams distribute parallel for
+//
+//for(int32_t i = 0; i < m;   ++i){
+////#pragma omp parallel for
 
 _Z13kernel_stddeviiPdS_S_S__OC_3(m, n, data, corr, mean, stddev, i);
 }
-#pragma omp target teams distribute parallel for collapse(2)
+#pragma omp target teams distribute parallel for collapse(2) thread_limit(256)
 
 for(int32_t i = 0; i < n;   ++i){
 
@@ -252,7 +223,7 @@ for(int32_t j = 0; j < m;   ++j){
 _Z13kernel_reduceiiPdS_S_S__OC_4(m, n, data, corr, mean, stddev, i, j);
 }
 }
-#pragma omp target teams distribute parallel for
+#pragma omp target teams distribute parallel for thread_limit(256)
 
 for(int32_t i = 0; i < m;   ++i){
 
@@ -260,10 +231,9 @@ _Z11kernel_diagiiPdS_S_S__OC_5(m, n, data, corr, mean, stddev, i);
 }
   block.field0 = 8;
   block.field1 = 32;
-  block.field2 = 1;
   call28 = _ZL10num_blocksii((m - 1), block.field0);
   call31 = _ZL10num_blocksii((m - 1), block.field1);
-#pragma omp target teams distribute parallel for collapse(2)
+#pragma omp target teams distribute parallel for collapse(2) thread_limit(256)
 
 for(int32_t k = 0; k < call28;   ++k){
 
