@@ -7,8 +7,8 @@ SPLENDID_CPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-release/bin/splendid
 SPLENDID_GPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-debug/bin/splendid
 SPLENDID_ACC=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-openacc/bin/splendid
 #ADDITIONAL_PASSES+=-O1
-#SPLENDID_CPU=splendid
-#SPLENDID_LOC=splendid
+SPLENDID_CPU=splendid
+SPLENDID_LOC=splendid
 #SPLENDID_GPU=splendid
 #SPLENDID_ACC=splendid
 
@@ -113,7 +113,9 @@ ${BMARK}.o: ${BMARK}.cu
 	${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
 
 openmp.exe: ${BMARK}_omp.c
-	clang -fopenmp -O3 ${FLAGS} $< -o $@
+	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $< -o tmp.bc
+	opt -instcombine -dce tmp.bc -o tmp2.bc
+	clang -O0 ${FLAGS} tmp2.bc -o $@
 
 polygeist.exe: ${BMARK}.o
 	clang -fopenmp -O3 ${FLAGS} $< -o $@
@@ -125,13 +127,15 @@ icx.noelle.exe: ${BMARK}_cpu_noelle.c
 	icx -fopenmp -O3 $(FLAGS) $< -o $@
 
 tulip.clang.noelle.exe: ${BMARK}_cpu_noelle.c
-	clang -fopenmp -O3 $(FLAGS) $< -o $@
+	clang -O3 $(FLAGS) $< -o $@
 
 tulip.gcc.noelle.exe: ${BMARK}_cpu_noelle.c
 	gcc -fopenmp -O3 $< -o $@ $(FLAGS)
 
 tulip.clang.exe: ${BMARK}_cpu.c
-	clang -fopenmp -O3 $(FLAGS) $< -o $@
+	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $< -o tmp.bc
+	opt -instcombine -dce tmp.bc -o tmp2.bc
+	clang -O0 ${FLAGS} tmp2.bc -o $@
 
 tulip.gcc.exe: ${BMARK}_cpu.c
 	gcc -fopenmp -O3 $< -o $@ $(FLAGS)
@@ -140,13 +144,18 @@ cpu.exe: ${BMARK}_reduced.bc
 	clang -O3 -lm  $< -o $@
 
 seq.exe: ${BMARK}.c
-	clang -O3 -lm $< -o $@
+	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $< -o tmp.bc
+	opt -instcombine -dce tmp.bc -o tmp2.bc
+	clang -O0 ${FLAGS} tmp2.bc -o $@
 
 cuda.exe: ${BMARK}.cu
 	nvcc -O3 $< -o $@
 
 run_seq: seq.exe
 	regressions-watchdog $(RUN_TIMEOUT) seq.time ./seq.exe $(PERF_ARGS)
+
+run_openmp: openmp.exe
+	regressions-watchdog $(RUN_TIMEOUT) openmp.time ./openmp.exe $(PERF_ARGS)
 
 run_cuda: cuda.exe
 	regressions-watchdog $(RUN_TIMEOUT) cuda.time ./cuda.exe $(PERF_ARGS)
@@ -171,9 +180,9 @@ run_icx: icx.exe icx.noelle.exe
 
 run_tulip: tulip.clang.noelle.exe tulip.gcc.noelle.exe tulip.clang.exe tulip.gcc.exe 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
-	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
+	#regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.noelle.time ./tulip.clang.noelle.exe $(PERF_ARGS) 
-	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.noelle.time ./tulip.gcc.noelle.exe $(PERF_ARGS) 
+	#regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.noelle.time ./tulip.gcc.noelle.exe $(PERF_ARGS) 
 
 run_nvhpc: nvhpc.cpu.exe nvhpc.cpu.noelle.exe nvhpc.gpu.exe nvhpc.gpu.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.cpu.time ./nvhpc.cpu.exe $(PERF_ARGS)
