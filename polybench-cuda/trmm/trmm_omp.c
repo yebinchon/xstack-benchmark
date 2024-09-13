@@ -63,8 +63,8 @@ void print_array(int m, int n,
 static
 void kernel_trmm(int n, int m,
 		 double alpha,
-		 double A[n][m],
-		 double B[m][n])
+		 double *A,
+		 double *B)
 {
   int i, j, k;
 
@@ -74,12 +74,12 @@ void kernel_trmm(int n, int m,
     for (int j = 0; j < n; j++)
       for (int i = 0; i < m; i++)
         for (int k = i + 1; k < m; k++)
-          B[i][j] += A[k][i] * B[k][j];
+          B[i*n+j] += A[k*m+i] * B[k*n+j];
 
 #pragma omp for collapse(2) schedule(static)
     for (int i = 0; i < m; i++)
       for (int j = 0; j < n; j++)
-        B[i][j] *= alpha;
+        B[i*n+j] *= alpha;
 }
 
 }
