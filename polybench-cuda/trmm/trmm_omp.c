@@ -101,7 +101,7 @@ int main(int argc, char** argv)
   init_array (n,m, &alpha, A, B);
 
   /* Run kernel. */
-  kernel(n,m, alpha, A, B);
+  kernel_trmm(n,m, alpha, A, B);
 
   /* Prevent dead-code elimination. All live-out data must be printed
      by the function call in argument. */
