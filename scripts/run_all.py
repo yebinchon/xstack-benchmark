@@ -200,10 +200,10 @@ if __name__ == "__main__":
 
   clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
 
-  perf_list = []
   perf_dic_acc = {}
   for j in range(config['run_num']):
     perf_dic = {}
+    perf_list = []
     for bmark in config['bmark_list']:
       run_all(config['root_path'], bmark, tests)
       perf_list.append(get_time(config['root_path'], bmark, results))
