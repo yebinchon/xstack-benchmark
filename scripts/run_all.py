@@ -82,7 +82,7 @@ def Postprocess(perf_dic_acc, perf_dic, bmark_list, run_num):
   #  #del perf_dic[bmark]['seq']
 
   mean = { 'geomean': {}}
-  for key in perf_dic['atax'].keys():
+  for key in next(iter(perf_dic.values())).keys():
     geo = 1
     for bmark in bmark_list:
       geo = geo*pow(perf_dic[bmark][key], 1/len(bmark_list))
