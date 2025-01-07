@@ -22,6 +22,14 @@ void init_array(int n,int m,
   int i, j;
 
   *alpha = 32412;
+
+    // Initialize B to zero as only diagonals are set below
+  for (i = 0; i < m; i++) {
+    for (j = 0; j < n; j++) {
+      B[i*n + j] = 0.0;
+    }
+  }
+
   for (i = 0; i < n; i++)
     for (j = 0; j < m; j++) {
       A[i*m+j] = ((double) i*j) / m;
