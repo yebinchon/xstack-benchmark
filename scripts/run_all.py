@@ -82,7 +82,7 @@ def Postprocess(perf_dic_acc, perf_dic, bmark_list, run_num):
   #  #del perf_dic[bmark]['seq']
 
   mean = { 'geomean': {}}
-  for key in perf_dic['atax'].keys():
+  for key in next(iter(perf_dic.values())).keys():
     geo = 1
     for bmark in bmark_list:
       geo = geo*pow(perf_dic[bmark][key], 1/len(bmark_list))
@@ -200,10 +200,10 @@ if __name__ == "__main__":
 
   clean_all_bmarks(config['root_path'], config['bmark_list'], config['result_path'])
 
-  perf_list = []
   perf_dic_acc = {}
   for j in range(config['run_num']):
     perf_dic = {}
+    perf_list = []
     for bmark in config['bmark_list']:
       run_all(config['root_path'], bmark, tests)
       perf_list.append(get_time(config['root_path'], bmark, results))
