@@ -11,16 +11,38 @@
 #include <string.h>
 #include <math.h>
 
-  static
-void init_array (int n,
-    double *A)
-{
-  int i, j;
+static
+void init_array(int n, double *A) {
+    int i, j;
 
-  for (i = 0; i < n; i++)
-    for (j = 0; j < n; j++)
-      A[i*n+j] = ((double) (i+1)*(j+1)) / n;
+    for (i = 0; i < n; i++) {
+        for (j = 0; j <= i; j++) {
+            A[i * n + j] = (double)(-j % n) / n + 1;
+        }
+        for (j = i + 1; j < n; j++) {
+            A[i * n + j] = 0;
+        }
+        A[i * n + i] = 1;
+    }
+
+    // Make A positive semi-definite.
+    double *B = (double *)malloc(n * n * sizeof(double));
+    for (int r = 0; r < n; r++) {
+        for (int s = 0; s < n; s++) {
+            B[r * n + s] = 0.0;
+        }
+    }
+    for (int t = 0; t < n; t++) {
+        for (int r = 0; r < n; r++) {
+            for (int s = 0; s < n; s++) {
+                B[r * n + s] += A[r * n + t] * A[s * n + t];
+            }
+        }
+    }
+    memcpy(A, B, n * n * sizeof(double));
+    free(B);
 }
+
 
 
 
