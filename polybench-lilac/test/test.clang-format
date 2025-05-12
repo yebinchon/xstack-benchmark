@@ -1,0 +1,30 @@
+BasedOnStyle: LLVM
+
+# General formatting preferences
+IndentWidth: 2
+UseTab: Never
+BreakBeforeBraces: Attach
+AllowShortBlocksOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+BinPackArguments: false
+BinPackParameters: false
+ColumnLimit: 100
+PointerAlignment: Left
+
+# Remove extra blank lines
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 0
+RemoveEmptyLinesInUnwrappedLines: true
+
+# Miscellaneous cleanup
+EmptyLineBeforeAccessModifier: Never
+EmptyLineBeforeBlockComment: false
+AlignOperands: false
+AlignTrailingComments: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpacesInCStyleCastParentheses: false
+Cpp11BracedListStyle: false
+SortIncludes: false

@@ -1,0 +1,247 @@
+RUN_TIMEOUT?=7200 # 2 hours.
+ROOT_DIR=/scratch/yc0769/llvm14-tulip/susan-v9
+CUDAFE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/TulipOoT
+LLVM18=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-llvm-install
+POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
+NOELLE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/noelle-susan/install
+SPLENDID_CPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-lilac/bin/splendid
+SPLENDID_GPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-offloading/bin/splendid
+SPLENDID_ACC=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-openacc/bin/splendid
+SPLENDID_TULIP=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-tulip/bin/splendid
+
+#ADDITIONAL_PASSES+=-O1
+#SPLENDID_CPU=splendid
+#SPLENDID_LOC=splendid
+#SPLENDID_GPU=splendid
+#SPLENDID_ACC=splendid
+
+
+nvtarget.exe: #${BMARK}_cpu.cbe.c
+	clang -g -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_gpu.c -O3 -c -o ${BMARK}_nvtarget.o
+	clang -g --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -lm -o $@ -foffload-lto -lomptarget.devicertl
+
+nvtarget_noelle.exe: #${BMARK}_cpu.cbe.c
+	clang -g -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_gpu_noelle.c -O3 -c -o ${BMARK}_nvtarget.o
+	clang -g --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget.o -O3 -lm -o $@ -foffload-lto -lomptarget.devicertl
+
+amdtarget.exe: #${BMARK}_cpu.cbe.c
+	clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_gpu.c -O3 -c -o ${BMARK}_amdtarget.o
+	clang --offload-link $(FLAGS) ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
+
+amdtarget_noelle.exe: #${BMARK}_cpu.cbe.c
+	clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_gpu_noelle.c -O3 -c -o ${BMARK}_amdtarget.o
+	clang --offload-link $(FLAGS) ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
+
+openacc.gpu.exe:
+	nvc -acc=gpu -gpu=cc70 -Minfo=accel -O3 ${BMARK}_openacc.c -o $@
+
+openacc.cpu.exe:
+	nvc -acc=multicore -Minfo=accel -O3 ${BMARK}_openacc.c -o $@
+
+nvhpc.gpu.noelle.exe:
+	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu_noelle.nvc.c -o $@
+
+nvhpc.gpu.exe:
+	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu.nvc.c -o $@
+
+nvhpc.cpu.noelle.exe:
+	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu_noelle.nvc.c -o $@
+
+nvhpc.cpu.exe:
+	nvc -mp=multicore -Minfo=accel -O4 -fast ${BMARK}_gpu.nvc.c -o $@
+
+manual.clang.amd.exe: ${BMARK}_amd_manual.c
+	clang -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=gfx90a --rocm-path=/opt/rocm-5.4.2/ -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism ${BMARK}_amd_manual.c -O3 -c -o ${BMARK}_amdtarget_m.o
+	clang --offload-link $(FLAGS) ${LLVM_LIBS_DIR}/libomp.so ${LLVM_LIBS_DIR}/libomptarget.so ${BMARK}_amdtarget_m.o ${LLVM_LIBS_DIR}/libomptarget.devicertl.a -O3 -o $@
+
+manual.clang.gpu.exe: ${BMARK}_gpu_noelle_manual.c
+	clang -g -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native ${BMARK}_gpu_noelle_manual.c -O3 -c -o ${BMARK}_nvtarget_manual.o
+	clang -g --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget_manual.o -O3 -lm -o $@ -foffload-lto -lomptarget.devicertl
+
+manual.nvc.gpu.exe: ${BMARK}_gpu_noelle_manual.c
+	nvc -mp=gpu -gpu=cc70 -Minfo=accel -Mneginfo -O4 -fast ${BMARK}_gpu_noelle_manual.c -o $@
+
+manual.clang.cpu.exe: ${BMARK}_cpu_noelle_manual.c
+	clang -fopenmp -O3 $(FLAGS) $< -o $@
+
+manual.gcc.cpu.exe: ${BMARK}_cpu_noelle_manual.c
+	gcc -fopenmp -O3 $(FLAGS) $< -o $@
+
+%.ll: ${BMARK}.cu
+	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
+
+%.bc: %.c
+	clang -Xclang -disable-O0-optnone -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -g -c -emit-llvm $<
+	opt -mem2reg -loop-simplify -indvars -dce $@ -o $@
+
+
+${BMARK}_linked.bc: ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll
+	llvm-link-cudafe ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll -o ${BMARK}_linked.bc
+
+${BMARK}_cpu.bc: ${BMARK}_linked.bc
+	#opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+	opt -load ${CUDAFE}/build/MergeKernel/libLLVMCudaFE.so -merge-kernel -mem2reg -indvars -dce  ${ADDITIONAL_PASSES} ${BMARK}_linked.bc -o ${BMARK}_cpu.bc 2> debug_cudafe
+
+${BMARK}_openacc.c: ${BMARK}_cpu.bc
+	$(SPLENDID_ACC) $< 2> debug
+	mv ${BMARK}_cpu.cbe.c $@
+
+${BMARK}_cpu.c: ${BMARK}_cpu.bc
+	$(SPLENDID_CPU) $< 2> debug
+	mv ${BMARK}_cpu.cbe.c $@
+
+${BMARK}_gpu.c: ${BMARK}_cpu.bc
+	$(SPLENDID_GPU) $< 2> debug
+	mv ${BMARK}_cpu.cbe.c $@
+
+${BMARK}_tulip.c: ${BMARK}_cpu.bc
+	$(SPLENDID_TULIP) $< 2> debug_tulip
+	mv ${BMARK}_cpu.cbe.c $@
+
+#CUDA TO OMP START
+${BMARK}_omp.cu: ${BMARK}_omp.bc
+	$(SPLENDID_GPU) $< 2> debug
+	mv ${BMARK}_omp.cbe.c $@
+
+${BMARK}_omp_loopid.bc: ${BMARK}_omp.bc
+	noelle-meta-loop-embed $< -o $@
+	noelle-parallel-load -load ${NOELLE}/lib/Planner.so -planner $@ -o $@ 
+
+${BMARK}_omp_reduced.bc: ${BMARK}_omp_loopid.bc
+	noelle-load -load ${NOELLE}/lib/ParallelizationTechnique.so -load ${NOELLE}/lib/DOALL.so -load ${NOELLE}/lib/DSWP.so -load ${NOELLE}/lib/Heuristics.so -load ${NOELLE}/lib/Parallelizer.so -load ${CUDAFE}/build/NoelleDOALL/libNoelleDOALL.so -noelle-verbose=3 -noelle-doall ${ADDITIONAL_PASSES}  $< -o $@
+	llvm-dis $@
+
+${BMARK}_omp_outlined.bc: ${BMARK}_omp_reduced.bc
+	opt -load ${CUDAFE}/build/OutlineKernel/libOutlineKernel.so -outline-loop $< -o $@ 2> debug_outline
+	llvm-dis $@
+
+${BMARK}_noelle.cu: ${BMARK}_omp_outlined.bc
+	$(SPLENDID_GPU) $< 2> debug
+	mv ${BMARK}_omp_outlined.cbe.c $@
+
+cudatoomp.exe: ${BMARK}_noelle.cu
+	mv $< ${BMARK}_noelle.c
+	clang -fopenmp -O3 $(FLAGS) ${BMARK}_noelle.c -o $@
+
+#CUDA TO OMP END
+
+${BMARK}_loc.c: ${BMARK}_cpu.bc
+	opt ${LOC_PASSES} $< -o temp_loc.bc 
+	$(SPLENDID_LOC) temp_loc.bc 2> debug
+	cp temp_loc.cbe.c $@
+#${BMARK}_pdg_embed.bc:${BMARK}_cpu.bc
+#	noelle-load -PDGAnalysis -noelle-pdg-verbose=3 -noelle-pdg-embed ${BMARK}_svf.bc -o $@
+
+${BMARK}_loopid.bc: ${BMARK}_cpu.bc
+	noelle-meta-loop-embed $< -o $@
+	noelle-parallel-load -load ${NOELLE}/lib/Planner.so -planner $@ -o $@ 
+
+
+${BMARK}_reduced.bc: ${BMARK}_loopid.bc
+	noelle-load -load ${NOELLE}/lib/ParallelizationTechnique.so -load ${NOELLE}/lib/DOALL.so -load ${NOELLE}/lib/DSWP.so -load ${NOELLE}/lib/Heuristics.so -load ${NOELLE}/lib/Parallelizer.so -load ${CUDAFE}/build/NoelleDOALL/libNoelleDOALL.so -noelle-verbose=3 -noelle-doall ${ADDITIONAL_PASSES}  $< -o $@
+
+${BMARK}_cpu_noelle.c: ${BMARK}_reduced.bc
+	$(SPLENDID_CPU) $< 2> debug
+	mv ${BMARK}_reduced.cbe.c $@
+
+${BMARK}_gpu_noelle.c: ${BMARK}_reduced.bc
+	$(SPLENDID_GPU) $< 2> debug
+	mv ${BMARK}_reduced.cbe.c $@
+
+${BMARK}.o: ${BMARK}.cu
+	${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
+
+openmp.clang.exe: ${BMARK}_omp.c
+	clang -fopenmp -O3 ${FLAGS} $< -o $@
+
+openmp.gcc.exe: ${BMARK}_omp.c
+	gcc -fopenmp -O3 $< -o $@ ${FLAGS} 
+
+polygeist.exe: ${BMARK}.o
+	clang -fopenmp -O3 ${FLAGS} $< -o $@
+
+icx.exe: ${BMARK}_cpu.c
+	icx -fopenmp -O3 $(FLAGS) $< -o $@
+
+icx.noelle.exe: ${BMARK}_cpu_noelle.c
+	icx -fopenmp -O3 $(FLAGS) $< -o $@
+
+tulip.clang.noelle.exe: ${BMARK}_cpu_noelle.c
+	clang -fopenmp -O3 $(FLAGS) $< -o $@
+
+tulip.gcc.noelle.exe: ${BMARK}_cpu_noelle.c
+	gcc -fopenmp -O3 $< -o $@ $(FLAGS)
+
+tulip.clang.exe: ${BMARK}_cpu.c
+	clang -fopenmp -O3 $(FLAGS) $< -o $@
+
+tulip.gcc.exe: ${BMARK}_cpu.c
+	gcc -fopenmp -O3 $< -o $@ $(FLAGS)
+
+cpu.exe: ${BMARK}_reduced.bc
+	clang -O3 -lm  $< -o $@
+
+seq.exe: ${BMARK}.c
+	clang -O3 -lm $< -o $@
+
+cuda.exe: ${BMARK}.cu
+	nvcc -O3 $< -o $@
+
+run_seq: seq.exe
+	regressions-watchdog $(RUN_TIMEOUT) seq.time ./seq.exe $(PERF_ARGS)
+
+run_cuda: cuda.exe
+	regressions-watchdog $(RUN_TIMEOUT) cuda.time ./cuda.exe $(PERF_ARGS)
+
+run_nvidia: nvtarget.exe nvtarget_noelle.exe
+	regressions-watchdog $(RUN_TIMEOUT) nvidia.time ./nvtarget.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) nvidia.noelle.time ./nvtarget_noelle.exe $(PERF_ARGS)
+
+run_amd: amdtarget.exe amdtarget_noelle.exe
+	regressions-watchdog $(RUN_TIMEOUT) amd.time ./amdtarget.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) amd.noelle.time ./amdtarget_noelle.exe $(PERF_ARGS)
+
+run_polygeist: polygeist.exe
+	regressions-watchdog $(RUN_TIMEOUT) polygeist.time ./polygeist.exe $(PERF_ARGS)
+
+run_openacc: openacc.gpu.exe
+	regressions-watchdog $(RUN_TIMEOUT) openacc.time ./openacc.gpu.exe $(PERF_ARGS)
+
+run_icx: icx.exe icx.noelle.exe
+	regressions-watchdog $(RUN_TIMEOUT) tulip.icx.time ./icx.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) tulip.icx.noelle.time ./icx.noelle.exe $(PERF_ARGS)
+
+run_tulip: tulip.clang.noelle.exe tulip.gcc.noelle.exe tulip.clang.exe tulip.gcc.exe 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
+#	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.noelle.time ./tulip.clang.noelle.exe $(PERF_ARGS) 
+#	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.noelle.time ./tulip.gcc.noelle.exe $(PERF_ARGS) 
+
+run_nvhpc: nvhpc.cpu.exe nvhpc.cpu.noelle.exe nvhpc.gpu.exe nvhpc.gpu.noelle.exe
+	regressions-watchdog $(RUN_TIMEOUT) nvhpc.cpu.time ./nvhpc.cpu.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) nvhpc.cpu.reduced.time ./nvhpc.cpu.noelle.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) nvhpc.gpu.time ./nvhpc.gpu.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) nvhpc.gpu.reduced.time ./nvhpc.gpu.noelle.exe $(PERF_ARGS)
+
+run_manual:  manual.clang.cpu.exe manual.gcc.cpu.exe 
+	regressions-watchdog $(RUN_TIMEOUT) manual.clang.cpu.time ./manual.clang.cpu.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) manual.gcc.cpu.time ./manual.gcc.cpu.exe $(PERF_ARGS) 
+
+run_nvmanual: manual.clang.gpu.exe manual.nvc.gpu.exe
+	regressions-watchdog $(RUN_TIMEOUT) manual.clang.gpu.time ./manual.clang.gpu.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) manual.nvc.gpu.time ./manual.nvc.gpu.exe $(PERF_ARGS) 
+
+run_amdmanual: manual.clang.amd.exe 
+	regressions-watchdog $(RUN_TIMEOUT) manual.clang.amd.time ./manual.clang.amd.exe $(PERF_ARGS) 
+
+run_openmp: openmp.clang.exe  openmp.gcc.exe
+	regressions-watchdog $(RUN_TIMEOUT) openmp.clang.time ./openmp.clang.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) openmp.gcc.time ./openmp.gcc.exe $(PERF_ARGS) 
+
+run_correctness: seq.exe openmp.clang.exe tulip.clang.exe
+	./seq.exe $(TEST_ARGS) 2> seq.txt
+	./openmp.clang.exe $(TEST_ARGS) 2> omp.txt
+	./tulip.clang.exe $(TEST_ARGS) 2> tulip.txt
+
+clean:
+	rm -rf *.ll *.bc *.cbe.c *.exe debug* *.o  *.log *.txt
