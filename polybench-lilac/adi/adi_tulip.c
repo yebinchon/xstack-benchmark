@@ -87,16 +87,16 @@ struct l_unnamed_1 {
 uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
 uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
-void _ZL10init_arrayiPdS_S_S_(uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
+void init_array(uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
-void _ZL6kerneliiPdS_S_S_(uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
+void kernel(uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 uint32_t cudaFree(uint8_t*);
-void _ZL11print_arrayiPd(uint32_t, double*) __ATTRIBUTELIST__((noinline));
-uint32_t _ZL10num_blocksii(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
+uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
-void _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(uint32_t, uint32_t, double*, double*, double*, double*, double, double, double, double, double, double, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(uint32_t, uint32_t, double*, double*, double*, double*, double, double, double, double, double, double, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_column_sweep(uint32_t, uint32_t, double*, double*, double*, double*, double, double, double, double, double, double, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_row_sweep(uint32_t, uint32_t, double*, double*, double*, double*, double, double, double, double, double, double, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -159,12 +159,12 @@ int main(int argc, char ** argv) {
   v = malloc(n * n * 8);
   p = malloc(n * n * 8);
   q = malloc(n * n * 8);
-  _ZL10init_arrayiPdS_S_S_(n, ((double*)u), ((double*)v), ((double*)p), ((double*)q));
+  init_array(n, ((double*)u), ((double*)v), ((double*)p), ((double*)q));
 ;
-  _ZL6kerneliiPdS_S_S_(tsteps, n, ((double*)u), ((double*)v), ((double*)p), ((double*)q));
+  kernel(tsteps, n, ((double*)u), ((double*)v), ((double*)p), ((double*)q));
 ;
   if (dump_code == 1) {
-_ZL11print_arrayiPd(n, ((double*)u));
+print_array(n, ((double*)u));
   }
 free(((uint8_t*)((double*)u)));
 free(((uint8_t*)((double*)v)));
@@ -174,13 +174,11 @@ free(((uint8_t*)((double*)q)));
 }
 
 
-void _ZL10init_arrayiPdS_S_S_(uint32_t n, double* u, double* v, double* p, double* q) {
+void init_array(uint32_t n, double* u, double* v, double* p, double* q) {
   int64_t i;
   uint64_t j;
 
-
 for(int64_t i = 0; i < n;   i = i + 1){
-
 for(int64_t j = 0; j < n;   j = j + 1){
   u[(i * n + j)] = ((double)(((i + n) - j)) / (double)(n));
   v[(i * n + j)] = 0;
@@ -192,7 +190,7 @@ for(int64_t j = 0; j < n;   j = j + 1){
 }
 
 
-void _ZL6kerneliiPdS_S_S_(uint32_t tsteps, uint32_t n, double* u, double* v, double* p, double* q) {
+void kernel(uint32_t tsteps, uint32_t n, double* u, double* v, double* p, double* q) {
   struct l_struct_struct_OC_dim3 agg_2e_tmp;    /* Address-exposed local */
   struct l_struct_struct_OC_dim3 agg_2e_tmp15;    /* Address-exposed local */
   struct l_unnamed_1 agg_2e_tmp_2e_coerce;    /* Address-exposed local */
@@ -223,9 +221,8 @@ void _ZL6kerneliiPdS_S_S_(uint32_t tsteps, uint32_t n, double* u, double* v, dou
   b = (1 + mul1);
   div12 = (-(mul2) / 2);
   e = (1 + mul2);
-
 for(int32_t t = 1; t <= tsteps;   t = t + 1){
-  uint32_t call = _ZL10num_blocksii((n - 2), 256);
+  uint32_t call = num_blocks((n - 2), 256);
   agg_2e_tmp.field0 = call;
   agg_2e_tmp.field1 = 1;
   agg_2e_tmp.field2 = 1;
@@ -236,12 +233,11 @@ for(int32_t t = 1; t <= tsteps;   t = t + 1){
   memcpy(((uint8_t*)(&agg_2e_tmp15_2e_coerce)), ((uint8_t*)(&agg_2e_tmp15)), 12);
 #pragma omp parallel for collapse(2)
 for(int32_t j = 0; j < call;   j = j + 1){
-
 for(int32_t k = 0; k < 256;   k = k + 1){
-_Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+kernel_column_sweep(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
-  uint32_t call19 = _ZL10num_blocksii((n - 2), 256);
+  uint32_t call19 = num_blocks((n - 2), 256);
   agg_2e_tmp17.field0 = call19;
   agg_2e_tmp17.field1 = 1;
   agg_2e_tmp17.field2 = 1;
@@ -252,9 +248,8 @@ _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(tsteps, n, u, v, p, q, div10, b, di
   memcpy(((uint8_t*)(&agg_2e_tmp20_2e_coerce)), ((uint8_t*)(&agg_2e_tmp20)), 12);
 #pragma omp parallel for collapse(2)
 for(int32_t j = 0; j < call19;   j = j + 1){
-
 for(int32_t k = 0; k < 256;   k = k + 1){
-_Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call19, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+kernel_row_sweep(tsteps, n, u, v, p, q, div10, b, div10, div12, e, div12, call19, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
 }
@@ -262,14 +257,12 @@ _Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(tsteps, n, u, v, p, q, div10, b, div10
 }
 
 
-void _ZL11print_arrayiPd(uint32_t n, double* u) {
+void print_array(uint32_t n, double* u) {
   int64_t i;
   uint64_t j;
   int32_t call11;
 
-
 for(int64_t i = 0; i < n;   i = i + 1){
-
 for(int64_t j = 0; j < n;   j = j + 1){
   uint32_t call = fprintf(stderr, (_OC_str), u[(i * n + j)]);
   if ((int)(i * n + j) % (int)20 == 0) {
@@ -281,12 +274,12 @@ for(int64_t j = 0; j < n;   j = j + 1){
 }
 
 
-uint32_t _ZL10num_blocksii(uint32_t num, uint32_t factor) {
+uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
 
 
-void _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(uint32_t tsteps, uint32_t n, double* u, double* v, double* p, double* q, double a, double b, double c, double d, double e, double f, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+void kernel_column_sweep(uint32_t tsteps, uint32_t n, double* u, double* v, double* p, double* q, double a, double b, double c, double d, double e, double f, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int64_t j;
 
@@ -295,13 +288,11 @@ void _Z19kernel_column_sweepiiPdS_S_S_dddddd_OC_1(uint32_t tsteps, uint32_t n, d
   v[(0 * n + i)] = 1;
   p[(i * n + 0)] = 0;
   q[(i * n + 0)] = v[(0 * n + i)];
-
 for(int64_t j = 1; j < (n - 1);   j = j + 1){
   p[(i * n + j)] = (-(c) / ((a * p[((i * n + j) - 1)]) + b));
   q[(i * n + j)] = (((((-(d) * u[((j * n + i) - 1)]) + ((1 + (2 * d)) * u[(j * n + i)])) - (f * u[((j * n + i) + 1)])) - (a * q[((i * n + j) - 1)])) / ((a * p[((i * n + j) - 1)]) + b));
 }
   v[((n - 1) * n + i)] = 1;
-
 for(int64_t j = n + -2; j >= 1;   j = j + -1){
   v[(j * n + i)] = ((p[(i * n + j)] * v[((j + 1) * n + i)]) + q[(i * n + j)]);
 }
@@ -310,7 +301,7 @@ for(int64_t j = n + -2; j >= 1;   j = j + -1){
 }
 
 
-void _Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(uint32_t tsteps, uint32_t n, double* u, double* v, double* p, double* q, double a, double b, double c, double d, double e, double f, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
+void kernel_row_sweep(uint32_t tsteps, uint32_t n, double* u, double* v, double* p, double* q, double a, double b, double c, double d, double e, double f, uint32_t gridDim_2e_x, uint32_t gridDim_2e_y, uint32_t gridDim_2e_z, uint32_t blockDim_2e_x, uint32_t blockDim_2e_y, uint32_t blockDim_2e_z, uint32_t blockIdx_2e_x, uint32_t blockIdx_2e_y, uint32_t blockIdx_2e_z, uint32_t threadIdx_2e_x, uint32_t threadIdx_2e_y, uint32_t threadIdx_2e_z) {
   int32_t i;
   int64_t j;
 
@@ -319,13 +310,11 @@ void _Z16kernel_row_sweepiiPdS_S_S_dddddd_OC_2(uint32_t tsteps, uint32_t n, doub
   u[(i * n + 0)] = 1;
   p[((i + n) + 0)] = 0;
   q[(i * n + 0)] = u[(i * n + 0)];
-
 for(int64_t j = 1; j < (n - 1);   j = j + 1){
   p[(i * n + j)] = (-(f) / ((d * p[((i * n + j) - 1)]) + e));
   q[(i * n + j)] = (((((-(a) * v[((i - 1) * n + j)]) + ((1 + (2 * a)) * v[(i * n + j)])) - (c * v[((i + 1) * n + j)])) - (d * q[((i * n + j) - 1)])) / ((d * p[((i * n + j) - 1)]) + e));
 }
   u[((i * n + n) - 1)] = 1;
-
 for(int64_t j = n + -2; j >= 1;   j = j + -1){
   u[(i * n + j)] = ((p[(i * n + j)] * u[((i * n + j) + 1)]) + q[(i * n + j)]);
 }

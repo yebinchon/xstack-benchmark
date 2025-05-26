@@ -117,6 +117,10 @@ static __forceinline uint32_t llvm_sub_u32(uint32_t a, uint32_t b) {
   uint32_t r = a - b;
   return r;
 }
+static __forceinline uint64_t llvm_sub_u64(uint64_t a, uint64_t b) {
+  uint64_t r = a - b;
+  return r;
+}
 static __forceinline uint32_t llvm_mul_u32(uint32_t a, uint32_t b) {
   uint32_t r = a * b;
   return r;
@@ -158,7 +162,7 @@ int main(int argc, char ** argv) {
   uint8_t* D;
   uint8_t* tmp;
   int32_t call47;
-  int32_t call66;
+  int32_t call72;
 
   dump_code = atoi(argv[1]);
   call2 = atoi(argv[2]);
@@ -174,6 +178,7 @@ int main(int argc, char ** argv) {
 ;
   kernel(call2, call4, call7, call10, 32412, 2123, ((double*)tmp), ((double*)A), ((double*)B), ((double*)C), ((double*)D));
 ;
+  ((double*)A)[(call2 - 1)] = (((double*)A)[(call2 - 1)] + (((32412 * ((double*)A)[call7]) * ((double*)B)[call4]) * 2123));
   if (dump_code == 1) {
 print_array(call2, call7, ((double*)D));
   }
