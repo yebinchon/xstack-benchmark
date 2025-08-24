@@ -22,6 +22,14 @@ void init_array(int n,int m,
   int i, j;
 
   *alpha = 32412;
+
+    // Initialize B to zero as only diagonals are set below
+  for (i = 0; i < m; i++) {
+    for (j = 0; j < n; j++) {
+      B[i*n + j] = 0.0;
+    }
+  }
+
   for (i = 0; i < n; i++)
     for (j = 0; j < m; j++) {
       A[i*m+j] = ((double) i*j) / m;
@@ -116,7 +124,7 @@ int main(int argc, char** argv)
   cudaMemcpy(dev_A, A, n*m*sizeof(double), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_B, B, m*n*sizeof(double), cudaMemcpyHostToDevice);
   /* Run kernel. */
-  kernel(n,m, alpha, dev_A, dev_B);
+  kernel(n,m, alpha, dev_B, dev_A);
   cudaMemcpy(B, dev_B, m*n*sizeof(double), cudaMemcpyDeviceToHost);
 
   /* Prevent dead-code elimination. All live-out data must be printed

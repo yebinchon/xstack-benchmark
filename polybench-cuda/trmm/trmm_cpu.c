@@ -153,7 +153,7 @@ int main(int argc, char ** argv) {
   B = malloc(m * n * 8);
   _ZL10init_arrayiiPdS_S_(n, m, (&alpha), ((double*)A), ((double*)B));
 ;
-  _ZL6kerneliidPdS_(n, m, alpha, ((double*)A), ((double*)B));
+  _ZL6kerneliidPdS_(n, m, alpha, ((double*)B), ((double*)A));
 ;
   if (dump_code == 1) {
 _ZL11print_arrayiiPd(m, n, ((double*)B));
@@ -167,9 +167,16 @@ free(((uint8_t*)((double*)B)));
 void _ZL10init_arrayiiPdS_S_(uint32_t n, uint32_t m, double* alpha, double* A, double* B) {
   int64_t i;
   int64_t j;
-  uint32_t j_2e_0;
+  uint32_t j_2e_1;
 
   *alpha = 32412;
+
+for(int64_t i = 0; i < m;   i = i + 1){
+
+for(int64_t j = 0; j < n;   j = j + 1){
+  B[(i * n + j)] = 0;
+}
+}
 
 for(int64_t i = 0; i < n;   i = i + 1){
 
