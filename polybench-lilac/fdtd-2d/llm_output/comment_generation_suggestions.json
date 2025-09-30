@@ -1,0 +1,89 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize the simulation arrays: populate ex, ey, hz and the time-dependent boundary array with deterministic values based on their indices to create reproducible initial conditions."
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Return the number of blocks needed to cover 'num' items with 'factor' threads per block (ceiling division)."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_splat",
+      "original": "// INSERT COMMENT FUNCTION: kernel_splat",
+      "replacement": "// Kernel that applies the time-dependent boundary condition by writing fict[t] into the first row of ey (splat boundary update)."
+    },
+    {
+      "id": "unknown_IFELSE_kernel_splat::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_splat::entry",
+      "replacement": "// Compute the global column index j and, if it is inside the domain, set ey[0,j] = fict[t] to apply the boundary value for this time step."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_ey",
+      "original": "// INSERT COMMENT FUNCTION: kernel_ey",
+      "replacement": "// Kernel that updates the Ey field on interior grid points using a finite-difference in the x-direction: ey[i,j] -= 0.5*(hz[i,j] - hz[i-1,j])."
+    },
+    {
+      "id": "unknown_IFELSE_kernel_ey::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_ey::entry",
+      "replacement": "// Compute global indices (i,j); if within bounds update ey[i,j] by subtracting half the difference of adjacent hz values (hz[i,j] - hz[i-1,j])."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_ex",
+      "original": "// INSERT COMMENT FUNCTION: kernel_ex",
+      "replacement": "// Kernel that updates the Ex field on interior grid points using a finite-difference in the y-direction: ex[i,j] -= 0.5*(hz[i,j] - hz[i,j-1])."
+    },
+    {
+      "id": "unknown_IFELSE_kernel_ex::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_ex::entry",
+      "replacement": "// Compute global indices (i,j); if inside the domain update ex[i,j] by subtracting half the difference of adjacent hz values in y (hz[i,j] - hz[i,j-1])."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_hz",
+      "original": "// INSERT COMMENT FUNCTION: kernel_hz",
+      "replacement": "// Kernel that updates the Hz field by computing the discrete curl of E (differences of Ex and Ey) and subtracting a scaled value to advance Hz."
+    },
+    {
+      "id": "unknown_IFELSE_kernel_hz::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_hz::entry",
+      "replacement": "// Compute global indices (i,j); if i < nx-1 and j < ny-1 update hz[i,j] using the discrete curl: hz -= 0.7*((ex[i,j+1]-ex[i,j]) + ey[i+1,j] - ey[i,j])."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Host-side driver that sets up grid/thread dimensions and iterates over time steps, launching the Ex, Ey, Hz and boundary update kernels in the correct order."
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the field arrays (ex, ey, hz) to stderr in row-major order for verification, using a counter to format the output."
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all grid cells (i=0..nx-1, j=0..ny-1) and initialize ex[i,j] with a deterministic function of indices (i*(j+1)/nx) to set starting field values."
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all grid cells (i=0..nx-1, j=0..ny-1) and initialize ex[i,j] with a deterministic function of indices (i*(j+1)/nx) to set starting field values."
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Time-stepping loop over t from 0 to tmax-1: for each step configure execution parameters and invoke the field-update and boundary kernels."
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over all grid cells and print each field value using the chosen format, advancing a print counter to control output layout."
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line arguments to obtain dump_code, tmax, nx and ny, then allocate memory for the simulation field arrays sized nx*ny."
+    }
+  ]
+}

@@ -94,9 +94,9 @@ void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
-void _Z11kernel_meaniiPdS_S__OC_1(uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z13kernel_reduceiiPdS_S__OC_2(uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z10kernel_coviiPdS_S__OC_3(uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_mean(uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_reduce(uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_cov(uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -137,6 +137,7 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
 
 /* Function Bodies */
 
+// MAIN START
 int main(int argc, char ** argv) {
   int32_t dump_code;
   int32_t n;
@@ -147,7 +148,7 @@ int main(int argc, char ** argv) {
   int32_t __FIXME__call28;
   int32_t __FIXME__call39;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: main::entry
   dump_code = atoi(argv[1]);
   n = atoi(argv[2]);
   m = atoi(argv[3]);
@@ -158,7 +159,7 @@ int main(int argc, char ** argv) {
 ;
   kernel(m, n, ((double*)data), ((double*)cov), ((double*)mean));
 ;
-  if (dump_code == 1) {
+  if (dump_code == 1) { // IFELSE MARKER: entry IF
 print_array(m, ((double*)cov));
   }
 free(((uint8_t*)((double*)data)));
@@ -166,14 +167,16 @@ free(((uint8_t*)((double*)cov)));
 free(((uint8_t*)((double*)mean)));
   return 0;
 }
+// MAIN END
 
 
-//INSERT COMMENT FUNCTION: init_array
+// FUNCTION ORDER ID 0 START
+// INSERT COMMENT FUNCTION: init_array
 void init_array(uint32_t m, uint32_t n, double* data) {
   int64_t i;
   int64_t j;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: init_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < m;   j = j + 1){
   data[(i * m + j)] = (((double)(i) * (double)(j)) / 1000);
@@ -181,9 +184,11 @@ for(int64_t j = 0; j < m;   j = j + 1){
 }
   return;
 }
+// FUNCTION ORDER ID 0 END
 
 
-//INSERT COMMENT FUNCTION: kernel
+// FUNCTION ORDER ID 1 START
+// INSERT COMMENT FUNCTION: kernel
 void kernel(uint32_t m, uint32_t n, double* data, double* cov, double* mean) {
   struct __FIXME__l_struct_struct_OC_dim3 __FIXME__agg_2e_tmp;    /* Address-exposed local */
   struct __FIXME__l_struct_struct_OC_dim3 __FIXME__agg_2e_tmp1;    /* Address-exposed local */
@@ -228,11 +233,11 @@ void kernel(uint32_t m, uint32_t n, double* data, double* cov, double* mean) {
   __FIXME__agg_2e_tmp1.__FIXME__l_struct_struct_OC_dim3_field2 = 1;
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp1)), 12);
-//INSERT COMMENT LOOP: header.016
+// INSERT COMMENT LOOP: kernel::header.016
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < __FIXME__call;   i = i + 1){
 for(int32_t j = 0; j < 256;   j = j + 1){
-_Z11kernel_meaniiPdS_S__OC_1(m, n, data, cov, mean, __FIXME__call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
+kernel_mean(m, n, data, cov, mean, __FIXME__call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
 }
 }
   block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;
@@ -247,13 +252,13 @@ _Z11kernel_meaniiPdS_S__OC_1(m, n, data, cov, mean, __FIXME__call, 1, 1, 256, 1,
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp6)), ((uint8_t*)(&grid)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp5)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp6)), 12);
-//INSERT COMMENT LOOP: header.0
+// INSERT COMMENT LOOP: kernel::header.0
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < 8;   i = i + 1){
 for(int32_t j = 0; j < 32;   j = j + 1){
 for(int32_t k = 0; k < __FIXME__call3;   k = k + 1){
 for(int32_t l = 0; l < __FIXME__call4;   l = l + 1){
-_Z13kernel_reduceiiPdS_S__OC_2(m, n, data, cov, mean, 8, 32, 1, __FIXME__call3, __FIXME__call4, 1, i, j, 0, k, l, 0);
+kernel_reduce(m, n, data, cov, mean, 8, 32, 1, __FIXME__call3, __FIXME__call4, 1, i, j, 0, k, l, 0);
 }
 }
 }
@@ -270,54 +275,60 @@ _Z13kernel_reduceiiPdS_S__OC_2(m, n, data, cov, mean, 8, 32, 1, __FIXME__call3, 
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp19)), ((uint8_t*)(&grid)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp18_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp18)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp19_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp19)), 12);
-//INSERT COMMENT LOOP: header.026
+// INSERT COMMENT LOOP: kernel::header.026
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < 8;   i = i + 1){
 for(int32_t j = 0; j < 32;   j = j + 1){
 for(int32_t k = 0; k < __FIXME__call14;   k = k + 1){
 for(int32_t l = 0; l < __FIXME__call17;   l = l + 1){
-_Z10kernel_coviiPdS_S__OC_3(m, n, data, cov, mean, 8, 32, 1, __FIXME__call14, __FIXME__call17, 1, i, j, 0, k, l, 0);
+kernel_cov(m, n, data, cov, mean, 8, 32, 1, __FIXME__call14, __FIXME__call17, 1, i, j, 0, k, l, 0);
 }
 }
 }
 }
   return;
 }
+// FUNCTION ORDER ID 1 END
 
 
-//INSERT COMMENT FUNCTION: print_array
+// FUNCTION ORDER ID 2 START
+// INSERT COMMENT FUNCTION: print_array
 void print_array(uint32_t m, double* cov) {
   int64_t i;
   uint64_t j;
   int32_t __FIXME__call11;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < m;   i = i + 1){
 for(int64_t j = 0; j < m;   j = j + 1){
-  uint32_t __FIXME__call = fprintf(stderr, (__FIXME_GLOBAL___OC_str), cov[(i * m + j)]);
-  if ((int)(i * m + j) % (int)20 == 0) {
+  fprintf(stderr, (__FIXME_GLOBAL___OC_str), cov[(i * m + j)]);
+  if ((int)(i * m + j) % (int)20 == 0) { // IFELSE MARKER: for.body3 IF
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
   }
 }
 }
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
 }
+// FUNCTION ORDER ID 2 END
 
 
-//INSERT COMMENT FUNCTION: num_blocks
+// FUNCTION ORDER ID 3 START
+// INSERT COMMENT FUNCTION: num_blocks
 uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
+// FUNCTION ORDER ID 3 END
 
 
-//INSERT COMMENT FUNCTION: kernel_mean
-void _Z11kernel_meaniiPdS_S__OC_1(uint32_t m, uint32_t n, double* data, double* cov, double* mean, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 4 START
+// INSERT COMMENT FUNCTION: kernel_mean
+void kernel_mean(uint32_t m, uint32_t n, double* data, double* cov, double* mean, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   int64_t j;
   int64_t i;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel_mean::entry
   j = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;
-  if (j < m) {
+  if (j < m) { // IFELSE MARKER: entry IF
   mean[j] = 0;
 for(int64_t i = 0; i < n;   i = i + 1){
   mean[j] = (mean[j] + data[(i * m + j)]);
@@ -326,36 +337,40 @@ for(int64_t i = 0; i < n;   i = i + 1){
   }
   return;
 }
+// FUNCTION ORDER ID 4 END
 
 
-//INSERT COMMENT FUNCTION: kernel_reduce
-void _Z13kernel_reduceiiPdS_S__OC_2(uint32_t m, uint32_t n, double* data, double* cov, double* mean, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 5 START
+// INSERT COMMENT FUNCTION: kernel_reduce
+void kernel_reduce(uint32_t m, uint32_t n, double* data, double* cov, double* mean, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   int32_t i;
   int64_t j;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel_reduce::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;
   j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y;
-  if (i < n) {
-  if (j < m) {
+  if (i < n) { // IFELSE MARKER: entry IF
+  if (j < m) { // IFELSE MARKER: land.lhs.true IF
   data[(i * m + j)] = (data[(i * m + j)] - mean[j]);
   }
   }
   return;
 }
+// FUNCTION ORDER ID 5 END
 
 
-//INSERT COMMENT FUNCTION: kernel_cov
-void _Z10kernel_coviiPdS_S__OC_3(uint32_t m, uint32_t n, double* data, double* cov, double* mean, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 6 START
+// INSERT COMMENT FUNCTION: kernel_cov
+void kernel_cov(uint32_t m, uint32_t n, double* data, double* cov, double* mean, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   int32_t i;
   int32_t j;
   int64_t k;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel_cov::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;
   j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y + i;
-  if (i < m) {
-  if (j < m) {
+  if (i < m) { // IFELSE MARKER: entry IF
+  if (j < m) { // IFELSE MARKER: land.lhs.true IF
   cov[(i * m + j)] = 0;
 for(int64_t k = 0; k < n;   k = k + 1){
   cov[(i * m + j)] = (cov[(i * m + j)] + (data[(k * m + i)] * data[(k * m + j)]));
@@ -366,4 +381,5 @@ for(int64_t k = 0; k < n;   k = k + 1){
   }
   return;
 }
+// FUNCTION ORDER ID 6 END
 

@@ -1,0 +1,308 @@
+{
+  "mappings": [
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field0",
+      "after": "batch_flags"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field1",
+      "after": "batch_buf_base"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field2",
+      "after": "batch_buf_pos"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field3",
+      "after": "batch_buf_end"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field4",
+      "after": "batch_buf_read"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field5",
+      "after": "batch_buf_write"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field6",
+      "after": "batch_buf_aux0"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field7",
+      "after": "batch_buf_aux1"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field8",
+      "after": "batch_buf_aux2"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field9",
+      "after": "batch_buf_aux3"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field10",
+      "after": "batch_buf_aux4"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field11",
+      "after": "batch_buf_aux5"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field12",
+      "after": "batch_cookie"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field13",
+      "after": "batch_prev"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field14",
+      "after": "batch_u32_14"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field15",
+      "after": "batch_u32_15"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field16",
+      "after": "batch_u64_16"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field17",
+      "after": "batch_u16_17"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field18",
+      "after": "batch_u8_18"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field19",
+      "after": "batch_smallbuf"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field20",
+      "after": "batch_buf_extra"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field21",
+      "after": "batch_u64_21"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field22",
+      "after": "batch_lock"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field23",
+      "after": "batch_cookie2"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field24",
+      "after": "batch_next"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field25",
+      "after": "batch_buf_dynamic"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field26",
+      "after": "batch_u64_26"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field27",
+      "after": "batch_u32_27"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field28",
+      "after": "batch_padding"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC_dim3_field0",
+      "after": "x"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC_dim3_field1",
+      "after": "y"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC_dim3_field2",
+      "after": "z"
+    },
+    {
+      "before": "__FIXME__l_unnamed_1_field0",
+      "after": "first64"
+    },
+    {
+      "before": "__FIXME__l_unnamed_1_field1",
+      "after": "second32"
+    },
+    {
+      "before": "__FIXME__tmp1",
+      "after": "index_A"
+    },
+    {
+      "before": "__FIXME__tmp2",
+      "after": "i_double"
+    },
+    {
+      "before": "__FIXME__tmp3",
+      "after": "j_plus_2_double"
+    },
+    {
+      "before": "__FIXME__tmp4",
+      "after": "prod_i_jp2"
+    },
+    {
+      "before": "__FIXME__tmp5",
+      "after": "prod_plus_2"
+    },
+    {
+      "before": "__FIXME__tmp6",
+      "after": "A_value"
+    },
+    {
+      "before": "__FIXME__tmp7",
+      "after": "index_B"
+    },
+    {
+      "before": "__FIXME__tmp8",
+      "after": "i_double2"
+    },
+    {
+      "before": "__FIXME__tmp9",
+      "after": "j_plus_3_double"
+    },
+    {
+      "before": "__FIXME__tmp10",
+      "after": "prod_i_jp3"
+    },
+    {
+      "before": "__FIXME__tmp11",
+      "after": "prod_plus_3"
+    },
+    {
+      "before": "__FIXME__tmp12",
+      "after": "B_value"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp",
+      "after": "grid_copy"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp3",
+      "after": "block_copy"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp3_2e_coerce",
+      "after": "block_pair_coerce"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp5",
+      "after": "grid_copy2"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp5_2e_coerce",
+      "after": "grid_pair_coerce2"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp6",
+      "after": "block_copy2"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp6_2e_coerce",
+      "after": "block_pair_coerce2"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp_2e_coerce",
+      "after": "grid_pair_coerce"
+    },
+    {
+      "before": "__FIXME__call",
+      "after": "num_blocks_x"
+    },
+    {
+      "before": "__FIXME__call2",
+      "after": "num_blocks_y"
+    },
+    {
+      "before": "__FIXME__blockDim_2e_x",
+      "after": "blockDim_x"
+    },
+    {
+      "before": "__FIXME__blockDim_2e_y",
+      "after": "blockDim_y"
+    },
+    {
+      "before": "__FIXME__blockDim_2e_z",
+      "after": "blockDim_z"
+    },
+    {
+      "before": "__FIXME__blockIdx_2e_x",
+      "after": "blockIdx_x"
+    },
+    {
+      "before": "__FIXME__blockIdx_2e_y",
+      "after": "blockIdx_y"
+    },
+    {
+      "before": "__FIXME__blockIdx_2e_z",
+      "after": "blockIdx_z"
+    },
+    {
+      "before": "__FIXME__gridDim_2e_x",
+      "after": "gridDim_x"
+    },
+    {
+      "before": "__FIXME__gridDim_2e_y",
+      "after": "gridDim_y"
+    },
+    {
+      "before": "__FIXME__gridDim_2e_z",
+      "after": "gridDim_z"
+    },
+    {
+      "before": "__FIXME__threadIdx_2e_x",
+      "after": "threadIdx_x"
+    },
+    {
+      "before": "__FIXME__threadIdx_2e_y",
+      "after": "threadIdx_y"
+    },
+    {
+      "before": "__FIXME__threadIdx_2e_z",
+      "after": "threadIdx_z"
+    },
+    {
+      "before": "__FIXME__call22",
+      "after": "unused_call22"
+    },
+    {
+      "before": "__FIXME__call30",
+      "after": "unused_call30"
+    },
+    {
+      "before": "__FIXME__call11",
+      "after": "temp_i32"
+    },
+    {
+      "before": "__FIXME__l_array_1_uint8_t",
+      "after": "UInt8Array1"
+    },
+    {
+      "before": "__FIXME__l_array_20_uint8_t",
+      "after": "UInt8Array20"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC__IO_FILE",
+      "after": "StdFile"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC_dim3",
+      "after": "Dim3"
+    },
+    {
+      "before": "__FIXME__l_unnamed_1",
+      "after": "UInt64UInt32Pair"
+    }
+  ]
+}

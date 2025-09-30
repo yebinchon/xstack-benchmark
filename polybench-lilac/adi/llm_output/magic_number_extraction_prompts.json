@@ -1,0 +1,9 @@
+{
+  "rounds": [
+    {
+      "scope": "global",
+      "system_prompt": "You are an expert C refactoring assistant. Define file-level constants for repeated literals used across functions.",
+      "user_prompt": "Identify descriptive constants for these numeric literals used across multiple contexts.\nReturn JSON: {\"extractions\":[{\"value\":string,\"name\":string,\"type\":string,\"scope\":string,\"occurrences\":[int],\"function\":string}]}\nValid types: define, const_var. Scope must be global or file.\nNames must be unique across the entire file and not clash with existing identifiers.\nRe-use previously defined constants when the meaning matches, but feel free to introduce a distinct name when the literal carries a different semantic role.\nCandidates:\n- value 256 (count 4 lines [273, 284, 288, 299])\n    example: uint32_t __FIXME__call = num_blocks((n - 2), 256);\n    example: for(int32_t k = 0; k < 256;   k = k + 1){\n    example: uint32_t __FIXME__call19 = num_blocks((n - 2), 256);\nOnly suggest replacements for the exact numeric literals listed above. Do not invent new expressions or sizeof-derived values.\nSkip loop increments or obvious counters unless they appear multiple times with semantic meaning.\n\nReference file: /scratch/ah7226/xstack-benchmark/polybench-lilac/adi/adi_cpu.c"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "extractions": [
+    {
+      "value": "8",
+      "name": "BLOCK_DIM3_FIELD1_DEFAULT_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        242
+      ],
+      "function": "main"
+    },
+    {
+      "value": "32",
+      "name": "BLOCK_DIM3_FIELD2_DEFAULT_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        243
+      ],
+      "function": "main"
+    },
+    {
+      "value": "12",
+      "name": "BLOCK_BYTES_TO_COPY_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        251
+      ],
+      "function": "main"
+    }
+  ]
+}

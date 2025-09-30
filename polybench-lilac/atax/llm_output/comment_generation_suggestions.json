@@ -1,0 +1,74 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize the input matrix A and the vectors x, tmp and y with deterministic starting values used by the ATAX benchmark (fills A and sets up initial vectors)"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute how many blocks of size 'factor' are required to cover 'num' items (ceiling integer division)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel3",
+      "original": "// INSERT COMMENT FUNCTION: kernel3",
+      "replacement": "// Parallel kernel that computes tmp = A * x: each thread computes the dot product of one row i of A with vector x and stores the result in tmp[i]"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel4",
+      "original": "// INSERT COMMENT FUNCTION: kernel4",
+      "replacement": "// Parallel kernel that computes y = A^T * tmp: each thread computes the dot product of one column j of A with vector tmp and writes the result to y[j]"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the vector y of length nx to stderr using the provided format, with readable line breaks between groups of values"
+    },
+    {
+      "id": "unknown_LOOP_main",
+      "original": "// INSERT COMMENT LOOP: main",
+      "replacement": "// Parallel nested loops over block-row index i and inner block index j that partition the computation into tiles; OpenMP collapse(2) distributes tiles across threads"
+    },
+    {
+      "id": "unknown_LOOP_main",
+      "original": "// INSERT COMMENT LOOP: main",
+      "replacement": "// Parallel nested loops over block-row index i and inner block index j that partition the computation into tiles; OpenMP collapse(2) distributes tiles across threads"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all rows i and columns j of A to initialize each element with the test pattern A[i*ny + j] = (i * (j+1)) / nx"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all rows i and columns j of A to initialize each element with the test pattern A[i*ny + j] = (i * (j+1)) / nx"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all rows i and columns j of A to initialize each element with the test pattern A[i*ny + j] = (i * (j+1)) / nx"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over the elements of y, printing each value and inserting a newline every 20 values to keep the output readable"
+    },
+    {
+      "id": "unknown_IFELSE_main::kcall.end51",
+      "original": "// INSERT COMMENT IFELSE: main::kcall.end51",
+      "replacement": "// If the dump_code flag is set, print the result vector y for debugging/verification; then free heap allocations for A and x to avoid memory leaks"
+    },
+    {
+      "id": "unknown_IFELSE_kernel3::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel3::entry",
+      "replacement": "// Compute global row index i from block/thread indices and, if it is within bounds (i < m), accumulate the dot product of row i of A with x into dot (guard prevents out-of-range threads from doing work)"
+    },
+    {
+      "id": "unknown_IFELSE_kernel4::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel4::entry",
+      "replacement": "// Compute global column index j from block/thread indices and, if it is within bounds (j < n), initialize y[j] and accumulate the dot product of column j of A with tmp into y[j] (guard prevents out-of-range threads)"
+    }
+  ]
+}

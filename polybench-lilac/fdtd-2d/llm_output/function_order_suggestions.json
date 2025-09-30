@@ -1,0 +1,15 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    3,
+    4,
+    5,
+    6,
+    7,
+    1,
+    2
+  ],
+  "reasoning": "The entry point (main) is placed first to match the requested convention and make top-level control flow immediately visible. Immediately after main, put initialization and small utility functions that main or core code rely on: init_array (0) and num_blocks (3). The various small kernel helpers (kernel_splat (4), kernel_ey (5), kernel_ex (6), kernel_hz (7)) are grouped together next so related GPU/compute pieces are adjacent and easy to scan. The high-level orchestrator kernel (1), which calls num_blocks and the kernel_* helpers, is placed after those dependencies so callers appear after their callees, improving dependency ordering and readability. Finally, print_array (2) is left last as a display/utility function. This ordering improves logical flow (entry \u2192 setup \u2192 helpers \u2192 orchestrator \u2192 output), groups related helpers, and respects call dependencies to aid comprehension and debugging.",
+  "confidence": 0.9
+}

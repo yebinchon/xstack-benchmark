@@ -1,0 +1,94 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize arrays used by the computation; this function prepares data structures (e.g., zeroing G and setting initial values for A..F) for the main kernels"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute the number of blocks required to cover 'num' items when grouping by 'factor' (ceiling division)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_A_mul_B",
+      "original": "// INSERT COMMENT FUNCTION: kernel_A_mul_B",
+      "replacement": "// Per-thread/block kernel that computes one element of C as the dot product of row i of A and column j of B, using block/thread indices to map to global matrix coordinates"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Top-level kernel wrapper that sets up grid/block dimensions (dim3_t structs) and coordinates, then orchestrates the tiled/blocked parallel computation to produce G from input matrices"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the matrix G (dimensions ni x nl) to stderr in a human-readable formatted form for verification or debugging"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all row (i) and column (j) indices of G and initialize each element to 0 to clear the output matrix before computation"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all row (i) and column (j) indices of G and initialize each element to 0 to clear the output matrix before computation"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all row (i) and column (j) indices of G and initialize each element to 0 to clear the output matrix before computation"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all row (i) and column (j) indices of G and initialize each element to 0 to clear the output matrix before computation"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all row (i) and column (j) indices of G and initialize each element to 0 to clear the output matrix before computation"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all row (i) and column (j) indices of G and initialize each element to 0 to clear the output matrix before computation"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all row (i) and column (j) indices of G and initialize each element to 0 to clear the output matrix before computation"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallelized nested loop over block-grid indices i and j (both loops collapsed) to cover all tile/block positions for the computation; iterations correspond to block-level work dispatched via OpenMP"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallelized nested loop over block-grid indices i and j (both loops collapsed) to cover all tile/block positions for the computation; iterations correspond to block-level work dispatched via OpenMP"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallelized nested loop over block-grid indices i and j (both loops collapsed) to cover all tile/block positions for the computation; iterations correspond to block-level work dispatched via OpenMP"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over rows i and columns j of G and print each element in row-major order to stderr using the configured double format"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line arguments: set dump_code and problem sizes ni, nj, nk, nl from argv[1..5]"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_A_mul_B::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_A_mul_B::entry",
+      "replacement": "// Compute global row (i) and column (j) indices from block and thread coordinates; if both indices fall within matrix bounds, initialize the dot-product accumulator for this thread"
+    }
+  ]
+}

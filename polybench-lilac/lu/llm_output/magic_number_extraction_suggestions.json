@@ -1,0 +1,44 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "LU_BLOCK_ELEM_COUNT_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        222
+      ],
+      "function": "lu_cpu"
+    },
+    {
+      "value": "8",
+      "name": "LU_BLOCK_DIM_X_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        237
+      ],
+      "function": "lu_cpu"
+    },
+    {
+      "value": "32",
+      "name": "LU_BLOCK_DIM_Y_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        238
+      ],
+      "function": "lu_cpu"
+    },
+    {
+      "value": "12",
+      "name": "LU_AGG_COPY_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        246
+      ],
+      "function": "lu_cpu"
+    }
+  ]
+}

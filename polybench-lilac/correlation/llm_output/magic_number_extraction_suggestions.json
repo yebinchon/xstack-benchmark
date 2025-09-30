@@ -1,0 +1,55 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "CORRELATION_BLOCK_ELEMENTS_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        358,
+        370,
+        374,
+        386,
+        416
+      ],
+      "function": "kernel_correlation"
+    },
+    {
+      "value": "8",
+      "name": "CORRELATION_BLOCK_DIM0_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        390,
+        404,
+        429,
+        443
+      ],
+      "function": "kernel_correlation"
+    },
+    {
+      "value": "32",
+      "name": "CORRELATION_BLOCK_DIM1_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        391,
+        405,
+        430,
+        444
+      ],
+      "function": "kernel_correlation"
+    },
+    {
+      "value": "12",
+      "name": "CORRELATION_BLOCK_COPY_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        398,
+        437
+      ],
+      "function": "kernel_correlation"
+    }
+  ]
+}

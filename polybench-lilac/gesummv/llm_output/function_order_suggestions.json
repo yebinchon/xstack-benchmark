@@ -1,0 +1,11 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    1,
+    3,
+    2
+  ],
+  "reasoning": "Place the program entry first for immediate context. Follow with initialization and setup functions that main calls early: init_array (0) initializes data and num_blocks (1) computes launch configuration. Next put the core computational kernel kernel_y (3) so the heavy computation is colocated after setup. Finally place the I/O/utility print_array (2) last since it is a helper used only for optional output. This order respects call/dependency order (main -> init_array, num_blocks, kernel_y, print_array), groups related routines, and improves readability and debugging by locating initialization, core logic, and printing in a logical sequence.",
+  "confidence": 0.9
+}

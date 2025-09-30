@@ -1,0 +1,59 @@
+{
+  "function_name": "kernel_stencil",
+  "breakups": [
+    {
+      "line_number": 183,
+      "original_expression": "i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x + 1;",
+      "breakup_steps": [
+        {
+          "temp_var": "block_offset",
+          "expression": "__FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x",
+          "description": "Compute the starting index contributed by the block (block stride times block index)."
+        },
+        {
+          "temp_var": "thread_base",
+          "expression": "block_offset + __FIXME__threadIdx_2e_x",
+          "description": "Add the thread's index within the block to get the zero-based global thread index."
+        },
+        {
+          "temp_var": "thread_global_idx",
+          "expression": "thread_base + 1",
+          "description": "Apply the +1 offset from the original expression to match the intended indexing."
+        }
+      ],
+      "final_expression": "thread_global_idx"
+    },
+    {
+      "line_number": 185,
+      "original_expression": "B[i] = (((A[(i - 1)] + A[i]) + A[(i + 1)]) / 3);",
+      "breakup_steps": [
+        {
+          "temp_var": "left_val",
+          "expression": "A[i - 1]",
+          "description": "Value at the left neighbor."
+        },
+        {
+          "temp_var": "center_val",
+          "expression": "A[i]",
+          "description": "Value at the current index."
+        },
+        {
+          "temp_var": "right_val",
+          "expression": "A[i + 1]",
+          "description": "Value at the right neighbor."
+        },
+        {
+          "temp_var": "sum",
+          "expression": "left_val + center_val + right_val",
+          "description": "Sum the three neighboring values."
+        },
+        {
+          "temp_var": "average",
+          "expression": "sum / 3.0",
+          "description": "Compute the average of the three values (use 3.0 to make the floating-point intent explicit)."
+        }
+      ],
+      "final_expression": "average"
+    }
+  ]
+}

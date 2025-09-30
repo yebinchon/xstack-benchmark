@@ -1,0 +1,94 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize input/output arrays and the temporary matrix: prepare A, B, C, D and zero-initialize tmp with deterministic values so the computation has reproducible inputs"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Return the number of blocks required to cover 'num' elements with block size 'factor' (ceiling division)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_A_mul_B",
+      "original": "// INSERT COMMENT FUNCTION: kernel_A_mul_B",
+      "replacement": "// Compute the first kernel phase: for each valid (i,j) thread compute the dot product over k of A[i,*] and B[*,j] (scaled by alpha) and store the result into tmp"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_A_mul_B",
+      "original": "// INSERT COMMENT FUNCTION: kernel_A_mul_B",
+      "replacement": "// Kernel entry for the A*B multiply stage; thread/block indices map to matrix element (i,j), inner loop accumulates the dot product into 'dot' before writing to tmp"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_D_plus_tmp_mul_C",
+      "original": "// INSERT COMMENT FUNCTION: kernel_D_plus_tmp_mul_C",
+      "replacement": "// Compute the second kernel phase: for each valid (i,l) thread initialize accumulator from beta*D[i,l], add contributions from tmp*C (inner product over j) scaled by alpha, and update D"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Host-side orchestration that computes grid/block configuration and dispatches the two computation phases (A_mul_B and D_plus_tmp_mul_C), adapting to the execution model (here using nested/parallel loops)"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the resulting matrix D (dimensions ni x nl) in row-major order to stderr using the configured floating-point format for verification or debugging"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over rows i (0..ni-1) and columns j (0..nj-1) of the temporary matrix and initialize each tmp element to 0"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over rows i (0..ni-1) and columns j (0..nj-1) of the temporary matrix and initialize each tmp element to 0"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over rows i (0..ni-1) and columns j (0..nj-1) of the temporary matrix and initialize each tmp element to 0"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over rows i (0..ni-1) and columns j (0..nj-1) of the temporary matrix and initialize each tmp element to 0"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over rows i (0..ni-1) and columns j (0..nj-1) of the temporary matrix and initialize each tmp element to 0"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallel 2D loop over block indices (i,j) using OpenMP collapse to distribute work across blocks covering numBlocksNi2 x numBlocksNl"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallel 2D loop over block indices (i,j) using OpenMP collapse to distribute work across blocks covering numBlocksNi2 x numBlocksNl"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over rows i and columns j of D and print each element to stderr in row-major order for output/validation"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line arguments: set dump_code flag and matrix dimensions m, n, k, p from argv[1..5]"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_A_mul_B::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_A_mul_B::entry",
+      "replacement": "// Compute global thread indices i and j from block and thread coordinates; if both indices are within matrix bounds, initialize accumulator 'dot' to 0 to begin inner-product accumulation"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_D_plus_tmp_mul_C::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_D_plus_tmp_mul_C::entry",
+      "replacement": "// Compute global thread indices i and l; if indices are within bounds initialize 'dot' with beta-scaled D[i,l] as the starting accumulator for adding tmp*C contributions"
+    }
+  ]
+}

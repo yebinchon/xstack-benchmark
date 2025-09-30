@@ -1,0 +1,69 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize arrays used by the computation; set up initial values (here u is initialized as u[i*n+j] = (i + n - j) / n) before the main computation"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Return the number of blocks of size 'factor' required to cover 'num' items (integer ceiling division)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_column_sweep",
+      "original": "// INSERT COMMENT FUNCTION: kernel_column_sweep",
+      "replacement": "// Column-oriented GPU-style kernel: performs per-column updates on the 2D arrays u,v,p,q using provided coefficients and thread/block mapping"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_column_sweep",
+      "original": "// INSERT COMMENT FUNCTION: kernel_column_sweep",
+      "replacement": "// Kernel entry point for column sweeps over tsteps and an n x n grid; thread and block indices determine which column(s) each thread handles"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_row_sweep",
+      "original": "// INSERT COMMENT FUNCTION: kernel_row_sweep",
+      "replacement": "// Row-oriented GPU-style kernel: performs per-row updates on the 2D arrays u,v,p,q using provided coefficients and thread/block mapping"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Host-side kernel driver that configures grid/block dimensions, prepares launch parameters, and iterates time steps to invoke row/column sweep kernels"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the n x n array 'u' in row-major order to stderr using a fixed format, iterating over rows then columns"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate all rows (i) and columns (j) of the n x n grid to initialize the element u[i*n + j] to (i + n - j) / n"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Time-stepping loop: for each time step compute how many blocks are needed to cover the interior columns and set grid.x accordingly before launching kernels"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate rows and columns and print each element u[i*n + j] with fprintf to produce a full array dump"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line arguments to obtain dump_code, n and tsteps, then allocate memory for u and v arrays of n*n doubles"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_column_sweep::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_column_sweep::entry",
+      "replacement": "// Compute the global column index i for this thread; if i lies inside the interior (1..n-2) initialize the top-of-column and related auxiliary values (v[0,i], p[i,0], q[i,0])"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_row_sweep::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_row_sweep::entry",
+      "replacement": "// Compute the global row index i for this thread; if i lies inside the interior (1..n-2) initialize the left-of-row and related auxiliary values (u[i,0], p[i+ n,0], q[i,0])"
+    }
+  ]
+}

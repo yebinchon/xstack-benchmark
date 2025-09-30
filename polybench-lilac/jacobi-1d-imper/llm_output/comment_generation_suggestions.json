@@ -1,0 +1,54 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize arrays A and B of length n with deterministic test values: A[i]=(i+2)/n and B[i]=(i+3)/n"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute how many blocks of size 'factor' are needed to cover 'num' elements (ceiling division)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_stencil",
+      "original": "// INSERT COMMENT FUNCTION: kernel_stencil",
+      "replacement": "// Per-thread CUDA-like kernel: compute the global index from block/thread coordinates and apply a stencil update from A into B for interior elements"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Host-side driver that configures grid/block dimensions and runs the stencil kernel for tsteps iterations to update arrays A and B"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the contents of array A (length n) to stderr using the provided double format, with human-friendly line breaks"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Loop over all indices 0..n-1 and initialize A and B with fractional values derived from the index for predictable test data"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Time-stepping loop: for each timestep compute the number of blocks needed (256 threads per block) to cover n and set up the grid for the kernel launch"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over array elements and print each value; insert a line break/spacing every 20 values to keep output readable"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line arguments (dump_code, tsteps, n) and allocate two double arrays A and B of length n"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_stencil::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_stencil::entry",
+      "replacement": "// Compute this thread's global index (shifted by +1) and execute the stencil only if the index lies in the interior range (1..n-2) to avoid boundaries"
+    }
+  ]
+}

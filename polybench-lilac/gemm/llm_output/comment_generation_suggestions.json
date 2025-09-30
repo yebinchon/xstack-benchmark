@@ -1,0 +1,64 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize the arrays A, B, and C with deterministic values based on their indices so the computation has a known starting state"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_dev",
+      "original": "// INSERT COMMENT FUNCTION: kernel_dev",
+      "replacement": "// GPU-style per-thread kernel: compute the global element indices i,j from block/thread ids, perform the dot-product over k to update C[i,j] as alpha * sum_k(A[i,k]*B[k,j]) + beta*C[i,j], with bounds checks"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute the number of blocks required to cover 'num' elements with blocks of size 'factor' (ceiling division)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Host-side kernel launcher: configure grid and block dimensions and orchestrate parallel execution of the device kernel over the matrix tiles"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the contents of matrix C (size ni x nj) to stderr in row-major order using the specified formatting"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over k (0..nk-1) and j (0..nj-1) to visit every element of B (nk x nj) and compute its linear index idx_B for access"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over k (0..nk-1) and j (0..nj-1) to visit every element of B (nk x nj) and compute its linear index idx_B for access"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over k (0..nk-1) and j (0..nj-1) to visit every element of B (nk x nj) and compute its linear index idx_B for access"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallelize over the 2D block grid: for each block index (i,j) in the x and y block dimensions run the block-level work (collapse(2) distributes both loops)"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Loop over all rows i and columns j of C and print each element C[i*nj + j] in row-major order"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line arguments (dump_code, ni, nj, nk) and allocate memory for A (ni * nk doubles); these values configure problem size and behavior"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_dev::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_dev::entry",
+      "replacement": "// Compute the global element coordinates i,j from block and thread indices; check bounds so only valid matrix positions execute, then initialize the accumulator 'dot' with beta * C[i,j]"
+    }
+  ]
+}

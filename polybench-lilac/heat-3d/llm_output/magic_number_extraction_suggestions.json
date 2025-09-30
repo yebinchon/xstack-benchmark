@@ -1,0 +1,40 @@
+{
+  "extractions": [
+    {
+      "value": "8",
+      "name": "HEAT3D_BLOCK_DEPTH_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        197,
+        225,
+        241,
+        257
+      ],
+      "function": "kernel_heat_3d / main"
+    },
+    {
+      "value": "32",
+      "name": "HEAT3D_BLOCK_HEIGHT_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        226,
+        242,
+        258
+      ],
+      "function": "kernel_heat_3d / main"
+    },
+    {
+      "value": "12",
+      "name": "HEAT3D_BLOCK_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        234,
+        250
+      ],
+      "function": "main"
+    }
+  ]
+}

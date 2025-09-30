@@ -1,0 +1,168 @@
+{
+  "function_name": "init_array",
+  "breakups": [
+    {
+      "line_number": 196,
+      "original_expression": "A[(i * ni + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "i_d",
+          "expression": "(double)i",
+          "description": "Convert loop index i to double"
+        },
+        {
+          "temp_var": "j_d",
+          "expression": "(double)j",
+          "description": "Convert loop index j to double"
+        },
+        {
+          "temp_var": "prod_ij",
+          "expression": "i_d * j_d",
+          "description": "Multiply i and j in double precision"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)ni",
+          "description": "Convert denominator ni to double"
+        },
+        {
+          "temp_var": "value",
+          "expression": "prod_ij / denom",
+          "description": "Compute the final double value"
+        },
+        {
+          "temp_var": "idx",
+          "expression": "i * ni + j",
+          "description": "Compute the array index"
+        }
+      ],
+      "final_expression": "A[idx] = value;"
+    },
+    {
+      "line_number": 202,
+      "original_expression": "B[(i * nk + j)] = (((double)(i) * (double)((j + 1))) / (double)(nj));",
+      "breakup_steps": [
+        {
+          "temp_var": "i_d",
+          "expression": "(double)i",
+          "description": "Convert loop index i to double"
+        },
+        {
+          "temp_var": "j_plus1",
+          "expression": "j + 1",
+          "description": "Compute integer (j + 1)"
+        },
+        {
+          "temp_var": "j1_d",
+          "expression": "(double)j_plus1",
+          "description": "Convert (j + 1) to double"
+        },
+        {
+          "temp_var": "prod_i_j1",
+          "expression": "i_d * j1_d",
+          "description": "Multiply i and (j + 1) in double precision"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)nj",
+          "description": "Convert denominator nj to double"
+        },
+        {
+          "temp_var": "value",
+          "expression": "prod_i_j1 / denom",
+          "description": "Compute the final double value"
+        },
+        {
+          "temp_var": "idx_b",
+          "expression": "i * nk + j",
+          "description": "Compute the array index for B"
+        }
+      ],
+      "final_expression": "B[idx_b] = value;"
+    },
+    {
+      "line_number": 208,
+      "original_expression": "C[(i * nj + j)] = (((double)(i) * (double)((j + 3))) / (double)(nl));",
+      "breakup_steps": [
+        {
+          "temp_var": "i_d",
+          "expression": "(double)i",
+          "description": "Convert loop index i to double"
+        },
+        {
+          "temp_var": "j_plus3",
+          "expression": "j + 3",
+          "description": "Compute integer (j + 3)"
+        },
+        {
+          "temp_var": "j3_d",
+          "expression": "(double)j_plus3",
+          "description": "Convert (j + 3) to double"
+        },
+        {
+          "temp_var": "prod_i_j3",
+          "expression": "i_d * j3_d",
+          "description": "Multiply i and (j + 3) in double precision"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)nl",
+          "description": "Convert denominator nl to double"
+        },
+        {
+          "temp_var": "value",
+          "expression": "prod_i_j3 / denom",
+          "description": "Compute the final double value"
+        },
+        {
+          "temp_var": "idx_c",
+          "expression": "i * nj + j",
+          "description": "Compute the array index for C"
+        }
+      ],
+      "final_expression": "C[idx_c] = value;"
+    },
+    {
+      "line_number": 214,
+      "original_expression": "D[(i * nm + j)] = (((double)(i) * (double)((j + 2))) / (double)(nk));",
+      "breakup_steps": [
+        {
+          "temp_var": "i_d",
+          "expression": "(double)i",
+          "description": "Convert loop index i to double"
+        },
+        {
+          "temp_var": "j_plus2",
+          "expression": "j + 2",
+          "description": "Compute integer (j + 2)"
+        },
+        {
+          "temp_var": "j2_d",
+          "expression": "(double)j_plus2",
+          "description": "Convert (j + 2) to double"
+        },
+        {
+          "temp_var": "prod_i_j2",
+          "expression": "i_d * j2_d",
+          "description": "Multiply i and (j + 2) in double precision"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)nk",
+          "description": "Convert denominator nk to double"
+        },
+        {
+          "temp_var": "value",
+          "expression": "prod_i_j2 / denom",
+          "description": "Compute the final double value"
+        },
+        {
+          "temp_var": "idx_d",
+          "expression": "i * nm + j",
+          "description": "Compute the array index for D"
+        }
+      ],
+      "final_expression": "D[idx_d] = value;"
+    }
+  ]
+}

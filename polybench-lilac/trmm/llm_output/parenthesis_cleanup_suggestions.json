@@ -1,0 +1,202 @@
+{
+  "removals": [
+    {
+      "line_number": 155,
+      "expression": "(&alpha)",
+      "replacement": "&alpha",
+      "reasoning": "Parentheses around a single unary & expression are redundant in an argument list."
+    },
+    {
+      "line_number": 155,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "The outer parentheses wrapping the cast expression are redundant; the cast itself (double*)A must keep its parentheses for the type."
+    },
+    {
+      "line_number": 155,
+      "expression": "((double*)B)",
+      "replacement": "(double*)B",
+      "reasoning": "As above, remove the redundant outer parentheses around the cast expression."
+    },
+    {
+      "line_number": 157,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "Outer parentheses around the cast are unnecessary in a function call argument."
+    },
+    {
+      "line_number": 157,
+      "expression": "((double*)B)",
+      "replacement": "(double*)B",
+      "reasoning": "Outer parentheses around the cast are unnecessary in a function call argument."
+    },
+    {
+      "line_number": 160,
+      "expression": "((double*)B)",
+      "replacement": "(double*)B",
+      "reasoning": "Outer parentheses around the cast are redundant for the call argument."
+    },
+    {
+      "line_number": 162,
+      "expression": "((uint8_t*)((double*)A))",
+      "replacement": "(uint8_t*)((double*)A)",
+      "reasoning": "The outermost parentheses around the cast expression passed to free() are redundant; keep the necessary cast parentheses."
+    },
+    {
+      "line_number": 163,
+      "expression": "((uint8_t*)((double*)B))",
+      "replacement": "(uint8_t*)((double*)B)",
+      "reasoning": "Remove the unnecessary outer parentheses around the cast expression passed to free()."
+    },
+    {
+      "line_number": 182,
+      "expression": "A[(i * m + j)]",
+      "replacement": "A[i * m + j]",
+      "reasoning": "Parentheses around the full array index expression are redundant; the indexing expression can be written without the extra parens."
+    },
+    {
+      "line_number": 189,
+      "expression": "B[(j * n + j)]",
+      "replacement": "B[j * n + j]",
+      "reasoning": "Remove redundant parentheses around the array index expression for clarity."
+    },
+    {
+      "line_number": 196,
+      "expression": "((num + factor) - 1) / factor",
+      "replacement": "(num + factor - 1) / factor",
+      "reasoning": "The extra outer parentheses and the unnecessary parentheses around the (num + factor) subexpression can be removed while keeping parentheses around the entire numerator to preserve the intended division grouping."
+    },
+    {
+      "line_number": 210,
+      "expression": "B[(i * n + j)]",
+      "replacement": "B[i * n + j]",
+      "reasoning": "Remove redundant parentheses around the array index on the left-hand side of the assignment."
+    },
+    {
+      "line_number": 210,
+      "expression": "(B[(i * n + j)] + (A[(k * m + i)] * B[(k * n + j)]))",
+      "replacement": "B[i * n + j] + (A[k * m + i] * B[k * n + j])",
+      "reasoning": "The outer parentheses around the sum are unnecessary; multiplication has higher precedence so the inner product does not need outer grouping. Also simplify the indexed expressions (see separate entries)."
+    },
+    {
+      "line_number": 210,
+      "expression": "A[(k * m + i)]",
+      "replacement": "A[k * m + i]",
+      "reasoning": "Remove redundant parentheses around the array index expression inside the product."
+    },
+    {
+      "line_number": 210,
+      "expression": "B[(k * n + j)]",
+      "replacement": "B[k * n + j]",
+      "reasoning": "Remove redundant parentheses around this array index expression inside the product."
+    },
+    {
+      "line_number": 226,
+      "expression": "B[(i * n + j)]",
+      "replacement": "B[i * n + j]",
+      "reasoning": "Remove redundant parentheses around the array index on the left-hand side."
+    },
+    {
+      "line_number": 226,
+      "expression": "(B[(i * n + j)] * alpha)",
+      "replacement": "B[i * n + j] * alpha",
+      "reasoning": "Outer parentheses around the multiplication are unnecessary because * has higher precedence than assignment; also simplified the indexed expression (see separate entry)."
+    },
+    {
+      "line_number": 264,
+      "expression": "((uint8_t*)(&grid_tmp1_packed))",
+      "replacement": "(uint8_t*)(&grid_tmp1_packed)",
+      "reasoning": "The outer parentheses wrapping the cast expression passed to memcpy are redundant; keep the cast syntax but drop the extra parens."
+    },
+    {
+      "line_number": 264,
+      "expression": "((uint8_t*)(&grid_tmp1))",
+      "replacement": "(uint8_t*)(&grid_tmp1)",
+      "reasoning": "Same as above: the outer parentheses around the cast operand are unnecessary."
+    },
+    {
+      "line_number": 265,
+      "expression": "((uint8_t*)(&block_tmp1_packed))",
+      "replacement": "(uint8_t*)(&block_tmp1_packed)",
+      "reasoning": "Remove redundant outer parentheses around cast expression passed to memcpy."
+    },
+    {
+      "line_number": 265,
+      "expression": "((uint8_t*)(&block_tmp1))",
+      "replacement": "(uint8_t*)(&block_tmp1)",
+      "reasoning": "Remove redundant outer parentheses around cast expression passed to memcpy."
+    },
+    {
+      "line_number": 281,
+      "expression": "((uint8_t*)(&grid_tmp2))",
+      "replacement": "(uint8_t*)(&grid_tmp2)",
+      "reasoning": "Outer parentheses around the cast are redundant in the memcpy call."
+    },
+    {
+      "line_number": 281,
+      "expression": "((uint8_t*)(&grid))",
+      "replacement": "(uint8_t*)(&grid)",
+      "reasoning": "Remove redundant outer parentheses around this cast expression."
+    },
+    {
+      "line_number": 282,
+      "expression": "((uint8_t*)(&block_tmp2))",
+      "replacement": "(uint8_t*)(&block_tmp2)",
+      "reasoning": "Remove the unnecessary outer parentheses around the cast."
+    },
+    {
+      "line_number": 282,
+      "expression": "((uint8_t*)(&block))",
+      "replacement": "(uint8_t*)(&block)",
+      "reasoning": "Same reasoning: outer parentheses are redundant."
+    },
+    {
+      "line_number": 283,
+      "expression": "((uint8_t*)(&grid_tmp2_packed))",
+      "replacement": "(uint8_t*)(&grid_tmp2_packed)",
+      "reasoning": "Drop unnecessary outer parentheses around the cast passed to memcpy."
+    },
+    {
+      "line_number": 283,
+      "expression": "((uint8_t*)(&grid_tmp2))",
+      "replacement": "(uint8_t*)(&grid_tmp2)",
+      "reasoning": "Remove redundant outer parentheses around the cast."
+    },
+    {
+      "line_number": 284,
+      "expression": "((uint8_t*)(&block_tmp2_packed))",
+      "replacement": "(uint8_t*)(&block_tmp2_packed)",
+      "reasoning": "Remove the redundant outer parentheses around the cast expression."
+    },
+    {
+      "line_number": 284,
+      "expression": "((uint8_t*)(&block_tmp2))",
+      "replacement": "(uint8_t*)(&block_tmp2)",
+      "reasoning": "Remove the redundant outer parentheses around this cast passed to memcpy."
+    },
+    {
+      "line_number": 307,
+      "expression": "(print_format_str)",
+      "replacement": "print_format_str",
+      "reasoning": "Parentheses around a single variable used as a function argument are unnecessary and add visual clutter."
+    },
+    {
+      "line_number": 307,
+      "expression": "B[(i * n + j)]",
+      "replacement": "B[i * n + j]",
+      "reasoning": "Redundant parentheses around the array index expression; the index can be used without the extra parens."
+    },
+    {
+      "line_number": 309,
+      "expression": "(newline_str)",
+      "replacement": "newline_str",
+      "reasoning": "Parentheses around the variable passed to fprintf are redundant."
+    },
+    {
+      "line_number": 313,
+      "expression": "(newline_str)",
+      "replacement": "newline_str",
+      "reasoning": "Same as above; remove unnecessary parentheses around the argument."
+    }
+  ]
+}

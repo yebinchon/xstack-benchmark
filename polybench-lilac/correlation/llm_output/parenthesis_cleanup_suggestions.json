@@ -1,0 +1,358 @@
+{
+  "removals": [
+    {
+      "line_number": 165,
+      "expression": "((double*)data)",
+      "replacement": "(double*)data",
+      "reasoning": "Outer parentheses around a cast expression used as a function argument are redundant; (double*)data is the standard, simpler form."
+    },
+    {
+      "line_number": 167,
+      "expression": "((double*)data)",
+      "replacement": "(double*)data",
+      "reasoning": "Same as above: extra outer parentheses around the cast are unnecessary."
+    },
+    {
+      "line_number": 167,
+      "expression": "((double*)corr)",
+      "replacement": "(double*)corr",
+      "reasoning": "Remove redundant outer parentheses around the cast inside the function call."
+    },
+    {
+      "line_number": 167,
+      "expression": "((double*)mean)",
+      "replacement": "(double*)mean",
+      "reasoning": "Remove redundant outer parentheses around the cast inside the function call."
+    },
+    {
+      "line_number": 167,
+      "expression": "((double*)stddev)",
+      "replacement": "(double*)stddev",
+      "reasoning": "Remove redundant outer parentheses around the cast inside the function call."
+    },
+    {
+      "line_number": 170,
+      "expression": "((double*)corr)",
+      "replacement": "(double*)corr",
+      "reasoning": "The extra outer parentheses around the cast in the call are unnecessary."
+    },
+    {
+      "line_number": 172,
+      "expression": "((uint8_t*)((double*)data))",
+      "replacement": "(uint8_t*)((double*)data)",
+      "reasoning": "The outer parentheses around the cast expression passed to free are redundant; keep the cast syntax but drop the superfluous outer pair."
+    },
+    {
+      "line_number": 173,
+      "expression": "((uint8_t*)((double*)corr))",
+      "replacement": "(uint8_t*)((double*)corr)",
+      "reasoning": "Remove redundant outer parentheses around the cast inside free(); the inner casts must remain for correct typing."
+    },
+    {
+      "line_number": 174,
+      "expression": "((uint8_t*)((double*)mean))",
+      "replacement": "(uint8_t*)((double*)mean)",
+      "reasoning": "Drop the unnecessary outer parentheses around the cast used as the call argument."
+    },
+    {
+      "line_number": 175,
+      "expression": "((uint8_t*)((double*)stddev))",
+      "replacement": "(uint8_t*)((double*)stddev)",
+      "reasoning": "Remove the redundant outer parentheses around a cast expression used as a function argument."
+    },
+    {
+      "line_number": 186,
+      "expression": "data[(i * n + j)]",
+      "replacement": "data[i * n + j]",
+      "reasoning": "Parentheses around the index expression are stylistically unnecessary; data[i * n + j] is clearer and equivalent."
+    },
+    {
+      "line_number": 186,
+      "expression": "(((double)(i) * (double)(j)) / 1000)",
+      "replacement": "(double)i * (double)j / 1000",
+      "reasoning": "Several redundant parentheses here: use (double)i and (double)j for casts (no inner parentheses around the variable) and the surrounding grouping is unnecessary because * and / have appropriate precedence and associativity."
+    },
+    {
+      "line_number": 200,
+      "expression": "(fmt_double_space)",
+      "replacement": "fmt_double_space",
+      "reasoning": "Parentheses around a single variable passed as a function argument are redundant; fmt_double_space is sufficient."
+    },
+    {
+      "line_number": 200,
+      "expression": "corr[(i * m + j)]",
+      "replacement": "corr[i * m + j]",
+      "reasoning": "Array-index parentheses are unnecessary; corr[i * m + j] is clearer and equivalent."
+    },
+    {
+      "line_number": 201,
+      "expression": "(int)20",
+      "replacement": "20",
+      "reasoning": "Casting the integer literal 20 to int is redundant: 20 is already an int literal. Removing the cast simplifies the expression without changing behavior."
+    },
+    {
+      "line_number": 202,
+      "expression": "(fmt_newline)",
+      "replacement": "fmt_newline",
+      "reasoning": "Parentheses around a single variable in a function argument are unnecessary."
+    },
+    {
+      "line_number": 206,
+      "expression": "(fmt_newline)",
+      "replacement": "fmt_newline",
+      "reasoning": "Same as above: remove redundant parentheses around the variable passed to fprintf."
+    },
+    {
+      "line_number": 210,
+      "expression": "(num + factor)",
+      "replacement": "num + factor",
+      "reasoning": "The inner parentheses are redundant when combined with the outer grouping. Simplifying to (num + factor - 1) / factor (or leaving a single pair around the whole numerator) preserves intended precedence and improves readability."
+    },
+    {
+      "line_number": 224,
+      "expression": "(double)(n)",
+      "replacement": "(double)n",
+      "reasoning": "Cast syntax doesn't need an extra pair around the variable; (double)n is the simple, equivalent form."
+    },
+    {
+      "line_number": 224,
+      "expression": "(mean[j] / (double)(n))",
+      "replacement": "mean[j] / (double)n",
+      "reasoning": "The outer parentheses around the right-hand side are unnecessary; the expression reads more clearly without them."
+    },
+    {
+      "line_number": 239,
+      "expression": "data[(i * m + j)]",
+      "replacement": "data[i * m + j]",
+      "reasoning": "Remove redundant parentheses around the array index expression."
+    },
+    {
+      "line_number": 239,
+      "expression": "((data[(i * m + j)] - mean[j]) * (data[(i * m + j)] - mean[j]))",
+      "replacement": "(data[i * m + j] - mean[j]) * (data[i * m + j] - mean[j])",
+      "reasoning": "Keep the parentheses that are required to ensure subtraction happens before multiplication, but drop outer/redundant parentheses and simplify array indexing for clarity."
+    },
+    {
+      "line_number": 241,
+      "expression": "(double)(n)",
+      "replacement": "(double)n",
+      "reasoning": "Use the standard cast form without extra parentheses around the variable."
+    },
+    {
+      "line_number": 261,
+      "expression": "data[(i * m + j)]",
+      "replacement": "data[i * m + j]",
+      "reasoning": "Index parentheses are not needed; the simpler form improves readability."
+    },
+    {
+      "line_number": 261,
+      "expression": "(data[(i * m + j)] - mean[j])",
+      "replacement": "data[i * m + j] - mean[j]",
+      "reasoning": "The parentheses around this subtraction used as the right-hand side are redundant; subtraction has lower precedence than assignment so the meaning is unchanged."
+    },
+    {
+      "line_number": 262,
+      "expression": "(double)(n)",
+      "replacement": "(double)n",
+      "reasoning": "Remove the unnecessary parentheses around the operand of the cast."
+    },
+    {
+      "line_number": 263,
+      "expression": "data[(i * m + j)]",
+      "replacement": "data[i * m + j]",
+      "reasoning": "Simplify array indexing by removing unnecessary parentheses."
+    },
+    {
+      "line_number": 263,
+      "expression": "(data[(i * m + j)] / (sqrt_n * stddev[j]))",
+      "replacement": "data[i * m + j] / (sqrt_n * stddev[j])",
+      "reasoning": "Outer parentheses around the division are unnecessary; keep the parentheses that group the denominator expression (sqrt_n * stddev[j])."
+    },
+    {
+      "line_number": 275,
+      "expression": "corr[(i * m + i)]",
+      "replacement": "corr[i * m + i]",
+      "reasoning": "Array index grouping parentheses are redundant."
+    },
+    {
+      "line_number": 292,
+      "expression": "(m - 1)",
+      "replacement": "m - 1",
+      "reasoning": "Arithmetic has higher precedence than comparison, so i < m - 1 is parsed as intended; the extra parentheses around the subtraction are not needed."
+    },
+    {
+      "line_number": 296,
+      "expression": "corr[(i * m + j)]",
+      "replacement": "corr[i * m + j]",
+      "reasoning": "Remove unnecessary parentheses around the index expression."
+    },
+    {
+      "line_number": 303,
+      "expression": "corr[(i * m + j)]",
+      "replacement": "corr[i * m + j]",
+      "reasoning": "Simplify indexing by removing redundant parentheses."
+    },
+    {
+      "line_number": 308,
+      "expression": "corr[(j * m + i)]",
+      "replacement": "corr[j * m + i]",
+      "reasoning": "Drop redundant parentheses around the index to improve readability."
+    },
+    {
+      "line_number": 315,
+      "expression": "(((m - 1) * m + m) - 1)",
+      "replacement": "(m - 1) * m + m - 1",
+      "reasoning": "Multiple nested parentheses around a straightforward arithmetic expression are redundant; simplifying keeps the same semantics while improving clarity. (If desired, this can be further simplified algebraically, e.g. m * m - 1.)"
+    },
+    {
+      "line_number": 373,
+      "expression": "num_blocks(m, 256)",
+      "replacement": "num_blocks(m, 256)",
+      "reasoning": "No change \u2014 shown for context (no redundant parentheses in this call)."
+    },
+    {
+      "line_number": 380,
+      "expression": "((uint8_t*)(&grid_mean_blocks_coerce))",
+      "replacement": "(uint8_t*)&grid_mean_blocks_coerce",
+      "reasoning": "Outer parentheses around the cast expression are redundant; (uint8_t*)&grid_mean_blocks_coerce is clearer and equivalent."
+    },
+    {
+      "line_number": 380,
+      "expression": "((uint8_t*)(&grid_mean_blocks))",
+      "replacement": "(uint8_t*)&grid_mean_blocks",
+      "reasoning": "Same: remove the unnecessary outer parentheses around the cast used as the memcpy argument."
+    },
+    {
+      "line_number": 381,
+      "expression": "((uint8_t*)(&block_256x1_coerce))",
+      "replacement": "(uint8_t*)&block_256x1_coerce",
+      "reasoning": "Drop redundant outer parentheses around a cast expression."
+    },
+    {
+      "line_number": 381,
+      "expression": "((uint8_t*)(&block_256x1))",
+      "replacement": "(uint8_t*)&block_256x1",
+      "reasoning": "Same: remove redundant parentheses in memcpy argument casting."
+    },
+    {
+      "line_number": 396,
+      "expression": "((uint8_t*)(&grid_stddev_blocks_coerce))",
+      "replacement": "(uint8_t*)&grid_stddev_blocks_coerce",
+      "reasoning": "Unnecessary outer parentheses around the cast can be removed."
+    },
+    {
+      "line_number": 396,
+      "expression": "((uint8_t*)(&grid_stddev_blocks))",
+      "replacement": "(uint8_t*)&grid_stddev_blocks",
+      "reasoning": "Simplify the cast expression passed to memcpy by removing redundant outer parentheses."
+    },
+    {
+      "line_number": 397,
+      "expression": "((uint8_t*)(&block_256x1_stddev_coerce))",
+      "replacement": "(uint8_t*)&block_256x1_stddev_coerce",
+      "reasoning": "Remove the redundant parentheses around the cast."
+    },
+    {
+      "line_number": 397,
+      "expression": "((uint8_t*)(&block_256x1_stddev))",
+      "replacement": "(uint8_t*)&block_256x1_stddev",
+      "reasoning": "As above, drop extra outer parentheses for clarity."
+    },
+    {
+      "line_number": 413,
+      "expression": "((uint8_t*)(&block_8_32))",
+      "replacement": "(uint8_t*)&block_8_32",
+      "reasoning": "Simplify the cast expression in memcpy by removing unnecessary outer parentheses."
+    },
+    {
+      "line_number": 414,
+      "expression": "((uint8_t*)(&grid_for_reduce))",
+      "replacement": "(uint8_t*)&grid_for_reduce",
+      "reasoning": "Remove redundant outer parentheses around the cast argument to memcpy."
+    },
+    {
+      "line_number": 415,
+      "expression": "((uint8_t*)(&block_8_32_coerce))",
+      "replacement": "(uint8_t*)&block_8_32_coerce",
+      "reasoning": "Drop the unnecessary outer parentheses; keep the cast."
+    },
+    {
+      "line_number": 416,
+      "expression": "((uint8_t*)(&grid_for_reduce_coerce))",
+      "replacement": "(uint8_t*)&grid_for_reduce_coerce",
+      "reasoning": "Remove redundant parentheses around the cast passed to memcpy."
+    },
+    {
+      "line_number": 435,
+      "expression": "((uint8_t*)(&block_256x1_diag_coerce))",
+      "replacement": "(uint8_t*)&block_256x1_diag_coerce",
+      "reasoning": "Unnecessary outer parentheses around the cast; remove for clarity."
+    },
+    {
+      "line_number": 436,
+      "expression": "((uint8_t*)(&grid_diag_blocks_coerce))",
+      "replacement": "(uint8_t*)&grid_diag_blocks_coerce",
+      "reasoning": "Drop redundant parentheses around the cast argument to memcpy."
+    },
+    {
+      "line_number": 435,
+      "expression": "((uint8_t*)(&block_256x1_diag))",
+      "replacement": "(uint8_t*)&block_256x1_diag",
+      "reasoning": "Same simplification on the other memcpy argument."
+    },
+    {
+      "line_number": 436,
+      "expression": "((uint8_t*)(&grid_diag_blocks))",
+      "replacement": "(uint8_t*)&grid_diag_blocks",
+      "reasoning": "Remove the redundant parentheses around the cast; the result is equivalent and clearer."
+    },
+    {
+      "line_number": 452,
+      "expression": "((uint8_t*)(&block_8_32_corr))",
+      "replacement": "(uint8_t*)&block_8_32_corr",
+      "reasoning": "Remove unnecessary outer parentheses around the cast in memcpy."
+    },
+    {
+      "line_number": 453,
+      "expression": "((uint8_t*)(&grid_for_corr))",
+      "replacement": "(uint8_t*)&grid_for_corr",
+      "reasoning": "Drop redundant parentheses; the cast expression is clear without them."
+    },
+    {
+      "line_number": 454,
+      "expression": "((uint8_t*)(&block_8_32_corr_coerce))",
+      "replacement": "(uint8_t*)&block_8_32_corr_coerce",
+      "reasoning": "Simplify the memcpy argument by removing unnecessary outer parentheses."
+    },
+    {
+      "line_number": 455,
+      "expression": "((uint8_t*)(&grid_for_corr_coerce))",
+      "replacement": "(uint8_t*)&grid_for_corr_coerce",
+      "reasoning": "As above: remove redundant outer parentheses around the cast."
+    },
+    {
+      "line_number": 474,
+      "expression": "((uint8_t*)(&block_tail_coerce))",
+      "replacement": "(uint8_t*)&block_tail_coerce",
+      "reasoning": "Outer parentheses around the cast are redundant for a function argument; removing them improves readability."
+    },
+    {
+      "line_number": 475,
+      "expression": "((uint8_t*)(&grid_tail_coerce))",
+      "replacement": "(uint8_t*)&grid_tail_coerce",
+      "reasoning": "Drop the redundant parentheses around the cast passed to memcpy."
+    },
+    {
+      "line_number": 447,
+      "expression": "(m - 1)",
+      "replacement": "m - 1",
+      "reasoning": "In the function call num_blocks((m - 1), block.batch) the parentheses around the subtraction are unnecessary; num_blocks(m - 1, block.batch) is clearer and equivalent."
+    },
+    {
+      "line_number": 448,
+      "expression": "(m - 1)",
+      "replacement": "m - 1",
+      "reasoning": "Same as above for the second call: remove redundant parentheses around the first argument expression."
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize an m-by-n array 'data' in row-major order with values (i*j)/1000"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the m-by-m correlation matrix 'corr' row by row to stderr using the fmt_double_space format"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Return the ceiling of num/factor (number of factor-sized blocks required to cover num)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_mean",
+      "original": "// INSERT COMMENT FUNCTION: kernel_mean",
+      "replacement": "// GPU-style kernel: compute column-wise means across n rows and store each column mean in mean[j]"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_mean",
+      "original": "// INSERT COMMENT FUNCTION: kernel_mean",
+      "replacement": "// Compute mean per column using grid/block/thread indices so each thread is responsible for one column j"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_stddev",
+      "original": "// INSERT COMMENT FUNCTION: kernel_stddev",
+      "replacement": "// GPU-style kernel: compute per-column sum of squared deviations (variance numerator) using mean[] and store in stddev[]"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_reduce",
+      "original": "// INSERT COMMENT FUNCTION: kernel_reduce",
+      "replacement": "// GPU-style kernel: centralize (and prepare to scale) data by subtracting column mean for each element data[i*m + j]"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_diag",
+      "original": "// INSERT COMMENT FUNCTION: kernel_diag",
+      "replacement": "// GPU-style kernel: set diagonal entries of the correlation matrix corr at (i,i) to 1 for valid i"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_corr",
+      "original": "// INSERT COMMENT FUNCTION: kernel_corr",
+      "replacement": "// GPU-style kernel: compute pairwise correlations for column pairs (i,j) by accumulating products across rows (k)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_tail",
+      "original": "// INSERT COMMENT FUNCTION: kernel_tail",
+      "replacement": "// Finalize the correlation matrix tail; here set the bottom-right diagonal element to 1"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Host routine that configures grid/block sizes and launches the sequence of kernels to compute mean, stddev, normalize data, and correlations"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// For each row i and column j, set data[i*n + j] to the scaled product (i * j) / 1000 to initialize the matrix"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate rows i and columns j of the m-by-m matrix and print each corr[i*m + j] to stderr with the chosen format"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < 8;   i = i + 1){\nfor(int32_t j = 0; j < 32;   j = j + 1){",
+      "replacement": "// Parallel 2D OpenMP loop over 8x32 tiles to emulate per-block/thread work for the corresponding kernel launch"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < 8;   i = i + 1){\nfor(int32_t j = 0; j < 32;   j = j + 1){",
+      "replacement": "// Parallel 2D OpenMP loop over 8x32 tiles to emulate per-block/thread work for the corresponding kernel launch"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < 8;   i = i + 1){\nfor(int32_t j = 0; j < 32;   j = j + 1){",
+      "replacement": "// Parallel 2D OpenMP loop over 8x32 tiles to emulate per-block/thread work for the corresponding kernel launch"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < 8;   i = i + 1){\nfor(int32_t j = 0; j < 32;   j = j + 1){",
+      "replacement": "// Parallel 2D OpenMP loop over 8x32 tiles to emulate per-block/thread work for the corresponding kernel launch"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < 8;   i = i + 1){\nfor(int32_t j = 0; j < 32;   j = j + 1){",
+      "replacement": "// Parallel 2D OpenMP loop over 8x32 tiles to emulate per-block/thread work for the corresponding kernel launch"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse argv to set dump_code, n, m and allocate 'data' (n*m doubles) and 'mean' (m doubles)"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_mean::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_mean::entry",
+      "replacement": "// Compute column index j for this thread; if j < m initialize mean[j]=0 and sum data over all n rows to accumulate the column sum"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_stddev::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_stddev::entry",
+      "replacement": "// Compute column index j for this thread; if j < m initialize stddev[j]=0 and accumulate squared deviations (data-mean[j])^2 over all n rows"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_reduce::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_reduce::entry",
+      "replacement": "// Compute element coordinates (i,j) for this thread; if i<n and j<m subtract mean[j] from data[i*m + j] to centralize the data element"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_diag::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_diag::entry",
+      "replacement": "// Compute diagonal index i for this thread; if i < m set corr[i*m + i] = 1 to write the diagonal element, then return"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_corr::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_corr::entry",
+      "replacement": "// Derive the pair of column indices for this thread: i from x-dimension and j = y-dimension base + i + 1 so that the kernel targets the upper-triangle pair (i,j)"
+    },
+    {
+      "id": "unknown_IFELSE_kernel::kcall.end37",
+      "original": "// INSERT COMMENT IFELSE: kernel::kcall.end37",
+      "replacement": "// Configure a 1x1x1 grid and 1x1x1 block (single-thread invocation) for the tail kernel launch"
+    }
+  ]
+}

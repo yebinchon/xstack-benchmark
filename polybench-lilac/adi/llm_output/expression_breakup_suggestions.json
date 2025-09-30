@@ -1,0 +1,146 @@
+{
+  "function_name": "kernel_column_sweep",
+  "breakups": [
+    {
+      "line_number": 207,
+      "original_expression": "p[(i * n + j)] = (-(c) / ((a * p[((i * n + j) - 1)]) + b));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx_ipj",
+          "expression": "i * n + j",
+          "description": "Compute the flattened index for p at (i, j)"
+        },
+        {
+          "temp_var": "idx_ipj_minus1",
+          "expression": "idx_ipj - 1",
+          "description": "Index for the previous p element used in the denominator"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "a * p[idx_ipj_minus1] + b",
+          "description": "Compute the denominator (a * p[...]) + b"
+        },
+        {
+          "temp_var": "numerator",
+          "expression": "-c",
+          "description": "Numerator for p assignment"
+        },
+        {
+          "temp_var": "p_val",
+          "expression": "numerator / denom",
+          "description": "Final p value to assign"
+        }
+      ],
+      "final_expression": "p[idx_ipj] = p_val"
+    },
+    {
+      "line_number": 208,
+      "original_expression": "q[(i * n + j)] = (((((-(d) * u[((j * n + i) - 1)]) + ((1 + (2 * d)) * u[(j * n + i)])) - (f * u[((j * n + i) + 1)])) - (a * q[((i * n + j) - 1)])) / ((a * p[((i * n + j) - 1)]) + b));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx_ipj",
+          "expression": "i * n + j",
+          "description": "Flattened index for arrays indexed by (i, j)"
+        },
+        {
+          "temp_var": "idx_ipj_minus1",
+          "expression": "idx_ipj - 1",
+          "description": "Index for the previous p/q element (i, j-1)"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "a * p[idx_ipj_minus1] + b",
+          "description": "Shared denominator: (a * p[(i*n + j) - 1]) + b"
+        },
+        {
+          "temp_var": "idx_jni",
+          "expression": "j * n + i",
+          "description": "Flattened index for arrays indexed by (j, i)"
+        },
+        {
+          "temp_var": "idx_jni_minus1",
+          "expression": "idx_jni - 1",
+          "description": "Index for u[(j*n + i) - 1]"
+        },
+        {
+          "temp_var": "idx_jni_plus1",
+          "expression": "idx_jni + 1",
+          "description": "Index for u[(j*n + i) + 1]"
+        },
+        {
+          "temp_var": "term1",
+          "expression": "-d * u[idx_jni_minus1]",
+          "description": "First part of numerator: -(d) * u[(j*n + i) - 1]"
+        },
+        {
+          "temp_var": "term2",
+          "expression": "(1 + 2 * d) * u[idx_jni]",
+          "description": "Second part of numerator: (1 + 2*d) * u[(j*n + i)]"
+        },
+        {
+          "temp_var": "term3",
+          "expression": "f * u[idx_jni_plus1]",
+          "description": "Third part of numerator: f * u[(j*n + i) + 1]"
+        },
+        {
+          "temp_var": "term4",
+          "expression": "a * q[idx_ipj_minus1]",
+          "description": "Fourth part of numerator: a * q[(i*n + j) - 1]"
+        },
+        {
+          "temp_var": "numerator",
+          "expression": "term1 + term2 - term3 - term4",
+          "description": "Combine all numerator terms"
+        },
+        {
+          "temp_var": "q_val",
+          "expression": "numerator / denom",
+          "description": "Final q value to assign"
+        }
+      ],
+      "final_expression": "q[idx_ipj] = q_val"
+    },
+    {
+      "line_number": 212,
+      "original_expression": "v[(j * n + i)] = ((p[(i * n + j)] * v[((j + 1) * n + i)]) + q[(i * n + j)]);",
+      "breakup_steps": [
+        {
+          "temp_var": "idx_jni",
+          "expression": "j * n + i",
+          "description": "Flattened index for v at (j, i)"
+        },
+        {
+          "temp_var": "idx_ipj",
+          "expression": "i * n + j",
+          "description": "Flattened index for p/q at (i, j)"
+        },
+        {
+          "temp_var": "idx_jplus1_ni",
+          "expression": "(j + 1) * n + i",
+          "description": "Index for the next-row v element v[(j+1)*n + i]"
+        },
+        {
+          "temp_var": "p_val",
+          "expression": "p[idx_ipj]",
+          "description": "Load p[(i*n + j)] once"
+        },
+        {
+          "temp_var": "v_next",
+          "expression": "v[idx_jplus1_ni]",
+          "description": "Load v[(j+1)*n + i] once"
+        },
+        {
+          "temp_var": "q_val",
+          "expression": "q[idx_ipj]",
+          "description": "Load q[(i*n + j)] once"
+        },
+        {
+          "temp_var": "result",
+          "expression": "p_val * v_next + q_val",
+          "description": "Compute the combined result"
+        }
+      ],
+      "final_expression": "v[idx_jni] = result"
+    }
+  ]
+}

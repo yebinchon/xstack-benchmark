@@ -1,0 +1,14 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    3,
+    4,
+    5,
+    6,
+    1,
+    2
+  ],
+  "reasoning": "Place the program entry first for immediate context. After main, keep initialization early (init_array = 0) since main calls it. kernel_polly (1) is the high-level orchestrator invoked by main and depends on num_blocks (3) and the three kernel helpers (kernel0=4, kernel1=5, kernel2=6). To respect dependency order and improve readability, move num_blocks and the kernel implementations before kernel_polly so callers appear after their callees. Finally place print_array (2) last as a utility/display function. This ordering groups initialization, small utilities, core compute kernels, the orchestration routine, and print routines for clearer logical flow and easier debugging.",
+  "confidence": 0.9
+}

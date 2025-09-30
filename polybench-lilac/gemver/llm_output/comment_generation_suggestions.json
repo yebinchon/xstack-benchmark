@@ -1,0 +1,99 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize all input arrays and vectors used by the computation: fill u1, u2, v1, v2, w, x, y, z and the matrix A with deterministic, index-based double values so subsequent kernels have known inputs."
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute and return the number of blocks required to cover 'num' items with 'factor' items per block (ceiling division)."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_A",
+      "original": "// INSERT COMMENT FUNCTION: kernel_A",
+      "replacement": "// Parallel kernel that performs a rank-2 update of matrix A: each valid thread computes A[i*n + j] += u1[i]*v1[j] + u2[i]*v2[j], where i and j are derived from block/thread coordinates."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_x",
+      "original": "// INSERT COMMENT FUNCTION: kernel_x",
+      "replacement": "// Parallel kernel that updates vector x by accumulating beta * A^T * y: for each assigned index i compute x[i] += beta * sum_j A[j*n + i] * y[j]."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_y",
+      "original": "// INSERT COMMENT FUNCTION: kernel_y",
+      "replacement": "// Pointwise kernel that adds vector z into x for assigned indices: perform x[i] += z[i] when the thread's index i is within bounds."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_w",
+      "original": "// INSERT COMMENT FUNCTION: kernel_w",
+      "replacement": "// Parallel kernel that updates vector w by accumulating alpha * A * x: for each assigned index i compute w[i] += alpha * sum_j A[i*n + j] * x[j]."
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Host-side orchestrator that configures block/grid dimensions and dispatches the computational kernels (A, w, x, y), preparing parallel execution parameters and dividing work among threads/blocks."
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the contents of vector w to stderr using the specified double format, inserting line breaks every 20 elements to format output into readable rows."
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over each element index to initialize input vectors: assign u1[i] to i and initialise u2[i] with ((i+1)/n)/2 cast to double, producing deterministic test data."
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallel nested loop over block indices (0..blocks_for_w-1) and intra-block thread slots (0..255); the collapsed OpenMP region distributes these (block,thread) iterations across CPU threads to execute work in parallel."
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallel nested loop over block indices (0..blocks_for_w-1) and intra-block thread slots (0..255); the collapsed OpenMP region distributes these (block,thread) iterations across CPU threads to execute work in parallel."
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallel nested loop over block indices (0..blocks_for_w-1) and intra-block thread slots (0..255); the collapsed OpenMP region distributes these (block,thread) iterations across CPU threads to execute work in parallel."
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallel nested loop over block indices (0..blocks_for_w-1) and intra-block thread slots (0..255); the collapsed OpenMP region distributes these (block,thread) iterations across CPU threads to execute work in parallel."
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over all elements of w, printing each value; after every 20th element emit a newline so the output is grouped into rows for readability."
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line arguments to obtain dump_code and n, then allocate memory for matrix A and the vectors (allocating n*n doubles for A and n doubles for each vector) before initialization."
+    },
+    {
+      "id": "unknown_IFELSE_kernel_A::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_A::entry",
+      "replacement": "// Compute global row i and column j from block and thread indices; if both i and j are within bounds perform the rank-2 update A[i*n + j] += u1[i]*v1[j] + u2[i]*v2[j]."
+    },
+    {
+      "id": "unknown_IFELSE_kernel_x::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_x::entry",
+      "replacement": "// Compute the global index i for this thread; if i < n then iterate over j to accumulate x[i] += beta * A[j*n + i] * y[j], effectively computing a scaled A^T * y contribution for x[i]."
+    },
+    {
+      "id": "unknown_IFELSE_kernel_y::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_y::entry",
+      "replacement": "// Compute the global index i and, if it is within bounds, perform the pointwise update x[i] += z[i]; otherwise do nothing and return."
+    },
+    {
+      "id": "unknown_IFELSE_kernel_w::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_w::entry",
+      "replacement": "// Compute the global index i and, if i < n, iterate over j to accumulate the row-wise dot product into w[i]: w[i] += alpha * A[i*n + j] * x[j], scaling the matrix-vector product by alpha."
+    }
+  ]
+}

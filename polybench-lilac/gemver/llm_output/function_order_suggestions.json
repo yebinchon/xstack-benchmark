@@ -1,0 +1,15 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    3,
+    4,
+    5,
+    6,
+    7,
+    1,
+    2
+  ],
+  "reasoning": "Ordering rationale:\n- Keep main first (per guideline: entry function up top) so a reader sees program entry immediately.\n- Put initialization/setup next: init_array (0) is used by main to populate data, so it follows main for immediate context.\n- Place num_blocks (3) early among helpers because kernel (the orchestration function) calls it to compute loop/grid sizes; having it before the kernels clarifies dependencies.\n- Group the low-level computational kernels together: kernel_A (4), kernel_x (5), kernel_y (6), kernel_w (7). These are the building blocks invoked by kernel; grouping them improves logical flow and makes it easy to inspect/modify individual computation kernels.\n- Place kernel (1) after its helper kernels and num_blocks since it orchestrates parallel dispatch and calls those helpers. Locating it after the helpers makes the higher-level control flow easier to follow once the primitive operations are understood.\n- Put print_array (2) last as a display/utility function; display functions are typically kept after core computation for readability.\nThis order balances the guideline to present the entry point first while grouping initialization, helper utilities, and computational primitives in dependency- and logical- flow order to aid comprehension and debugging.",
+  "confidence": 0.9
+}

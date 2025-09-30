@@ -94,7 +94,7 @@ void print_array(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
-void _Z10kernel_deviiiddPdS_S__OC_1(uint32_t, uint32_t, uint32_t, double, double, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_dev(uint32_t, uint32_t, uint32_t, double, double, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -139,6 +139,7 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
 
 /* Function Bodies */
 
+// MAIN START
 int main(int argc, char ** argv) {
   int32_t dump_code;
   int32_t ni;
@@ -150,7 +151,7 @@ int main(int argc, char ** argv) {
   int32_t __FIXME__call32;
   int32_t __FIXME__call44;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: main::entry
   dump_code = atoi(argv[1]);
   ni = atoi(argv[2]);
   nj = atoi(argv[3]);
@@ -162,7 +163,7 @@ int main(int argc, char ** argv) {
 ;
   kernel(ni, nj, nk, 32412, 2123, ((double*)C), ((double*)A), ((double*)B));
 ;
-  if (dump_code == 1) {
+  if (dump_code == 1) { // IFELSE MARKER: entry IF
 print_array(ni, nj, ((double*)C));
   }
 free(((uint8_t*)((double*)C)));
@@ -170,26 +171,28 @@ free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)B)));
   return 0;
 }
+// MAIN END
 
 
-//INSERT COMMENT FUNCTION: init_array
+// FUNCTION ORDER ID 0 START
+// INSERT COMMENT FUNCTION: init_array
 void init_array(uint32_t ni, uint32_t nj, uint32_t nk, double* C, double* A, double* B) {
   int64_t i;
   int64_t j;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: init_array::for.cond
 for(int64_t i = 0; i < ni;   i = i + 1){
 for(int64_t j = 0; j < nj;   j = j + 1){
   C[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
-//INSERT COMMENT LOOP: for.cond10
+// INSERT COMMENT LOOP: init_array::for.cond10
 for(int64_t i = 0; i < ni;   i = i + 1){
 for(int64_t j = 0; j < nk;   j = j + 1){
   A[(i * nk + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
-//INSERT COMMENT LOOP: for.cond31
+// INSERT COMMENT LOOP: init_array::for.cond31
 for(int64_t i = 0; i < nk;   i = i + 1){
 for(int64_t j = 0; j < nj;   j = j + 1){
   B[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));
@@ -197,9 +200,11 @@ for(int64_t j = 0; j < nj;   j = j + 1){
 }
   return;
 }
+// FUNCTION ORDER ID 0 END
 
 
-//INSERT COMMENT FUNCTION: kernel
+// FUNCTION ORDER ID 1 START
+// INSERT COMMENT FUNCTION: kernel
 void kernel(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, double beta, double* C, double* A, double* B) {
   struct __FIXME__l_struct_struct_OC_dim3 block;    /* Address-exposed local */
   struct __FIXME__l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
@@ -232,58 +237,64 @@ void kernel(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, double beta, do
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp2)), 12);
-//INSERT COMMENT LOOP: header.0
+// INSERT COMMENT LOOP: kernel::header.0
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < __FIXME__call;   i = i + 1){
 for(int32_t j = 0; j < __FIXME__call1;   j = j + 1){
 for(int32_t k = 0; k < 8;   k = k + 1){
 for(int32_t l = 0; l < 32;   l = l + 1){
-_Z10kernel_deviiiddPdS_S__OC_1(ni, nj, nk, alpha, beta, C, A, B, __FIXME__call, __FIXME__call1, 1, __FIXME__div, 32, 1, i, j, 0, k, l, 0);
+kernel_dev(ni, nj, nk, alpha, beta, C, A, B, __FIXME__call, __FIXME__call1, 1, __FIXME__div, 32, 1, i, j, 0, k, l, 0);
 }
 }
 }
 }
   return;
 }
+// FUNCTION ORDER ID 1 END
 
 
-//INSERT COMMENT FUNCTION: print_array
+// FUNCTION ORDER ID 2 START
+// INSERT COMMENT FUNCTION: print_array
 void print_array(uint32_t ni, uint32_t nj, double* C) {
   int64_t i;
   int64_t j;
   int32_t __FIXME__call11;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < ni;   i = i + 1){
 for(int64_t j = 0; j < nj;   j = j + 1){
-  uint32_t __FIXME__call = fprintf(stderr, (__FIXME_GLOBAL___OC_str), C[(i * nj + j)]);
-  if ((int)(i * ni + j) % (int)20 == 0) {
+  fprintf(stderr, (__FIXME_GLOBAL___OC_str), C[(i * nj + j)]);
+  if ((int)(i * ni + j) % (int)20 == 0) { // IFELSE MARKER: for.body3 IF
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
   }
 }
 }
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
 }
+// FUNCTION ORDER ID 2 END
 
 
-//INSERT COMMENT FUNCTION: num_blocks
+// FUNCTION ORDER ID 3 START
+// INSERT COMMENT FUNCTION: num_blocks
 uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
+// FUNCTION ORDER ID 3 END
 
 
-//INSERT COMMENT FUNCTION: kernel_dev
-void _Z10kernel_deviiiddPdS_S__OC_1(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, double beta, double* C, double* A, double* B, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 4 START
+// INSERT COMMENT FUNCTION: kernel_dev
+void kernel_dev(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, double beta, double* C, double* A, double* B, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   int32_t i;
   int32_t j;
   double dot;
   int64_t k;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel_dev::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;
   j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y;
-  if (i < ni) {
-  if (j < nj) {
+  if (i < ni) { // IFELSE MARKER: entry IF
+  if (j < nj) { // IFELSE MARKER: land.lhs.true IF
   dot = (C[(i * nj + j)] * beta);
 for(int64_t k = 0; k < nk;   k = k + 1){
   dot = (dot + ((alpha * A[(i * nk + k)]) * B[(k * nj + j)]));
@@ -293,4 +304,5 @@ for(int64_t k = 0; k < nk;   k = k + 1){
   }
   return;
 }
+// FUNCTION ORDER ID 4 END
 

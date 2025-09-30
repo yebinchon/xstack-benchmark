@@ -1,0 +1,12 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    3,
+    4,
+    1,
+    2
+  ],
+  "reasoning": "Place the entry point first (\"main\") for immediate visibility. Follow with initialization/setup (init_array -> id 0) so setup code appears early. Next put low-level utilities that the core computation depends on: num_blocks (3) and kernel_A_mul_B (4). Having these before the kernel (1) honors dependencies and makes the kernel easier to read and debug because its callees are already visible. Then place the core computation (kernel -> 1). Finally place output/display functions (print_array -> 2) last. This ordering improves logical flow: entry -> setup -> helpers -> core -> output, and groups related helpers together while respecting dependency order.",
+  "confidence": 0.9
+}

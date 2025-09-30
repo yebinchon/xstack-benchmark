@@ -1,0 +1,41 @@
+{
+  "extractions": [
+    {
+      "value": "32",
+      "name": "BLOCK_DIM3_FIELD1_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        304,
+        320,
+        340,
+        360
+      ],
+      "function": "multiple_functions"
+    },
+    {
+      "value": "12",
+      "name": "BLOCK_COPY_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        312,
+        332,
+        352
+      ],
+      "function": "multiple_functions"
+    },
+    {
+      "value": "8",
+      "name": "BLOCK_SUBDIM_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        319,
+        339,
+        359
+      ],
+      "function": "multiple_functions"
+    }
+  ]
+}

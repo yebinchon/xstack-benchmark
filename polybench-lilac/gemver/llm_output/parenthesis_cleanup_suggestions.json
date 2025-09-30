@@ -1,0 +1,298 @@
+{
+  "removals": [
+    {
+      "line_number": 187,
+      "expression": "((double*)w)",
+      "replacement": "(double*)w",
+      "reasoning": "Outer parentheses around the cast are redundant; keep the cast but remove the extra grouping."
+    },
+    {
+      "line_number": 189,
+      "expression": "((uint8_t*)((double*)A))",
+      "replacement": "A",
+      "reasoning": "A is already a uint8_t*; both casts and the extra grouping are unnecessary \u2014 free(A) is equivalent and clearer."
+    },
+    {
+      "line_number": 190,
+      "expression": "((uint8_t*)((double*)u1))",
+      "replacement": "u1",
+      "reasoning": "u1 already has the correct pointer type; the casts and extra parentheses are redundant."
+    },
+    {
+      "line_number": 191,
+      "expression": "((uint8_t*)((double*)v1))",
+      "replacement": "v1",
+      "reasoning": "v1 is already a uint8_t*; the casts and redundant grouping can be removed."
+    },
+    {
+      "line_number": 192,
+      "expression": "((uint8_t*)((double*)u2))",
+      "replacement": "u2",
+      "reasoning": "u2 is already a uint8_t*; remove unnecessary casts/parentheses."
+    },
+    {
+      "line_number": 193,
+      "expression": "((uint8_t*)((double*)v2))",
+      "replacement": "v2",
+      "reasoning": "v2 is already a uint8_t*; the nested casts and grouping are redundant."
+    },
+    {
+      "line_number": 194,
+      "expression": "((uint8_t*)((double*)w))",
+      "replacement": "w",
+      "reasoning": "w is already a uint8_t*; remove the unnecessary casts and extra parentheses."
+    },
+    {
+      "line_number": 195,
+      "expression": "((uint8_t*)((double*)x))",
+      "replacement": "x",
+      "reasoning": "x is already a uint8_t*; the double cast and grouping are unnecessary."
+    },
+    {
+      "line_number": 196,
+      "expression": "((uint8_t*)((double*)y))",
+      "replacement": "y",
+      "reasoning": "y already has the correct type; remove redundant casts/parentheses."
+    },
+    {
+      "line_number": 197,
+      "expression": "((uint8_t*)((double*)z))",
+      "replacement": "z",
+      "reasoning": "z is already a uint8_t*; remove the redundant casts and grouping for clarity."
+    },
+    {
+      "line_number": 327,
+      "expression": "((uint8_t*)(&grid_tmp))",
+      "replacement": "(uint8_t*)&grid_tmp",
+      "reasoning": "The outer grouping around the cast is redundant; keep the cast but remove the extra parentheses around the whole expression. Also parentheses around the address operand are unnecessary."
+    },
+    {
+      "line_number": 327,
+      "expression": "((uint8_t*)(&grid))",
+      "replacement": "(uint8_t*)&grid",
+      "reasoning": "Same as above: outer grouping and inner operand parentheses are unnecessary; (uint8_t*)&grid is clearer."
+    },
+    {
+      "line_number": 328,
+      "expression": "((uint8_t*)(&block_tmp4))",
+      "replacement": "(uint8_t*)&block_tmp4",
+      "reasoning": "Remove redundant outer parentheses; keep cast with &operand without extra grouping."
+    },
+    {
+      "line_number": 328,
+      "expression": "((uint8_t*)(&block))",
+      "replacement": "(uint8_t*)&block",
+      "reasoning": "Outer grouping and operand parentheses are redundant; (uint8_t*)&block is equivalent and clearer."
+    },
+    {
+      "line_number": 329,
+      "expression": "((uint8_t*)(&grid_tmp_coerce))",
+      "replacement": "(uint8_t*)&grid_tmp_coerce",
+      "reasoning": "Remove redundant grouping around the cast; parentheses around the address operand are unnecessary."
+    },
+    {
+      "line_number": 329,
+      "expression": "((uint8_t*)(&grid_tmp))",
+      "replacement": "(uint8_t*)&grid_tmp",
+      "reasoning": "Same simplification as prior memcpy arguments: avoid superfluous grouping."
+    },
+    {
+      "line_number": 330,
+      "expression": "((uint8_t*)(&block_tmp4_coerce))",
+      "replacement": "(uint8_t*)&block_tmp4_coerce",
+      "reasoning": "Outer grouping is redundant; keep cast but remove extra parentheses for readability."
+    },
+    {
+      "line_number": 330,
+      "expression": "((uint8_t*)(&block_tmp4))",
+      "replacement": "(uint8_t*)&block_tmp4",
+      "reasoning": "Parentheses around the &operand and the overall grouping are unnecessary."
+    },
+    {
+      "line_number": 349,
+      "expression": "((uint8_t*)(&grid_tmp6_coerce))",
+      "replacement": "(uint8_t*)&grid_tmp6_coerce",
+      "reasoning": "Remove the redundant outer parentheses around the cast; the cast plus &operand is sufficient."
+    },
+    {
+      "line_number": 349,
+      "expression": "((uint8_t*)(&grid_tmp6))",
+      "replacement": "(uint8_t*)&grid_tmp6",
+      "reasoning": "Same as above: unnecessary grouping around the cast and address-of operand."
+    },
+    {
+      "line_number": 350,
+      "expression": "((uint8_t*)(&block_tmp8_coerce))",
+      "replacement": "(uint8_t*)&block_tmp8_coerce",
+      "reasoning": "Outer grouping is redundant; (uint8_t*)&block_tmp8_coerce is clearer and equivalent."
+    },
+    {
+      "line_number": 350,
+      "expression": "((uint8_t*)(&block_tmp8))",
+      "replacement": "(uint8_t*)&block_tmp8",
+      "reasoning": "Remove unnecessary parentheses around the address operand and overall expression."
+    },
+    {
+      "line_number": 365,
+      "expression": "((uint8_t*)(&grid_tmp13_coerce))",
+      "replacement": "(uint8_t*)&grid_tmp13_coerce",
+      "reasoning": "Redundant outer parentheses can be removed while keeping the cast."
+    },
+    {
+      "line_number": 365,
+      "expression": "((uint8_t*)(&grid_tmp13))",
+      "replacement": "(uint8_t*)&grid_tmp13",
+      "reasoning": "Avoid extra grouping around the cast; the shorter form is equivalent."
+    },
+    {
+      "line_number": 366,
+      "expression": "((uint8_t*)(&block_tmp15_coerce))",
+      "replacement": "(uint8_t*)&block_tmp15_coerce",
+      "reasoning": "Remove superfluous parentheses around the casted address."
+    },
+    {
+      "line_number": 366,
+      "expression": "((uint8_t*)(&block_tmp15))",
+      "replacement": "(uint8_t*)&block_tmp15",
+      "reasoning": "Parentheses around the &operand and overall grouping are unnecessary."
+    },
+    {
+      "line_number": 381,
+      "expression": "((uint8_t*)(&grid_tmp20_coerce))",
+      "replacement": "(uint8_t*)&grid_tmp20_coerce",
+      "reasoning": "Outer parentheses are redundant; keep cast and address-of without extra grouping."
+    },
+    {
+      "line_number": 381,
+      "expression": "((uint8_t*)(&grid_tmp20))",
+      "replacement": "(uint8_t*)&grid_tmp20",
+      "reasoning": "Same simplification for clarity and concision."
+    },
+    {
+      "line_number": 382,
+      "expression": "((uint8_t*)(&block_tmp22_coerce))",
+      "replacement": "(uint8_t*)&block_tmp22_coerce",
+      "reasoning": "Remove redundant outer grouping around the cast."
+    },
+    {
+      "line_number": 382,
+      "expression": "((uint8_t*)(&block_tmp22))",
+      "replacement": "(uint8_t*)&block_tmp22",
+      "reasoning": "Parentheses around the &operand and the whole expression are unnecessary."
+    },
+    {
+      "line_number": 207,
+      "expression": "(double)(i)",
+      "replacement": "(double)i",
+      "reasoning": "Parentheses around the single variable operand of the cast are unnecessary; (double)i is the conventional form."
+    },
+    {
+      "line_number": 208,
+      "expression": "((double)((i + 1) / n) / 2)",
+      "replacement": "(double)((i + 1) / n) / 2",
+      "reasoning": "The outermost grouping around the entire RHS is redundant; keep the cast and necessary parentheses around (i + 1)."
+    },
+    {
+      "line_number": 209,
+      "expression": "((double)((i + 1) / n) / 4)",
+      "replacement": "(double)((i + 1) / n) / 4",
+      "reasoning": "Remove the redundant outer parentheses; preserve the cast and grouping that affect evaluation."
+    },
+    {
+      "line_number": 210,
+      "expression": "((double)((i + 1) / n) / 6)",
+      "replacement": "(double)((i + 1) / n) / 6",
+      "reasoning": "Same as above: outer grouping unnecessary, inner grouping must remain for correct order."
+    },
+    {
+      "line_number": 211,
+      "expression": "((double)((i + 1) / n) / 8)",
+      "replacement": "(double)((i + 1) / n) / 8",
+      "reasoning": "Remove only the redundant outer parentheses and keep those that preserve intended integer division prior to casting."
+    },
+    {
+      "line_number": 212,
+      "expression": "((double)((i + 1) / n) / 9)",
+      "replacement": "(double)((i + 1) / n) / 9",
+      "reasoning": "Outer parentheses are redundant; keep the essential grouping for the cast and division."
+    },
+    {
+      "line_number": 216,
+      "expression": "A[(i * n + j)]",
+      "replacement": "A[i * n + j]",
+      "reasoning": "Index-expression grouping parentheses are not required; A[i * n + j] is clearer and equivalent."
+    },
+    {
+      "line_number": 216,
+      "expression": "(((double)(i) * (double)(j)) / (double)(n))",
+      "replacement": "(double)i * (double)j / (double)n",
+      "reasoning": "Remove redundant outer grouping and unnecessary parentheses around single-variable casts; multiplication/division precedence preserves intended semantics."
+    },
+    {
+      "line_number": 223,
+      "expression": "((num + factor) - 1) / factor",
+      "replacement": "(num + factor - 1) / factor",
+      "reasoning": "Outer grouping around the numerator is larger than necessary; keep parentheses around the numerator as a whole but remove the extra grouping and simplify the expression while preserving order."
+    },
+    {
+      "line_number": 235,
+      "expression": "A[(i * n + j)]",
+      "replacement": "A[i * n + j]",
+      "reasoning": "Index parentheses are redundant on the left-hand side; A[i * n + j] is equivalent and more idiomatic."
+    },
+    {
+      "line_number": 235,
+      "expression": "A[(i * n + j)]",
+      "replacement": "A[i * n + j]",
+      "reasoning": "Also redundant on the right-hand side; remove the unnecessary grouping for consistency and readability."
+    },
+    {
+      "line_number": 235,
+      "expression": "((u1[i] * v1[j]) + (u2[i] * v2[j]))",
+      "replacement": "u1[i] * v1[j] + u2[i] * v2[j]",
+      "reasoning": "Product groupings are not needed because * has higher precedence than +; remove redundant parentheses to simplify the expression."
+    },
+    {
+      "line_number": 249,
+      "expression": "((beta * A[(j * n + i)]) * y[j])",
+      "replacement": "beta * A[j * n + i] * y[j]",
+      "reasoning": "Products associate left-to-right with the same precedence, so nested parentheses are unnecessary; also simplify the array indexing."
+    },
+    {
+      "line_number": 249,
+      "expression": "A[(j * n + i)]",
+      "replacement": "A[j * n + i]",
+      "reasoning": "Index-expression parentheses are redundant; A[j * n + i] is clearer."
+    },
+    {
+      "line_number": 261,
+      "expression": "(x[i] + z[i])",
+      "replacement": "x[i] + z[i]",
+      "reasoning": "Outer parentheses around a simple addition assigned to x[i] are unnecessary and can be removed without changing precedence."
+    },
+    {
+      "line_number": 274,
+      "expression": "((alpha * A[(i * n + j)]) * x[j])",
+      "replacement": "alpha * A[i * n + j] * x[j]",
+      "reasoning": "Remove redundant nested parentheses; multiplication order is preserved and the indexing can be simplified."
+    },
+    {
+      "line_number": 274,
+      "expression": "A[(i * n + j)]",
+      "replacement": "A[i * n + j]",
+      "reasoning": "Index grouping parentheses are unnecessary; use the clearer form."
+    },
+    {
+      "line_number": 398,
+      "expression": "(double_format_str)",
+      "replacement": "double_format_str",
+      "reasoning": "Parentheses around a single variable passed as a function argument are redundant; omit them for clarity."
+    },
+    {
+      "line_number": 400,
+      "expression": "(newline_str)",
+      "replacement": "newline_str",
+      "reasoning": "Same as above: parentheses around the single variable argument are unnecessary and can be removed."
+    }
+  ]
+}

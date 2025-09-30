@@ -94,8 +94,8 @@ void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
-void _Z10kernel_diviPdi_OC_1(uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z8kernel_AiPdi_OC_2(uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_div(uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_A(uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -136,6 +136,7 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
 
 /* Function Bodies */
 
+// MAIN START
 int main(int argc, char ** argv) {
   int32_t dump_code;
   int32_t n;
@@ -143,7 +144,7 @@ int main(int argc, char ** argv) {
   int32_t __FIXME__call12;
   int32_t __FIXME__call16;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: main::entry
   dump_code = atoi(argv[1]);
   n = atoi(argv[2]);
   A = malloc(n * n * 8);
@@ -151,30 +152,34 @@ int main(int argc, char ** argv) {
 ;
   kernel(n, ((double*)A));
 ;
-  if (dump_code == 1) {
+  if (dump_code == 1) { // IFELSE MARKER: entry IF
 print_array(n, ((double*)A));
   }
 free(((uint8_t*)((double*)A)));
   return 0;
 }
+// MAIN END
 
 
-//INSERT COMMENT FUNCTION: init_array
+// FUNCTION ORDER ID 0 START
+// INSERT COMMENT FUNCTION: init_array
 void init_array(uint32_t n, double* A) {
   int64_t i;
   uint64_t j;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: init_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
-  A[(i * n + j)] = (((double)((i + 1)) * (double)(j)) / (double)(n));
+  A[(i * n + j)] = (((double)((i + 1)) * (double)((j + 1))) / (double)(n));
 }
 }
   return;
 }
+// FUNCTION ORDER ID 0 END
 
 
-//INSERT COMMENT FUNCTION: kernel
+// FUNCTION ORDER ID 1 START
+// INSERT COMMENT FUNCTION: kernel
 void kernel(uint32_t n, double* A) {
   struct __FIXME__l_struct_struct_OC_dim3 __FIXME__agg_2e_tmp;    /* Address-exposed local */
   struct __FIXME__l_struct_struct_OC_dim3 __FIXME__agg_2e_tmp2;    /* Address-exposed local */
@@ -192,7 +197,7 @@ void kernel(uint32_t n, double* A) {
   uint32_t l;
   uint32_t m;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: kernel::for.cond
 for(int32_t iter = 0; iter < (n - 1);   iter = iter + 1){
   uint32_t __FIXME__call = num_blocks((n - iter + 1), 256);
   __FIXME__agg_2e_tmp.__FIXME__l_struct_struct_OC_dim3_field0 = __FIXME__call;
@@ -206,7 +211,7 @@ for(int32_t iter = 0; iter < (n - 1);   iter = iter + 1){
 #pragma omp parallel for collapse(2)
 for(int32_t j = 0; j < __FIXME__call;   j = j + 1){
 for(int32_t k = 0; k < 256;   k = k + 1){
-_Z10kernel_diviPdi_OC_1(n, A, iter, __FIXME__call, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+kernel_div(n, A, iter, __FIXME__call, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
   block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;
@@ -226,7 +231,7 @@ for(int32_t j = 0; j < __FIXME__call6;   j = j + 1){
 for(int32_t k = 0; k < __FIXME__call9;   k = k + 1){
 for(int32_t l = 0; l < 8;   l = l + 1){
 for(int32_t m = 0; m < 32;   m = m + 1){
-_Z8kernel_AiPdi_OC_2(n, A, iter, __FIXME__call6, __FIXME__call9, 1, 8, 32, 1, j, k, 0, l, m, 0);
+kernel_A(n, A, iter, __FIXME__call6, __FIXME__call9, 1, 8, 32, 1, j, k, 0, l, m, 0);
 }
 }
 }
@@ -234,59 +239,68 @@ _Z8kernel_AiPdi_OC_2(n, A, iter, __FIXME__call6, __FIXME__call9, 1, 8, 32, 1, j,
 }
   return;
 }
+// FUNCTION ORDER ID 1 END
 
 
-//INSERT COMMENT FUNCTION: print_array
+// FUNCTION ORDER ID 2 START
+// INSERT COMMENT FUNCTION: print_array
 void print_array(uint32_t n, double* A) {
   int64_t i;
   uint64_t j;
   int32_t __FIXME__call11;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
-  uint32_t __FIXME__call = fprintf(stderr, (__FIXME_GLOBAL___OC_str), A[(i * n + j)]);
-  if ((int)(i * n + j) % (int)20 == 0) {
+  fprintf(stderr, (__FIXME_GLOBAL___OC_str), A[(i * n + j)]);
+  if ((int)(i * n + j) % (int)20 == 0) { // IFELSE MARKER: for.body3 IF
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
   }
 }
 }
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
 }
+// FUNCTION ORDER ID 2 END
 
 
-//INSERT COMMENT FUNCTION: num_blocks
+// FUNCTION ORDER ID 3 START
+// INSERT COMMENT FUNCTION: num_blocks
 uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
+// FUNCTION ORDER ID 3 END
 
 
-//INSERT COMMENT FUNCTION: kernel_div
-void _Z10kernel_diviPdi_OC_1(uint32_t n, double* A, uint32_t __FIXME__k, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 4 START
+// INSERT COMMENT FUNCTION: kernel_div
+void kernel_div(uint32_t n, double* A, uint32_t __FIXME__k, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   int32_t i;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel_div::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x + __FIXME__k + 1;
-  if (i < n) {
+  if (i < n) { // IFELSE MARKER: entry IF
   A[(i * n + __FIXME__k)] = (A[(i * n + __FIXME__k)] / A[(__FIXME__k * n + __FIXME__k)]);
   }
   return;
 }
+// FUNCTION ORDER ID 4 END
 
 
-//INSERT COMMENT FUNCTION: kernel_A
-void _Z8kernel_AiPdi_OC_2(uint32_t n, double* A, uint32_t __FIXME__k, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 5 START
+// INSERT COMMENT FUNCTION: kernel_A
+void kernel_A(uint32_t n, double* A, uint32_t __FIXME__k, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   int32_t i;
   int32_t j;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel_A::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x + __FIXME__k + 1;
   j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y + __FIXME__k + 1;
-  if (i < n) {
-  if (j < n) {
+  if (i < n) { // IFELSE MARKER: entry IF
+  if (j < n) { // IFELSE MARKER: land.lhs.true IF
   A[(i * n + j)] = (A[(i * n + j)] - (A[(i * n + __FIXME__k)] * A[(__FIXME__k * n + j)]));
   }
   }
   return;
 }
+// FUNCTION ORDER ID 5 END
 

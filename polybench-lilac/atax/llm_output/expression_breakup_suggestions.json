@@ -1,0 +1,121 @@
+{
+  "function_name": "main",
+  "breakups": [
+    {
+      "line_number": 173,
+      "original_expression": "init_array(nx, ny, ((double*)A), ((double*)x), ((double*)tmp), ((double*)y));",
+      "breakup_steps": [
+        {
+          "temp_var": "a_double_ptr",
+          "expression": "(double*)A",
+          "description": "Cast the raw uint8_t* buffer A to a double* for use by numerical routines"
+        },
+        {
+          "temp_var": "x_double_ptr",
+          "expression": "(double*)x",
+          "description": "Cast the raw uint8_t* buffer x to a double*"
+        },
+        {
+          "temp_var": "tmp_double_ptr",
+          "expression": "(double*)tmp",
+          "description": "Cast the raw uint8_t* buffer tmp to a double*"
+        },
+        {
+          "temp_var": "y_double_ptr",
+          "expression": "(double*)y",
+          "description": "Cast the raw uint8_t* buffer y to a double*"
+        },
+        {
+          "temp_var": "call_expr",
+          "expression": "init_array(nx, ny, a_double_ptr, x_double_ptr, tmp_double_ptr, y_double_ptr)",
+          "description": "Call init_array with the clearly named double* pointers"
+        }
+      ],
+      "final_expression": "init_array(nx, ny, a_double_ptr, x_double_ptr, tmp_double_ptr, y_double_ptr);"
+    },
+    {
+      "line_number": 187,
+      "original_expression": "kernel3(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), __FIXME__call42, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);",
+      "breakup_steps": [
+        {
+          "temp_var": "a_double_ptr",
+          "expression": "(double*)A",
+          "description": "Cast A to double* for kernel arguments"
+        },
+        {
+          "temp_var": "x_double_ptr",
+          "expression": "(double*)x",
+          "description": "Cast x to double* for kernel arguments"
+        },
+        {
+          "temp_var": "y_double_ptr",
+          "expression": "(double*)y",
+          "description": "Cast y to double* for kernel arguments"
+        },
+        {
+          "temp_var": "tmp_double_ptr",
+          "expression": "(double*)tmp",
+          "description": "Cast tmp to double* for kernel arguments"
+        },
+        {
+          "temp_var": "grid_blocks_x",
+          "expression": "__FIXME__call42",
+          "description": "Number of blocks in the x/grid dimension (precomputed earlier)"
+        },
+        {
+          "temp_var": "threads_per_block",
+          "expression": "256",
+          "description": "Number of threads per block (use a named temp to make intent clear)"
+        },
+        {
+          "temp_var": "call_expr",
+          "expression": "kernel3(nx, ny, a_double_ptr, x_double_ptr, y_double_ptr, tmp_double_ptr, grid_blocks_x, 1, 1, threads_per_block, 1, 1, i, 0, 0, j, 0, 0)",
+          "description": "Call kernel3 with descriptive temporaries for pointer casts and block/grid parameters"
+        }
+      ],
+      "final_expression": "kernel3(nx, ny, a_double_ptr, x_double_ptr, y_double_ptr, tmp_double_ptr, grid_blocks_x, 1, 1, threads_per_block, 1, 1, i, 0, 0, j, 0, 0);"
+    },
+    {
+      "line_number": 203,
+      "original_expression": "kernel4(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), __FIXME__call46, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);",
+      "breakup_steps": [
+        {
+          "temp_var": "a_double_ptr",
+          "expression": "(double*)A",
+          "description": "Cast A to double* for kernel arguments"
+        },
+        {
+          "temp_var": "x_double_ptr",
+          "expression": "(double*)x",
+          "description": "Cast x to double* for kernel arguments"
+        },
+        {
+          "temp_var": "y_double_ptr",
+          "expression": "(double*)y",
+          "description": "Cast y to double* for kernel arguments"
+        },
+        {
+          "temp_var": "tmp_double_ptr",
+          "expression": "(double*)tmp",
+          "description": "Cast tmp to double* for kernel arguments"
+        },
+        {
+          "temp_var": "grid_blocks_y",
+          "expression": "__FIXME__call46",
+          "description": "Number of blocks in the y/grid dimension (precomputed earlier)"
+        },
+        {
+          "temp_var": "threads_per_block",
+          "expression": "256",
+          "description": "Number of threads per block (named for clarity)"
+        },
+        {
+          "temp_var": "call_expr",
+          "expression": "kernel4(nx, ny, a_double_ptr, x_double_ptr, y_double_ptr, tmp_double_ptr, grid_blocks_y, 1, 1, threads_per_block, 1, 1, i, 0, 0, j, 0, 0)",
+          "description": "Call kernel4 with descriptive temporaries for pointer casts and block/grid parameters"
+        }
+      ],
+      "final_expression": "kernel4(nx, ny, a_double_ptr, x_double_ptr, y_double_ptr, tmp_double_ptr, grid_blocks_y, 1, 1, threads_per_block, 1, 1, i, 0, 0, j, 0, 0);"
+    }
+  ]
+}

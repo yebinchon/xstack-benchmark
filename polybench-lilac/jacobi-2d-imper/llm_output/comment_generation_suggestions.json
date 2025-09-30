@@ -1,0 +1,54 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize the n-by-n arrays A and B: iterate over rows and columns to set up initial values for the computation"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Return the number of blocks required to cover 'num' items with blocks of size 'factor' (ceiling division)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_stencil",
+      "original": "// INSERT COMMENT FUNCTION: kernel_stencil",
+      "replacement": "// Compute a 5-point stencil for interior grid points: use block/grid/thread indices to get global i,j and update B from neighboring values in A"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Manage and execute the time-stepping stencil kernel: configure block/grid dimensions and run the stencil for the given number of time steps, swapping buffers as needed"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the n-by-n array A to stderr in row-major order using the configured floating-point format"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all row (i) and column (j) indices of the n-by-n grid to compute the row-major element index used for initialization"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Time-stepping loop: perform one stencil iteration per timestep (1..tsteps), configuring block dimensions and invoking the stencil computation each iteration"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over every element of the n-by-n array and print each value (row-major order) to stderr"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line arguments for dump_code, n and tsteps, then allocate two n-by-n double buffers A and B (n*n*8 bytes each)"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_stencil::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_stencil::entry",
+      "replacement": "// Compute global indices i,j from block/thread coordinates; if they are interior points (not on the boundary), compute the average of the center and its four neighbors from A and store it into B"
+    }
+  ]
+}

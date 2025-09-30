@@ -1,0 +1,17 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "ADI_BLOCK_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        273,
+        284,
+        288,
+        299
+      ],
+      "function": "kernel_adi"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "BICG_BLOCK_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        250,
+        262,
+        266,
+        278
+      ],
+      "function": "num_blocks and kernel_bicg"
+    }
+  ]
+}

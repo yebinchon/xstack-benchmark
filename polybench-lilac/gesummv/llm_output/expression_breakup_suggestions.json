@@ -1,0 +1,91 @@
+{
+  "function_name": "kernel_y",
+  "breakups": [
+    {
+      "line_number": 222,
+      "original_expression": "tmp[i] = (tmp[i] + (A[(i * n + j)] * x[j]));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx",
+          "expression": "i * n + j",
+          "description": "Compute the linear index for row-major access"
+        },
+        {
+          "temp_var": "a_val",
+          "expression": "A[idx]",
+          "description": "Load A at the computed index"
+        },
+        {
+          "temp_var": "x_j",
+          "expression": "x[j]",
+          "description": "Load x at index j"
+        },
+        {
+          "temp_var": "prod_a",
+          "expression": "a_val * x_j",
+          "description": "Multiply the matrix element by the vector element"
+        },
+        {
+          "temp_var": "new_tmp_i",
+          "expression": "tmp[i] + prod_a",
+          "description": "Accumulate the product into the tmp[i] value"
+        }
+      ],
+      "final_expression": "tmp[i] = new_tmp_i"
+    },
+    {
+      "line_number": 223,
+      "original_expression": "y[i] = (y[i] + (B[(i * n + j)] * x[j]));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx",
+          "expression": "i * n + j",
+          "description": "Compute the linear index for row-major access (same as above)"
+        },
+        {
+          "temp_var": "b_val",
+          "expression": "B[idx]",
+          "description": "Load B at the computed index"
+        },
+        {
+          "temp_var": "x_j",
+          "expression": "x[j]",
+          "description": "Load x at index j"
+        },
+        {
+          "temp_var": "prod_b",
+          "expression": "b_val * x_j",
+          "description": "Multiply the matrix element by the vector element"
+        },
+        {
+          "temp_var": "new_y_i",
+          "expression": "y[i] + prod_b",
+          "description": "Accumulate the product into the y[i] value"
+        }
+      ],
+      "final_expression": "y[i] = new_y_i"
+    },
+    {
+      "line_number": 225,
+      "original_expression": "y[i] = ((alpha * tmp[i]) + (beta * y[i]));",
+      "breakup_steps": [
+        {
+          "temp_var": "scaled_tmp",
+          "expression": "alpha * tmp[i]",
+          "description": "Scale tmp[i] by alpha"
+        },
+        {
+          "temp_var": "scaled_y",
+          "expression": "beta * y[i]",
+          "description": "Scale y[i] by beta"
+        },
+        {
+          "temp_var": "result_y",
+          "expression": "scaled_tmp + scaled_y",
+          "description": "Combine the scaled terms"
+        }
+      ],
+      "final_expression": "y[i] = result_y"
+    }
+  ]
+}

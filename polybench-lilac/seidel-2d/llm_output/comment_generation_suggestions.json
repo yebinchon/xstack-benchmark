@@ -1,0 +1,54 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize an n\u00d7n double array A with deterministic values: A[i*n + j] = ((i*(j+2)) + 2) / n for rows i and columns j"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute how many blocks are required to cover 'num' items with 'factor' items per block (ceiling division)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_stencil",
+      "original": "// INSERT COMMENT FUNCTION: kernel_stencil",
+      "replacement": "// Per-thread 2D stencil routine: compute global i,j for this thread and perform the stencil/time-step updates for the assigned grid point using neighboring values"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Top-level kernel driver that configures block/grid dimensions and launches per-thread stencil work over the domain for the given number of time steps"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the n\u00d7n array A to stderr in row-major order using the predefined print format"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Iterate over all row (i) and column (j) indices to initialize each element A[i*n + j] with the formula ((i*(j+2))+2)/n"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Time-stepping loop: for each time step configure block dimensions (and later grid/launch) then run the stencil work for that step"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over rows and columns and print each array element A[i*n + j] to stderr in row-major order"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line args into dump_code, n, tsteps; allocate memory for the n\u00d7n array A and initialize it"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_stencil::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_stencil::entry",
+      "replacement": "// Compute global indices i,j from block/thread IDs and check that (i,j) lie inside the interior (1..n-2); if so compute row base for i-1 to prepare neighbor accesses"
+    }
+  ]
+}

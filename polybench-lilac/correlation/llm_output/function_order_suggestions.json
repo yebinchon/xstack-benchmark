@@ -1,0 +1,17 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    1
+  ],
+  "reasoning": "I keep main first (per the guideline). Immediately after main I place setup/display functions that main directly uses: init_array (0) and print_array (2). Next I place small utilities needed by the core computation (num_blocks (3)). Then I group all kernel helper routines together in logical order: kernel_mean (4), kernel_stddev (5), kernel_reduce (6), kernel_diag (7), kernel_corr (8), kernel_tail (9). Finally I place kernel (1) itself last among the core functions because it calls all of the preceding kernel_* helpers and num_blocks. This ordering improves readability by: (1) presenting the program entry first; (2) showing initialization and I/O next; (3) keeping utility functions and helpers grouped; and (4) satisfying dependency order where callers come after the functions they call (so callers like kernel appear after their callees). This grouping also speeds debugging by keeping related computation pieces and low-level utilities close together.",
+  "confidence": 0.9
+}

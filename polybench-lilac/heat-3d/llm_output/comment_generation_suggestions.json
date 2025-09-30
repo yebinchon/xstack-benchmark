@@ -1,0 +1,54 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize two n x n x n 3D arrays A and B with their starting values (prepare data for the stencil computation)"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute the number of blocks required to cover 'num' elements with block size 'factor' using ceiling division"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_stencil",
+      "original": "// INSERT COMMENT FUNCTION: kernel_stencil",
+      "replacement": "// Perform a single-threaded 3D stencil update for the element at (i,j,k) using arrays A and B and the provided grid/block/thread coordinates"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Coordinate the time-stepping loop: configure grid/block dimensions, launch the stencil kernel for each time step, and manage buffer swapping"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Walk the n x n x n array A and print its elements in a consistent order for verification or debugging"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "for(int64_t i = 0; i < n;   i = i + 1){\nfor(int64_t j = 0; j < n;   j = j + 1){\nfor(int64_t k = 0; k < n;   k = k + 1){",
+      "replacement": "// Triple-nested loops over i,j,k to visit every element of the n^3 volume and initialize A and B"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "for(int32_t t = 1; t <= tsteps;   t = t + 1){\n  block.dim3_x = 1;\n  block.dim3_y = 8;",
+      "replacement": "// Iterate time steps from 1..tsteps; for each step configure block dimensions and execute the stencil kernel for that timestep"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "for(int64_t i = 0; i < n;   i = i + 1){\nfor(int64_t j = 0; j < n;   j = j + 1){\nfor(int64_t k = 0; k < n;   k = k + 1){",
+      "replacement": "// Triple-nested loops over i,j,k to traverse every element of A and emit its value (controls output ordering)"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "  dump_code = atoi(argv[1]);\n  tsteps = atoi(argv[2]);\n  n = atoi(argv[3]);\n  A = malloc(n * n * n * 8);\n  B = malloc(n * n * n * 8);",
+      "replacement": "// Parse command-line args: dump flag, number of timesteps and grid size n; then allocate two n^3 double arrays (8 bytes per double) for A and B"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_stencil::entry",
+      "original": "  i = blockDim_x * blockIdx_x + threadIdx_x + 1;\n  j = blockDim_y * blockIdx_y + threadIdx_y + 1;\n  k = blockDim_z * blockIdx_z + threadIdx_z + 1;\n  if (i < (iter - 1)) { // IFELSE MARKER: entry IF\n  if (j < (iter - 1)) { // IFELSE MARKER: land.lhs.true IF",
+      "replacement": "// Compute global 1-based indices (i,j,k) for this thread from block/thread coordinates and check that i and j lie inside the valid update region (exclude halo/edges)"
+    }
+  ]
+}

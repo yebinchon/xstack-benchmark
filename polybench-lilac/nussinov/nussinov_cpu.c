@@ -97,7 +97,7 @@ uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
 double fmax(double, double);
-void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_max_score(uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -138,15 +138,18 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
 
 /* Function Bodies */
 
-//INSERT COMMENT FUNCTION: max
+// FUNCTION ORDER ID 0 START
+// INSERT COMMENT FUNCTION: max
 double max(double a, double b) {
   double __FIXME__1;
 
   __FIXME__1 = fmax(a, b);
   return __FIXME__1;
 }
+// FUNCTION ORDER ID 0 END
 
 
+// MAIN START
 int main(int argc, char ** argv) {
   int32_t dump_code;
   int32_t n;
@@ -156,7 +159,7 @@ int main(int argc, char ** argv) {
   int32_t __FIXME__call26;
   int32_t __FIXME__call37;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: main::entry
   dump_code = atoi(argv[1]);
   n = atoi(argv[2]);
   table = malloc(n * n * 8);
@@ -166,7 +169,7 @@ int main(int argc, char ** argv) {
 ;
   kernel(n, ((double*)seq), ((double*)table), ((double*)oldtable));
 ;
-  if (dump_code == 1) {
+  if (dump_code == 1) { // IFELSE MARKER: entry IF
 print_array(n, ((double*)table));
   }
 free(((uint8_t*)((double*)table)));
@@ -174,29 +177,33 @@ free(((uint8_t*)((double*)oldtable)));
 free(((uint8_t*)((double*)seq)));
   return 0;
 }
+// MAIN END
 
 
-//INSERT COMMENT FUNCTION: init_array
+// FUNCTION ORDER ID 1 START
+// INSERT COMMENT FUNCTION: init_array
 void init_array(uint32_t n, double* table, double* oldtable, double* seq) {
   int64_t i;
   uint64_t j;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: init_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
   table[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
   oldtable[(i * n + j)] = (((double)(i) * (double)(j)) / (double)(n));
 }
 }
-//INSERT COMMENT LOOP: for.cond19
+// INSERT COMMENT LOOP: init_array::for.cond19
 for(int64_t i = 0; i < n;   i = i + 1){
   seq[i] = ((double)(i) / (double)(n));
 }
   return;
 }
+// FUNCTION ORDER ID 1 END
 
 
-//INSERT COMMENT FUNCTION: kernel
+// FUNCTION ORDER ID 2 START
+// INSERT COMMENT FUNCTION: kernel
 void kernel(uint32_t n, double* seq, double* table, double* oldtable) {
   struct __FIXME__l_struct_struct_OC_dim3 __FIXME__agg_2e_tmp;    /* Address-exposed local */
   struct __FIXME__l_struct_struct_OC_dim3 __FIXME__agg_2e_tmp1;    /* Address-exposed local */
@@ -206,7 +213,7 @@ void kernel(uint32_t n, double* seq, double* table, double* oldtable) {
   uint32_t j;
   uint32_t k;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: kernel::for.cond
 for(int32_t w = n; w < (2 * n - 1);   w = w + 1){
   uint32_t __FIXME__call = num_blocks(n, 32);
   __FIXME__agg_2e_tmp.__FIXME__l_struct_struct_OC_dim3_field0 = __FIXME__call;
@@ -220,41 +227,47 @@ for(int32_t w = n; w < (2 * n - 1);   w = w + 1){
 #pragma omp parallel for collapse(2)
 for(int32_t j = 0; j < __FIXME__call;   j = j + 1){
 for(int32_t k = 0; k < 32;   k = k + 1){
-_Z16kernel_max_scoreiPdS_S_i_OC_1(n, seq, table, oldtable, w, __FIXME__call, 1, 1, 32, 1, 1, j, 0, 0, k, 0, 0);
+kernel_max_score(n, seq, table, oldtable, w, __FIXME__call, 1, 1, 32, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
 }
   return;
 }
+// FUNCTION ORDER ID 2 END
 
 
-//INSERT COMMENT FUNCTION: print_array
+// FUNCTION ORDER ID 3 START
+// INSERT COMMENT FUNCTION: print_array
 void print_array(uint32_t n, double* table) {
   int64_t i;
   uint64_t j;
   int32_t __FIXME__call11;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
-  uint32_t __FIXME__call = fprintf(stderr, (__FIXME_GLOBAL___OC_str), table[(i * n + j)]);
-  if ((int)(i * n + j) % (int)20 == 0) {
+  fprintf(stderr, (__FIXME_GLOBAL___OC_str), table[(i * n + j)]);
+  if ((int)(i * n + j) % (int)20 == 0) { // IFELSE MARKER: for.body3 IF
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
   }
 }
 }
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
 }
+// FUNCTION ORDER ID 3 END
 
 
-//INSERT COMMENT FUNCTION: num_blocks
+// FUNCTION ORDER ID 4 START
+// INSERT COMMENT FUNCTION: num_blocks
 uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
+// FUNCTION ORDER ID 4 END
 
 
-//INSERT COMMENT FUNCTION: kernel_max_score
-void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t n, double* seq, double* table, double* oldtable, uint32_t w, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 5 START
+// INSERT COMMENT FUNCTION: kernel_max_score
+void kernel_max_score(uint32_t n, double* seq, double* table, double* oldtable, uint32_t w, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   uint32_t __FIXME__mul;
   int64_t j;
   int64_t i;
@@ -262,23 +275,23 @@ void _Z16kernel_max_scoreiPdS_S_i_OC_1(uint32_t n, double* seq, double* table, d
   double upd;
   int64_t k;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel_max_score::entry
   __FIXME__mul = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x;
   j = __FIXME__mul + __FIXME__threadIdx_2e_x;
   i = ((n - 1) + j - w);
-  if (0 <= i) {
-  if (i < n) {
-  if (i + 1 <= j) {
-  if (j < n) {
-  if ((j - 1) >= 0) {
+  if (0 <= i) { // IFELSE MARKER: entry IF
+  if (i < n) { // IFELSE MARKER: land.lhs.true IF
+  if (i + 1 <= j) { // IFELSE MARKER: land.lhs.true6 IF
+  if (j < n) { // IFELSE MARKER: land.lhs.true9 IF
+  if ((j - 1) >= 0) { // IFELSE MARKER: if.then IF
   maximum = max(maximum, table[(i * n + (j - 1))]);
   }
-  if (i + 1 < n) {
+  if (i + 1 < n) { // IFELSE MARKER: if.end IF
   maximum = max(maximum, table[((i + 1) * n + j)]);
   }
-  if ((j - 1) >= 0) {
-  if (i + 1 < n) {
-  if (i < (j - 1)) {
+  if ((j - 1) >= 0) { // IFELSE MARKER: if.end31 IF
+  if (i + 1 < n) { // IFELSE MARKER: land.lhs.true34 IF
+  if (i < (j - 1)) { // IFELSE MARKER: if.then37 IF
   upd = (upd + (llvm_fcmp_oeq((seq[i] + seq[j]), 3) ? 1 : 0));
   maximum = max(maximum, upd);
   }
@@ -295,4 +308,5 @@ for(int64_t k = (__FIXME__threadIdx_2e_x + n + __FIXME__mul - w); k < j;   k = k
   }
   return;
 }
+// FUNCTION ORDER ID 5 END
 

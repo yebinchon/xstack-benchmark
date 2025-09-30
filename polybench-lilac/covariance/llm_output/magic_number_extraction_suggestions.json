@@ -1,0 +1,51 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "COV_TILE_SIZE_256_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        273
+      ],
+      "function": "kernel_covariance"
+    },
+    {
+      "value": "8",
+      "name": "COV_BLOCK_DIM0_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        289,
+        303,
+        312,
+        326
+      ],
+      "function": "kernel_covariance"
+    },
+    {
+      "value": "32",
+      "name": "COV_BLOCK_DIM1_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        290,
+        304,
+        313,
+        327
+      ],
+      "function": "kernel_covariance"
+    },
+    {
+      "value": "12",
+      "name": "COV_BLOCK_STRUCT_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        297,
+        320
+      ],
+      "function": "kernel_covariance"
+    }
+  ]
+}

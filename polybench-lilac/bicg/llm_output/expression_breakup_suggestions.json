@@ -1,0 +1,201 @@
+{
+  "function_name": "main",
+  "breakups": [
+    {
+      "line_number": 159,
+      "original_expression": "init_array(m, n, ((double*)A), ((double*)r), ((double*)p));",
+      "breakup_steps": [
+        {
+          "temp_var": "A_d",
+          "expression": "(double*)A",
+          "description": "Cast the raw byte pointer A to a double pointer for numeric operations"
+        },
+        {
+          "temp_var": "r_d",
+          "expression": "(double*)r",
+          "description": "Cast the raw byte pointer r to a double pointer"
+        },
+        {
+          "temp_var": "p_d",
+          "expression": "(double*)p",
+          "description": "Cast the raw byte pointer p to a double pointer"
+        },
+        {
+          "temp_var": "init_call",
+          "expression": "init_array(m, n, A_d, r_d, p_d)",
+          "description": "Call init_array using the clearer, typed temporary pointers"
+        }
+      ],
+      "final_expression": "init_array(m, n, A_d, r_d, p_d)"
+    },
+    {
+      "line_number": 161,
+      "original_expression": "kernel(m, n, ((double*)A), ((double*)s), ((double*)q), ((double*)p), ((double*)r));",
+      "breakup_steps": [
+        {
+          "temp_var": "A_d",
+          "expression": "(double*)A",
+          "description": "Cast A to double* for kernel access"
+        },
+        {
+          "temp_var": "s_d",
+          "expression": "(double*)s",
+          "description": "Cast s to double*"
+        },
+        {
+          "temp_var": "q_d",
+          "expression": "(double*)q",
+          "description": "Cast q to double*"
+        },
+        {
+          "temp_var": "p_d",
+          "expression": "(double*)p",
+          "description": "Cast p to double*"
+        },
+        {
+          "temp_var": "r_d",
+          "expression": "(double*)r",
+          "description": "Cast r to double*"
+        },
+        {
+          "temp_var": "kernel_call",
+          "expression": "kernel(m, n, A_d, s_d, q_d, p_d, r_d)",
+          "description": "Call kernel with the typed temporaries to improve readability"
+        }
+      ],
+      "final_expression": "kernel(m, n, A_d, s_d, q_d, p_d, r_d)"
+    },
+    {
+      "line_number": 164,
+      "original_expression": "print_array(m, n, ((double*)s), ((double*)q));",
+      "breakup_steps": [
+        {
+          "temp_var": "s_d",
+          "expression": "(double*)s",
+          "description": "Cast s to double* for printing"
+        },
+        {
+          "temp_var": "q_d",
+          "expression": "(double*)q",
+          "description": "Cast q to double* for printing"
+        },
+        {
+          "temp_var": "print_call",
+          "expression": "print_array(m, n, s_d, q_d)",
+          "description": "Call print_array using the typed temporaries"
+        }
+      ],
+      "final_expression": "print_array(m, n, s_d, q_d)"
+    },
+    {
+      "line_number": 166,
+      "original_expression": "free(((uint8_t*)((double*)A)));",
+      "breakup_steps": [
+        {
+          "temp_var": "A_d",
+          "expression": "(double*)A",
+          "description": "Cast A to double* to mirror the original nested cast"
+        },
+        {
+          "temp_var": "A_bytes",
+          "expression": "(uint8_t*)A_d",
+          "description": "Cast the double* back to a byte pointer for free"
+        },
+        {
+          "temp_var": "free_call",
+          "expression": "free(A_bytes)",
+          "description": "Free the allocated memory using the clearer temporary pointer"
+        }
+      ],
+      "final_expression": "free(A_bytes)"
+    },
+    {
+      "line_number": 167,
+      "original_expression": "free(((uint8_t*)((double*)s)));",
+      "breakup_steps": [
+        {
+          "temp_var": "s_d",
+          "expression": "(double*)s",
+          "description": "Cast s to double* to mirror the original nested cast"
+        },
+        {
+          "temp_var": "s_bytes",
+          "expression": "(uint8_t*)s_d",
+          "description": "Cast the double* back to a byte pointer for free"
+        },
+        {
+          "temp_var": "free_call",
+          "expression": "free(s_bytes)",
+          "description": "Free the allocated memory using the clearer temporary pointer"
+        }
+      ],
+      "final_expression": "free(s_bytes)"
+    },
+    {
+      "line_number": 168,
+      "original_expression": "free(((uint8_t*)((double*)q)));",
+      "breakup_steps": [
+        {
+          "temp_var": "q_d",
+          "expression": "(double*)q",
+          "description": "Cast q to double* to mirror the original nested cast"
+        },
+        {
+          "temp_var": "q_bytes",
+          "expression": "(uint8_t*)q_d",
+          "description": "Cast the double* back to a byte pointer for free"
+        },
+        {
+          "temp_var": "free_call",
+          "expression": "free(q_bytes)",
+          "description": "Free the allocated memory using the clearer temporary pointer"
+        }
+      ],
+      "final_expression": "free(q_bytes)"
+    },
+    {
+      "line_number": 169,
+      "original_expression": "free(((uint8_t*)((double*)p)));",
+      "breakup_steps": [
+        {
+          "temp_var": "p_d",
+          "expression": "(double*)p",
+          "description": "Cast p to double* to mirror the original nested cast"
+        },
+        {
+          "temp_var": "p_bytes",
+          "expression": "(uint8_t*)p_d",
+          "description": "Cast the double* back to a byte pointer for free"
+        },
+        {
+          "temp_var": "free_call",
+          "expression": "free(p_bytes)",
+          "description": "Free the allocated memory using the clearer temporary pointer"
+        }
+      ],
+      "final_expression": "free(p_bytes)"
+    },
+    {
+      "line_number": 170,
+      "original_expression": "free(((uint8_t*)((double*)r)));",
+      "breakup_steps": [
+        {
+          "temp_var": "r_d",
+          "expression": "(double*)r",
+          "description": "Cast r to double* to mirror the original nested cast"
+        },
+        {
+          "temp_var": "r_bytes",
+          "expression": "(uint8_t*)r_d",
+          "description": "Cast the double* back to a byte pointer for free"
+        },
+        {
+          "temp_var": "free_call",
+          "expression": "free(r_bytes)",
+          "description": "Free the allocated memory using the clearer temporary pointer"
+        }
+      ],
+      "final_expression": "free(r_bytes)"
+    }
+  ]
+}

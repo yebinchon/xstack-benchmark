@@ -1,0 +1,89 @@
+{
+  "function_name": "main",
+  "breakups": [
+    {
+      "line_number": 155,
+      "original_expression": "init_array(15000, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));",
+      "breakup_steps": [
+        {
+          "temp_var": "n",
+          "expression": "15000",
+          "description": "Number of elements to initialize"
+        },
+        {
+          "temp_var": "x1_d",
+          "expression": "(double*)x1",
+          "description": "Cast x1 buffer to double* for element access"
+        },
+        {
+          "temp_var": "x2_d",
+          "expression": "(double*)x2",
+          "description": "Cast x2 buffer to double* for element access"
+        },
+        {
+          "temp_var": "y1_d",
+          "expression": "(double*)y_1",
+          "description": "Cast y_1 buffer to double* for element access"
+        },
+        {
+          "temp_var": "y2_d",
+          "expression": "(double*)y_2",
+          "description": "Cast y_2 buffer to double* for element access"
+        },
+        {
+          "temp_var": "A_d",
+          "expression": "(double*)A",
+          "description": "Cast A buffer to double* for element access"
+        },
+        {
+          "temp_var": "init_call",
+          "expression": "init_array(n, x1_d, x2_d, y1_d, y2_d, A_d)",
+          "description": "Call init_array using the named temporaries"
+        }
+      ],
+      "final_expression": "init_array(n, x1_d, x2_d, y1_d, y2_d, A_d)"
+    },
+    {
+      "line_number": 157,
+      "original_expression": "kernel(15000, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));",
+      "breakup_steps": [
+        {
+          "temp_var": "n",
+          "expression": "15000",
+          "description": "Number of elements to process"
+        },
+        {
+          "temp_var": "x1_d",
+          "expression": "(double*)x1",
+          "description": "Cast x1 buffer to double* for element access"
+        },
+        {
+          "temp_var": "x2_d",
+          "expression": "(double*)x2",
+          "description": "Cast x2 buffer to double* for element access"
+        },
+        {
+          "temp_var": "y1_d",
+          "expression": "(double*)y_1",
+          "description": "Cast y_1 buffer to double* for element access"
+        },
+        {
+          "temp_var": "y2_d",
+          "expression": "(double*)y_2",
+          "description": "Cast y_2 buffer to double* for element access"
+        },
+        {
+          "temp_var": "A_d",
+          "expression": "(double*)A",
+          "description": "Cast A buffer to double* for element access"
+        },
+        {
+          "temp_var": "kernel_call",
+          "expression": "kernel(n, x1_d, x2_d, y1_d, y2_d, A_d)",
+          "description": "Call kernel using the named temporaries"
+        }
+      ],
+      "final_expression": "kernel(n, x1_d, x2_d, y1_d, y2_d, A_d)"
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "removals": [
+    {
+      "line_number": 166,
+      "expression": "((double*)ex)",
+      "replacement": "(double*)ex",
+      "reasoning": "The outer parentheses around the cast result are redundant. The cast syntax (double*)ex already groups correctly; the extra parentheses add no precedence and hurt readability."
+    },
+    {
+      "line_number": 166,
+      "expression": "((double*)ey)",
+      "replacement": "(double*)ey",
+      "reasoning": "Same as above: outer parentheses around the cast are unnecessary."
+    },
+    {
+      "line_number": 166,
+      "expression": "((double*)hz)",
+      "replacement": "(double*)hz",
+      "reasoning": "Same: remove redundant outer parentheses around the cast."
+    },
+    {
+      "line_number": 166,
+      "expression": "((double*)_fict_)",
+      "replacement": "(double*)_fict_",
+      "reasoning": "Same: outer parentheses around the cast are unnecessary."
+    },
+    {
+      "line_number": 168,
+      "expression": "((double*)ex)",
+      "replacement": "(double*)ex",
+      "reasoning": "Outer parentheses around the cast are redundant in a function call argument."
+    },
+    {
+      "line_number": 168,
+      "expression": "((double*)ey)",
+      "replacement": "(double*)ey",
+      "reasoning": "Remove redundant outer parentheses around the cast."
+    },
+    {
+      "line_number": 168,
+      "expression": "((double*)hz)",
+      "replacement": "(double*)hz",
+      "reasoning": "Remove redundant outer parentheses around the cast."
+    },
+    {
+      "line_number": 168,
+      "expression": "((double*)_fict_)",
+      "replacement": "(double*)_fict_",
+      "reasoning": "Remove redundant outer parentheses around the cast."
+    },
+    {
+      "line_number": 171,
+      "expression": "((double*)ex)",
+      "replacement": "(double*)ex",
+      "reasoning": "Redundant outer parentheses around the cast in the function call \u2014 safe to remove."
+    },
+    {
+      "line_number": 171,
+      "expression": "((double*)ey)",
+      "replacement": "(double*)ey",
+      "reasoning": "Redundant outer parentheses around the cast in the function call."
+    },
+    {
+      "line_number": 171,
+      "expression": "((double*)hz)",
+      "replacement": "(double*)hz",
+      "reasoning": "Redundant outer parentheses around the cast in the function call."
+    },
+    {
+      "line_number": 173,
+      "expression": "((uint8_t*)((double*)ex))",
+      "replacement": "(uint8_t*)((double*)ex)",
+      "reasoning": "The outermost parentheses around the cast expression passed to free are unnecessary; leaving the cast parentheses is sufficient and clearer."
+    },
+    {
+      "line_number": 174,
+      "expression": "((uint8_t*)((double*)ey))",
+      "replacement": "(uint8_t*)((double*)ey)",
+      "reasoning": "Remove redundant outer parentheses around the cast expression passed to free."
+    },
+    {
+      "line_number": 175,
+      "expression": "((uint8_t*)((double*)hz))",
+      "replacement": "(uint8_t*)((double*)hz)",
+      "reasoning": "Remove redundant outer parentheses around the cast expression passed to free."
+    },
+    {
+      "line_number": 176,
+      "expression": "((uint8_t*)((double*)_fict_))",
+      "replacement": "(uint8_t*)((double*)_fict_)",
+      "reasoning": "Remove redundant outer parentheses around the cast expression passed to free."
+    },
+    {
+      "line_number": 186,
+      "expression": "(double)(i)",
+      "replacement": "(double)i",
+      "reasoning": "Parentheses around the single variable operand of a cast are unnecessary; (double)i is the idiomatic form."
+    },
+    {
+      "line_number": 191,
+      "expression": "ex[(i * ny + j)]",
+      "replacement": "ex[i * ny + j]",
+      "reasoning": "Parentheses surrounding the entire index expression inside the array subscript are unnecessary; array indexing accepts the expression directly and removing them improves readability."
+    },
+    {
+      "line_number": 191,
+      "expression": "(((double)(i) * (double)((j + 1))) / (double)(nx))",
+      "replacement": "(double)i * (double)(j + 1) / (double)nx",
+      "reasoning": "The outer grouping parentheses around the whole RHS are redundant. Also the cast forms (double)(i) and (double)((j + 1)) can be simplified to (double)i and (double)(j + 1); these changes do not alter precedence and make the expression cleaner."
+    },
+    {
+      "line_number": 192,
+      "expression": "ey[(i * ny + j)]",
+      "replacement": "ey[i * ny + j]",
+      "reasoning": "Remove unnecessary parentheses around the array index expression."
+    },
+    {
+      "line_number": 192,
+      "expression": "(((double)(i) * (double)((j + 2))) / (double)(ny))",
+      "replacement": "(double)i * (double)(j + 2) / (double)ny",
+      "reasoning": "Outer grouping parentheses are redundant and casts around single variables can drop the extra parentheses; readability improves without changing semantics."
+    },
+    {
+      "line_number": 193,
+      "expression": "hz[(i * ny + j)]",
+      "replacement": "hz[i * ny + j]",
+      "reasoning": "Remove unnecessary parentheses around the array index expression."
+    },
+    {
+      "line_number": 193,
+      "expression": "(((double)(i) * (double)((j + 3))) / (double)(nx))",
+      "replacement": "(double)i * (double)(j + 3) / (double)nx",
+      "reasoning": "Remove redundant outer parentheses and simplify cast operand parentheses where they are around single variables; precedence is preserved."
+    },
+    {
+      "line_number": 200,
+      "expression": "((num + factor) - 1)",
+      "replacement": "num + factor - 1",
+      "reasoning": "Addition and subtraction have the same precedence and are left-associative; the extra parentheses around the numerator are unnecessary."
+    },
+    {
+      "line_number": 209,
+      "expression": "ey[(0 * ny + j)]",
+      "replacement": "ey[0 * ny + j]",
+      "reasoning": "Parentheses around the index expression are unnecessary. (Note: the arithmetic 0 * ny + j could be simplified to j, but this change only removes redundant parentheses.)"
+    },
+    {
+      "line_number": 223,
+      "expression": "ey[(i * ny + j)] = (ey[(i * ny + j)] - (0.5 * (hz[(i * ny + j)] - hz[((i - 1) * ny + j)])));",
+      "replacement": "ey[i * ny + j] = ey[i * ny + j] - 0.5 * (hz[i * ny + j] - hz[(i - 1) * ny + j]);",
+      "reasoning": "Remove redundant parentheses around array indices and the outermost grouping around the subtraction. Keep the inner parentheses around the hz difference to preserve the intended multiplication scope (0.5 * (...)). This improves readability without changing precedence."
+    },
+    {
+      "line_number": 238,
+      "expression": "ex[(i * ny + j)] = (ex[(i * ny + j)] - (0.5 * (hz[(i * ny + j)] - hz[((i * ny + j) - 1)])));",
+      "replacement": "ex[i * ny + j] = ex[i * ny + j] - 0.5 * (hz[i * ny + j] - hz[(i * ny + j) - 1]);",
+      "reasoning": "Remove unnecessary parentheses around indices and the assignment RHS outer grouping. Keep the necessary inner parentheses that group the subtraction being multiplied by 0.5."
+    },
+    {
+      "line_number": 253,
+      "expression": "hz[(i * ny + j)] = (hz[(i * ny + j)] - (0.69999999999999996 * (((ex[((i * ny + j) + 1)] - ex[(i * ny + j)]) + ey[((i + 1) * ny + j)]) - ey[(i * ny + j)])));",
+      "replacement": "hz[i * ny + j] = hz[i * ny + j] - 0.69999999999999996 * ((ex[(i * ny + j) + 1] - ex[i * ny + j] + ey[(i + 1) * ny + j]) - ey[i * ny + j]);",
+      "reasoning": "Remove redundant parentheses around array indices and the outermost grouping of the RHS. The multiplication binds tighter than subtraction so 'hz[...] - 0.699... * (...)' is correct; inner groupings that clarify the intended subtractions are kept but redundant nested parentheses are removed to improve readability."
+    },
+    {
+      "line_number": 293,
+      "expression": "((uint8_t*)(&dim_thread_256_packed))",
+      "replacement": "(uint8_t*)&dim_thread_256_packed",
+      "reasoning": "The outer parentheses around the casted address are unnecessary. Using (uint8_t*)&dim_thread_256_packed is the idiomatic, clearer form."
+    },
+    {
+      "line_number": 294,
+      "expression": "((uint8_t*)(&dim_grid_ny_packed))",
+      "replacement": "(uint8_t*)&dim_grid_ny_packed",
+      "reasoning": "Remove redundant outer parentheses around the casted address expression passed to memcpy; this does not change semantics."
+    },
+    {
+      "line_number": 309,
+      "expression": "memcpy(((uint8_t*)(&dim_grid_ey)), ((uint8_t*)(&grid)), 12);",
+      "replacement": "memcpy((uint8_t*)&dim_grid_ey, (uint8_t*)&grid, 12);",
+      "reasoning": "Remove redundant outer parentheses around the casted address arguments passed to memcpy. The simpler form is clearer and equivalent."
+    },
+    {
+      "line_number": 415,
+      "expression": "fprintf(stderr, (print_format), ex[(i * ny + j)]);",
+      "replacement": "fprintf(stderr, print_format, ex[i * ny + j]);",
+      "reasoning": "Parentheses around the format variable and around the array index are unnecessary. Removing them improves readability without affecting behavior."
+    },
+    {
+      "line_number": 416,
+      "expression": "fprintf(stderr, (print_format), ey[(i * ny + j)]);",
+      "replacement": "fprintf(stderr, print_format, ey[i * ny + j]);",
+      "reasoning": "Same as previous: remove redundant parentheses around the argument and index expression."
+    },
+    {
+      "line_number": 417,
+      "expression": "fprintf(stderr, (print_format), hz[(i * ny + j)]);",
+      "replacement": "fprintf(stderr, print_format, hz[i * ny + j]);",
+      "reasoning": "Same: removing unnecessary parentheses around the format and index expression."
+    },
+    {
+      "line_number": 419,
+      "expression": "fprintf(stderr, (newline));",
+      "replacement": "fprintf(stderr, newline);",
+      "reasoning": "Parentheses around the single argument 'newline' are redundant and can be removed for clearer code."
+    }
+  ]
+}

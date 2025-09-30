@@ -1,0 +1,116 @@
+{
+  "function_name": "init_array",
+  "breakups": [
+    {
+      "line_number": 180,
+      "original_expression": "C[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "c_index",
+          "expression": "i * (int64_t)nj + j",
+          "description": "Compute the linear row-major index into array C"
+        },
+        {
+          "temp_var": "i_d",
+          "expression": "(double)i",
+          "description": "Cast loop index i to double"
+        },
+        {
+          "temp_var": "j_d",
+          "expression": "(double)j",
+          "description": "Cast loop index j to double"
+        },
+        {
+          "temp_var": "prod_ij",
+          "expression": "i_d * j_d",
+          "description": "Multiply the two double values"
+        },
+        {
+          "temp_var": "ni_d",
+          "expression": "(double)ni",
+          "description": "Cast denominator ni to double"
+        },
+        {
+          "temp_var": "value",
+          "expression": "prod_ij / ni_d",
+          "description": "Compute the final value to store in C"
+        }
+      ],
+      "final_expression": "C[c_index] = value;"
+    },
+    {
+      "line_number": 186,
+      "original_expression": "A[(i * nk + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "a_index",
+          "expression": "i * (int64_t)nk + j",
+          "description": "Compute the linear row-major index into array A"
+        },
+        {
+          "temp_var": "i_d",
+          "expression": "(double)i",
+          "description": "Cast loop index i to double"
+        },
+        {
+          "temp_var": "j_d",
+          "expression": "(double)j",
+          "description": "Cast loop index j to double"
+        },
+        {
+          "temp_var": "prod_ij",
+          "expression": "i_d * j_d",
+          "description": "Multiply the two double values"
+        },
+        {
+          "temp_var": "ni_d",
+          "expression": "(double)ni",
+          "description": "Cast denominator ni to double"
+        },
+        {
+          "temp_var": "value",
+          "expression": "prod_ij / ni_d",
+          "description": "Compute the final value to store in A"
+        }
+      ],
+      "final_expression": "A[a_index] = value;"
+    },
+    {
+      "line_number": 192,
+      "original_expression": "B[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "b_index",
+          "expression": "i * (int64_t)nj + j",
+          "description": "Compute the linear row-major index into array B"
+        },
+        {
+          "temp_var": "i_d",
+          "expression": "(double)i",
+          "description": "Cast loop index i to double"
+        },
+        {
+          "temp_var": "j_d",
+          "expression": "(double)j",
+          "description": "Cast loop index j to double"
+        },
+        {
+          "temp_var": "prod_ij",
+          "expression": "i_d * j_d",
+          "description": "Multiply the two double values"
+        },
+        {
+          "temp_var": "ni_d",
+          "expression": "(double)ni",
+          "description": "Cast denominator ni to double"
+        },
+        {
+          "temp_var": "value",
+          "expression": "prod_ij / ni_d",
+          "description": "Compute the final value to store in B"
+        }
+      ],
+      "final_expression": "B[b_index] = value;"
+    }
+  ]
+}

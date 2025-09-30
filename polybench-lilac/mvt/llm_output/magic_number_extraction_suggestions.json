@@ -1,0 +1,17 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "BLOCK_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        240,
+        248,
+        256,
+        264
+      ],
+      "function": "main"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize the n-by-m data matrix with deterministic values: data[i*m + j] = (i*j)/1000; i indexes rows (0..n-1), j indexes columns (0..m-1)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_mean",
+      "original": "// INSERT COMMENT FUNCTION: kernel_mean",
+      "replacement": "// Compute the per-column sums (mean accumulator) in parallel: each thread maps to a column j and accumulates values across all rows i into mean[j]"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_reduce",
+      "original": "// INSERT COMMENT FUNCTION: kernel_reduce",
+      "replacement": "// Center the data by subtracting the column mean: each thread handles element (i,j) and replaces data[i*m + j] with data - mean[j] when in range"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_cov",
+      "original": "// INSERT COMMENT FUNCTION: kernel_cov",
+      "replacement": "// Compute covariance matrix entries in parallel: threads map to output indices (i,j) and use an inner reduction over k to accumulate covariance contributions from the centered data"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute the ceiling of num/factor to determine how many blocks of size 'factor' are needed to cover 'num' items"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Top-level routine that configures grid/block dimensions and orchestrates the parallel kernels to compute mean, center the data, and produce the covariance matrix"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the m-by-m covariance matrix to stderr in row-major order using the provided double format"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Nested loops over rows i (0..n-1) and columns j (0..m-1) that fill each matrix element with the scaled product (i*j)/1000"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < 8;   i = i + 1){\nfor(int32_t j = 0; j < 32;   j = j + 1){",
+      "replacement": "// Parallel 2D loop (OpenMP) that iterates over a tile of indices i in [0,8) and j in [0,32) distributing work across threads"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < 8;   i = i + 1){\nfor(int32_t j = 0; j < 32;   j = j + 1){",
+      "replacement": "// Parallel 2D loop (OpenMP) that iterates over a tile of indices i in [0,8) and j in [0,32) distributing work across threads"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < 8;   i = i + 1){\nfor(int32_t j = 0; j < 32;   j = j + 1){",
+      "replacement": "// Parallel 2D loop (OpenMP) that iterates over a tile of indices i in [0,8) and j in [0,32) distributing work across threads"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over all rows and columns of the m-by-m covariance matrix and print each element to stderr using the designated format"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line arguments for dump_code, n, m and allocate memory for the data matrix (n*m doubles) and the mean vector (m doubles)"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_mean::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_mean::entry",
+      "replacement": "// Map the thread to column j; if j is within bounds initialize mean[j] to zero and accumulate the sum of data over all rows i into mean[j]"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_reduce::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_reduce::entry",
+      "replacement": "// Map the thread to element (i,j); if both indices are within bounds subtract the previously computed mean[j] from data[i*m + j] to center the data"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_cov::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_cov::entry",
+      "replacement": "// Map the thread to covariance entry (i,j); if both row/col indices are within range initialize cov[i*m + j] to zero to prepare for the reduction over k"
+    }
+  ]
+}

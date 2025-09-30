@@ -1,0 +1,206 @@
+{
+  "function_name": "kernel",
+  "breakups": [
+    {
+      "line_number": 318,
+      "original_expression": "kernel_ey(tmax, nx, ny, ex, ey, hz, fict, t, __FIXME__call3, __FIXME__call4, 1, TILE_DIM_L_1, TILE_DIM_M_1, 1, j, k, 0, l, m, 0);",
+      "breakup_steps": [
+        {
+          "temp_var": "grid_x",
+          "expression": "__FIXME__call3",
+          "description": "Number of grid blocks in X (precomputed earlier as __FIXME__call3)"
+        },
+        {
+          "temp_var": "grid_y",
+          "expression": "__FIXME__call4",
+          "description": "Number of grid blocks in Y (precomputed earlier as __FIXME__call4)"
+        },
+        {
+          "temp_var": "grid_z",
+          "expression": "1",
+          "description": "Grid depth (z dimension) for the kernel launch"
+        },
+        {
+          "temp_var": "block_dim_l",
+          "expression": "TILE_DIM_L_1",
+          "description": "Block/tile dimension L"
+        },
+        {
+          "temp_var": "block_dim_m",
+          "expression": "TILE_DIM_M_1",
+          "description": "Block/tile dimension M"
+        },
+        {
+          "temp_var": "block_depth",
+          "expression": "1",
+          "description": "Block depth (z dimension) for the kernel launch"
+        },
+        {
+          "temp_var": "tile_i",
+          "expression": "j",
+          "description": "Outer loop index mapped to tile i"
+        },
+        {
+          "temp_var": "tile_j",
+          "expression": "k",
+          "description": "Outer loop index mapped to tile j"
+        },
+        {
+          "temp_var": "tile_i_offset",
+          "expression": "0",
+          "description": "Constant offset argument passed as 0"
+        },
+        {
+          "temp_var": "local_i",
+          "expression": "l",
+          "description": "Local index inside tile in L dimension"
+        },
+        {
+          "temp_var": "local_j",
+          "expression": "m",
+          "description": "Local index inside tile in M dimension"
+        },
+        {
+          "temp_var": "local_j_offset",
+          "expression": "0",
+          "description": "Constant offset argument passed as 0"
+        }
+      ],
+      "final_expression": "kernel_ey(tmax, nx, ny, ex, ey, hz, fict, t, grid_x, grid_y, grid_z, block_dim_l, block_dim_m, block_depth, tile_i, tile_j, tile_i_offset, local_i, local_j, local_j_offset);"
+    },
+    {
+      "line_number": 340,
+      "original_expression": "kernel_ex(tmax, nx, ny, ex, ey, hz, fict, t, __FIXME__call14, __FIXME__call17, 1, TILE_DIM_L_1, TILE_DIM_M_1, 1, j, k, 0, l, m, 0);",
+      "breakup_steps": [
+        {
+          "temp_var": "grid_x",
+          "expression": "__FIXME__call14",
+          "description": "Number of grid blocks in X (precomputed earlier as __FIXME__call14)"
+        },
+        {
+          "temp_var": "grid_y",
+          "expression": "__FIXME__call17",
+          "description": "Number of grid blocks in Y (precomputed earlier as __FIXME__call17)"
+        },
+        {
+          "temp_var": "grid_z",
+          "expression": "1",
+          "description": "Grid depth (z dimension) for the kernel launch"
+        },
+        {
+          "temp_var": "block_dim_l",
+          "expression": "TILE_DIM_L_1",
+          "description": "Block/tile dimension L"
+        },
+        {
+          "temp_var": "block_dim_m",
+          "expression": "TILE_DIM_M_1",
+          "description": "Block/tile dimension M"
+        },
+        {
+          "temp_var": "block_depth",
+          "expression": "1",
+          "description": "Block depth (z dimension) for the kernel launch"
+        },
+        {
+          "temp_var": "tile_i",
+          "expression": "j",
+          "description": "Outer loop index mapped to tile i"
+        },
+        {
+          "temp_var": "tile_j",
+          "expression": "k",
+          "description": "Outer loop index mapped to tile j"
+        },
+        {
+          "temp_var": "tile_i_offset",
+          "expression": "0",
+          "description": "Constant offset argument passed as 0"
+        },
+        {
+          "temp_var": "local_i",
+          "expression": "l",
+          "description": "Local index inside tile in L dimension"
+        },
+        {
+          "temp_var": "local_j",
+          "expression": "m",
+          "description": "Local index inside tile in M dimension"
+        },
+        {
+          "temp_var": "local_j_offset",
+          "expression": "0",
+          "description": "Constant offset argument passed as 0"
+        }
+      ],
+      "final_expression": "kernel_ex(tmax, nx, ny, ex, ey, hz, fict, t, grid_x, grid_y, grid_z, block_dim_l, block_dim_m, block_depth, tile_i, tile_j, tile_i_offset, local_i, local_j, local_j_offset);"
+    },
+    {
+      "line_number": 362,
+      "original_expression": "kernel_hz(tmax, nx, ny, ex, ey, hz, fict, t, __FIXME__call28, __FIXME__call31, 1, TILE_DIM_L_1, TILE_DIM_M_1, 1, j, k, 0, l, m, 0);",
+      "breakup_steps": [
+        {
+          "temp_var": "grid_x",
+          "expression": "__FIXME__call28",
+          "description": "Number of grid blocks in X (precomputed earlier as __FIXME__call28)"
+        },
+        {
+          "temp_var": "grid_y",
+          "expression": "__FIXME__call31",
+          "description": "Number of grid blocks in Y (precomputed earlier as __FIXME__call31)"
+        },
+        {
+          "temp_var": "grid_z",
+          "expression": "1",
+          "description": "Grid depth (z dimension) for the kernel launch"
+        },
+        {
+          "temp_var": "block_dim_l",
+          "expression": "TILE_DIM_L_1",
+          "description": "Block/tile dimension L"
+        },
+        {
+          "temp_var": "block_dim_m",
+          "expression": "TILE_DIM_M_1",
+          "description": "Block/tile dimension M"
+        },
+        {
+          "temp_var": "block_depth",
+          "expression": "1",
+          "description": "Block depth (z dimension) for the kernel launch"
+        },
+        {
+          "temp_var": "tile_i",
+          "expression": "j",
+          "description": "Outer loop index mapped to tile i"
+        },
+        {
+          "temp_var": "tile_j",
+          "expression": "k",
+          "description": "Outer loop index mapped to tile j"
+        },
+        {
+          "temp_var": "tile_i_offset",
+          "expression": "0",
+          "description": "Constant offset argument passed as 0"
+        },
+        {
+          "temp_var": "local_i",
+          "expression": "l",
+          "description": "Local index inside tile in L dimension"
+        },
+        {
+          "temp_var": "local_j",
+          "expression": "m",
+          "description": "Local index inside tile in M dimension"
+        },
+        {
+          "temp_var": "local_j_offset",
+          "expression": "0",
+          "description": "Constant offset argument passed as 0"
+        }
+      ],
+      "final_expression": "kernel_hz(tmax, nx, ny, ex, ey, hz, fict, t, grid_x, grid_y, grid_z, block_dim_l, block_dim_m, block_depth, tile_i, tile_j, tile_i_offset, local_i, local_j, local_j_offset);"
+    }
+  ]
+}

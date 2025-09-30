@@ -1,0 +1,14 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "GESUMMV_BLOCK_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        165
+      ],
+      "function": "main"
+    }
+  ]
+}

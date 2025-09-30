@@ -94,7 +94,7 @@ void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 uint32_t cudaMalloc(uint8_t**, uint64_t);
-void _Z14kernel_stenciliPdS__OC_1(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_stencil(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -135,6 +135,7 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
 
 /* Function Bodies */
 
+// MAIN START
 int main(int argc, char ** argv) {
   int32_t dump_code;
   int32_t tsteps;
@@ -144,7 +145,7 @@ int main(int argc, char ** argv) {
   int32_t __FIXME__call27;
   int32_t __FIXME__call37;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: main::entry
   dump_code = atoi(argv[1]);
   tsteps = atoi(argv[2]);
   n = atoi(argv[3]);
@@ -154,22 +155,24 @@ int main(int argc, char ** argv) {
 ;
   kernel(tsteps, n, ((double*)A), ((double*)B));
 ;
-  if (dump_code == 1) {
+  if (dump_code == 1) { // IFELSE MARKER: entry IF
 print_array(n, ((double*)A));
   }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)B)));
   return 0;
 }
+// MAIN END
 
 
-//INSERT COMMENT FUNCTION: init_array
+// FUNCTION ORDER ID 0 START
+// INSERT COMMENT FUNCTION: init_array
 void init_array(uint32_t n, double* A, double* B) {
   int64_t i;
   uint64_t j;
   uint64_t k;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: init_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
 for(int64_t k = 0; k < n;   k = k + 1){
@@ -180,9 +183,11 @@ for(int64_t k = 0; k < n;   k = k + 1){
 }
   return;
 }
+// FUNCTION ORDER ID 0 END
 
 
-//INSERT COMMENT FUNCTION: kernel
+// FUNCTION ORDER ID 1 START
+// INSERT COMMENT FUNCTION: kernel
 void kernel(uint32_t tsteps, uint32_t iter, double* A, double* B) {
   struct __FIXME__l_struct_struct_OC_dim3 block;    /* Address-exposed local */
   struct __FIXME__l_struct_struct_OC_dim3 grid;    /* Address-exposed local */
@@ -201,7 +206,7 @@ void kernel(uint32_t tsteps, uint32_t iter, double* A, double* B) {
   uint32_t m;
   uint32_t n;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: kernel::for.cond
 for(int32_t t = 1; t <= tsteps;   t = t + 1){
   block.__FIXME__l_struct_struct_OC_dim3_field0 = 1;
   block.__FIXME__l_struct_struct_OC_dim3_field1 = 8;
@@ -222,7 +227,7 @@ for(int32_t k = 0; k < __FIXME__call2;   k = k + 1){
 for(int32_t l = 0; l < __FIXME__call4;   l = l + 1){
 for(int32_t m = 0; m < 8;   m = m + 1){
 for(int32_t n = 0; n < 32;   n = n + 1){
-_Z14kernel_stenciliPdS__OC_1(iter, A, B, __FIXME__call, __FIXME__call2, __FIXME__call4, 1, 8, 32, j, k, l, 0, m, n);
+kernel_stencil(iter, A, B, __FIXME__call, __FIXME__call2, __FIXME__call4, 1, 8, 32, j, k, l, 0, m, n);
 }
 }
 }
@@ -238,7 +243,7 @@ for(int32_t k = 0; k < __FIXME__call2;   k = k + 1){
 for(int32_t l = 0; l < __FIXME__call4;   l = l + 1){
 for(int32_t m = 0; m < 8;   m = m + 1){
 for(int32_t n = 0; n < 32;   n = n + 1){
-_Z14kernel_stenciliPdS__OC_1(iter, B, A, __FIXME__call, __FIXME__call2, __FIXME__call4, 1, 8, 32, j, k, l, 0, m, n);
+kernel_stencil(iter, B, A, __FIXME__call, __FIXME__call2, __FIXME__call4, 1, 8, 32, j, k, l, 0, m, n);
 }
 }
 }
@@ -247,21 +252,23 @@ _Z14kernel_stenciliPdS__OC_1(iter, B, A, __FIXME__call, __FIXME__call2, __FIXME_
 }
   return;
 }
+// FUNCTION ORDER ID 1 END
 
 
-//INSERT COMMENT FUNCTION: print_array
+// FUNCTION ORDER ID 2 START
+// INSERT COMMENT FUNCTION: print_array
 void print_array(uint32_t n, double* A) {
   int64_t i;
   uint64_t j;
   uint64_t k;
   int32_t __FIXME__call21;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
 for(int64_t k = 0; k < n;   k = k + 1){
-  uint32_t __FIXME__call = fprintf(stderr, (__FIXME_GLOBAL___OC_str), A[((i * n + j) * n + k)]);
-  if ((int)((i * n + j) * n + k) % (int)20 == 0) {
+  fprintf(stderr, (__FIXME_GLOBAL___OC_str), A[((i * n + j) * n + k)]);
+  if ((int)((i * n + j) * n + k) % (int)20 == 0) { // IFELSE MARKER: for.body6 IF
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
   }
 }
@@ -269,31 +276,36 @@ for(int64_t k = 0; k < n;   k = k + 1){
 }
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
 }
+// FUNCTION ORDER ID 2 END
 
 
-//INSERT COMMENT FUNCTION: num_blocks
+// FUNCTION ORDER ID 3 START
+// INSERT COMMENT FUNCTION: num_blocks
 uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
+// FUNCTION ORDER ID 3 END
 
 
-//INSERT COMMENT FUNCTION: kernel_stencil
-void _Z14kernel_stenciliPdS__OC_1(uint32_t iter, double* A, double* B, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 4 START
+// INSERT COMMENT FUNCTION: kernel_stencil
+void kernel_stencil(uint32_t iter, double* A, double* B, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   int32_t i;
   int32_t j;
   int32_t k;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel_stencil::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x + 1;
   j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y + 1;
   k = __FIXME__blockDim_2e_z * __FIXME__blockIdx_2e_z + __FIXME__threadIdx_2e_z + 1;
-  if (i < (iter - 1)) {
-  if (j < (iter - 1)) {
-  if (k < (iter - 1)) {
+  if (i < (iter - 1)) { // IFELSE MARKER: entry IF
+  if (j < (iter - 1)) { // IFELSE MARKER: land.lhs.true IF
+  if (k < (iter - 1)) { // IFELSE MARKER: land.lhs.true18 IF
   B[((i * iter + j) * iter + k)] = ((((((A[(((i + 1) * iter + j) * iter + k)] - (2 * A[((i * iter + j) * iter + k)])) + A[(((i - 1) * iter + j) * iter + k)]) / 8) + (((A[((i * iter + (j + 1)) * iter + k)] - (2 * A[((i * iter + j) * iter + k)])) + A[((i * iter + (j - 1)) * iter + k)]) / 8)) + (((A[(((i * iter + j) * iter + k) + 1)] - (2 * A[((i * iter + j) * iter + k)])) + A[(((i * iter + j) * iter + k) - 1)]) / 8)) + A[((i * iter + j) * iter + k)]);
   }
   }
   }
   return;
 }
+// FUNCTION ORDER ID 4 END
 

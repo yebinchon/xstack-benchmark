@@ -1,0 +1,34 @@
+{
+  "extractions": [
+    {
+      "value": "8",
+      "name": "BLOCK_DIM_X_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        208
+      ],
+      "function": "main"
+    },
+    {
+      "value": "32",
+      "name": "BLOCK_DIM_Y_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        209
+      ],
+      "function": "main"
+    },
+    {
+      "value": "12",
+      "name": "DIM3_SIZE_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        217
+      ],
+      "function": "main"
+    }
+  ]
+}

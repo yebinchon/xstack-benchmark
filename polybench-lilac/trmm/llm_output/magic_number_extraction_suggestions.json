@@ -1,0 +1,44 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "TRMM_BLOCK_SIZE_256_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        244
+      ],
+      "function": "main"
+    },
+    {
+      "value": "8",
+      "name": "TRMM_MICRO_TILE_M_8_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        260
+      ],
+      "function": "main"
+    },
+    {
+      "value": "32",
+      "name": "TRMM_MICRO_TILE_N_32_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        261
+      ],
+      "function": "main"
+    },
+    {
+      "value": "12",
+      "name": "TRMM_BLOCK_DESC_SIZE_12_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        269
+      ],
+      "function": "main"
+    }
+  ]
+}

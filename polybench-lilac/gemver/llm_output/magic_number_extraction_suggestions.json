@@ -1,0 +1,49 @@
+{
+  "extractions": [
+    {
+      "value": "8",
+      "name": "GEMVER_BLOCK_DIM3_F0_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        300
+      ],
+      "function": "main"
+    },
+    {
+      "value": "32",
+      "name": "GEMVER_BLOCK_DIM3_F1_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        301
+      ],
+      "function": "main"
+    },
+    {
+      "value": "12",
+      "name": "GEMVER_STRUCT_COPY_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        309
+      ],
+      "function": "main"
+    },
+    {
+      "value": "256",
+      "name": "GEMVER_BLOCK_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        323,
+        335,
+        339,
+        351,
+        355,
+        367
+      ],
+      "function": "main"
+    }
+  ]
+}

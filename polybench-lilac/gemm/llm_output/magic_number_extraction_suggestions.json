@@ -1,0 +1,24 @@
+{
+  "extractions": [
+    {
+      "value": "32",
+      "name": "GEMM_BLOCK_DIM3_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        244
+      ],
+      "function": "main"
+    },
+    {
+      "value": "12",
+      "name": "GEMM_BLOCK_COPY_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        252
+      ],
+      "function": "main"
+    }
+  ]
+}

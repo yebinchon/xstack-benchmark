@@ -1,0 +1,12 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    1,
+    3,
+    4,
+    2
+  ],
+  "reasoning": "Keep the entry point first for quick overview (main). Immediately follow with the initialization routine (init_array, id 0) since main calls it early and it sets up program state. Next place small utility/helper routines used by main (num_blocks, id 1) so its behavior is easy to find when reading main. Then group the core computation kernels (kernel3 id 3 and kernel4 id 4) together after the helpers \u2014 they are the primary computation functions invoked from main and are logically adjacent. Finally place the output/printing routine (print_array, id 2) last because print/display functions are typically considered I/O helpers and read better at the end. This ordering improves logical flow (entry \u2192 init \u2192 helpers \u2192 core computation \u2192 output), respects dependencies (called functions near the top after main), groups related utilities and kernels, and makes debugging easier by locating high-level control and core routines near each other.",
+  "confidence": 0.9
+}

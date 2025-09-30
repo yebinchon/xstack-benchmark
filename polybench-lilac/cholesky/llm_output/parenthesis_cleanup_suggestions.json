@@ -1,0 +1,226 @@
+{
+  "removals": [
+    {
+      "line_number": 147,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "The outer parentheses around the cast are redundant. The cast itself must keep parentheses, but wrapping that in another pair is unnecessary in a function argument."
+    },
+    {
+      "line_number": 149,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "Same as above: redundant outer parentheses around a cast in a function call."
+    },
+    {
+      "line_number": 152,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "Redundant outer parentheses around the cast; keep the cast but remove the extra grouping for readability."
+    },
+    {
+      "line_number": 154,
+      "expression": "((uint8_t*)((double*)A))",
+      "replacement": "A",
+      "reasoning": "A is already a uint8_t*; free accepts a void*, so the cast (and all surrounding parentheses) is unnecessary. Using free(A) is clearer and equivalent."
+    },
+    {
+      "line_number": 165,
+      "expression": "(i * n + j)",
+      "replacement": "i * n + j",
+      "reasoning": "Parentheses around the array index expression are unnecessary; A[i * n + j] is equivalent and clearer."
+    },
+    {
+      "line_number": 165,
+      "expression": "(1 / (double)(n))",
+      "replacement": "1 / (double)n",
+      "reasoning": "The outer parentheses around the division are unnecessary. Also the cast syntax is better written as (double)n rather than (double)(n)."
+    },
+    {
+      "line_number": 165,
+      "expression": "(double)(n)",
+      "replacement": "(double)n",
+      "reasoning": "Parentheses around the operand of the cast are redundant; the cast (double)n already applies to the whole expression."
+    },
+    {
+      "line_number": 172,
+      "expression": "(num + factor)",
+      "replacement": "num + factor",
+      "reasoning": "Inner parentheses around the subexpression are unnecessary when the whole numerator is already parenthesized. (num + factor - 1) / factor is clearer; removing the inner parentheses does not change precedence."
+    },
+    {
+      "line_number": 178,
+      "expression": "(j * n + j)",
+      "replacement": "j * n + j",
+      "reasoning": "Parentheses around the array index are unnecessary; A[j * n + j] is equivalent and clearer."
+    },
+    {
+      "line_number": 179,
+      "expression": "(j * n + j)",
+      "replacement": "j * n + j",
+      "reasoning": "Same as line 178: remove redundant parentheses around the index expression."
+    },
+    {
+      "line_number": 188,
+      "expression": "(i * n + j)",
+      "replacement": "i * n + j",
+      "reasoning": "Parentheses around the array index are unnecessary; use A[i * n + j]."
+    },
+    {
+      "line_number": 188,
+      "expression": "(j * n + j)",
+      "replacement": "j * n + j",
+      "reasoning": "Parentheses around the array index are unnecessary; use A[j * n + j]."
+    },
+    {
+      "line_number": 188,
+      "expression": "(A[(i * n + j)] / A[(j * n + j)])",
+      "replacement": "A[i * n + j] / A[j * n + j]",
+      "reasoning": "The outer parentheses around the division are unnecessary. After removing the index parentheses (above), the division can be written directly."
+    },
+    {
+      "line_number": 200,
+      "expression": "(j < n)",
+      "replacement": "j < n",
+      "reasoning": "Parentheses around this simple comparison are redundant in an assignment to a boolean-like variable; dropping them keeps the condition clear."
+    },
+    {
+      "line_number": 201,
+      "expression": "(j < i)",
+      "replacement": "j < i",
+      "reasoning": "Redundant parentheses around a simple comparison; removing them improves readability."
+    },
+    {
+      "line_number": 202,
+      "expression": "(i < n)",
+      "replacement": "i < n",
+      "reasoning": "Redundant parentheses around a simple comparison; keep the bare comparison expression."
+    },
+    {
+      "line_number": 203,
+      "expression": "(j < k)",
+      "replacement": "j < k",
+      "reasoning": "Unnecessary grouping around the comparison; it can be assigned directly."
+    },
+    {
+      "line_number": 204,
+      "expression": "(k <= i)",
+      "replacement": "k <= i",
+      "reasoning": "Parentheses around this comparison are not needed for correct precedence or clarity."
+    },
+    {
+      "line_number": 207,
+      "expression": "(i * n + k)",
+      "replacement": "i * n + k",
+      "reasoning": "Parentheses around the arithmetic index expression are redundant; use the plain expression in the assignment."
+    },
+    {
+      "line_number": 208,
+      "expression": "(i * n + j)",
+      "replacement": "i * n + j",
+      "reasoning": "Same as line 207: parentheses around the arithmetic expression are unnecessary."
+    },
+    {
+      "line_number": 209,
+      "expression": "(k * n + j)",
+      "replacement": "k * n + j",
+      "reasoning": "Remove redundant parentheses around the index arithmetic expression."
+    },
+    {
+      "line_number": 215,
+      "expression": "(i * n + k)",
+      "replacement": "i * n + k",
+      "reasoning": "Parentheses in the array index are unnecessary; A[i * n + k] is clearer."
+    },
+    {
+      "line_number": 249,
+      "expression": "((uint8_t*)(&dim_temp_a_coerce))",
+      "replacement": "(uint8_t*)&dim_temp_a_coerce",
+      "reasoning": "The outer parentheses are redundant around the cast of an address. Writing (uint8_t*)&dim_temp_a_coerce is idiomatic and equivalent."
+    },
+    {
+      "line_number": 249,
+      "expression": "((uint8_t*)(&dim_temp_a))",
+      "replacement": "(uint8_t*)&dim_temp_a",
+      "reasoning": "Same pattern as previous argument: remove the extra parentheses around the casted address."
+    },
+    {
+      "line_number": 259,
+      "expression": "((uint8_t*)(&blocks_k1_coerce))",
+      "replacement": "(uint8_t*)&blocks_k1_coerce",
+      "reasoning": "Remove redundant outer parentheses around the cast of the address; (uint8_t*)&... is sufficient."
+    },
+    {
+      "line_number": 260,
+      "expression": "((uint8_t*)(&threads_k1_coerce))",
+      "replacement": "(uint8_t*)&threads_k1_coerce",
+      "reasoning": "Same as above: outer parentheses around the cast are unnecessary."
+    },
+    {
+      "line_number": 276,
+      "expression": "((uint8_t*)(&block_copy))",
+      "replacement": "(uint8_t*)&block_copy",
+      "reasoning": "Redundant outer parentheses around a casted address; simplify to (uint8_t*)&block_copy."
+    },
+    {
+      "line_number": 276,
+      "expression": "((uint8_t*)(&block))",
+      "replacement": "(uint8_t*)&block",
+      "reasoning": "Remove unnecessary extra parentheses around the cast of &block."
+    },
+    {
+      "line_number": 277,
+      "expression": "((uint8_t*)(&grid_copy))",
+      "replacement": "(uint8_t*)&grid_copy",
+      "reasoning": "Outer parentheses around the cast are redundant; use the direct cast of the address."
+    },
+    {
+      "line_number": 277,
+      "expression": "((uint8_t*)(&grid))",
+      "replacement": "(uint8_t*)&grid",
+      "reasoning": "Simplify the casted address expression by removing the extra parentheses."
+    },
+    {
+      "line_number": 278,
+      "expression": "((uint8_t*)(&block_copy_coerce))",
+      "replacement": "(uint8_t*)&block_copy_coerce",
+      "reasoning": "Remove redundant grouping around the cast; the cast syntax already conveys intent."
+    },
+    {
+      "line_number": 278,
+      "expression": "((uint8_t*)(&block_copy))",
+      "replacement": "(uint8_t*)&block_copy",
+      "reasoning": "Same as above: extra parentheses around a casted address are unnecessary."
+    },
+    {
+      "line_number": 279,
+      "expression": "((uint8_t*)(&grid_copy_coerce))",
+      "replacement": "(uint8_t*)&grid_copy_coerce",
+      "reasoning": "Outer parentheses around the cast are redundant; writing (uint8_t*)&grid_copy_coerce is clearer."
+    },
+    {
+      "line_number": 279,
+      "expression": "((uint8_t*)(&grid_copy))",
+      "replacement": "(uint8_t*)&grid_copy",
+      "reasoning": "Remove the extra parentheses around the casted address expression for readability."
+    },
+    {
+      "line_number": 302,
+      "expression": "(print_format_str)",
+      "replacement": "print_format_str",
+      "reasoning": "Parentheses around a single identifier passed as an argument are unnecessary; remove them to improve clarity."
+    },
+    {
+      "line_number": 302,
+      "expression": "(i * n + j)",
+      "replacement": "i * n + j",
+      "reasoning": "Index expression grouping is unnecessary; use A[i * n + j] for readability and consistency with other index usages."
+    },
+    {
+      "line_number": 304,
+      "expression": "(newline_str)",
+      "replacement": "newline_str",
+      "reasoning": "Parentheses around a single identifier argument are redundant; remove them for clarity."
+    }
+  ]
+}

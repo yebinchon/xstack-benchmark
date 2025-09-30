@@ -1,0 +1,79 @@
+{
+  "function_name": "init_array",
+  "breakups": [
+    {
+      "line_number": 172,
+      "original_expression": "A[(i * n + j)] = ((((double)(i) * (double)((j + 2))) + 2) / (double)(n));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx",
+          "expression": "i * n + j",
+          "description": "Compute the flat array index for row i and column j"
+        },
+        {
+          "temp_var": "i_double",
+          "expression": "(double)i",
+          "description": "Convert loop index i to double for floating-point arithmetic"
+        },
+        {
+          "temp_var": "j_plus2_double",
+          "expression": "(double)(j + 2)",
+          "description": "Compute j+2 and convert to double"
+        },
+        {
+          "temp_var": "product_term",
+          "expression": "i_double * j_plus2_double",
+          "description": "Multiply the converted i and (j+2)"
+        },
+        {
+          "temp_var": "numerator",
+          "expression": "product_term + 2.0",
+          "description": "Add the constant 2 to the product (as a double)"
+        },
+        {
+          "temp_var": "value",
+          "expression": "numerator / (double)n",
+          "description": "Divide by n (converted to double) to get the final value"
+        }
+      ],
+      "final_expression": "A[idx] = value"
+    },
+    {
+      "line_number": 173,
+      "original_expression": "B[(i * n + j)] = ((((double)(i) * (double)((j + 3))) + 3) / (double)(n));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx",
+          "expression": "i * n + j",
+          "description": "Compute the flat array index for row i and column j"
+        },
+        {
+          "temp_var": "i_double",
+          "expression": "(double)i",
+          "description": "Convert loop index i to double for floating-point arithmetic"
+        },
+        {
+          "temp_var": "j_plus3_double",
+          "expression": "(double)(j + 3)",
+          "description": "Compute j+3 and convert to double"
+        },
+        {
+          "temp_var": "product_term",
+          "expression": "i_double * j_plus3_double",
+          "description": "Multiply the converted i and (j+3)"
+        },
+        {
+          "temp_var": "numerator",
+          "expression": "product_term + 3.0",
+          "description": "Add the constant 3 to the product (as a double)"
+        },
+        {
+          "temp_var": "value",
+          "expression": "numerator / (double)n",
+          "description": "Divide by n (converted to double) to get the final value"
+        }
+      ],
+      "final_expression": "B[idx] = value"
+    }
+  ]
+}

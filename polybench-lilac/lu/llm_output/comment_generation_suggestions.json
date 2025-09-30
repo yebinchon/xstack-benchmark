@@ -1,0 +1,64 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize an n-by-n matrix A in row-major order with values (i+1)*(j+1)/n where i and j are 0-based row/column indices"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute the number of blocks required to cover 'num' items with blocks of size 'factor' (ceiling division)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_div",
+      "original": "// INSERT COMMENT FUNCTION: kernel_div",
+      "replacement": "// Per-thread kernel that divides the matrix column element A[i,k] by the pivot A[k,k] for rows assigned to this thread using the provided grid/block/thread indices"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_A",
+      "original": "// INSERT COMMENT FUNCTION: kernel_A",
+      "replacement": "// Per-thread kernel that will update row i of the matrix after division (used to perform A[i,j] -= A[i,k] * A[k,j] for assigned columns), with i and j determined from grid/block/thread indices"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Top-level driver that sets up grid/block dimensions and iterates kernel launches to perform the stepwise division and row-updates over the n-by-n matrix"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the n-by-n matrix A to stderr in row-major order using the configured double print format"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Nested loops over rows i and columns j to populate each A[i*n + j] with the initialization formula ((i+1)*(j+1))/n"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Iterate 'iter' from 0 to n-2 to configure per-iteration kernel launches; compute the number of 256-sized blocks needed to cover remaining elements and set the grid x dimension"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Nested loops over rows i and columns j to print each matrix element A[i*n + j] to stderr"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line args: set dump_code from argv[1], n from argv[2]; allocate n*n doubles for A and initialize it via init_array"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_div::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_div::entry",
+      "replacement": "// Compute the global row index i for this thread and, if it is within bounds, divide A[i,k] by the pivot A[k,k] to normalize the column entry"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_A::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_A::entry",
+      "replacement": "// Compute the global row index i using block and thread indices plus offset k+1 (preparing the thread to update row i in the matrix update kernel)"
+    }
+  ]
+}

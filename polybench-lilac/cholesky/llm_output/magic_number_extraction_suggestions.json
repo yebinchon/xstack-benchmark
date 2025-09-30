@@ -1,0 +1,44 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "AGG_BLOCK_ELEMENTS_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        238
+      ],
+      "function": "main"
+    },
+    {
+      "value": "8",
+      "name": "BLOCK_DIM0_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        254
+      ],
+      "function": "main"
+    },
+    {
+      "value": "32",
+      "name": "BLOCK_DIM1_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        255
+      ],
+      "function": "main"
+    },
+    {
+      "value": "12",
+      "name": "BLOCK_STRUCT_SIZE_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        262
+      ],
+      "function": "main"
+    }
+  ]
+}

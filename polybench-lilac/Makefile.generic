@@ -3,12 +3,21 @@ ROOT_DIR=/scratch/yc0769/llvm14-tulip/susan-v9
 CUDAFE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/TulipOoT
 LLVM18=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-llvm-install
 POLYGEIST=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/polygeist-install
-NOELLE=/u/NAS_SCRATCH/yc0769/xstack/xstack-installs/noelle-susan/install
-SPLENDID_CPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-lilac/bin/splendid
-SPLENDID_GPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-offloading/bin/splendid
+NOELLE=$ROOT_DIR/noelle/install
+SPLENDID_CPU=/scratch/ah7226/llvm-install-tulip/bin/splendid
+SPLENDID_GPU=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-debug/bin/splendid
 SPLENDID_ACC=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-openacc/bin/splendid
-SPLENDID_TULIP=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-tulip/bin/splendid
+SPLENDID_LOC=/u/NAS_SCRATCH/yc0769/xstack/llvm-install-openacc/bin/splendid
 
+# LLM Transformation settings
+LLM_TRANSFORM_DIR=../LLMTransformation
+LLM_TRANSFORM_SCRIPT=$(LLM_TRANSFORM_DIR)/entry.py
+LLM_TRANSFORM_OUTPUT_DIR=llm_output
+# Set this to your OpenAI API key or export as environment variable
+OPENAI_API_KEY?=$(shell echo $$OPENAI_API_KEY)
+LLM_TRANSFORMATIONS?= function_order magic_number_extraction expression_breakup variable_replacement variable_elimination  parenthesis_cleanup comment_generation    
+# magic_number_extraction function_order comment_generation variable_replacement magic_number_extraction parenthesis_cleanup variable_elimination expression_breakup
+# Dynamically checks for transformation outputs in reverse order (final to first)
 #ADDITIONAL_PASSES+=-O1
 #SPLENDID_CPU=splendid
 #SPLENDID_LOC=splendid
@@ -70,11 +79,6 @@ manual.gcc.cpu.exe: ${BMARK}_cpu_noelle_manual.c
 %.ll: ${BMARK}.cu
 	clang -Xclang -disable-O0-optnone -S -emit-llvm -g $<
 
-%.bc: %.c
-	clang -Xclang -disable-O0-optnone -fno-unroll-loops -fno-lax-vector-conversions -fno-vectorize -fno-slp-vectorize -g -c -emit-llvm $<
-	opt -mem2reg -loop-simplify -indvars -dce $@ -o $@
-
-
 ${BMARK}_linked.bc: ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll
 	llvm-link-cudafe ${BMARK}-cuda-nvptx64-nvidia-cuda-sm_20.ll ${BMARK}.ll -o ${BMARK}_linked.bc
 
@@ -88,42 +92,68 @@ ${BMARK}_openacc.c: ${BMARK}_cpu.bc
 
 ${BMARK}_cpu.c: ${BMARK}_cpu.bc
 	$(SPLENDID_CPU) $< 2> debug
-	mv ${BMARK}_cpu.cbe.c $@
+	cp ${BMARK}_cpu.cbe.c $@
+
+# LLM Transformation targets
+${BMARK}_cpu_llm.c: ${BMARK}_cpu.c
+	@echo "Applying LLM transformations to ${BMARK}_cpu.c..."
+	@if [ -z "$(OPENAI_API_KEY)" ] && ! grep -q '"api_key"[[:space:]]*:' $(LLM_TRANSFORM_DIR)/config.json 2>/dev/null; then \
+		echo "Warning: no OPENAI_API_KEY and no api_key in config.json. Copying original file without transformation..."; \
+		cp $< $@; \
+	else \
+		mkdir -p $(LLM_TRANSFORM_OUTPUT_DIR); \
+		cd $(LLM_TRANSFORM_DIR) && python3 $(notdir $(LLM_TRANSFORM_SCRIPT)) $(abspath $<) \
+			$(if $(OPENAI_API_KEY),--api-key "$(OPENAI_API_KEY)") \
+			--config config.json \
+			--transformations $(LLM_TRANSFORMATIONS) \
+			--output-dir $(abspath $(LLM_TRANSFORM_OUTPUT_DIR)) \
+			--verbose && \
+		found_output=0; \
+		for transform in $$(echo $(LLM_TRANSFORMATIONS) | tr ' ' '\n' | tac); do \
+			if [ -f $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))/$${transform}_transformed.c ]; then \
+				cp $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))/$${transform}_transformed.c $(abspath $@); \
+				echo "LLM transformation successful ($${transform}), result saved to $@"; \
+				found_output=1; \
+				break; \
+			fi; \
+		done; \
+		if [ $$found_output -eq 0 ]; then \
+			echo "LLM transformation failed or produced no output, using original file"; \
+			cp $(abspath $<) $(abspath $@); \
+		fi; \
+	fi
 
 ${BMARK}_gpu.c: ${BMARK}_cpu.bc
 	$(SPLENDID_GPU) $< 2> debug
-	mv ${BMARK}_cpu.cbe.c $@
+	cp ${BMARK}_cpu.cbe.c $@
 
-${BMARK}_tulip.c: ${BMARK}_cpu.bc
-	$(SPLENDID_TULIP) $< 2> debug_tulip
-	mv ${BMARK}_cpu.cbe.c $@
-
-#CUDA TO OMP START
-${BMARK}_omp.cu: ${BMARK}_omp.bc
-	$(SPLENDID_GPU) $< 2> debug
-	mv ${BMARK}_omp.cbe.c $@
-
-${BMARK}_omp_loopid.bc: ${BMARK}_omp.bc
-	noelle-meta-loop-embed $< -o $@
-	noelle-parallel-load -load ${NOELLE}/lib/Planner.so -planner $@ -o $@ 
-
-${BMARK}_omp_reduced.bc: ${BMARK}_omp_loopid.bc
-	noelle-load -load ${NOELLE}/lib/ParallelizationTechnique.so -load ${NOELLE}/lib/DOALL.so -load ${NOELLE}/lib/DSWP.so -load ${NOELLE}/lib/Heuristics.so -load ${NOELLE}/lib/Parallelizer.so -load ${CUDAFE}/build/NoelleDOALL/libNoelleDOALL.so -noelle-verbose=3 -noelle-doall ${ADDITIONAL_PASSES}  $< -o $@
-	llvm-dis $@
-
-${BMARK}_omp_outlined.bc: ${BMARK}_omp_reduced.bc
-	opt -load ${CUDAFE}/build/OutlineKernel/libOutlineKernel.so -outline-loop $< -o $@ 2> debug_outline
-	llvm-dis $@
-
-${BMARK}_noelle.cu: ${BMARK}_omp_outlined.bc
-	$(SPLENDID_GPU) $< 2> debug
-	mv ${BMARK}_omp_outlined.cbe.c $@
-
-cudatoomp.exe: ${BMARK}_noelle.cu
-	mv $< ${BMARK}_noelle.c
-	clang -fopenmp -O3 $(FLAGS) ${BMARK}_noelle.c -o $@
-
-#CUDA TO OMP END
+${BMARK}_gpu_llm.c: ${BMARK}_gpu.c
+	@echo "Applying LLM transformations to ${BMARK}_gpu.c..."
+	@if [ -z "$(OPENAI_API_KEY)" ] && ! grep -q '"api_key"[[:space:]]*:' $(LLM_TRANSFORM_DIR)/config.json 2>/dev/null; then \
+		echo "Warning: no OPENAI_API_KEY and no api_key in config.json. Copying original file without transformation..."; \
+		cp $< $@; \
+	else \
+		mkdir -p $(LLM_TRANSFORM_OUTPUT_DIR); \
+		cd $(LLM_TRANSFORM_DIR) && python3 $(notdir $(LLM_TRANSFORM_SCRIPT)) $(abspath $<) \
+			$(if $(OPENAI_API_KEY),--api-key "$(OPENAI_API_KEY)") \
+			--config config.json \
+			--transformations $(LLM_TRANSFORMATIONS) \
+			--output-dir $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))_gpu \
+			--verbose && \
+		found_output=0; \
+		for transform in $$(echo $(LLM_TRANSFORMATIONS) | tr ' ' '\n' | tac); do \
+			if [ -f $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))_gpu/$${transform}_transformed.c ]; then \
+				cp $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))_gpu/$${transform}_transformed.c $(abspath $@); \
+				echo "LLM transformation successful ($${transform}), result saved to $@"; \
+				found_output=1; \
+				break; \
+			fi; \
+		done; \
+		if [ $$found_output -eq 0 ]; then \
+			echo "LLM transformation failed or produced no output, using original file"; \
+			cp $(abspath $<) $(abspath $@); \
+		fi; \
+	fi
 
 ${BMARK}_loc.c: ${BMARK}_cpu.bc
 	opt ${LOC_PASSES} $< -o temp_loc.bc 
@@ -144,9 +174,65 @@ ${BMARK}_cpu_noelle.c: ${BMARK}_reduced.bc
 	$(SPLENDID_CPU) $< 2> debug
 	mv ${BMARK}_reduced.cbe.c $@
 
+${BMARK}_cpu_noelle_llm.c: ${BMARK}_cpu_noelle.c
+	@echo "Applying LLM transformations to ${BMARK}_cpu_noelle.c..."
+	@if [ -z "$(OPENAI_API_KEY)" ] && ! grep -q '"api_key"[[:space:]]*:' $(LLM_TRANSFORM_DIR)/config.json 2>/dev/null; then \
+		echo "Warning: no OPENAI_API_KEY and no api_key in config.json. Copying original file without transformation..."; \
+		cp $< $@; \
+	else \
+		mkdir -p $(LLM_TRANSFORM_OUTPUT_DIR); \
+		cd $(LLM_TRANSFORM_DIR) && python3 $(notdir $(LLM_TRANSFORM_SCRIPT)) $(abspath $<) \
+			$(if $(OPENAI_API_KEY),--api-key "$(OPENAI_API_KEY)") \
+			--config config.json \
+			--transformations $(LLM_TRANSFORMATIONS) \
+			--output-dir $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))_cpu_noelle \
+			--verbose && \
+		found_output=0; \
+		for transform in $$(echo $(LLM_TRANSFORMATIONS) | tr ' ' '\n' | tac); do \
+			if [ -f $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))_cpu_noelle/$${transform}_transformed.c ]; then \
+				cp $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))_cpu_noelle/$${transform}_transformed.c $(abspath $@); \
+				echo "LLM transformation successful ($${transform}), result saved to $@"; \
+				found_output=1; \
+				break; \
+			fi; \
+		done; \
+		if [ $$found_output -eq 0 ]; then \
+			echo "LLM transformation failed or produced no output, using original file"; \
+			cp $(abspath $<) $(abspath $@); \
+		fi; \
+	fi
+
 ${BMARK}_gpu_noelle.c: ${BMARK}_reduced.bc
 	$(SPLENDID_GPU) $< 2> debug
 	mv ${BMARK}_reduced.cbe.c $@
+
+${BMARK}_gpu_noelle_llm.c: ${BMARK}_gpu_noelle.c
+	@echo "Applying LLM transformations to ${BMARK}_gpu_noelle.c..."
+	@if [ -z "$(OPENAI_API_KEY)" ] && ! grep -q '"api_key"[[:space:]]*:' $(LLM_TRANSFORM_DIR)/config.json 2>/dev/null; then \
+		echo "Warning: no OPENAI_API_KEY and no api_key in config.json. Copying original file without transformation..."; \
+		cp $< $@; \
+	else \
+		mkdir -p $(LLM_TRANSFORM_OUTPUT_DIR); \
+		cd $(LLM_TRANSFORM_DIR) && python3 $(notdir $(LLM_TRANSFORM_SCRIPT)) $(abspath $<) \
+			$(if $(OPENAI_API_KEY),--api-key "$(OPENAI_API_KEY)") \
+			--config config.json \
+			--transformations $(LLM_TRANSFORMATIONS) \
+			--output-dir $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))_gpu_noelle \
+			--verbose && \
+		found_output=0; \
+		for transform in $$(echo $(LLM_TRANSFORMATIONS) | tr ' ' '\n' | tac); do \
+			if [ -f $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))_gpu_noelle/$${transform}_transformed.c ]; then \
+				cp $(abspath $(LLM_TRANSFORM_OUTPUT_DIR))_gpu_noelle/$${transform}_transformed.c $(abspath $@); \
+				echo "LLM transformation successful ($${transform}), result saved to $@"; \
+				found_output=1; \
+				break; \
+			fi; \
+		done; \
+		if [ $$found_output -eq 0 ]; then \
+			echo "LLM transformation failed or produced no output, using original file"; \
+			cp $(abspath $<) $(abspath $@); \
+		fi; \
+	fi
 
 ${BMARK}.o: ${BMARK}.cu
 	${POLYGEIST}/bin/cgeist --cuda-lower -cpuify="distribute" -raise-scf-to-affine --inner-serialize=1 -resource-dir=${LLVM18}/lib/clang/18/ -O3 $< -c -o $@
@@ -177,6 +263,33 @@ tulip.clang.exe: ${BMARK}_cpu.c
 
 tulip.gcc.exe: ${BMARK}_cpu.c
 	gcc -fopenmp -O3 $< -o $@ $(FLAGS)
+
+# LLM-transformed compilation targets
+tulip.clang.llm.exe: ${BMARK}_cpu_llm.c
+	clang -fopenmp -O3 $(FLAGS) $< -o $@
+
+tulip.gcc.llm.exe: ${BMARK}_cpu_llm.c
+	gcc -fopenmp -O3 $< -o $@ $(FLAGS)
+
+tulip.clang.noelle.llm.exe: ${BMARK}_cpu_noelle_llm.c
+	clang -fopenmp -O3 $(FLAGS) $< -o $@
+
+tulip.gcc.noelle.llm.exe: ${BMARK}_cpu_noelle_llm.c
+	gcc -fopenmp -O3 $< -o $@ $(FLAGS)
+
+icx.llm.exe: ${BMARK}_cpu_llm.c
+	icx -fopenmp -O3 $(FLAGS) $< -o $@
+
+icx.noelle.llm.exe: ${BMARK}_cpu_noelle_llm.c
+	icx -fopenmp -O3 $(FLAGS) $< -o $@
+
+nvtarget.llm.exe: ${BMARK}_gpu_llm.c
+	clang -g -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native $< -O3 -c -o ${BMARK}_nvtarget_llm.o
+	clang -g --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget_llm.o -O3 -lm -o $@ -foffload-lto -lomptarget.devicertl
+
+nvtarget_noelle.llm.exe: ${BMARK}_gpu_noelle_llm.c
+	clang -g -fopenmp -fopenmp-cuda-mode -Rpass=openmp-opt -Rpass-analysis=openmp-opt -Rpass-missed=openmp-opt -fopenmp-assume-no-thread-state -fopenmp-assume-no-nested-parallelism --offload-arch=native $< -O3 -c -o ${BMARK}_nvtarget_noelle_llm.o
+	clang -g --offload-link ${LLVM_LIBS_DIR}/libomptarget.so ${LLVM_LIBS_DIR}/libomp.so ${BMARK}_nvtarget_noelle_llm.o -O3 -lm -o $@ -foffload-lto -lomptarget.devicertl
 
 cpu.exe: ${BMARK}_reduced.bc
 	clang -O3 -lm  $< -o $@
@@ -214,8 +327,22 @@ run_icx: icx.exe icx.noelle.exe
 run_tulip: tulip.clang.noelle.exe tulip.gcc.noelle.exe tulip.clang.exe tulip.gcc.exe 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.time ./tulip.clang.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.time ./tulip.gcc.exe $(PERF_ARGS) 
-#	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.noelle.time ./tulip.clang.noelle.exe $(PERF_ARGS) 
-#	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.noelle.time ./tulip.gcc.noelle.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.noelle.time ./tulip.clang.noelle.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.noelle.time ./tulip.gcc.noelle.exe $(PERF_ARGS)
+
+run_tulip_llm: tulip.clang.llm.exe tulip.gcc.llm.exe tulip.clang.noelle.llm.exe tulip.gcc.noelle.llm.exe
+	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.llm.time ./tulip.clang.llm.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.llm.time ./tulip.gcc.llm.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.clang.noelle.llm.time ./tulip.clang.noelle.llm.exe $(PERF_ARGS) 
+	regressions-watchdog $(RUN_TIMEOUT) tulip.gcc.noelle.llm.time ./tulip.gcc.noelle.llm.exe $(PERF_ARGS)
+
+run_icx_llm: icx.llm.exe icx.noelle.llm.exe
+	regressions-watchdog $(RUN_TIMEOUT) tulip.icx.llm.time ./icx.llm.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) tulip.icx.noelle.llm.time ./icx.noelle.llm.exe $(PERF_ARGS)
+
+run_nvidia_llm: nvtarget.llm.exe nvtarget_noelle.llm.exe
+	regressions-watchdog $(RUN_TIMEOUT) nvidia.llm.time ./nvtarget.llm.exe $(PERF_ARGS)
+	regressions-watchdog $(RUN_TIMEOUT) nvidia.noelle.llm.time ./nvtarget_noelle.llm.exe $(PERF_ARGS) 
 
 run_nvhpc: nvhpc.cpu.exe nvhpc.cpu.noelle.exe nvhpc.gpu.exe nvhpc.gpu.noelle.exe
 	regressions-watchdog $(RUN_TIMEOUT) nvhpc.cpu.time ./nvhpc.cpu.exe $(PERF_ARGS)
@@ -238,10 +365,51 @@ run_openmp: openmp.clang.exe  openmp.gcc.exe
 	regressions-watchdog $(RUN_TIMEOUT) openmp.clang.time ./openmp.clang.exe $(PERF_ARGS) 
 	regressions-watchdog $(RUN_TIMEOUT) openmp.gcc.time ./openmp.gcc.exe $(PERF_ARGS) 
 
-run_correctness: seq.exe openmp.clang.exe tulip.clang.exe
-	./seq.exe $(TEST_ARGS) 2> seq.txt
-	./openmp.clang.exe $(TEST_ARGS) 2> omp.txt
-	./tulip.clang.exe $(TEST_ARGS) 2> tulip.txt
+# Convenience targets for LLM transformations
+llm_transform: ${BMARK}_cpu_llm.c ${BMARK}_gpu_llm.c ${BMARK}_cpu_noelle_llm.c ${BMARK}_gpu_noelle_llm.c
+	@echo "All LLM transformations completed"
+
+llm_cpu_only: ${BMARK}_cpu_llm.c
+	@echo "CPU LLM transformation completed"
+
+llm_build: tulip.clang.llm.exe tulip.gcc.llm.exe
+	@echo "LLM-transformed executables built"
+
+llm_test: run_tulip_llm
+	@echo "LLM-transformed executables tested"
+
+# Show available LLM transformations
+llm_info:
+	@echo "Available LLM transformations:"
+	@if [ -f $(LLM_TRANSFORM_SCRIPT) ]; then \
+		cd $(LLM_TRANSFORM_DIR) && python3 $(notdir $(LLM_TRANSFORM_SCRIPT)) --list-transformations; \
+	else \
+		echo "LLM transformation script not found at $(LLM_TRANSFORM_SCRIPT)"; \
+	fi
+
+# Help target
+help:
+	@echo "LLM Transformation Makefile Targets:"
+	@echo "  llm_transform    - Apply LLM transformations to all C files"
+	@echo "  llm_cpu_only     - Apply LLM transformations to CPU-only files"
+	@echo "  llm_build        - Build executables from LLM-transformed code"
+	@echo "  llm_test         - Run tests with LLM-transformed executables"
+	@echo "  llm_info         - Show available LLM transformations"
+	@echo "  run_tulip_llm    - Run tulip with LLM-transformed code"
+	@echo "  run_icx_llm      - Run ICX with LLM-transformed code"
+	@echo "  run_nvidia_llm   - Run NVIDIA targets with LLM-transformed code"
+	@echo ""
+	@echo "Configuration variables:"
+	@echo "  OPENAI_API_KEY        - OpenAI API key (required)"
+	@echo "  LLM_TRANSFORMATIONS   - Space-separated list of transformations to apply"
+	@echo "  LLM_TRANSFORM_OUTPUT_DIR - Output directory for LLM results"
+
+clean_non_llm:
+	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o loopIDtoSrc.txt debug_cudafe *.log _loc.c ${BMARK}_cpu ${BMARK}_cpu_llm
+	rm dictionary.json
+
 
 clean:
-	rm -rf *.ll *.bc *.cbe.c *.exe debug* *.o  *.log *.txt
+	rm -rf *.ll *.bc *.cbe.c *.exe debug *.o loopIDtoSrc.txt debug_cudafe *.log _loc.c
+	rm -rf *_llm.c $(LLM_TRANSFORM_OUTPUT_DIR)* *.time
+	rm dictionary.json

@@ -1,0 +1,17 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "ATAX_BLOCK_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        172,
+        184,
+        188,
+        200
+      ],
+      "function": "__GLOBAL__"
+    }
+  ]
+}

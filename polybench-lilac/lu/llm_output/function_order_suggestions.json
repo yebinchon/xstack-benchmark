@@ -1,0 +1,13 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    3,
+    4,
+    5,
+    1,
+    2
+  ],
+  "reasoning": "Placed main first to follow the guideline that entry points appear up front for quick overview. init_array (0) comes immediately after main since it is a setup/initialization routine invoked from main. Core helpers that kernel depends on are next: num_blocks (3) (simple utility used to compute grid sizes), kernel_div (4) and kernel_A (5) (fine-grained compute kernels). With those helpers in place, the high-level kernel (1) follows \u2014 its implementation now reads naturally because its callees appear earlier. Finally print_array (2) is placed last as a display/IO utility; grouping print/display functions toward the end improves readability and isolates side-effecting output code. This order respects dependency direction (helpers before callers where practical), groups utilities together, keeps setup early, and places IO at the end to improve logical flow and debugging.",
+  "confidence": 0.9
+}

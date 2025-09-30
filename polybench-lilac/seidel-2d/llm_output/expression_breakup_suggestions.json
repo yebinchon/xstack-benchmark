@@ -1,0 +1,127 @@
+{
+  "function_name": "kernel_stencil",
+  "breakups": [
+    {
+      "line_number": 187,
+      "original_expression": "A[(i * n + j)] = (((((((((A[(((i - 1) * n + j) - 1)] + A[((i - 1) * n + j)]) + A[(((i - 1) * n + j) + 1)]) + A[((i * n + j) - 1)]) + A[(i * n + j)]) + A[((i * n + j) + 1)]) + A[(((i + 1) * n + j) - 1)]) + A[((i + 1) * n + j)]) + A[(((i + 1) * n + j) + 1)]) / 9);",
+      "breakup_steps": [
+        {
+          "temp_var": "row_im1",
+          "expression": "(i - 1) * n",
+          "description": "Compute the base index (start) of row i-1"
+        },
+        {
+          "temp_var": "row_i",
+          "expression": "i * n",
+          "description": "Compute the base index (start) of row i"
+        },
+        {
+          "temp_var": "row_ip1",
+          "expression": "(i + 1) * n",
+          "description": "Compute the base index (start) of row i+1"
+        },
+        {
+          "temp_var": "idx_im1_jm1",
+          "expression": "row_im1 + (j - 1)",
+          "description": "Index of element (i-1, j-1)"
+        },
+        {
+          "temp_var": "idx_im1_j",
+          "expression": "row_im1 + j",
+          "description": "Index of element (i-1, j)"
+        },
+        {
+          "temp_var": "idx_im1_jp1",
+          "expression": "row_im1 + (j + 1)",
+          "description": "Index of element (i-1, j+1)"
+        },
+        {
+          "temp_var": "idx_i_jm1",
+          "expression": "row_i + (j - 1)",
+          "description": "Index of element (i, j-1)"
+        },
+        {
+          "temp_var": "idx_i_j",
+          "expression": "row_i + j",
+          "description": "Index of element (i, j) (center)"
+        },
+        {
+          "temp_var": "idx_i_jp1",
+          "expression": "row_i + (j + 1)",
+          "description": "Index of element (i, j+1)"
+        },
+        {
+          "temp_var": "idx_ip1_jm1",
+          "expression": "row_ip1 + (j - 1)",
+          "description": "Index of element (i+1, j-1)"
+        },
+        {
+          "temp_var": "idx_ip1_j",
+          "expression": "row_ip1 + j",
+          "description": "Index of element (i+1, j)"
+        },
+        {
+          "temp_var": "idx_ip1_jp1",
+          "expression": "row_ip1 + (j + 1)",
+          "description": "Index of element (i+1, j+1)"
+        },
+        {
+          "temp_var": "val_im1_jm1",
+          "expression": "A[idx_im1_jm1]",
+          "description": "Load value at (i-1, j-1)"
+        },
+        {
+          "temp_var": "val_im1_j",
+          "expression": "A[idx_im1_j]",
+          "description": "Load value at (i-1, j)"
+        },
+        {
+          "temp_var": "val_im1_jp1",
+          "expression": "A[idx_im1_jp1]",
+          "description": "Load value at (i-1, j+1)"
+        },
+        {
+          "temp_var": "val_i_jm1",
+          "expression": "A[idx_i_jm1]",
+          "description": "Load value at (i, j-1)"
+        },
+        {
+          "temp_var": "val_i_j",
+          "expression": "A[idx_i_j]",
+          "description": "Load value at (i, j) (center)"
+        },
+        {
+          "temp_var": "val_i_jp1",
+          "expression": "A[idx_i_jp1]",
+          "description": "Load value at (i, j+1)"
+        },
+        {
+          "temp_var": "val_ip1_jm1",
+          "expression": "A[idx_ip1_jm1]",
+          "description": "Load value at (i+1, j-1)"
+        },
+        {
+          "temp_var": "val_ip1_j",
+          "expression": "A[idx_ip1_j]",
+          "description": "Load value at (i+1, j)"
+        },
+        {
+          "temp_var": "val_ip1_jp1",
+          "expression": "A[idx_ip1_jp1]",
+          "description": "Load value at (i+1, j+1)"
+        },
+        {
+          "temp_var": "sum_neighbors",
+          "expression": "val_im1_jm1 + val_im1_j + val_im1_jp1 + val_i_jm1 + val_i_j + val_i_jp1 + val_ip1_jm1 + val_ip1_j + val_ip1_jp1",
+          "description": "Sum all nine neighbor values (3x3 window)"
+        },
+        {
+          "temp_var": "result",
+          "expression": "sum_neighbors / 9.0",
+          "description": "Average the sum by dividing by 9 (use 9.0 for floating-point division)"
+        }
+      ],
+      "final_expression": "result"
+    }
+  ]
+}

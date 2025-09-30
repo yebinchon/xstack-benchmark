@@ -1,0 +1,166 @@
+{
+  "removals": [
+    {
+      "line_number": 172,
+      "expression": "((double*)x1)",
+      "replacement": "(double*)x1",
+      "reasoning": "The outer parentheses around the cast expression are redundant in a function-call argument; the cast itself must keep parentheses around the type but the extra pair is unnecessary."
+    },
+    {
+      "line_number": 172,
+      "expression": "((double*)x2)",
+      "replacement": "(double*)x2",
+      "reasoning": "Same as above: the extra outer parentheses around the cast are redundant and can be removed for readability."
+    },
+    {
+      "line_number": 174,
+      "expression": "((uint8_t*)((double*)A))",
+      "replacement": "(uint8_t*)((double*)A)",
+      "reasoning": "The outermost parentheses around the cast chain are unnecessary inside the free() call; keep the necessary cast parentheses but remove the redundant outer pair."
+    },
+    {
+      "line_number": 175,
+      "expression": "((uint8_t*)((double*)x1))",
+      "replacement": "(uint8_t*)((double*)x1)",
+      "reasoning": "Same as above for this free() call: drop the redundant outer parentheses around the cast expression."
+    },
+    {
+      "line_number": 176,
+      "expression": "((uint8_t*)((double*)x2))",
+      "replacement": "(uint8_t*)((double*)x2)",
+      "reasoning": "Remove redundant outer parentheses around the cast chain in the free() argument."
+    },
+    {
+      "line_number": 177,
+      "expression": "((uint8_t*)((double*)y_1))",
+      "replacement": "(uint8_t*)((double*)y_1)",
+      "reasoning": "Remove the unnecessary outer parentheses around the cast expression used as the free() argument."
+    },
+    {
+      "line_number": 178,
+      "expression": "((uint8_t*)((double*)y_2))",
+      "replacement": "(uint8_t*)((double*)y_2)",
+      "reasoning": "Remove the redundant outer parentheses around the cast chain; the inner cast parentheses must remain."
+    },
+    {
+      "line_number": 188,
+      "expression": "((double)(i) / (double)(n))",
+      "replacement": "(double)i / (double)n",
+      "reasoning": "Parentheses around single variables inside casts are unnecessary: (double)(i) -> (double)i and (double)(n) -> (double)n. The outermost parentheses around the whole RHS are also redundant in an assignment."
+    },
+    {
+      "line_number": 189,
+      "expression": "(((double)(i) + 1) / (double)(n))",
+      "replacement": "((double)i + 1) / (double)n",
+      "reasoning": "Keep parentheses that group the numerator (addition) but remove redundant parentheses around single variables inside casts ((double)(i)->(double)i, (double)(n)->(double)n) and the outermost pair around the whole expression."
+    },
+    {
+      "line_number": 190,
+      "expression": "(((double)(i) + 3) / (double)(n))",
+      "replacement": "((double)i + 3) / (double)n",
+      "reasoning": "Same rationale as line 189: remove redundant parentheses around single-variable casts and the unnecessary outermost parentheses while preserving the numerator grouping."
+    },
+    {
+      "line_number": 191,
+      "expression": "(((double)(i) + 4) / (double)(n))",
+      "replacement": "((double)i + 4) / (double)n",
+      "reasoning": "Remove redundant parentheses around the inner casts and the outermost pair; keep the parentheses that ensure the addition happens before division."
+    },
+    {
+      "line_number": 193,
+      "expression": "A[(i * n + j)]",
+      "replacement": "A[i * n + j]",
+      "reasoning": "Parentheses around the array index are redundant; A[i * n + j] is clearer and equivalent."
+    },
+    {
+      "line_number": 193,
+      "expression": "(((double)(i) * (double)(j)) / (double)(n))",
+      "replacement": "(double)i * (double)j / (double)n",
+      "reasoning": "Remove parentheses around single-variable casts ((double)(i)->(double)i, (double)(j)->(double)j, (double)(n)->(double)n). Multiplication and division have the same precedence and evaluate left-to-right so extra grouping around the numerator is unnecessary."
+    },
+    {
+      "line_number": 200,
+      "expression": "((num + factor) - 1) / factor",
+      "replacement": "(num + factor - 1) / factor",
+      "reasoning": "The extra parentheses around the partial expression are redundant. Parentheses are still used to group the entire numerator (addition/subtraction) relative to division."
+    },
+    {
+      "line_number": 211,
+      "expression": "(x1[i] + (A[(i * n + j)] * y_1[j]))",
+      "replacement": "x1[i] + A[i * n + j] * y_1[j]",
+      "reasoning": "Remove redundant outer parentheses around the entire RHS and the inner parentheses around the array index and multiplication. Operator precedence (+ and *) already yields the intended evaluation."
+    },
+    {
+      "line_number": 225,
+      "expression": "(x2[i] + (A[(j * n + i)] * y_2[j]))",
+      "replacement": "x2[i] + A[j * n + i] * y_2[j]",
+      "reasoning": "Same as line 211: outer parentheses and the index parentheses are redundant; expression reads more clearly without them and precedence is preserved."
+    },
+    {
+      "line_number": 256,
+      "expression": "((uint8_t*)(&dim_block256_coerce))",
+      "replacement": "(uint8_t*)&dim_block256_coerce",
+      "reasoning": "The outer parentheses around the cast are redundant, and &dim_block256_coerce does not need its own parentheses here. Use the usual (uint8_t*)&dim_block256_coerce form for readability."
+    },
+    {
+      "line_number": 256,
+      "expression": "((uint8_t*)(&dim_block256))",
+      "replacement": "(uint8_t*)&dim_block256",
+      "reasoning": "Remove redundant parentheses around the cast and the address expression; (uint8_t*)&dim_block256 is clearer and equivalent."
+    },
+    {
+      "line_number": 257,
+      "expression": "((uint8_t*)(&dim_grid_coerce))",
+      "replacement": "(uint8_t*)&dim_grid_coerce",
+      "reasoning": "Same cleanup as for dim_block256_coerce: drop redundant parentheses around the cast/address expression."
+    },
+    {
+      "line_number": 257,
+      "expression": "((uint8_t*)(&dim_grid))",
+      "replacement": "(uint8_t*)&dim_grid",
+      "reasoning": "Remove redundant parentheses around the cast and the & operand to improve readability."
+    },
+    {
+      "line_number": 272,
+      "expression": "((uint8_t*)(&dim_block256_b_coerce))",
+      "replacement": "(uint8_t*)&dim_block256_b_coerce",
+      "reasoning": "As above: outer parentheses are unnecessary; use the standard cast-to-pointer-of-address form."
+    },
+    {
+      "line_number": 272,
+      "expression": "((uint8_t*)(&dim_block256_b))",
+      "replacement": "(uint8_t*)&dim_block256_b",
+      "reasoning": "Remove redundant parentheses around the cast and address expression for clarity."
+    },
+    {
+      "line_number": 273,
+      "expression": "((uint8_t*)(&dim_grid_b_coerce))",
+      "replacement": "(uint8_t*)&dim_grid_b_coerce",
+      "reasoning": "Drop the unnecessary outer parentheses around the cast/address expression."
+    },
+    {
+      "line_number": 273,
+      "expression": "((uint8_t*)(&dim_grid_b))",
+      "replacement": "(uint8_t*)&dim_grid_b",
+      "reasoning": "Remove redundant parentheses to simplify the cast-of-address expression."
+    },
+    {
+      "line_number": 289,
+      "expression": "(double_print_format)",
+      "replacement": "double_print_format",
+      "reasoning": "Parentheses around a single variable passed as an argument are unnecessary and can be removed for clarity."
+    },
+    {
+      "line_number": 290,
+      "expression": "(double_print_format)",
+      "replacement": "double_print_format",
+      "reasoning": "Same as above: remove redundant parentheses around the format string variable."
+    },
+    {
+      "line_number": 292,
+      "expression": "(newline_string)",
+      "replacement": "newline_string",
+      "reasoning": "The parentheses around the single variable argument to fprintf are redundant and reduce readability."
+    }
+  ]
+}

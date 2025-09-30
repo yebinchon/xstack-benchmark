@@ -160,35 +160,36 @@ r = a * b;
 
 /* Function Bodies */
 
-//INSERT COMMENT FUNCTION: Gold_laplace3d
+// FUNCTION ORDER ID 0 START
+// INSERT COMMENT FUNCTION: Gold_laplace3d
 void Gold_laplace3d(uint32_t NX, uint32_t NY, uint32_t NZ, float* u1, float* u2) {
   int64_t k;
   int64_t j;
   int64_t i;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: Gold_laplace3d::for.cond
 for(int64_t k = 0; k < NZ;   k = k + 1){
 for(int64_t j = 0; j < NY;   j = j + 1){
 for(int64_t i = 0; i < NX;   i = i + 1){
   uint64_t __FIXME__1 = i + j * NX + k * NX * NY;
-  if (i == 0) {
+  if (i == 0) { // IFELSE MARKER: for.body6 IF
   u2[__FIXME__1] = u1[__FIXME__1];
-  } else {
-  if (i == (NX - 1)) {
+  } else { // IFELSE MARKER: for.body6 ELSE
+  if (i == (NX - 1)) { // IFELSE MARKER: lor.lhs.false IF
   u2[__FIXME__1] = u1[__FIXME__1];
-  } else {
-  if (j == 0) {
+  } else { // IFELSE MARKER: lor.lhs.false ELSE
+  if (j == 0) { // IFELSE MARKER: lor.lhs.false12 IF
   u2[__FIXME__1] = u1[__FIXME__1];
-  } else {
-  if (j == (NY - 1)) {
+  } else { // IFELSE MARKER: lor.lhs.false12 ELSE
+  if (j == (NY - 1)) { // IFELSE MARKER: lor.lhs.false14 IF
   u2[__FIXME__1] = u1[__FIXME__1];
-  } else {
-  if (k == 0) {
+  } else { // IFELSE MARKER: lor.lhs.false14 ELSE
+  if (k == 0) { // IFELSE MARKER: lor.lhs.false17 IF
   u2[__FIXME__1] = u1[__FIXME__1];
-  } else {
-  if (k == (NZ - 1)) {
+  } else { // IFELSE MARKER: lor.lhs.false17 ELSE
+  if (k == (NZ - 1)) { // IFELSE MARKER: lor.lhs.false19 IF
   u2[__FIXME__1] = u1[__FIXME__1];
-  } else {
+  } else { // IFELSE MARKER: lor.lhs.false19 ELSE
   u2[__FIXME__1] = u1[(__FIXME__1 - 1)] + u1[(__FIXME__1 + 1)] + u1[(__FIXME__1 - NX)] + u1[(__FIXME__1 + NX)] + u1[(__FIXME__1 - NX * NY)] + u1[(__FIXME__1 + NX * NY)] * 0.166666672;
   }
   }
@@ -201,8 +202,10 @@ for(int64_t i = 0; i < NX;   i = i + 1){
 }
   return;
 }
+// FUNCTION ORDER ID 0 END
 
 
+// MAIN START
 int main(int argc, char ** argv) {
   uint32_t NX;    /* Address-exposed local */
   uint32_t NY;    /* Address-exposed local */
@@ -253,38 +256,38 @@ int main(int argc, char ** argv) {
   int32_t __FIXME__call190;
   int32_t __FIXME__call191;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: main::entry
   ;
-  if (1) {
+  if (1) { // IFELSE MARKER: entry IF
 printHelp();
   }
-//INSERT COMMENT IFELSE: if.end
-  if ((&NX) != ((uint32_t*)0)) {
-  if (NX <= 99) {
+// INSERT COMMENT IFELSE: main::if.end
+  if ((&NX) != ((uint32_t*)0)) { // IFELSE MARKER: if.end IF
+  if (NX <= 99) { // IFELSE MARKER: if.then1 IF
   printf((__FIXME_GLOBAL___OC_str_OC_2));
   }
-  } else {
+  } else { // IFELSE MARKER: if.end ELSE
   NX = 100;
   }
-//INSERT COMMENT IFELSE: if.end4
-  if ((&NY) != ((uint32_t*)0)) {
-  if (NY <= 99) {
+// INSERT COMMENT IFELSE: main::if.end4
+  if ((&NY) != ((uint32_t*)0)) { // IFELSE MARKER: if.end4 IF
+  if (NY <= 99) { // IFELSE MARKER: if.then6 IF
   printf((__FIXME_GLOBAL___OC_str_OC_4));
   }
-  } else {
+  } else { // IFELSE MARKER: if.end4 ELSE
   NY = 100;
   }
-//INSERT COMMENT IFELSE: if.end12
-  if ((&NZ) != ((uint32_t*)0)) {
-  if (NZ <= 99) {
+// INSERT COMMENT IFELSE: main::if.end12
+  if ((&NZ) != ((uint32_t*)0)) { // IFELSE MARKER: if.end12 IF
+  if (NZ <= 99) { // IFELSE MARKER: if.then14 IF
   printf((__FIXME_GLOBAL___OC_str_OC_6));
   }
-  } else {
+  } else { // IFELSE MARKER: if.end12 ELSE
   NZ = 100;
   }
-//INSERT COMMENT IFELSE: if.end20
-  if ((&REPEAT) != ((uint32_t*)0)) {
-  if (REPEAT <= 0) {
+// INSERT COMMENT IFELSE: main::if.end20
+  if ((&REPEAT) != ((uint32_t*)0)) { // IFELSE MARKER: if.end20 IF
+  if (REPEAT <= 0) { // IFELSE MARKER: if.then22 IF
   printf((__FIXME_GLOBAL___OC_str_OC_8));
   printf((__FIXME_GLOBAL___OC_str_OC_9), NX, NY, NZ);
   cudaGetDeviceCount((&deviceCount));
@@ -303,7 +306,7 @@ printHelp();
   cudaMalloc(((uint8_t**)(&d_u1)), 4 * NX * NY * NZ);
   cudaMalloc(((uint8_t**)(&d_u2)), 4 * NX * NY * NZ);
   pitch = (/*UNDEF*/0 / 4);
-  } else {
+  } else { // IFELSE MARKER: if.end20 ELSE
   REPEAT = 1;
   printf((__FIXME_GLOBAL___OC_str_OC_9), NX, NY, NZ);
   cudaGetDeviceCount((&deviceCount));
@@ -314,29 +317,29 @@ printHelp();
   cudaMalloc(((uint8_t**)(&d_u2)), 4 * NX * NY * NZ);
   pitch = (/*UNDEF*/0 / 4);
   }
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: main::for.cond
 for(int32_t k = 0; k < NZ;   k = k + 1){
 for(int32_t j = 0; j < NY;   j = j + 1){
 for(int32_t i = 0; i < NX;   i = i + 1){
   uint32_t ind = i + j * NX + k * NX * NY;
-  if (i == 0) {
+  if (i == 0) { // IFELSE MARKER: for.body71 IF
   ((float*)__FIXME__call42)[ind] = 1;
-  } else {
-  if (i == (NX - 1)) {
+  } else { // IFELSE MARKER: for.body71 ELSE
+  if (i == (NX - 1)) { // IFELSE MARKER: lor.lhs.false IF
   ((float*)__FIXME__call42)[ind] = 1;
-  } else {
-  if (j == 0) {
+  } else { // IFELSE MARKER: lor.lhs.false ELSE
+  if (j == 0) { // IFELSE MARKER: lor.lhs.false78 IF
   ((float*)__FIXME__call42)[ind] = 1;
-  } else {
-  if (j == (NY - 1)) {
+  } else { // IFELSE MARKER: lor.lhs.false78 ELSE
+  if (j == (NY - 1)) { // IFELSE MARKER: lor.lhs.false80 IF
   ((float*)__FIXME__call42)[ind] = 1;
-  } else {
-  if (k == 0) {
+  } else { // IFELSE MARKER: lor.lhs.false80 ELSE
+  if (k == 0) { // IFELSE MARKER: lor.lhs.false83 IF
   ((float*)__FIXME__call42)[ind] = 1;
-  } else {
-  if (k == (NZ - 1)) {
+  } else { // IFELSE MARKER: lor.lhs.false83 ELSE
+  if (k == (NZ - 1)) { // IFELSE MARKER: lor.lhs.false85 IF
   ((float*)__FIXME__call42)[ind] = 1;
-  } else {
+  } else { // IFELSE MARKER: lor.lhs.false85 ELSE
   ((float*)__FIXME__call42)[ind] = 0;
   }
   }
@@ -359,7 +362,7 @@ for(int32_t i = 0; i < NX;   i = i + 1){
   printf((__FIXME_GLOBAL___OC_str_OC_10), dimGrid.__FIXME__l_struct_struct_OC_dim3_field0, dimGrid.__FIXME__l_struct_struct_OC_dim3_field1, dimGrid.__FIXME__l_struct_struct_OC_dim3_field2);
   printf((__FIXME_GLOBAL___OC_str_OC_11), dimBlock.__FIXME__l_struct_struct_OC_dim3_field0, dimBlock.__FIXME__l_struct_struct_OC_dim3_field1, dimBlock.__FIXME__l_struct_struct_OC_dim3_field2);
   cudaThreadSynchronize();
-//INSERT COMMENT LOOP: for.cond119
+// INSERT COMMENT LOOP: main::for.cond119
 for(int32_t i = 1; i <= REPEAT;   i = i + 1){
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), ((uint8_t*)(&dimGrid)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp122)), ((uint8_t*)(&dimBlock)), 12);
@@ -379,12 +382,12 @@ GPU_laplace3d(NX, NY, NZ, pitch, ((float*)__FIXME__call35), d_u2, bx, by, 1, 32,
   d_u2 = ((float*)__FIXME__call35);
   cudaThreadSynchronize();
 }
-//INSERT COMMENT LOOP: for.cond137
+// INSERT COMMENT LOOP: main::for.cond137
 for(int32_t i = 1; i <= REPEAT;   i = i + 1){
 Gold_laplace3d(NX, NY, NZ, __FIXME__h_u3_2e_0_2e_lcssa, __FIXME__h_u3_2e_0_2e_lcssa);
 }
   err = 0;
-//INSERT COMMENT LOOP: for.cond143
+// INSERT COMMENT LOOP: main::for.cond143
 for(int32_t k = 0; k < NZ;   k = k + 1){
 for(int32_t j = 0; j < NY;   j = j + 1){
 for(int32_t i = 0; i < NX;   i = i + 1){
@@ -405,9 +408,11 @@ free(((uint8_t*)__FIXME__h_u3_2e_0_2e_lcssa));
 free(((uint8_t*)__FIXME__h_u3_2e_0_2e_lcssa));
   return 0;
 }
+// MAIN END
 
 
-//INSERT COMMENT FUNCTION: printHelp
+// FUNCTION ORDER ID 1 START
+// INSERT COMMENT FUNCTION: printHelp
 void printHelp(void) {
   int32_t __FIXME__call;
   int32_t __FIXME__call1;
@@ -435,18 +440,22 @@ void printHelp(void) {
   printf((__FIXME_GLOBAL___OC_str_OC_27));
   printf((__FIXME_GLOBAL___OC_str_OC_28));
 }
+// FUNCTION ORDER ID 1 END
 
 
-//INSERT COMMENT FUNCTION: std::sqrt
+// FUNCTION ORDER ID 2 START
+// INSERT COMMENT FUNCTION: std::sqrt
 float std::sqrt(float __x) {
   float __FIXME__call;
 
   __FIXME__call = sqrtf(__x);
   return __FIXME__call;
 }
+// FUNCTION ORDER ID 2 END
 
 
-//INSERT COMMENT FUNCTION: GPU_laplace3d
+// FUNCTION ORDER ID 3 START
+// INSERT COMMENT FUNCTION: GPU_laplace3d
 void GPU_laplace3d(uint32_t NX, uint32_t NY, uint32_t NZ, uint32_t pitch, float* d_u1, float* d_u2, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t x, uint32_t x, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   float __FIXME__sharedMem0[612];    /* Address-exposed local */
   uint32_t NXM1;
@@ -476,99 +485,99 @@ void GPU_laplace3d(uint32_t NX, uint32_t NY, uint32_t NZ, uint32_t pitch, float*
   int32_t indg0;
   float u2;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: GPU_laplace3d::entry
   NXM1 = (NX - 1);
   NYM1 = (NY - 1);
   NZM1 = (NZ - 1);
   k = __FIXME__threadIdx_2e_x + __FIXME__threadIdx_2e_y * 32;
-  if (halo != 0) {
-  if (__FIXME__threadIdx_2e_y < 2) {
+  if (halo != 0) { // IFELSE MARKER: entry IF
+  if (__FIXME__threadIdx_2e_y < 2) { // IFELSE MARKER: if.then IF
   j = (__FIXME__threadIdx_2e_y * 5 - 1);
-  } else {
+  } else { // IFELSE MARKER: if.then ELSE
   i = ((int)k % (int)2 * 33 - 1);
   j = ((k / 2 - 32) - 1);
   }
-  __FIXME__4 = llvm_OC_nvvm_OC_mul24_OC_i(j + 1, 34);
+  __FIXME__4 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(j + 1, 34);
   ind_h = i + 1 + __FIXME__4 + 204;
-  __FIXME__5 = llvm_OC_nvvm_OC_mul24_OC_i(x, 32);
+  __FIXME__5 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(x, 32);
   i = i + __FIXME__5;
-  __FIXME__6 = llvm_OC_nvvm_OC_mul24_OC_i(x, 4);
+  __FIXME__6 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(x, 4);
   __FIXME__add25 = j + __FIXME__6;
-  __FIXME__7 = llvm_OC_nvvm_OC_mul24_OC_i(__FIXME__add25, pitch);
+  __FIXME__7 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(__FIXME__add25, pitch);
   indg_h = i + __FIXME__7;
-  if (i >= 0) {
-  if (i < NX) {
-  if (__FIXME__add25 >= 0) {
+  if (i >= 0) { // IFELSE MARKER: if.end IF
+  if (i < NX) { // IFELSE MARKER: land.lhs.true IF
+  if (__FIXME__add25 >= 0) { // IFELSE MARKER: land.lhs.true30 IF
   }
   }
   }
   }
-//INSERT COMMENT IFELSE: if.end34
-  __FIXME__8 = llvm_OC_nvvm_OC_mul24_OC_i(__FIXME__threadIdx_2e_y + 1, 34);
+// INSERT COMMENT IFELSE: GPU_laplace3d::if.end34
+  __FIXME__8 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(__FIXME__threadIdx_2e_y + 1, 34);
   ind = __FIXME__threadIdx_2e_x + 1 + __FIXME__8 + 204;
-  __FIXME__9 = llvm_OC_nvvm_OC_mul24_OC_i(x, 32);
+  __FIXME__9 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(x, 32);
   i = __FIXME__threadIdx_2e_x + __FIXME__9;
-  __FIXME__10 = llvm_OC_nvvm_OC_mul24_OC_i(x, 4);
+  __FIXME__10 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(x, 4);
   __FIXME__add47 = __FIXME__threadIdx_2e_y + __FIXME__10;
-  __FIXME__11 = llvm_OC_nvvm_OC_mul24_OC_i(__FIXME__add47, pitch);
+  __FIXME__11 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(__FIXME__add47, pitch);
   __FIXME__add49 = i + __FIXME__11;
-  if (i < NX) {
+  if (i < NX) { // IFELSE MARKER: if.end34 IF
   }
-//INSERT COMMENT IFELSE: land.end53
-  if (__FIXME__3 != 0) {
+// INSERT COMMENT IFELSE: GPU_laplace3d::land.end53
+  if (__FIXME__3 != 0) { // IFELSE MARKER: land.end53 IF
   __FIXME__sharedMem0[(ind + 204)] = d_u1[indg0];
   }
-//INSERT COMMENT IFELSE: if.end60
-  if (halo != 0) {
+// INSERT COMMENT IFELSE: GPU_laplace3d::if.end60
+  if (halo != 0) { // IFELSE MARKER: if.end60 IF
   __FIXME__sharedMem0[(ind_h + 204)] = d_u1[indg_h];
   indg0 = /*UNDEF*/0;
   }
   indg0 = /*UNDEF*/0;
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: GPU_laplace3d::for.cond
 for(int32_t k = 0; k < NZ;   k = k + 1){
-  if (__FIXME__3 != 0) {
-  uint32_t __FIXME__12 = llvm_OC_nvvm_OC_mul24_OC_i(NY, pitch);
+  if (__FIXME__3 != 0) { // IFELSE MARKER: for.body IF
+  uint32_t __FIXME__12 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(NY, pitch);
   uint32_t __FIXME__add73 = indg0 + __FIXME__12;
   __FIXME__sharedMem0[(ind - 204)] = __FIXME__sharedMem0[ind];
   __FIXME__sharedMem0[ind] = __FIXME__sharedMem0[(ind + 204)];
-  if (k < NZM1) {
+  if (k < NZM1) { // IFELSE MARKER: if.then71 IF
   __FIXME__sharedMem0[(ind + 204)] = d_u1[indg0];
   }
   }
-  if (halo != 0) {
-  uint32_t __FIXME__13 = llvm_OC_nvvm_OC_mul24_OC_i(NY, pitch);
+  if (halo != 0) { // IFELSE MARKER: if.end92 IF
+  uint32_t __FIXME__13 = /*__FIXME__INTRINSIC_CALL__*/llvm_OC_nvvm_OC_mul24_OC_i(NY, pitch);
   uint32_t indg_h = indg_h + __FIXME__13;
   __FIXME__sharedMem0[(ind_h - 204)] = __FIXME__sharedMem0[ind_h];
   __FIXME__sharedMem0[ind_h] = __FIXME__sharedMem0[(ind_h + 204)];
-  if (k < NZM1) {
+  if (k < NZM1) { // IFELSE MARKER: if.then94 IF
   __FIXME__sharedMem0[(ind_h + 204)] = d_u1[indg_h];
   }
   }
-  if (__FIXME__3 != 0) {
-  if (i == 0) {
+  if (__FIXME__3 != 0) { // IFELSE MARKER: if.end115 IF
+  if (i == 0) { // IFELSE MARKER: if.then117 IF
   u2 = __FIXME__sharedMem0[ind];
   d_u2[indg0] = u2;
-  } else {
-  if (i == NXM1) {
+  } else { // IFELSE MARKER: if.then117 ELSE
+  if (i == NXM1) { // IFELSE MARKER: lor.lhs.false IF
   u2 = __FIXME__sharedMem0[ind];
   d_u2[indg0] = u2;
-  } else {
-  if (__FIXME__add47 == 0) {
+  } else { // IFELSE MARKER: lor.lhs.false ELSE
+  if (__FIXME__add47 == 0) { // IFELSE MARKER: lor.lhs.false120 IF
   u2 = __FIXME__sharedMem0[ind];
   d_u2[indg0] = u2;
-  } else {
-  if (__FIXME__add47 == NYM1) {
+  } else { // IFELSE MARKER: lor.lhs.false120 ELSE
+  if (__FIXME__add47 == NYM1) { // IFELSE MARKER: lor.lhs.false122 IF
   u2 = __FIXME__sharedMem0[ind];
   d_u2[indg0] = u2;
-  } else {
-  if (k == 0) {
+  } else { // IFELSE MARKER: lor.lhs.false122 ELSE
+  if (k == 0) { // IFELSE MARKER: lor.lhs.false124 IF
   u2 = __FIXME__sharedMem0[ind];
   d_u2[indg0] = u2;
-  } else {
-  if (k == NZM1) {
+  } else { // IFELSE MARKER: lor.lhs.false124 ELSE
+  if (k == NZM1) { // IFELSE MARKER: lor.lhs.false126 IF
   u2 = __FIXME__sharedMem0[ind];
   d_u2[indg0] = u2;
-  } else {
+  } else { // IFELSE MARKER: lor.lhs.false126 ELSE
   u2 = __FIXME__sharedMem0[(ind - 1)] + __FIXME__sharedMem0[(ind + 1)] + __FIXME__sharedMem0[(ind - 34)] + __FIXME__sharedMem0[(ind + 34)] + __FIXME__sharedMem0[(ind - 204)] + __FIXME__sharedMem0[(ind + 204)] * 0.166666672;
   d_u2[indg0] = u2;
   }
@@ -581,4 +590,5 @@ for(int32_t k = 0; k < NZ;   k = k + 1){
 }
   return;
 }
+// FUNCTION ORDER ID 3 END
 

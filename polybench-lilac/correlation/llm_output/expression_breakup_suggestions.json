@@ -1,0 +1,103 @@
+{
+  "function_name": "kernel_corr",
+  "breakups": [
+    {
+      "line_number": 286,
+      "original_expression": "j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y + i + 1;",
+      "breakup_steps": [
+        {
+          "temp_var": "block_y_offset",
+          "expression": "__FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y",
+          "description": "Compute the offset contributed by the block index in the Y dimension"
+        },
+        {
+          "temp_var": "thread_y_index",
+          "expression": "__FIXME__threadIdx_2e_y",
+          "description": "Thread index in the Y dimension (kept as a separate named value for clarity)"
+        },
+        {
+          "temp_var": "y_base",
+          "expression": "block_y_offset + thread_y_index",
+          "description": "Combine block and thread offsets to obtain the base Y index for this thread"
+        },
+        {
+          "temp_var": "j_index",
+          "expression": "y_base + i + 1",
+          "description": "Add the row offset (i) and the +1 to get the final column/j index"
+        }
+      ],
+      "final_expression": "j = j_index;"
+    },
+    {
+      "line_number": 289,
+      "original_expression": "corr[(i * m + j)] = 0;",
+      "breakup_steps": [
+        {
+          "temp_var": "idx_ij",
+          "expression": "i * m + j",
+          "description": "Compute flattened index for element (i, j)"
+        },
+        {
+          "temp_var": "corr_target",
+          "expression": "corr[idx_ij]",
+          "description": "Named reference to the correlation cell being initialized"
+        }
+      ],
+      "final_expression": "corr[idx_ij] = 0;"
+    },
+    {
+      "line_number": 291,
+      "original_expression": "corr[(i * m + j)] = (corr[(i * m + j)] + (data[(k * m + i)] * data[(k * m + j)]));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx_ij",
+          "expression": "i * m + j",
+          "description": "Compute flattened index for correlation element (i, j)"
+        },
+        {
+          "temp_var": "idx_ki",
+          "expression": "k * m + i",
+          "description": "Compute flattened index for data element (k, i)"
+        },
+        {
+          "temp_var": "idx_kj",
+          "expression": "k * m + j",
+          "description": "Compute flattened index for data element (k, j)"
+        },
+        {
+          "temp_var": "product",
+          "expression": "data[idx_ki] * data[idx_kj]",
+          "description": "Multiply the two data values for this k to get the contribution"
+        },
+        {
+          "temp_var": "updated_corr",
+          "expression": "corr[idx_ij] + product",
+          "description": "Add the contribution to the current correlation accumulator"
+        }
+      ],
+      "final_expression": "corr[idx_ij] = updated_corr;"
+    },
+    {
+      "line_number": 293,
+      "original_expression": "corr[(j * m + i)] = corr[(i * m + j)];",
+      "breakup_steps": [
+        {
+          "temp_var": "idx_ji",
+          "expression": "j * m + i",
+          "description": "Compute flattened index for element (j, i)"
+        },
+        {
+          "temp_var": "idx_ij",
+          "expression": "i * m + j",
+          "description": "Compute flattened index for element (i, j) (reuseable with line 11/13)"
+        },
+        {
+          "temp_var": "corr_value",
+          "expression": "corr[idx_ij]",
+          "description": "Value of the correlation at (i, j) to be mirrored"
+        }
+      ],
+      "final_expression": "corr[idx_ji] = corr_value;"
+    }
+  ]
+}

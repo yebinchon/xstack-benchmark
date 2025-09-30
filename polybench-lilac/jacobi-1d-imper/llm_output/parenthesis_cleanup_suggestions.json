@@ -1,0 +1,136 @@
+{
+  "removals": [
+    {
+      "line_number": 153,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "The outer parentheses around the cast expression are redundant in an argument position. The cast itself requires parentheses around the type but not around the whole expression."
+    },
+    {
+      "line_number": 153,
+      "expression": "((double*)B)",
+      "replacement": "(double*)B",
+      "reasoning": "Same as above: remove the redundant outer parentheses around the cast."
+    },
+    {
+      "line_number": 155,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "Redundant outer parentheses around a cast in a function call; (double*)A is sufficient and clearer."
+    },
+    {
+      "line_number": 155,
+      "expression": "((double*)B)",
+      "replacement": "(double*)B",
+      "reasoning": "Redundant outer parentheses around a cast in a function call."
+    },
+    {
+      "line_number": 158,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "Redundant outer parentheses around the cast when passing as an argument to print_array."
+    },
+    {
+      "line_number": 160,
+      "expression": "((uint8_t*)((double*)A))",
+      "replacement": "(uint8_t*)((double*)A)",
+      "reasoning": "The outer parentheses surrounding the cast expression are unnecessary for the free() call; leaving the cast expressions intact is sufficient."
+    },
+    {
+      "line_number": 161,
+      "expression": "((uint8_t*)((double*)B))",
+      "replacement": "(uint8_t*)((double*)B)",
+      "reasoning": "Same as above for B: remove the redundant outer parentheses around the nested casts."
+    },
+    {
+      "line_number": 170,
+      "expression": "(((double)(i) + 2) / (double)(n))",
+      "replacement": "((double)i + 2) / (double)n",
+      "reasoning": "Parentheses around the entire RHS are unnecessary; keep parentheses around the numerator so addition happens before division. The parentheses around the variable in the cast (e.g. (i)) are redundant: use (double)i and (double)n."
+    },
+    {
+      "line_number": 171,
+      "expression": "(((double)(i) + 3) / (double)(n))",
+      "replacement": "((double)i + 3) / (double)n",
+      "reasoning": "Same as the previous line: remove unnecessary outer parens and unnecessary parens around the casted variables, while preserving the numerator grouping."
+    },
+    {
+      "line_number": 177,
+      "expression": "((num + factor) - 1) / factor",
+      "replacement": "(num + factor - 1) / factor",
+      "reasoning": "Parentheses around the inner (num + factor) are unnecessary because the grouping (num + factor - 1) is sufficient as the numerator; keeping parentheses around the numerator ensures correct order of operations while removing the redundant inner pair improves readability."
+    },
+    {
+      "line_number": 188,
+      "expression": "(n - 1)",
+      "replacement": "n - 1",
+      "reasoning": "In the comparison i < (n - 1) the parentheses around the subtraction are redundant: i < n - 1 is parsed as i < (n - 1) due to operator precedence, so the parens can be removed."
+    },
+    {
+      "line_number": 221,
+      "expression": "((uint8_t*)(&gridA_packed))",
+      "replacement": "(uint8_t*)&gridA_packed",
+      "reasoning": "The outer parentheses around the cast are redundant. The address-of expression doesn't need its own parentheses; (uint8_t*)&gridA_packed is clearer and equivalent."
+    },
+    {
+      "line_number": 221,
+      "expression": "((uint8_t*)(&gridA))",
+      "replacement": "(uint8_t*)&gridA",
+      "reasoning": "Same simplification for the second memcpy argument: remove redundant outer parentheses and the inner parens around &gridA."
+    },
+    {
+      "line_number": 222,
+      "expression": "((uint8_t*)(&blockA_packed))",
+      "replacement": "(uint8_t*)&blockA_packed",
+      "reasoning": "Remove redundant outer parentheses around the cast; (uint8_t*)&blockA_packed is equivalent and clearer."
+    },
+    {
+      "line_number": 222,
+      "expression": "((uint8_t*)(&blockA))",
+      "replacement": "(uint8_t*)&blockA",
+      "reasoning": "Same as above: parentheses around &blockA are unnecessary when used with the cast."
+    },
+    {
+      "line_number": 236,
+      "expression": "((uint8_t*)(&gridB_packed))",
+      "replacement": "(uint8_t*)&gridB_packed",
+      "reasoning": "Remove redundant outer parentheses around the cast in memcpy; the cast and address-of bind correctly without the extra parens."
+    },
+    {
+      "line_number": 236,
+      "expression": "((uint8_t*)(&gridB))",
+      "replacement": "(uint8_t*)&gridB",
+      "reasoning": "Same simplification for the second memcpy argument."
+    },
+    {
+      "line_number": 237,
+      "expression": "((uint8_t*)(&blockB_packed))",
+      "replacement": "(uint8_t*)&blockB_packed",
+      "reasoning": "Remove redundant outer parentheses around the cast in memcpy."
+    },
+    {
+      "line_number": 237,
+      "expression": "((uint8_t*)(&blockB))",
+      "replacement": "(uint8_t*)&blockB",
+      "reasoning": "Same as above: the parentheses around &blockB are unnecessary with the cast."
+    },
+    {
+      "line_number": 254,
+      "expression": "(fmt_double_space)",
+      "replacement": "fmt_double_space",
+      "reasoning": "Parentheses around a simple identifier used as a function argument are redundant and can be removed for clarity."
+    },
+    {
+      "line_number": 256,
+      "expression": "(fmt_newline)",
+      "replacement": "fmt_newline",
+      "reasoning": "Remove redundant parentheses around the identifier passed to fprintf; plain fmt_newline is clearer."
+    },
+    {
+      "line_number": 259,
+      "expression": "(fmt_newline)",
+      "replacement": "fmt_newline",
+      "reasoning": "Same as above: parentheses around the identifier are unnecessary."
+    }
+  ]
+}

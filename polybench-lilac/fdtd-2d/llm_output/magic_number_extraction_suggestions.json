@@ -1,0 +1,63 @@
+{
+  "extractions": [
+    {
+      "value": "256",
+      "name": "BLOCK_SIZE_NY_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        284,
+        293
+      ],
+      "function": "__GLOBAL__"
+    },
+    {
+      "value": "8",
+      "name": "TILE_DIM_L_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        296,
+        311,
+        313,
+        318,
+        333,
+        335,
+        340,
+        355,
+        357
+      ],
+      "function": "__GLOBAL__"
+    },
+    {
+      "value": "32",
+      "name": "TILE_DIM_M_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        297,
+        312,
+        313,
+        319,
+        334,
+        335,
+        341,
+        356,
+        357
+      ],
+      "function": "__GLOBAL__"
+    },
+    {
+      "value": "12",
+      "name": "BLOCK_STRUCT_SIZE_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        305,
+        327,
+        349
+      ],
+      "function": "__GLOBAL__"
+    }
+  ]
+}

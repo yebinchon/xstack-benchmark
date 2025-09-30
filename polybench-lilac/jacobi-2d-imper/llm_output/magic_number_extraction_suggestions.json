@@ -1,0 +1,49 @@
+{
+  "extractions": [
+    {
+      "value": "3",
+      "name": "INIT_ARRAY_OFFSET_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        173
+      ],
+      "function": "init_array"
+    },
+    {
+      "value": "8",
+      "name": "BLOCK_ROWS_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        217,
+        232,
+        246
+      ],
+      "function": "kernel_jacobi_2d_imper"
+    },
+    {
+      "value": "32",
+      "name": "BLOCK_COLS_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        218,
+        233,
+        247
+      ],
+      "function": "kernel_jacobi_2d_imper"
+    },
+    {
+      "value": "12",
+      "name": "BLOCK_STRUCT_SIZE_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        226,
+        240
+      ],
+      "function": "kernel_jacobi_2d_imper"
+    }
+  ]
+}

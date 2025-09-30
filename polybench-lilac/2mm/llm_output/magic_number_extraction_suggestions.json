@@ -1,0 +1,38 @@
+{
+  "extractions": [
+    {
+      "value": "32",
+      "name": "BLOCK_DIM3_FIELD1_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        297,
+        313,
+        333
+      ],
+      "function": "main"
+    },
+    {
+      "value": "12",
+      "name": "BLOCK_STRUCT_COPY_BYTES_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        305,
+        325
+      ],
+      "function": "main"
+    },
+    {
+      "value": "8",
+      "name": "BLOCK_SUBDIM_K_SIZE_1",
+      "type": "define",
+      "scope": "file",
+      "occurrences": [
+        312,
+        332
+      ],
+      "function": "main"
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "function_name": "init_array",
+  "breakups": [
+    {
+      "line_number": 190,
+      "original_expression": "A[(i * ni + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "a_index",
+          "expression": "i * ni + j",
+          "description": "Compute the linear index into A"
+        },
+        {
+          "temp_var": "i_double",
+          "expression": "(double)i",
+          "description": "Cast i to double for arithmetic"
+        },
+        {
+          "temp_var": "j_double",
+          "expression": "(double)j",
+          "description": "Cast j to double for arithmetic"
+        },
+        {
+          "temp_var": "numerator",
+          "expression": "i_double * j_double",
+          "description": "Compute the numerator (i * j) in double"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)ni",
+          "description": "Compute the denominator as double"
+        },
+        {
+          "temp_var": "a_value",
+          "expression": "numerator / denom",
+          "description": "Divide numerator by denominator to get final value"
+        }
+      ],
+      "final_expression": "A[a_index] = a_value"
+    },
+    {
+      "line_number": 196,
+      "original_expression": "B[(i * nk + j)] = (((double)(i) * (double)((j + 1))) / (double)(nj));",
+      "breakup_steps": [
+        {
+          "temp_var": "b_index",
+          "expression": "i * nk + j",
+          "description": "Compute the linear index into B"
+        },
+        {
+          "temp_var": "i_double",
+          "expression": "(double)i",
+          "description": "Cast i to double for arithmetic"
+        },
+        {
+          "temp_var": "j_plus_1",
+          "expression": "j + 1",
+          "description": "Compute j+1 (integer) before casting"
+        },
+        {
+          "temp_var": "j1_double",
+          "expression": "(double)j_plus_1",
+          "description": "Cast (j+1) to double"
+        },
+        {
+          "temp_var": "numerator",
+          "expression": "i_double * j1_double",
+          "description": "Compute the numerator (i * (j+1)) in double"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)nj",
+          "description": "Compute the denominator as double"
+        },
+        {
+          "temp_var": "b_value",
+          "expression": "numerator / denom",
+          "description": "Divide numerator by denominator to get final value"
+        }
+      ],
+      "final_expression": "B[b_index] = b_value"
+    },
+    {
+      "line_number": 202,
+      "original_expression": "C[(i * nl + j)] = (((double)(i) * (double)((j + 3))) / (double)(nl));",
+      "breakup_steps": [
+        {
+          "temp_var": "c_index",
+          "expression": "i * nl + j",
+          "description": "Compute the linear index into C"
+        },
+        {
+          "temp_var": "i_double",
+          "expression": "(double)i",
+          "description": "Cast i to double for arithmetic"
+        },
+        {
+          "temp_var": "j_plus_3",
+          "expression": "j + 3",
+          "description": "Compute j+3 (integer) before casting"
+        },
+        {
+          "temp_var": "j3_double",
+          "expression": "(double)j_plus_3",
+          "description": "Cast (j+3) to double"
+        },
+        {
+          "temp_var": "numerator",
+          "expression": "i_double * j3_double",
+          "description": "Compute the numerator (i * (j+3)) in double"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)nl",
+          "description": "Compute the denominator as double"
+        },
+        {
+          "temp_var": "c_value",
+          "expression": "numerator / denom",
+          "description": "Divide numerator by denominator to get final value"
+        }
+      ],
+      "final_expression": "C[c_index] = c_value"
+    },
+    {
+      "line_number": 208,
+      "original_expression": "D[(i * ni + j)] = (((double)(i) * (double)((j + 2))) / (double)(nk));",
+      "breakup_steps": [
+        {
+          "temp_var": "d_index",
+          "expression": "i * ni + j",
+          "description": "Compute the linear index into D"
+        },
+        {
+          "temp_var": "i_double",
+          "expression": "(double)i",
+          "description": "Cast i to double for arithmetic"
+        },
+        {
+          "temp_var": "j_plus_2",
+          "expression": "j + 2",
+          "description": "Compute j+2 (integer) before casting"
+        },
+        {
+          "temp_var": "j2_double",
+          "expression": "(double)j_plus_2",
+          "description": "Cast (j+2) to double"
+        },
+        {
+          "temp_var": "numerator",
+          "expression": "i_double * j2_double",
+          "description": "Compute the numerator (i * (j+2)) in double"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)nk",
+          "description": "Compute the denominator as double"
+        },
+        {
+          "temp_var": "d_value",
+          "expression": "numerator / denom",
+          "description": "Divide numerator by denominator to get final value"
+        }
+      ],
+      "final_expression": "D[d_index] = d_value"
+    }
+  ]
+}

@@ -91,9 +91,9 @@ void kernel_polly(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 double sqrt(double);
-void _Z7kernel0iiPd_OC_1(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z7kernel1iiPd_OC_2(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-void _Z7kernel2iiPd_OC_3(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel0(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel1(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel2(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
@@ -134,6 +134,7 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
 
 /* Function Bodies */
 
+// MAIN START
 int main(int argc, char ** argv) {
   int32_t n;
   int32_t dump_code;
@@ -141,7 +142,7 @@ int main(int argc, char ** argv) {
   int32_t __FIXME__call12;
   int32_t __FIXME__call16;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: main::entry
   n = atoi(argv[2]);
   dump_code = atoi(argv[1]);
   A = malloc(n * n * 8);
@@ -149,20 +150,22 @@ int main(int argc, char ** argv) {
 ;
   kernel_polly(n, ((double*)A));
 ;
-  if (dump_code == 1) {
+  if (dump_code == 1) { // IFELSE MARKER: entry IF
 print_array(n, ((double*)A));
   }
 free(((uint8_t*)((double*)A)));
   return 0;
 }
+// MAIN END
 
 
-//INSERT COMMENT FUNCTION: init_array
+// FUNCTION ORDER ID 0 START
+// INSERT COMMENT FUNCTION: init_array
 void init_array(uint32_t n, double* A) {
   int64_t i;
   uint64_t j;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: init_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
   A[(i * n + j)] = (1 / (double)(n));
@@ -170,9 +173,11 @@ for(int64_t j = 0; j < n;   j = j + 1){
 }
   return;
 }
+// FUNCTION ORDER ID 0 END
 
 
-//INSERT COMMENT FUNCTION: kernel_polly
+// FUNCTION ORDER ID 1 START
+// INSERT COMMENT FUNCTION: kernel_polly
 void kernel_polly(uint32_t n, double* dev_A) {
   struct __FIXME__l_struct_struct_OC_dim3 __FIXME__agg_2e_tmp;    /* Address-exposed local */
   struct __FIXME__l_struct_struct_OC_dim3 __FIXME__agg_2e_tmp1;    /* Address-exposed local */
@@ -194,7 +199,7 @@ void kernel_polly(uint32_t n, double* dev_A) {
   uint32_t l;
   uint32_t m;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: kernel_polly::for.cond
 for(int32_t iter = 0; iter < n;   iter = iter + 1){
   __FIXME__agg_2e_tmp.__FIXME__l_struct_struct_OC_dim3_field0 = 1;
   __FIXME__agg_2e_tmp.__FIXME__l_struct_struct_OC_dim3_field1 = 1;
@@ -204,7 +209,7 @@ for(int32_t iter = 0; iter < n;   iter = iter + 1){
   __FIXME__agg_2e_tmp1.__FIXME__l_struct_struct_OC_dim3_field2 = 1;
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp1)), 12);
-_Z7kernel0iiPd_OC_1(n, iter, dev_A, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0);
+kernel0(n, iter, dev_A, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0);
   uint32_t __FIXME__call3 = num_blocks(n, 256);
   __FIXME__agg_2e_tmp2.__FIXME__l_struct_struct_OC_dim3_field0 = __FIXME__call3;
   __FIXME__agg_2e_tmp2.__FIXME__l_struct_struct_OC_dim3_field1 = 1;
@@ -217,7 +222,7 @@ _Z7kernel0iiPd_OC_1(n, iter, dev_A, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0);
 #pragma omp parallel for collapse(2)
 for(int32_t j = 0; j < __FIXME__call3;   j = j + 1){
 for(int32_t k = 0; k < 256;   k = k + 1){
-  _Z7kernel1iiPd_OC_2(n, iter, dev_A, __FIXME__call3, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+  kernel1(n, iter, dev_A, __FIXME__call3, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 ;
 }
 }
@@ -238,7 +243,7 @@ for(int32_t j = 0; j < 8;   j = j + 1){
 for(int32_t k = 0; k < 32;   k = k + 1){
 for(int32_t l = 0; l < __FIXME__call9;   l = l + 1){
 for(int32_t m = 0; m < __FIXME__call10;   m = m + 1){
-  _Z7kernel2iiPd_OC_3(n, iter, dev_A, 8, 32, 1, __FIXME__call9, __FIXME__call10, 1, j, k, 0, l, m, 0);
+  kernel2(n, iter, dev_A, 8, 32, 1, __FIXME__call9, __FIXME__call10, 1, j, k, 0, l, m, 0);
 ;
 }
 }
@@ -247,65 +252,76 @@ for(int32_t m = 0; m < __FIXME__call10;   m = m + 1){
 }
   return;
 }
+// FUNCTION ORDER ID 1 END
 
 
-//INSERT COMMENT FUNCTION: print_array
+// FUNCTION ORDER ID 2 START
+// INSERT COMMENT FUNCTION: print_array
 void print_array(uint32_t n, double* A) {
   int64_t i;
   uint64_t j;
 
-//INSERT COMMENT LOOP: for.cond
+// INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
-  uint32_t __FIXME__call = fprintf(stderr, (__FIXME_GLOBAL___OC_str), A[(i * n + j)]);
-  if ((int)(i * n + j) % (int)20 == 0) {
+  fprintf(stderr, (__FIXME_GLOBAL___OC_str), A[(i * n + j)]);
+  if ((int)(i * n + j) % (int)20 == 0) { // IFELSE MARKER: for.body3 IF
   fprintf(stderr, (__FIXME_GLOBAL___OC_str_OC_1));
   }
 }
 }
   return;
 }
+// FUNCTION ORDER ID 2 END
 
 
-//INSERT COMMENT FUNCTION: num_blocks
+// FUNCTION ORDER ID 3 START
+// INSERT COMMENT FUNCTION: num_blocks
 uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
+// FUNCTION ORDER ID 3 END
 
 
-//INSERT COMMENT FUNCTION: kernel0
-void _Z7kernel0iiPd_OC_1(uint32_t n, uint32_t __FIXME__j, double* A, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 4 START
+// INSERT COMMENT FUNCTION: kernel0
+void kernel0(uint32_t n, uint32_t __FIXME__j, double* A, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   double __FIXME__1;
 
   __FIXME__1 = sqrt(A[(__FIXME__j * n + __FIXME__j)]);
   A[(__FIXME__j * n + __FIXME__j)] = __FIXME__1;
 }
+// FUNCTION ORDER ID 4 END
 
 
-//INSERT COMMENT FUNCTION: kernel1
-void _Z7kernel1iiPd_OC_2(uint32_t n, uint32_t __FIXME__j, double* A, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 5 START
+// INSERT COMMENT FUNCTION: kernel1
+void kernel1(uint32_t n, uint32_t __FIXME__j, double* A, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   int32_t i;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel1::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;
-  if (i < n & i > __FIXME__j) {
+  if (i < n & i > __FIXME__j) { // IFELSE MARKER: entry IF
   A[(i * n + __FIXME__j)] = (A[(i * n + __FIXME__j)] / A[(__FIXME__j * n + __FIXME__j)]);
   }
   return;
 }
+// FUNCTION ORDER ID 5 END
 
 
-//INSERT COMMENT FUNCTION: kernel2
-void _Z7kernel2iiPd_OC_3(uint32_t n, uint32_t __FIXME__j, double* A, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
+// FUNCTION ORDER ID 6 START
+// INSERT COMMENT FUNCTION: kernel2
+void kernel2(uint32_t n, uint32_t __FIXME__j, double* A, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
   int32_t i;
   int32_t k;
 
-//INSERT COMMENT IFELSE: entry
+// INSERT COMMENT IFELSE: kernel2::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;
   k = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y;
-  if (__FIXME__j < n & __FIXME__j < i & i < n & __FIXME__j < k & k <= i) {
+  if (__FIXME__j < n & __FIXME__j < i & i < n & __FIXME__j < k & k <= i) { // IFELSE MARKER: entry IF
   A[(i * n + k)] = (A[(i * n + k)] - (A[(i * n + __FIXME__j)] * A[(k * n + __FIXME__j)]));
   }
   return;
 }
+// FUNCTION ORDER ID 6 END
 

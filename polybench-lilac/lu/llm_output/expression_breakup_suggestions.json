@@ -1,0 +1,106 @@
+{
+  "function_name": "kernel_A",
+  "breakups": [
+    {
+      "line_number": 193,
+      "original_expression": "i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x + __FIXME__k + 1;",
+      "breakup_steps": [
+        {
+          "temp_var": "block_stride_x",
+          "expression": "__FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x",
+          "description": "Compute the offset contributed by full blocks along X (blockDim_x * blockIdx_x)"
+        },
+        {
+          "temp_var": "base_x",
+          "expression": "block_stride_x + __FIXME__threadIdx_2e_x",
+          "description": "Add the thread's local X index to get the base X index within the grid"
+        },
+        {
+          "temp_var": "k_offset",
+          "expression": "__FIXME__k + 1",
+          "description": "Apply the k-based offset (+1 as in original code)"
+        },
+        {
+          "temp_var": "i_index",
+          "expression": "base_x + k_offset",
+          "description": "Combine base X index with the k-based offset to produce final i"
+        }
+      ],
+      "final_expression": "i = i_index"
+    },
+    {
+      "line_number": 194,
+      "original_expression": "j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y + __FIXME__k + 1;",
+      "breakup_steps": [
+        {
+          "temp_var": "block_stride_y",
+          "expression": "__FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y",
+          "description": "Compute the offset contributed by full blocks along Y (blockDim_y * blockIdx_y)"
+        },
+        {
+          "temp_var": "base_y",
+          "expression": "block_stride_y + __FIXME__threadIdx_2e_y",
+          "description": "Add the thread's local Y index to get the base Y index within the grid"
+        },
+        {
+          "temp_var": "k_offset",
+          "expression": "__FIXME__k + 1",
+          "description": "Apply the k-based offset (+1 as in original code)"
+        },
+        {
+          "temp_var": "j_index",
+          "expression": "base_y + k_offset",
+          "description": "Combine base Y index with the k-based offset to produce final j"
+        }
+      ],
+      "final_expression": "j = j_index"
+    },
+    {
+      "line_number": 197,
+      "original_expression": "A[(i * n + j)] = (A[(i * n + j)] - (A[(i * n + __FIXME__k)] * A[(__FIXME__k * n + j)]));",
+      "breakup_steps": [
+        {
+          "temp_var": "index_ij",
+          "expression": "i * n + j",
+          "description": "Compute flattened index for element A[i][j]"
+        },
+        {
+          "temp_var": "index_ik",
+          "expression": "i * n + __FIXME__k",
+          "description": "Compute flattened index for element A[i][k]"
+        },
+        {
+          "temp_var": "index_kj",
+          "expression": "__FIXME__k * n + j",
+          "description": "Compute flattened index for element A[k][j]"
+        },
+        {
+          "temp_var": "a_ij",
+          "expression": "A[index_ij]",
+          "description": "Load current A[i][j]"
+        },
+        {
+          "temp_var": "a_ik",
+          "expression": "A[index_ik]",
+          "description": "Load A[i][k]"
+        },
+        {
+          "temp_var": "a_kj",
+          "expression": "A[index_kj]",
+          "description": "Load A[k][j]"
+        },
+        {
+          "temp_var": "product",
+          "expression": "a_ik * a_kj",
+          "description": "Compute product of A[i][k] and A[k][j]"
+        },
+        {
+          "temp_var": "result",
+          "expression": "a_ij - product",
+          "description": "Compute the updated value for A[i][j]"
+        }
+      ],
+      "final_expression": "A[index_ij] = result"
+    }
+  ]
+}

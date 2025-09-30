@@ -1,0 +1,12 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    3,
+    4,
+    1,
+    2
+  ],
+  "reasoning": "Place the entry point first to make control flow obvious. After main, put initialization (init_array, id 0) since main calls it early. Next place small helper functions that the core kernel depends on: num_blocks (id 3) is a simple utility used by kernel, and kernel_stencil (id 4) is the low-level compute routine invoked from kernel. With those dependencies declared, place the high-level kernel (id 1) which orchestrates the computation. Finally place the print/display function (print_array, id 2) last. This ordering improves readability by following the call graph (callees before callers where possible), groups core compute pieces together, and keeps I/O/utility functions in predictable locations for easier debugging and comprehension.",
+  "confidence": 0.9
+}

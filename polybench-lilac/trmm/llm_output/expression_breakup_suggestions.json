@@ -1,0 +1,79 @@
+{
+  "function_name": "init_array",
+  "breakups": [
+    {
+      "line_number": 175,
+      "original_expression": "A[(i * m + j)] = (((double)(i) * (double)(j)) / (double)(m));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx",
+          "expression": "i * (int64_t)m + j",
+          "description": "Compute the linear index into A for row i and column j using a 64-bit index"
+        },
+        {
+          "temp_var": "i_d",
+          "expression": "(double)i",
+          "description": "Cast i to double for the arithmetic"
+        },
+        {
+          "temp_var": "j_d",
+          "expression": "(double)j",
+          "description": "Cast j to double for the arithmetic"
+        },
+        {
+          "temp_var": "product",
+          "expression": "i_d * j_d",
+          "description": "Compute the product of the casted i and j"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)m",
+          "description": "Cast the divisor m to double"
+        },
+        {
+          "temp_var": "value",
+          "expression": "product / denom",
+          "description": "Divide the product by the denominator to get the final double value"
+        }
+      ],
+      "final_expression": "A[idx] = value"
+    },
+    {
+      "line_number": 176,
+      "original_expression": "B[(j * n + j)] = (((double)(i) * (double)(j)) / (double)(n));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx",
+          "expression": "j * (int64_t)n + j",
+          "description": "Compute the linear index into B (as written) using a 64-bit index"
+        },
+        {
+          "temp_var": "i_d",
+          "expression": "(double)i",
+          "description": "Cast i to double for the arithmetic"
+        },
+        {
+          "temp_var": "j_d",
+          "expression": "(double)j",
+          "description": "Cast j to double for the arithmetic"
+        },
+        {
+          "temp_var": "product",
+          "expression": "i_d * j_d",
+          "description": "Compute the product of the casted i and j"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)n",
+          "description": "Cast the divisor n to double"
+        },
+        {
+          "temp_var": "value",
+          "expression": "product / denom",
+          "description": "Divide the product by the denominator to get the final double value"
+        }
+      ],
+      "final_expression": "B[idx] = value"
+    }
+  ]
+}

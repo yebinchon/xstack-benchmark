@@ -1,0 +1,106 @@
+{
+  "function_name": "kernel_sum",
+  "breakups": [
+    {
+      "line_number": 209,
+      "original_expression": "sum[((r * nq + q) * np + p)] = 0;",
+      "breakup_steps": [
+        {
+          "temp_var": "rq_index",
+          "expression": "r * nq + q",
+          "description": "Combine r and q into a single row-like index (r * nq + q)"
+        },
+        {
+          "temp_var": "base_index",
+          "expression": "rq_index * np",
+          "description": "Scale the combined r/q index by np to get the base offset for this r,q block"
+        },
+        {
+          "temp_var": "sum_index",
+          "expression": "base_index + p",
+          "description": "Complete the full linearized index into the sum array by adding p"
+        },
+        {
+          "temp_var": "result",
+          "expression": "sum[sum_index] = 0;",
+          "description": "Assign zero to the sum element using the computed index"
+        }
+      ],
+      "final_expression": "sum[sum_index] = 0;"
+    },
+    {
+      "line_number": 212,
+      "original_expression": "dot = (dot + (A[((r * nq + q) * np + s)] * C4[(s * np + p)]));",
+      "breakup_steps": [
+        {
+          "temp_var": "rq_index",
+          "expression": "r * nq + q",
+          "description": "Combine r and q into a single row-like index used for A indexing"
+        },
+        {
+          "temp_var": "base_index",
+          "expression": "rq_index * np",
+          "description": "Scale the combined r/q index by np to get the base offset for this r,q block"
+        },
+        {
+          "temp_var": "a_index",
+          "expression": "base_index + s",
+          "description": "Index inside A for the current s (A is indexed by (r,q,s) flattened)"
+        },
+        {
+          "temp_var": "c4_index",
+          "expression": "s * np + p",
+          "description": "Index inside C4 for the current s and p"
+        },
+        {
+          "temp_var": "a_val",
+          "expression": "A[a_index]",
+          "description": "Load the A element used in the product"
+        },
+        {
+          "temp_var": "c4_val",
+          "expression": "C4[c4_index]",
+          "description": "Load the C4 element used in the product"
+        },
+        {
+          "temp_var": "product",
+          "expression": "a_val * c4_val",
+          "description": "Compute the product of the two fetched values"
+        },
+        {
+          "temp_var": "result",
+          "expression": "dot = dot + product",
+          "description": "Accumulate the product into dot"
+        }
+      ],
+      "final_expression": "dot = dot + product"
+    },
+    {
+      "line_number": 214,
+      "original_expression": "sum[((r * nq + q) * np + p)] = dot;",
+      "breakup_steps": [
+        {
+          "temp_var": "rq_index",
+          "expression": "r * nq + q",
+          "description": "Combine r and q into a single row-like index (r * nq + q)"
+        },
+        {
+          "temp_var": "base_index",
+          "expression": "rq_index * np",
+          "description": "Scale the combined r/q index by np to get the base offset for this r,q block"
+        },
+        {
+          "temp_var": "sum_index",
+          "expression": "base_index + p",
+          "description": "Complete the full linearized index into the sum array by adding p"
+        },
+        {
+          "temp_var": "result",
+          "expression": "sum[sum_index] = dot;",
+          "description": "Store the accumulated dot into the sum array at the computed index"
+        }
+      ],
+      "final_expression": "sum[sum_index] = dot;"
+    }
+  ]
+}
