@@ -1,0 +1,23 @@
+{
+  "input_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/inputs/complex_dependencies.c",
+  "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/complex_dependencies_function_order_mock.c",
+  "original_order": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "new_order": [
+    3,
+    5,
+    1,
+    2,
+    0,
+    4
+  ],
+  "reasoning": "Reordered functions for better logical flow: main functions first, then initialization, computation kernels, and utility functions last",
+  "confidence": 0.85,
+  "functions_reordered": true
+}

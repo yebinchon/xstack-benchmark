@@ -1,0 +1,21 @@
+{
+  "openai": {
+    "api_key": "your_api_key_here",
+    "model": "gpt-4",
+    "temperature": 0.1
+  },
+  "transformations": {
+    "function_order": {
+      "enabled": true,
+      "parameters": {},
+      "validation_strict": true,
+      "confidence_threshold": 0.7
+    },
+    "comment_generation": {
+      "enabled": true,
+      "parameters": {},
+      "validation_strict": true,
+      "confidence_threshold": 0.7
+    }
+  }
+}

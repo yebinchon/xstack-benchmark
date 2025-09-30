@@ -1,0 +1,187 @@
+{
+  "summary": {
+    "total_tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "success_rate": 100.0,
+    "timestamp": "2025-09-19T20:37:58.251251"
+  },
+  "transformations": {
+    "function_order_mock": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "success_rate": 100.0
+    },
+    "function_order_real": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "success_rate": 100.0
+    },
+    "comment_generation_mock": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "success_rate": 100.0
+    },
+    "comment_generation_real": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "success_rate": 100.0
+    }
+  },
+  "test_results": [
+    {
+      "test_name": "unordered_functions",
+      "transformation": "function_order_mock",
+      "success": true,
+      "message": "Processed 5 functions - Reordered from [0, 1, 2, 3, 4] to [2, 4, 0, 1, 3]",
+      "timestamp": "2025-09-19T20:36:25.817223",
+      "details": {
+        "functions_count": 5,
+        "reordered": true,
+        "confidence": 0.85,
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/unordered_functions_function_order_mock.c"
+      }
+    },
+    {
+      "test_name": "unordered_functions",
+      "transformation": "function_order_real",
+      "success": true,
+      "message": "Transformation function_order completed successfully with suggestions: ['recommended_order', 'reasoning', 'confidence']",
+      "timestamp": "2025-09-19T20:36:41.470098",
+      "details": {
+        "confidence_score": 0.9200000000000002,
+        "validation_errors": [],
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/unordered_functions_function_order_real.c"
+      }
+    },
+    {
+      "test_name": "unordered_functions",
+      "transformation": "comment_generation_mock",
+      "success": true,
+      "message": "Generated 5 comments for 5 placeholders",
+      "timestamp": "2025-09-19T20:36:41.471476",
+      "details": {
+        "placeholders_count": 5,
+        "comments_generated": 5,
+        "confidence": 0.85,
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/unordered_functions_comment_generation_mock.c"
+      }
+    },
+    {
+      "test_name": "unordered_functions",
+      "transformation": "comment_generation_real",
+      "success": true,
+      "message": "Transformation comment_generation completed successfully with suggestions: ['replacements']",
+      "timestamp": "2025-09-19T20:36:54.668304",
+      "details": {
+        "confidence_score": 0.7,
+        "validation_errors": [],
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/unordered_functions_comment_generation_real.c"
+      }
+    },
+    {
+      "test_name": "complex_dependencies",
+      "transformation": "function_order_mock",
+      "success": true,
+      "message": "Processed 6 functions - Reordered from [0, 1, 2, 3, 4, 5] to [3, 5, 1, 2, 0, 4]",
+      "timestamp": "2025-09-19T20:36:54.669436",
+      "details": {
+        "functions_count": 6,
+        "reordered": true,
+        "confidence": 0.85,
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/complex_dependencies_function_order_mock.c"
+      }
+    },
+    {
+      "test_name": "complex_dependencies",
+      "transformation": "function_order_real",
+      "success": true,
+      "message": "Transformation function_order completed successfully with suggestions: ['recommended_order', 'reasoning', 'confidence']",
+      "timestamp": "2025-09-19T20:37:10.671543",
+      "details": {
+        "confidence_score": 0.9200000000000002,
+        "validation_errors": [],
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/complex_dependencies_function_order_real.c"
+      }
+    },
+    {
+      "test_name": "complex_dependencies",
+      "transformation": "comment_generation_mock",
+      "success": true,
+      "message": "Generated 6 comments for 6 placeholders",
+      "timestamp": "2025-09-19T20:37:10.672238",
+      "details": {
+        "placeholders_count": 6,
+        "comments_generated": 6,
+        "confidence": 0.85,
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/complex_dependencies_comment_generation_mock.c"
+      }
+    },
+    {
+      "test_name": "complex_dependencies",
+      "transformation": "comment_generation_real",
+      "success": true,
+      "message": "Transformation comment_generation completed successfully with suggestions: ['replacements']",
+      "timestamp": "2025-09-19T20:37:27.079931",
+      "details": {
+        "confidence_score": 0.7,
+        "validation_errors": [],
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/complex_dependencies_comment_generation_real.c"
+      }
+    },
+    {
+      "test_name": "already_ordered",
+      "transformation": "function_order_mock",
+      "success": true,
+      "message": "Processed 6 functions - Reordered from [0, 1, 2, 3, 4, 5] to [0, 1, 3, 2, 4, 5]",
+      "timestamp": "2025-09-19T20:37:27.080933",
+      "details": {
+        "functions_count": 6,
+        "reordered": true,
+        "confidence": 0.85,
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/already_ordered_function_order_mock.c"
+      }
+    },
+    {
+      "test_name": "already_ordered",
+      "transformation": "function_order_real",
+      "success": true,
+      "message": "Transformation function_order completed successfully with suggestions: ['recommended_order', 'reasoning', 'confidence']",
+      "timestamp": "2025-09-19T20:37:44.362193",
+      "details": {
+        "confidence_score": 0.9200000000000002,
+        "validation_errors": [],
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/already_ordered_function_order_real.c"
+      }
+    },
+    {
+      "test_name": "already_ordered",
+      "transformation": "comment_generation_mock",
+      "success": true,
+      "message": "Generated 6 comments for 6 placeholders",
+      "timestamp": "2025-09-19T20:37:44.363139",
+      "details": {
+        "placeholders_count": 6,
+        "comments_generated": 6,
+        "confidence": 0.85,
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/already_ordered_comment_generation_mock.c"
+      }
+    },
+    {
+      "test_name": "already_ordered",
+      "transformation": "comment_generation_real",
+      "success": true,
+      "message": "Transformation comment_generation completed successfully with suggestions: ['replacements']",
+      "timestamp": "2025-09-19T20:37:58.251180",
+      "details": {
+        "confidence_score": 0.7,
+        "validation_errors": [],
+        "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/already_ordered_comment_generation_real.c"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "transformations": {
+    "function_order": {
+      "enabled": true,
+      "parameters": {},
+      "validation_strict": true,
+      "confidence_threshold": 0.7
+    }
+  },
+  "llm_settings": {
+    "model": "gpt-4",
+    "temperature": 0.1
+  }
+}
+
+

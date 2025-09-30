@@ -1,0 +1,45 @@
+{
+  "input_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/inputs/already_ordered.c",
+  "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/already_ordered_comment_generation_mock.c",
+  "placeholders_found": 6,
+  "comments_generated": 6,
+  "confidence": 0.85,
+  "comments": [
+    {
+      "function_name": "main",
+      "type": "FUNCTION",
+      "segment_name": "main",
+      "comment": "Function main performs core computation logic."
+    },
+    {
+      "function_name": "init_data",
+      "type": "FUNCTION",
+      "segment_name": "init_data",
+      "comment": "Function init_data performs core computation logic."
+    },
+    {
+      "function_name": "process_data",
+      "type": "FUNCTION",
+      "segment_name": "process_data",
+      "comment": "Function process_data performs core computation logic."
+    },
+    {
+      "function_name": "print_data",
+      "type": "FUNCTION",
+      "segment_name": "print_data",
+      "comment": "Function print_data performs core computation logic."
+    },
+    {
+      "function_name": "square",
+      "type": "FUNCTION",
+      "segment_name": "square",
+      "comment": "Function square performs core computation logic."
+    },
+    {
+      "function_name": "cleanup_data",
+      "type": "FUNCTION",
+      "segment_name": "cleanup_data",
+      "comment": "Function cleanup_data performs core computation logic."
+    }
+  ]
+}

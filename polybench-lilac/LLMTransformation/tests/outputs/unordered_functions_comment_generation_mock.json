@@ -1,0 +1,39 @@
+{
+  "input_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/inputs/unordered_functions.c",
+  "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/unordered_functions_comment_generation_mock.c",
+  "placeholders_found": 5,
+  "comments_generated": 5,
+  "confidence": 0.85,
+  "comments": [
+    {
+      "function_name": "print_results",
+      "type": "FUNCTION",
+      "segment_name": "print_results",
+      "comment": "Function print_results performs core computation logic."
+    },
+    {
+      "function_name": "helper_function",
+      "type": "FUNCTION",
+      "segment_name": "helper_function",
+      "comment": "Function helper_function performs core computation logic."
+    },
+    {
+      "function_name": "main",
+      "type": "FUNCTION",
+      "segment_name": "main",
+      "comment": "Function main performs core computation logic."
+    },
+    {
+      "function_name": "compute_values",
+      "type": "FUNCTION",
+      "segment_name": "compute_values",
+      "comment": "Function compute_values performs core computation logic."
+    },
+    {
+      "function_name": "init_array",
+      "type": "FUNCTION",
+      "segment_name": "init_array",
+      "comment": "Function init_array performs core computation logic."
+    }
+  ]
+}

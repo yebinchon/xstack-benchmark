@@ -1,0 +1,20 @@
+{
+  "input_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/inputs/complex_dependencies.c",
+  "success": true,
+  "confidence_score": 0.9200000000000002,
+  "explanation": "Transformation function_order completed successfully with suggestions: ['recommended_order', 'reasoning', 'confidence']",
+  "validation_errors": [],
+  "suggestions": {
+    "recommended_order": [
+      3,
+      4,
+      5,
+      1,
+      0,
+      2
+    ],
+    "reasoning": "1) Place the entry point first (ID 3: main) to immediately show program flow and make top-level logic easy to find. 2) Follow main with setup routines: memory management (ID 4: allocate_matrix) before initialization (ID 5: init_matrix) because init_matrix calls allocate_matrix \u2014 this respects the called-before-caller dependency for those two functions and groups related setup code together. 3) Next put core computation (ID 1: kernel_multiply) so the main computational logic appears after setup and before helpers. 4) Group utility/core-logic helpers (ID 0: utility_max) adjacent to computation for easier readability and to keep helper functions close to the code that may use them. 5) Leave output last (ID 2: print_matrix) so display/printing helpers are separated from core logic and appear at the end. This ordering improves logical flow (main \u2192 setup \u2192 compute \u2192 helpers \u2192 output), groups related functions, and respects key dependencies (allocate before init), which aids comprehension and debugging.",
+    "confidence": 0.9
+  },
+  "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/complex_dependencies_function_order_real.c"
+}

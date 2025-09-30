@@ -1,0 +1,21 @@
+{
+  "input_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/inputs/unordered_functions.c",
+  "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/unordered_functions_function_order_mock.c",
+  "original_order": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "new_order": [
+    2,
+    4,
+    0,
+    1,
+    3
+  ],
+  "reasoning": "Reordered functions for better logical flow: main functions first, then initialization, computation kernels, and utility functions last",
+  "confidence": 0.85,
+  "functions_reordered": true
+}

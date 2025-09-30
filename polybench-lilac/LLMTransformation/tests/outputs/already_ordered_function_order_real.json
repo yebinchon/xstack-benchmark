@@ -1,0 +1,20 @@
+{
+  "input_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/inputs/already_ordered.c",
+  "success": true,
+  "confidence_score": 0.9200000000000002,
+  "explanation": "Transformation function_order completed successfully with suggestions: ['recommended_order', 'reasoning', 'confidence']",
+  "validation_errors": [],
+  "suggestions": {
+    "recommended_order": [
+      0,
+      1,
+      4,
+      2,
+      5,
+      3
+    ],
+    "reasoning": "1) Keep the entry point (main, ID 0) first so readers see program flow immediately.  \n2) Place initialization (init_data, ID 1) right after main so setup is visible early.  \n3) Put low-level/core helper(s) next (square, ID 4) before the function that calls them (process_data, ID 2) to satisfy dependency order and make the implementation of core steps easy to find.  \n4) Follow with the main computation (process_data, ID 2) so the core logic appears after its helpers.  \n5) Group remaining core/cleanup logic together (cleanup_data, ID 5) so related functionality is co-located, aiding maintenance and debugging.  \n6) Leave output/print routines last (print_data, ID 3) as display functions are typically end-of-pipeline and readers often want them at the bottom.  \nThis order balances the guideline to present the entry point early with the benefit of placing callees before their callers where practical, groups related functions, and improves readability and debugging efficiency.",
+    "confidence": 0.9
+  },
+  "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/already_ordered_function_order_real.c"
+}

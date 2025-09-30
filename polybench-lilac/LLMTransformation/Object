@@ -1,0 +1,17 @@
+import types
+import sys
+
+if 'openai' not in sys.modules:
+    openai_stub = types.ModuleType('openai')
+
+    class _DummyOpenAI:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        class chat:
+            @staticmethod
+            def completions_create(*args, **kwargs):
+                raise RuntimeError('OpenAI stub cannot make requests')
+
+    openai_stub.OpenAI = _DummyOpenAI
+    sys.modules['openai'] = openai_stub

@@ -1,0 +1,45 @@
+{
+  "input_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/inputs/complex_dependencies.c",
+  "output_file": "/scratch/ah7226/xstack-benchmark/polybench-lilac/LLMTransformation/tests/outputs/complex_dependencies_comment_generation_mock.c",
+  "placeholders_found": 6,
+  "comments_generated": 6,
+  "confidence": 0.85,
+  "comments": [
+    {
+      "function_name": "utility_max",
+      "type": "FUNCTION",
+      "segment_name": "utility_max",
+      "comment": "Function utility_max performs core computation logic."
+    },
+    {
+      "function_name": "kernel_multiply",
+      "type": "FUNCTION",
+      "segment_name": "kernel_multiply",
+      "comment": "Function kernel_multiply performs core computation logic."
+    },
+    {
+      "function_name": "print_matrix",
+      "type": "FUNCTION",
+      "segment_name": "print_matrix",
+      "comment": "Function print_matrix performs core computation logic."
+    },
+    {
+      "function_name": "main",
+      "type": "FUNCTION",
+      "segment_name": "main",
+      "comment": "Function main performs core computation logic."
+    },
+    {
+      "function_name": "allocate_matrix",
+      "type": "FUNCTION",
+      "segment_name": "allocate_matrix",
+      "comment": "Function allocate_matrix performs core computation logic."
+    },
+    {
+      "function_name": "init_matrix",
+      "type": "FUNCTION",
+      "segment_name": "init_matrix",
+      "comment": "Function init_matrix performs core computation logic."
+    }
+  ]
+}
