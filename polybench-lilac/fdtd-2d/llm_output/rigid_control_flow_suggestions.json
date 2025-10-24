@@ -1,0 +1,43 @@
+{
+  "suggestions_by_function": {
+    "kernel_ey": [
+      {
+        "identifier": [
+          "entry",
+          "land.lhs.true"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < nx",
+          "j < ny"
+        ],
+        "coalesced_condition": "i < nx && j < ny",
+        "line_numbers": [
+          177,
+          178
+        ],
+        "reasoning": "Both conditions are independent bounds checks with no side effects (no calls, assignments, or increments). They read-only variables i, j, nx, and ny, and neither condition modifies variables used by the other. Using a single condition with && preserves short-circuit order (i < nx evaluated before j < ny) and is functionally equivalent while reducing indentation and improving readability."
+      }
+    ],
+    "kernel_ex": [
+      {
+        "identifier": [
+          "entry",
+          "land.lhs.true"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < nx",
+          "j < ny"
+        ],
+        "coalesced_condition": "i < nx && j < ny",
+        "line_numbers": [
+          192,
+          193
+        ],
+        "reasoning": "These are independent, side-effect-free bounds checks. The conditions only read i, j, nx, and ny, and neither affects the other. Combining them with && preserves evaluation order and semantics while simplifying the control flow and improving readability."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

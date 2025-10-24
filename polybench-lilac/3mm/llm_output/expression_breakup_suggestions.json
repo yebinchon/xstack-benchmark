@@ -2,167 +2,167 @@
   "function_name": "init_array",
   "breakups": [
     {
-      "line_number": 196,
+      "line_number": 179,
       "original_expression": "A[(i * ni + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
       "breakup_steps": [
         {
-          "temp_var": "i_d",
-          "expression": "(double)i",
-          "description": "Convert loop index i to double"
-        },
-        {
-          "temp_var": "j_d",
-          "expression": "(double)j",
-          "description": "Convert loop index j to double"
-        },
-        {
-          "temp_var": "prod_ij",
-          "expression": "i_d * j_d",
-          "description": "Multiply i and j in double precision"
-        },
-        {
-          "temp_var": "denom",
-          "expression": "(double)ni",
-          "description": "Convert denominator ni to double"
-        },
-        {
-          "temp_var": "value",
-          "expression": "prod_ij / denom",
-          "description": "Compute the final double value"
-        },
-        {
-          "temp_var": "idx",
+          "temp_var": "a_idx",
           "expression": "i * ni + j",
-          "description": "Compute the array index"
+          "description": "Compute the linear index for A"
+        },
+        {
+          "temp_var": "a_di",
+          "expression": "(double)i",
+          "description": "Cast i to double"
+        },
+        {
+          "temp_var": "a_dj",
+          "expression": "(double)j",
+          "description": "Cast j to double"
+        },
+        {
+          "temp_var": "a_dni",
+          "expression": "(double)ni",
+          "description": "Cast ni to double for the denominator"
+        },
+        {
+          "temp_var": "a_num",
+          "expression": "a_di * a_dj",
+          "description": "Compute the numerator"
+        },
+        {
+          "temp_var": "a_val",
+          "expression": "a_num / a_dni",
+          "description": "Compute the final value to store in A"
         }
       ],
-      "final_expression": "A[idx] = value;"
+      "final_expression": "A[a_idx] = a_val;"
     },
     {
-      "line_number": 202,
-      "original_expression": "B[(i * nk + j)] = (((double)(i) * (double)((j + 1))) / (double)(nj));",
+      "line_number": 185,
+      "original_expression": "B[(i * nk + j)] = (((double)(i) * (double)((j + INIT_B_J_OFFSET))) / (double)(nj));",
       "breakup_steps": [
         {
-          "temp_var": "i_d",
-          "expression": "(double)i",
-          "description": "Convert loop index i to double"
-        },
-        {
-          "temp_var": "j_plus1",
-          "expression": "j + 1",
-          "description": "Compute integer (j + 1)"
-        },
-        {
-          "temp_var": "j1_d",
-          "expression": "(double)j_plus1",
-          "description": "Convert (j + 1) to double"
-        },
-        {
-          "temp_var": "prod_i_j1",
-          "expression": "i_d * j1_d",
-          "description": "Multiply i and (j + 1) in double precision"
-        },
-        {
-          "temp_var": "denom",
-          "expression": "(double)nj",
-          "description": "Convert denominator nj to double"
-        },
-        {
-          "temp_var": "value",
-          "expression": "prod_i_j1 / denom",
-          "description": "Compute the final double value"
-        },
-        {
-          "temp_var": "idx_b",
+          "temp_var": "b_idx",
           "expression": "i * nk + j",
-          "description": "Compute the array index for B"
+          "description": "Compute the linear index for B"
+        },
+        {
+          "temp_var": "b_j_off",
+          "expression": "j + INIT_B_J_OFFSET",
+          "description": "Apply the j offset prior to casting"
+        },
+        {
+          "temp_var": "b_di",
+          "expression": "(double)i",
+          "description": "Cast i to double"
+        },
+        {
+          "temp_var": "b_dj_off",
+          "expression": "(double)b_j_off",
+          "description": "Cast offset j to double"
+        },
+        {
+          "temp_var": "b_dnj",
+          "expression": "(double)nj",
+          "description": "Cast nj to double for the denominator"
+        },
+        {
+          "temp_var": "b_num",
+          "expression": "b_di * b_dj_off",
+          "description": "Compute the numerator"
+        },
+        {
+          "temp_var": "b_val",
+          "expression": "b_num / b_dnj",
+          "description": "Compute the final value to store in B"
         }
       ],
-      "final_expression": "B[idx_b] = value;"
+      "final_expression": "B[b_idx] = b_val;"
     },
     {
-      "line_number": 208,
-      "original_expression": "C[(i * nj + j)] = (((double)(i) * (double)((j + 3))) / (double)(nl));",
+      "line_number": 191,
+      "original_expression": "C[(i * nj + j)] = (((double)(i) * (double)((j + INIT_C_J_OFFSET))) / (double)(nl));",
       "breakup_steps": [
         {
-          "temp_var": "i_d",
-          "expression": "(double)i",
-          "description": "Convert loop index i to double"
-        },
-        {
-          "temp_var": "j_plus3",
-          "expression": "j + 3",
-          "description": "Compute integer (j + 3)"
-        },
-        {
-          "temp_var": "j3_d",
-          "expression": "(double)j_plus3",
-          "description": "Convert (j + 3) to double"
-        },
-        {
-          "temp_var": "prod_i_j3",
-          "expression": "i_d * j3_d",
-          "description": "Multiply i and (j + 3) in double precision"
-        },
-        {
-          "temp_var": "denom",
-          "expression": "(double)nl",
-          "description": "Convert denominator nl to double"
-        },
-        {
-          "temp_var": "value",
-          "expression": "prod_i_j3 / denom",
-          "description": "Compute the final double value"
-        },
-        {
-          "temp_var": "idx_c",
+          "temp_var": "c_idx",
           "expression": "i * nj + j",
-          "description": "Compute the array index for C"
+          "description": "Compute the linear index for C"
+        },
+        {
+          "temp_var": "c_j_off",
+          "expression": "j + INIT_C_J_OFFSET",
+          "description": "Apply the j offset prior to casting"
+        },
+        {
+          "temp_var": "c_di",
+          "expression": "(double)i",
+          "description": "Cast i to double"
+        },
+        {
+          "temp_var": "c_dj_off",
+          "expression": "(double)c_j_off",
+          "description": "Cast offset j to double"
+        },
+        {
+          "temp_var": "c_dnl",
+          "expression": "(double)nl",
+          "description": "Cast nl to double for the denominator"
+        },
+        {
+          "temp_var": "c_num",
+          "expression": "c_di * c_dj_off",
+          "description": "Compute the numerator"
+        },
+        {
+          "temp_var": "c_val",
+          "expression": "c_num / c_dnl",
+          "description": "Compute the final value to store in C"
         }
       ],
-      "final_expression": "C[idx_c] = value;"
+      "final_expression": "C[c_idx] = c_val;"
     },
     {
-      "line_number": 214,
-      "original_expression": "D[(i * nm + j)] = (((double)(i) * (double)((j + 2))) / (double)(nk));",
+      "line_number": 197,
+      "original_expression": "D[(i * nm + j)] = (((double)(i) * (double)((j + INIT_D_J_OFFSET))) / (double)(nk));",
       "breakup_steps": [
         {
-          "temp_var": "i_d",
-          "expression": "(double)i",
-          "description": "Convert loop index i to double"
-        },
-        {
-          "temp_var": "j_plus2",
-          "expression": "j + 2",
-          "description": "Compute integer (j + 2)"
-        },
-        {
-          "temp_var": "j2_d",
-          "expression": "(double)j_plus2",
-          "description": "Convert (j + 2) to double"
-        },
-        {
-          "temp_var": "prod_i_j2",
-          "expression": "i_d * j2_d",
-          "description": "Multiply i and (j + 2) in double precision"
-        },
-        {
-          "temp_var": "denom",
-          "expression": "(double)nk",
-          "description": "Convert denominator nk to double"
-        },
-        {
-          "temp_var": "value",
-          "expression": "prod_i_j2 / denom",
-          "description": "Compute the final double value"
-        },
-        {
-          "temp_var": "idx_d",
+          "temp_var": "d_idx",
           "expression": "i * nm + j",
-          "description": "Compute the array index for D"
+          "description": "Compute the linear index for D"
+        },
+        {
+          "temp_var": "d_j_off",
+          "expression": "j + INIT_D_J_OFFSET",
+          "description": "Apply the j offset prior to casting"
+        },
+        {
+          "temp_var": "d_di",
+          "expression": "(double)i",
+          "description": "Cast i to double"
+        },
+        {
+          "temp_var": "d_dj_off",
+          "expression": "(double)d_j_off",
+          "description": "Cast offset j to double"
+        },
+        {
+          "temp_var": "d_dnk",
+          "expression": "(double)nk",
+          "description": "Cast nk to double for the denominator"
+        },
+        {
+          "temp_var": "d_num",
+          "expression": "d_di * d_dj_off",
+          "description": "Compute the numerator"
+        },
+        {
+          "temp_var": "d_val",
+          "expression": "d_num / d_dnk",
+          "description": "Compute the final value to store in D"
         }
       ],
-      "final_expression": "D[idx_d] = value;"
+      "final_expression": "D[d_idx] = d_val;"
     }
   ]
 }

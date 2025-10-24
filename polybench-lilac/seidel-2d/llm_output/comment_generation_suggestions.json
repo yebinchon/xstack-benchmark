@@ -3,52 +3,52 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize an n\u00d7n double array A with deterministic values: A[i*n + j] = ((i*(j+2)) + 2) / n for rows i and columns j"
+      "replacement": "// Initialize the n\u00d7n array A with deterministic values based on (i,j)\u2014an affine function scaled by 1/n\u2014to seed subsequent computations"
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Compute how many blocks are required to cover 'num' items with 'factor' items per block (ceiling division)"
+      "replacement": "// Compute ceil(num/factor) to determine how many blocks are needed along a dimension"
     },
     {
       "id": "unknown_FUNCTION_kernel_stencil",
       "original": "// INSERT COMMENT FUNCTION: kernel_stencil",
-      "replacement": "// Per-thread 2D stencil routine: compute global i,j for this thread and perform the stencil/time-step updates for the assigned grid point using neighboring values"
+      "replacement": "// CUDA-style 2D stencil kernel: each thread computes one interior cell of A using halo-aware indices and boundary guards"
     },
     {
       "id": "unknown_FUNCTION_kernel",
       "original": "// INSERT COMMENT FUNCTION: kernel",
-      "replacement": "// Top-level kernel driver that configures block/grid dimensions and launches per-thread stencil work over the domain for the given number of time steps"
+      "replacement": "// Driver routine that configures grid/block sizes and applies the stencil kernel for tsteps over the n\u00d7n array A"
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the n\u00d7n array A to stderr in row-major order using the predefined print format"
+      "replacement": "// Print the n\u00d7n contents of A to stderr using a fixed format for verification/debugging"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over all row (i) and column (j) indices to initialize each element A[i*n + j] with the formula ((i*(j+2))+2)/n"
+      "replacement": "// Nested loops over all (i,j) fill A[i*n + j] with (i*(j + INIT_J_OFFSET) + INIT_CONST_TERM)/n for reproducible initialization"
     },
     {
       "id": "unknown_LOOP_kernel",
       "original": "// INSERT COMMENT LOOP: kernel",
-      "replacement": "// Time-stepping loop: for each time step configure block dimensions (and later grid/launch) then run the stencil work for that step"
+      "replacement": "// Time-stepping loop: for each t in [1..tsteps], configure block/grid geometry and execute one stencil update"
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Iterate over rows and columns and print each array element A[i*n + j] to stderr in row-major order"
+      "replacement": "// Traverse A row-major over all (i,j) and print each element using print_format_str"
     },
     {
       "id": "unknown_IFELSE_main::entry",
       "original": "// INSERT COMMENT IFELSE: main::entry",
-      "replacement": "// Parse command-line args into dump_code, n, tsteps; allocate memory for the n\u00d7n array A and initialize it"
+      "replacement": "// Parse command-line args (dump flag, n, tsteps), allocate an n\u00d7n buffer A, and initialize it before computation"
     },
     {
       "id": "unknown_IFELSE_kernel_stencil::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_stencil::entry",
-      "replacement": "// Compute global indices i,j from block/thread IDs and check that (i,j) lie inside the interior (1..n-2); if so compute row base for i-1 to prepare neighbor accesses"
+      "replacement": "// Compute global thread coords offset by STENCIL_HALO_RADIUS and proceed only if both i and j lie inside [halo, n - halo); otherwise do nothing"
     }
   ]
 }

@@ -7,6 +7,6 @@
     1,
     2
   ],
-  "reasoning": "Place the program entry first for quick scanning (\"main\"). Immediately after main put the initialization function (0: init_array) since main calls it \u2014 this makes setup visible early. Next group the helpers that the core computation depends on: 3 (num_blocks) is a small utility used by the kernel, and 4 (kernel_stencil) is the low-level per-thread/per-block worker; putting them before the kernel lets a reader see dependencies before the caller. Then place 1 (kernel) \u2014 the core computation that orchestrates the stencil and uses num_blocks and kernel_stencil. Finally put 2 (print_array) last since print/display utilities are typically less important for understanding computation and are often placed after core logic. This ordering improves logical flow, keeps dependent functions before callers, groups related utilities with the kernel for easier debugging, and leaves printing helpers at the end.",
+  "reasoning": "Main first for entry. Place initialization early (init_array = 0). Then define helpers used by the core kernel in dependency order (num_blocks = 3, kernel_stencil = 4) so called functions precede their caller. Follow with the core driver (kernel = 1). Keep output/printing last (print_array = 2). This ordering improves top-down readability, respects dependencies, and groups utilities appropriately.",
   "confidence": 0.9
 }

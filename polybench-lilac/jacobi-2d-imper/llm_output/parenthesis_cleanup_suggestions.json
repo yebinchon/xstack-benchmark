@@ -1,196 +1,286 @@
 {
   "removals": [
     {
-      "line_number": 153,
+      "line_number": 129,
       "expression": "((double*)A)",
       "replacement": "(double*)A",
-      "reasoning": "The outer parentheses around the cast expression are redundant; the cast (double*)A already yields an expression suitable as a function argument."
+      "reasoning": "Extra parentheses around the cast operand are unnecessary; the cast already binds tightly and function-argument parentheses are sufficient."
+    },
+    {
+      "line_number": 129,
+      "expression": "((double*)B)",
+      "replacement": "(double*)B",
+      "reasoning": "Same as above: redundant parentheses around the cast operand."
+    },
+    {
+      "line_number": 131,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "Redundant parentheses around cast operand in function argument."
+    },
+    {
+      "line_number": 131,
+      "expression": "((double*)B)",
+      "replacement": "(double*)B",
+      "reasoning": "Redundant parentheses around cast operand in function argument."
+    },
+    {
+      "line_number": 134,
+      "expression": "((double*)A)",
+      "replacement": "(double*)A",
+      "reasoning": "Redundant parentheses around cast operand in function argument."
+    },
+    {
+      "line_number": 136,
+      "expression": "((uint8_t*)((double*)A))",
+      "replacement": "A",
+      "reasoning": "free accepts void*; both casts and all surrounding parentheses are unnecessary and hurt readability."
+    },
+    {
+      "line_number": 137,
+      "expression": "((uint8_t*)((double*)B))",
+      "replacement": "B",
+      "reasoning": "Same as above: casts and extra parentheses are unnecessary when freeing."
+    },
+    {
+      "line_number": 149,
+      "expression": "(double)(i)",
+      "replacement": "(double)i",
+      "reasoning": "The extra parentheses around the cast operand are unnecessary; the cast syntax only requires parentheses around the type."
+    },
+    {
+      "line_number": 150,
+      "expression": "(double)(a_j_offset)",
+      "replacement": "(double)a_j_offset",
+      "reasoning": "Redundant parentheses around the cast operand."
     },
     {
       "line_number": 153,
-      "expression": "((double*)B)",
-      "replacement": "(double*)B",
-      "reasoning": "Same as above: the outer parentheses around the cast are unnecessary."
+      "expression": "(double)(n)",
+      "replacement": "(double)n",
+      "reasoning": "Redundant parentheses around the cast operand."
     },
     {
       "line_number": 155,
-      "expression": "((double*)A)",
-      "replacement": "(double*)A",
-      "reasoning": "Redundant outer parentheses around the cast in the function call argument."
+      "expression": "A[(i * n + j)]",
+      "replacement": "A[i * n + j]",
+      "reasoning": "Parentheses around the subscript expression are unnecessary; [] already bind tightly and operator precedence is unambiguous."
     },
     {
-      "line_number": 155,
-      "expression": "((double*)B)",
-      "replacement": "(double*)B",
-      "reasoning": "Redundant outer parentheses around the cast in the function call argument."
+      "line_number": 157,
+      "expression": "(double)(i)",
+      "replacement": "(double)i",
+      "reasoning": "Redundant parentheses around the cast operand."
     },
     {
       "line_number": 158,
-      "expression": "((double*)A)",
-      "replacement": "(double*)A",
-      "reasoning": "Outer parentheses around the cast expression are unnecessary when used as a function argument."
-    },
-    {
-      "line_number": 160,
-      "expression": "((uint8_t*)((double*)A))",
-      "replacement": "(uint8_t*)((double*)A)",
-      "reasoning": "The outer parentheses wrapping the cast are redundant; keep the casts themselves but remove the extra grouping parentheses."
+      "expression": "(double)(b_j_offset)",
+      "replacement": "(double)b_j_offset",
+      "reasoning": "Redundant parentheses around the cast operand."
     },
     {
       "line_number": 161,
-      "expression": "((uint8_t*)((double*)B))",
-      "replacement": "(uint8_t*)((double*)B)",
-      "reasoning": "Same as above: the outer grouping parentheses are unnecessary around the cast expression."
+      "expression": "(double)(n)",
+      "replacement": "(double)n",
+      "reasoning": "Redundant parentheses around the cast operand."
     },
     {
-      "line_number": 178,
-      "expression": "A[(i * n + j)]",
-      "replacement": "A[i * n + j]",
-      "reasoning": "Parentheses around the array index expression are redundant; A[index] with the arithmetic expression is clear and has the same meaning."
-    },
-    {
-      "line_number": 185,
+      "line_number": 163,
       "expression": "B[(i * n + j)]",
       "replacement": "B[i * n + j]",
-      "reasoning": "Parentheses around the array index are unnecessary and can be removed for clarity."
+      "reasoning": "Parentheses around the subscript expression are unnecessary."
     },
     {
-      "line_number": 192,
+      "line_number": 170,
       "expression": "((num + factor) - 1)",
-      "replacement": "num + factor - 1",
-      "reasoning": "The extra parentheses around the additive/subtractive expression are redundant; arithmetic precedence yields the same result and the expression is still readable."
+      "replacement": "(num + factor - 1)",
+      "reasoning": "The inner parentheses around (num + factor) are redundant due to left-to-right associativity of +/-. Keep a single pair around the whole numerator to preserve (a+b-1)/c semantics."
     },
     {
-      "line_number": 202,
-      "expression": "(n - 1)",
-      "replacement": "n - 1",
-      "reasoning": "Subtraction has higher precedence than the relational operator '<', so the parentheses are unnecessary: i < n - 1 is equivalent to i < (n - 1)."
+      "line_number": 180,
+      "expression": "(n - STENCIL_HALO_RADIUS)",
+      "replacement": "n - STENCIL_HALO_RADIUS",
+      "reasoning": "Relational operators have lower precedence than addition/subtraction; the subtraction is evaluated before the comparison without parentheses."
     },
     {
-      "line_number": 203,
-      "expression": "(n - 1)",
-      "replacement": "n - 1",
-      "reasoning": "Same reasoning as above for the j < (n - 1) condition."
+      "line_number": 181,
+      "expression": "(n - STENCIL_HALO_RADIUS)",
+      "replacement": "n - STENCIL_HALO_RADIUS",
+      "reasoning": "Same as above."
     },
     {
-      "line_number": 204,
+      "line_number": 182,
       "expression": "B[(i * n + j)]",
       "replacement": "B[i * n + j]",
-      "reasoning": "Array indexing with an arithmetic expression does not require an extra pair of parentheses around the index."
+      "reasoning": "Parentheses around the subscript expression are unnecessary."
     },
     {
-      "line_number": 204,
+      "line_number": 182,
       "expression": "A[(i * n + j)]",
       "replacement": "A[i * n + j]",
-      "reasoning": "Remove redundant parentheses around the array index; the arithmetic expression is clear without them."
+      "reasoning": "Parentheses around the subscript expression are unnecessary."
     },
     {
-      "line_number": 204,
-      "expression": "((i * n + j) - 1)",
-      "replacement": "i * n + j - 1",
-      "reasoning": "The inner grouping around the sub-expression is unnecessary because the arithmetic operators' precedence and associativity already produce the intended result."
+      "line_number": 182,
+      "expression": "A[((i * n + j) - 1)]",
+      "replacement": "A[i * n + j - 1]",
+      "reasoning": "Extra parentheses around (i * n + j) are unnecessary due to left-to-right associativity of +/-. Index precedence is unambiguous."
     },
     {
-      "line_number": 204,
-      "expression": "((i * n + 1) + j)",
-      "replacement": "i * n + 1 + j",
-      "reasoning": "Nested parentheses around addition are redundant; addition is left-associative and the expression remains unambiguous without them."
+      "line_number": 182,
+      "expression": "A[((i * n + 1) + j)]",
+      "replacement": "A[i * n + 1 + j]",
+      "reasoning": "Parentheses around the additive chain are unnecessary; + associates left-to-right."
     },
     {
-      "line_number": 204,
-      "expression": "((1 + i) * n + j)",
-      "replacement": "(1 + i) * n + j",
-      "reasoning": "The outer parentheses around the entire index are redundant. The inner parentheses around (1 + i) must remain because they change the order of operations; only the outer grouping can be removed."
+      "line_number": 182,
+      "expression": "A[((1 + i) * n + j)]",
+      "replacement": "A[(1 + i) * n + j]",
+      "reasoning": "The outer parentheses around the index expression are unnecessary. Keep (1 + i) to force addition before multiplication."
     },
     {
-      "line_number": 204,
-      "expression": "((i - 1) * n + j)",
-      "replacement": "(i - 1) * n + j",
-      "reasoning": "Remove the outer grouping; keep (i - 1) to preserve the needed order before multiplication."
+      "line_number": 182,
+      "expression": "A[((i - 1) * n + j)]",
+      "replacement": "A[(i - 1) * n + j]",
+      "reasoning": "The outer parentheses around the index expression are unnecessary. Keep (i - 1) to force subtraction before multiplication."
+    },
+    {
+      "line_number": 182,
+      "expression": "(((((A[i * n + j] + A[i * n + j - 1]) + A[i * n + 1 + j]) + A[(1 + i) * n + j]) + A[(i - 1) * n + j]))",
+      "replacement": "(A[i * n + j] + A[i * n + j - 1] + A[i * n + 1 + j] + A[(1 + i) * n + j] + A[(i - 1) * n + j])",
+      "reasoning": "Collapse nested additive parentheses into a single pair around the full sum. One pair is needed to ensure the entire sum is divided; the inner nestings are redundant."
+    },
+    {
+      "line_number": 210,
+      "expression": "(n - STENCIL_BORDER_TOTAL)",
+      "replacement": "n - STENCIL_BORDER_TOTAL",
+      "reasoning": "Function argument parentheses are unnecessary; subtraction is evaluated before the comma separation."
+    },
+    {
+      "line_number": 211,
+      "expression": "(n - STENCIL_BORDER_TOTAL)",
+      "replacement": "n - STENCIL_BORDER_TOTAL",
+      "reasoning": "Same as above."
+    },
+    {
+      "line_number": 215,
+      "expression": "((uint8_t*)(&grid_tmp))",
+      "replacement": "(uint8_t*)&grid_tmp",
+      "reasoning": "Parentheses around the unary & operand are unnecessary; the cast already provides grouping."
+    },
+    {
+      "line_number": 215,
+      "expression": "((uint8_t*)(&grid))",
+      "replacement": "(uint8_t*)&grid",
+      "reasoning": "Parentheses around the unary & operand are unnecessary; the cast already provides grouping."
+    },
+    {
+      "line_number": 216,
+      "expression": "((uint8_t*)(&block_tmp))",
+      "replacement": "(uint8_t*)&block_tmp",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 216,
+      "expression": "((uint8_t*)(&block))",
+      "replacement": "(uint8_t*)&block",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 217,
+      "expression": "((uint8_t*)(&grid_tmp_coerce))",
+      "replacement": "(uint8_t*)&grid_tmp_coerce",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 217,
+      "expression": "((uint8_t*)(&grid_tmp))",
+      "replacement": "(uint8_t*)&grid_tmp",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 218,
+      "expression": "((uint8_t*)(&block_tmp_coerce))",
+      "replacement": "(uint8_t*)&block_tmp_coerce",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 218,
+      "expression": "((uint8_t*)(&block_tmp))",
+      "replacement": "(uint8_t*)&block_tmp",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 229,
+      "expression": "((uint8_t*)(&grid_tmp2))",
+      "replacement": "(uint8_t*)&grid_tmp2",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 229,
+      "expression": "((uint8_t*)(&grid))",
+      "replacement": "(uint8_t*)&grid",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 230,
+      "expression": "((uint8_t*)(&block_tmp2))",
+      "replacement": "(uint8_t*)&block_tmp2",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 230,
+      "expression": "((uint8_t*)(&block))",
+      "replacement": "(uint8_t*)&block",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 231,
+      "expression": "((uint8_t*)(&grid_tmp2_coerce))",
+      "replacement": "(uint8_t*)&grid_tmp2_coerce",
+      "reasoning": "Redundant parentheses around &operand."
+    },
+    {
+      "line_number": 231,
+      "expression": "((uint8_t*)(&grid_tmp2))",
+      "replacement": "(uint8_t*)&grid_tmp2",
+      "reasoning": "Redundant parentheses around &operand."
     },
     {
       "line_number": 232,
-      "expression": "(n - 2)",
-      "replacement": "n - 2",
-      "reasoning": "The parentheses around this numeric expression passed as a function argument are unnecessary; num_blocks(n - 2, ...) is equivalent and clearer."
+      "expression": "((uint8_t*)(&block_tmp2_coerce))",
+      "replacement": "(uint8_t*)&block_tmp2_coerce",
+      "reasoning": "Redundant parentheses around &operand."
     },
     {
-      "line_number": 233,
-      "expression": "(n - 2)",
-      "replacement": "n - 2",
-      "reasoning": "Same as the previous occurrence: the cast/grouping is redundant in the function call argument."
-    },
-    {
-      "line_number": 237,
-      "expression": "((uint8_t*)(&grid_copy))",
-      "replacement": "(uint8_t*)&grid_copy",
-      "reasoning": "The outer parentheses around the cast expression are redundant. Preferred, clearer style is (uint8_t*)&grid_copy \u2014 keep the cast but remove the extra grouping parentheses."
-    },
-    {
-      "line_number": 238,
-      "expression": "((uint8_t*)(&block_copy))",
-      "replacement": "(uint8_t*)&block_copy",
-      "reasoning": "Same pattern: remove the redundant outer grouping; keep the cast."
-    },
-    {
-      "line_number": 239,
-      "expression": "((uint8_t*)(&grid_pair_coerce))",
-      "replacement": "(uint8_t*)&grid_pair_coerce",
-      "reasoning": "Outer grouping parentheses around the cast are unnecessary and can be removed for conciseness."
-    },
-    {
-      "line_number": 240,
-      "expression": "((uint8_t*)(&block_pair_coerce))",
-      "replacement": "(uint8_t*)&block_pair_coerce",
-      "reasoning": "Remove redundant outer parentheses around the cast expression."
-    },
-    {
-      "line_number": 251,
-      "expression": "((uint8_t*)(&grid_copy2))",
-      "replacement": "(uint8_t*)&grid_copy2",
-      "reasoning": "Same redundant outer grouping around cast as earlier memcpy calls; remove it."
-    },
-    {
-      "line_number": 252,
-      "expression": "((uint8_t*)(&block_copy2))",
-      "replacement": "(uint8_t*)&block_copy2",
-      "reasoning": "Remove redundant outer parentheses around the cast expression."
-    },
-    {
-      "line_number": 253,
-      "expression": "((uint8_t*)(&grid_pair_coerce2))",
-      "replacement": "(uint8_t*)&grid_pair_coerce2",
-      "reasoning": "Remove unnecessary outer grouping around the cast."
+      "line_number": 232,
+      "expression": "((uint8_t*)(&block_tmp2))",
+      "replacement": "(uint8_t*)&block_tmp2",
+      "reasoning": "Redundant parentheses around &operand."
     },
     {
       "line_number": 254,
-      "expression": "((uint8_t*)(&block_pair_coerce2))",
-      "replacement": "(uint8_t*)&block_pair_coerce2",
-      "reasoning": "Remove redundant outer parentheses around the cast expression for clarity."
+      "expression": "(print_double_format_str)",
+      "replacement": "print_double_format_str",
+      "reasoning": "Parentheses around a single variable are unnecessary and reduce readability."
     },
     {
-      "line_number": 276,
-      "expression": "(print_format_double)",
-      "replacement": "print_format_double",
-      "reasoning": "Parentheses around a simple identifier used as a function argument are unnecessary."
-    },
-    {
-      "line_number": 276,
+      "line_number": 254,
       "expression": "A[(i * n + j)]",
       "replacement": "A[i * n + j]",
-      "reasoning": "Array index does not need extra parentheses around the whole expression; removing them improves readability."
+      "reasoning": "Parentheses around the subscript expression are unnecessary."
     },
     {
-      "line_number": 278,
-      "expression": "(print_newline)",
-      "replacement": "print_newline",
-      "reasoning": "Parentheses around an identifier passed to fprintf are redundant and can be removed."
+      "line_number": 256,
+      "expression": "(newline_string)",
+      "replacement": "newline_string",
+      "reasoning": "Parentheses around a single variable are unnecessary."
     },
     {
-      "line_number": 282,
-      "expression": "(print_newline)",
-      "replacement": "print_newline",
-      "reasoning": "Same as above: the extra parentheses are unnecessary."
+      "line_number": 260,
+      "expression": "(newline_string)",
+      "replacement": "newline_string",
+      "reasoning": "Parentheses around a single variable are unnecessary."
     }
   ]
 }

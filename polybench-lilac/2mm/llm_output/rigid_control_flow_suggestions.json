@@ -1,0 +1,43 @@
+{
+  "suggestions_by_function": {
+    "kernel_A_mul_B": [
+      {
+        "identifier": [
+          "entry_if_bounds_check_i",
+          "land.lhs.true_if_bounds_check_j"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < ni",
+          "j < nj"
+        ],
+        "coalesced_condition": "i < ni && j < nj",
+        "line_numbers": [
+          193,
+          194
+        ],
+        "reasoning": "Both conditions are independent bounds checks with no side effects; they only read i, j, ni, and nj, which are not modified between the checks. Coalescing preserves short-circuit semantics and removes an indentation level, improving readability."
+      }
+    ],
+    "kernel_D_plus_tmp_mul_C": [
+      {
+        "identifier": [
+          "entry_if_bounds_check_i",
+          "land.lhs.true_if_bounds_check_l"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < ni",
+          "l < nl"
+        ],
+        "coalesced_condition": "i < ni && l < nl",
+        "line_numbers": [
+          214,
+          215
+        ],
+        "reasoning": "Independent range checks on i and l with no side effects; i, l, ni, and nl are only read and not modified between the tests. Combining them with && keeps the same short-circuit behavior and makes the guard more concise and readable."
+      }
+    ]
+  },
+  "confidence": 0.91
+}

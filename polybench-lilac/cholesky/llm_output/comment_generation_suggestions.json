@@ -3,67 +3,67 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize an n-by-n matrix A; set up storage so every element will be initialized (called before filling values)"
+      "replacement": "// Initialize the n x n matrix A so every element is set to the constant 1.0/n"
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Compute the number of blocks required to cover 'num' items with blocks of size 'factor' (ceiling division)"
+      "replacement": "// Return ceil(num/factor) to determine how many blocks of size 'factor' are needed to cover 'num' items"
     },
     {
       "id": "unknown_FUNCTION_kernel0",
       "original": "// INSERT COMMENT FUNCTION: kernel0",
-      "replacement": "// Compute and store the square root of the diagonal element A[j,j]; used to normalize the j-th pivot/diagonal (Cholesky-style step)"
+      "replacement": "// Compute sqrt of the pivot element A[j,j] and store it back (diagonal step, e.g., in Cholesky factorization)"
     },
     {
       "id": "unknown_FUNCTION_kernel1",
       "original": "// INSERT COMMENT FUNCTION: kernel1",
-      "replacement": "// Per-row kernel: for each row index i > j and i < n, scale the column entry A[i,j] by dividing it by the diagonal A[j,j] (parallel over i)"
+      "replacement": "// CUDA-style kernel that scales column j below the diagonal: for eligible i, set A[i,j] /= A[j,j]"
     },
     {
       "id": "unknown_FUNCTION_kernel2",
       "original": "// INSERT COMMENT FUNCTION: kernel2",
-      "replacement": "// Trailing-submatrix update kernel: perform the rank-1 update for the remaining matrix using column j (subtract outer product of column j entries from A[i,k]), parallelized over (i,k)"
+      "replacement": "// 2D CUDA kernel that computes (i,k) from thread indices and readies bounds checks for trailing submatrix updates at step j"
     },
     {
       "id": "unknown_FUNCTION_kernel_polly",
       "original": "// INSERT COMMENT FUNCTION: kernel_polly",
-      "replacement": "// Host-side routine that configures grid/block dimensions and iterates over columns to launch kernels implementing the factorization across all steps"
+      "replacement": "// Host driver that configures grid/block dimensions and iterates over n steps to launch GPU kernels operating on A"
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the n-by-n matrix A to stderr in row-major order using the specified format string"
+      "replacement": "// Print the n x n matrix A element-by-element to stderr using the configured floating-point format"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Loop over rows i and columns j (0..n-1) and set every matrix element A[i,j] to 1.0/n to initialize the matrix"
+      "replacement": "// Nested loops over all (i,j) entries to initialize A[i,j] to 1.0/n"
     },
     {
       "id": "unknown_LOOP_kernel_polly",
       "original": "// INSERT COMMENT LOOP: kernel_polly",
-      "replacement": "// Iterate the driver loop over column index 'iter' (0..n-1), configuring per-step launch parameters and invoking the kernels for each factorization step"
+      "replacement": "// Iterate n times, configuring grid dimensions (and subsequently launching kernels) for each step"
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Iterate rows and columns in row-major order and print each element A[i,n*j + j] (A[i*n + j]) using the provided print format"
+      "replacement": "// Nested loops over all rows i and columns j to output A[i,j] in row-major order"
     },
     {
       "id": "unknown_IFELSE_main::entry",
       "original": "// INSERT COMMENT IFELSE: main::entry",
-      "replacement": "// Parse command-line arguments to set dump_code and n, allocate memory for an n-by-n double matrix, and initialize it"
+      "replacement": "// Parse command-line arguments, allocate an n x n double matrix, and initialize its contents"
     },
     {
       "id": "unknown_IFELSE_kernel1::entry",
       "original": "// INSERT COMMENT IFELSE: kernel1::entry",
-      "replacement": "// Compute the global row index i for this thread; if i is within bounds and strictly greater than j, divide A[i,j] by the diagonal A[j,j], otherwise do nothing"
+      "replacement": "// If this thread\u2019s i is within bounds and below the diagonal (j < i < n), normalize A[i,j] by the pivot A[j,j]; otherwise skip"
     },
     {
       "id": "unknown_IFELSE_kernel2::entry",
       "original": "// INSERT COMMENT IFELSE: kernel2::entry",
-      "replacement": "// Compute global indices i and k for this thread and pre-evaluate boundary conditions (j<n, j<i, i<n) that determine whether this thread should perform the submatrix update"
+      "replacement": "// Compute thread coordinates (i,k) and precompute bound checks (j < n, j < i, i < n) for the subsequent update logic"
     }
   ]
 }

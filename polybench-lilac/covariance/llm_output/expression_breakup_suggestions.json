@@ -2,100 +2,85 @@
   "function_name": "kernel_cov",
   "breakups": [
     {
-      "line_number": 225,
+      "line_number": 198,
       "original_expression": "cov[(i * m + j)] = (cov[(i * m + j)] + (data[(k * m + i)] * data[(k * m + j)]));",
       "breakup_steps": [
         {
           "temp_var": "idx_ij",
           "expression": "i * m + j",
-          "description": "Compute the flat index for cov at (i, j). This can be hoisted outside the k-loop since i and j are loop-invariant."
+          "description": "Compute flattened index for element (i, j) in cov"
         },
         {
-          "temp_var": "idx_ki",
-          "expression": "k * m + i",
-          "description": "Compute the flat index for data at (k, i) for the current k."
-        },
-        {
-          "temp_var": "idx_kj",
-          "expression": "k * m + j",
-          "description": "Compute the flat index for data at (k, j) for the current k."
+          "temp_var": "row_k",
+          "expression": "k * m",
+          "description": "Compute base index for row k in data"
         },
         {
           "temp_var": "data_ki",
-          "expression": "data[idx_ki]",
-          "description": "Load data element at (k, i)."
+          "expression": "data[row_k + i]",
+          "description": "Load data element at (k, i)"
         },
         {
           "temp_var": "data_kj",
-          "expression": "data[idx_kj]",
-          "description": "Load data element at (k, j)."
+          "expression": "data[row_k + j]",
+          "description": "Load data element at (k, j)"
         },
         {
-          "temp_var": "product_term",
+          "temp_var": "prod_ik_jk",
           "expression": "data_ki * data_kj",
-          "description": "Compute the product of the two data elements."
+          "description": "Multiply the two data elements"
         },
         {
           "temp_var": "updated_cov",
-          "expression": "cov[idx_ij] + product_term",
-          "description": "Add the product to the current covariance accumulator."
-        },
-        {
-          "temp_var": "assignment",
-          "expression": "cov[idx_ij] = updated_cov",
-          "description": "Store the updated covariance back into the cov array."
+          "expression": "cov[idx_ij] + prod_ik_jk",
+          "description": "Accumulate product into current covariance entry"
         }
       ],
-      "final_expression": "cov[idx_ij] += product_term"
+      "final_expression": "cov[idx_ij] = updated_cov;"
     },
     {
-      "line_number": 227,
-      "original_expression": "cov[(i * m + j)] = (cov[(i * m + j)] / ((double)(n) - 1));",
+      "line_number": 200,
+      "original_expression": "cov[(i * m + j)] = (cov[(i * m + j)] / ((double)(n) - COV_BESSEL_CORRECTION));",
       "breakup_steps": [
         {
           "temp_var": "idx_ij",
           "expression": "i * m + j",
-          "description": "Compute the flat index for cov at (i, j). (If not already computed, hoist it out as it is invariant.)"
+          "description": "Compute flattened index for element (i, j) in cov"
         },
         {
           "temp_var": "denom",
-          "expression": "(double)n - 1",
-          "description": "Compute the denominator once with the proper cast."
+          "expression": "(double)n - COV_BESSEL_CORRECTION",
+          "description": "Compute denominator once for clarity"
         },
         {
           "temp_var": "scaled_cov",
           "expression": "cov[idx_ij] / denom",
-          "description": "Divide the accumulated covariance by the denominator."
-        },
-        {
-          "temp_var": "assignment",
-          "expression": "cov[idx_ij] = scaled_cov",
-          "description": "Store the final covariance value."
+          "description": "Apply scaling to covariance entry"
         }
       ],
-      "final_expression": "cov[idx_ij] /= denom"
+      "final_expression": "cov[idx_ij] = scaled_cov;"
     },
     {
-      "line_number": 228,
+      "line_number": 201,
       "original_expression": "cov[(j * m + i)] = cov[(i * m + j)];",
       "breakup_steps": [
         {
-          "temp_var": "idx_ji",
-          "expression": "j * m + i",
-          "description": "Compute the flat index for cov at (j, i)."
-        },
-        {
           "temp_var": "idx_ij",
           "expression": "i * m + j",
-          "description": "Compute (or reuse) the flat index for cov at (i, j)."
+          "description": "Index for (i, j)"
         },
         {
-          "temp_var": "assignment",
-          "expression": "cov[idx_ji] = cov[idx_ij]",
-          "description": "Assign the symmetric covariance value."
+          "temp_var": "idx_ji",
+          "expression": "j * m + i",
+          "description": "Index for (j, i) to enforce symmetry"
+        },
+        {
+          "temp_var": "cov_ij",
+          "expression": "cov[idx_ij]",
+          "description": "Load the computed covariance value"
         }
       ],
-      "final_expression": "cov[idx_ji] = cov[idx_ij]"
+      "final_expression": "cov[idx_ji] = cov_ij;"
     }
   ]
 }

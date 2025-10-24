@@ -2,13 +2,13 @@
   "recommended_order": [
     "main",
     0,
+    3,
     4,
     5,
     6,
-    3,
     1,
     2
   ],
-  "reasoning": "Place the program entry first to improve immediate comprehension. After main, put initialization/setup (init_array, ID 0) so readers see how data is prepared. Group the three kernel helper routines (kernel_mean ID 4, kernel_reduce ID 5, kernel_cov ID 6) next \u2014 these are the core computation helpers and should be adjacent for logical flow. Place num_blocks (ID 3) before kernel because kernel calls it (respecting dependency order). Then place kernel (ID 1) after its helpers and dependencies so callers are easy to follow. Finally put print_array (ID 2) last as a display/utility function. This ordering improves readability, groups related utilities, and ensures functions that are called by others appear before their callers to aid debugging and comprehension.",
+  "reasoning": "Main first for entry and top-level flow. Initialization/setup next (init_array). Place utility num_blocks before its caller. Group core helper kernels together and in the same logical order they are invoked (mean -> reduce -> cov), all before the orchestrating kernel to respect dependencies and aid comprehension. Keep the high-level kernel after its dependencies for clearer top-down reading. Print/display function last.",
   "confidence": 0.9
 }

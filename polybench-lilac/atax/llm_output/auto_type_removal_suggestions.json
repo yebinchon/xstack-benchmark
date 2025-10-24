@@ -1,0 +1,226 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 139,
+      "line_content": "__auto_type __FIXME__tmp1 = (double*)A;",
+      "original_line": "__auto_type __FIXME__tmp1 = (double*)A;"
+    },
+    {
+      "line_number": 140,
+      "line_content": "__auto_type __FIXME__tmp2 = (double*)x;",
+      "original_line": "__auto_type __FIXME__tmp2 = (double*)x;"
+    },
+    {
+      "line_number": 141,
+      "line_content": "__auto_type __FIXME__tmp3 = (double*)tmp;",
+      "original_line": "__auto_type __FIXME__tmp3 = (double*)tmp;"
+    },
+    {
+      "line_number": 142,
+      "line_content": "__auto_type __FIXME__tmp4 = (double*)y;",
+      "original_line": "__auto_type __FIXME__tmp4 = (double*)y;"
+    },
+    {
+      "line_number": 151,
+      "line_content": "  __auto_type __FIXME__tmp5 = (uint8_t*)&__FIXME__agg_2e_tmp_2e_coerce;",
+      "original_line": "  __auto_type __FIXME__tmp5 = (uint8_t*)&__FIXME__agg_2e_tmp_2e_coerce;"
+    },
+    {
+      "line_number": 152,
+      "line_content": "  __auto_type __FIXME__tmp6 = (uint8_t*)&__FIXME__agg_2e_tmp;",
+      "original_line": "  __auto_type __FIXME__tmp6 = (uint8_t*)&__FIXME__agg_2e_tmp;"
+    },
+    {
+      "line_number": 154,
+      "line_content": "  __auto_type __FIXME__tmp7 = (uint8_t*)&__FIXME__agg_2e_tmp43_2e_coerce;",
+      "original_line": "  __auto_type __FIXME__tmp7 = (uint8_t*)&__FIXME__agg_2e_tmp43_2e_coerce;"
+    },
+    {
+      "line_number": 155,
+      "line_content": "  __auto_type __FIXME__tmp8 = (uint8_t*)&__FIXME__agg_2e_tmp43;",
+      "original_line": "  __auto_type __FIXME__tmp8 = (uint8_t*)&__FIXME__agg_2e_tmp43;"
+    },
+    {
+      "line_number": 161,
+      "line_content": "__auto_type __FIXME__tmp9 = (double*)A;",
+      "original_line": "__auto_type __FIXME__tmp9 = (double*)A;"
+    },
+    {
+      "line_number": 162,
+      "line_content": "__auto_type __FIXME__tmp10 = (double*)x;",
+      "original_line": "__auto_type __FIXME__tmp10 = (double*)x;"
+    },
+    {
+      "line_number": 163,
+      "line_content": "__auto_type __FIXME__tmp11 = (double*)y;",
+      "original_line": "__auto_type __FIXME__tmp11 = (double*)y;"
+    },
+    {
+      "line_number": 164,
+      "line_content": "__auto_type __FIXME__tmp12 = (double*)tmp;",
+      "original_line": "__auto_type __FIXME__tmp12 = (double*)tmp;"
+    },
+    {
+      "line_number": 165,
+      "line_content": "__auto_type __FIXME__tmp13 = __FIXME__call42;",
+      "original_line": "__auto_type __FIXME__tmp13 = __FIXME__call42;"
+    },
+    {
+      "line_number": 166,
+      "line_content": "__auto_type __FIXME__tmp14 = 1;",
+      "original_line": "__auto_type __FIXME__tmp14 = 1;"
+    },
+    {
+      "line_number": 167,
+      "line_content": "__auto_type __FIXME__tmp15 = 1;",
+      "original_line": "__auto_type __FIXME__tmp15 = 1;"
+    },
+    {
+      "line_number": 168,
+      "line_content": "__auto_type __FIXME__tmp16 = THREADS_PER_BLOCK_X;",
+      "original_line": "__auto_type __FIXME__tmp16 = THREADS_PER_BLOCK_X;"
+    },
+    {
+      "line_number": 169,
+      "line_content": "__auto_type __FIXME__tmp17 = 1;",
+      "original_line": "__auto_type __FIXME__tmp17 = 1;"
+    },
+    {
+      "line_number": 170,
+      "line_content": "__auto_type __FIXME__tmp18 = 1;",
+      "original_line": "__auto_type __FIXME__tmp18 = 1;"
+    },
+    {
+      "line_number": 171,
+      "line_content": "__auto_type __FIXME__tmp19 = i;",
+      "original_line": "__auto_type __FIXME__tmp19 = i;"
+    },
+    {
+      "line_number": 172,
+      "line_content": "__auto_type __FIXME__tmp20 = 0;",
+      "original_line": "__auto_type __FIXME__tmp20 = 0;"
+    },
+    {
+      "line_number": 173,
+      "line_content": "__auto_type __FIXME__tmp21 = 0;",
+      "original_line": "__auto_type __FIXME__tmp21 = 0;"
+    },
+    {
+      "line_number": 174,
+      "line_content": "__auto_type __FIXME__tmp22 = j;",
+      "original_line": "__auto_type __FIXME__tmp22 = j;"
+    },
+    {
+      "line_number": 175,
+      "line_content": "__auto_type __FIXME__tmp23 = 0;",
+      "original_line": "__auto_type __FIXME__tmp23 = 0;"
+    },
+    {
+      "line_number": 176,
+      "line_content": "__auto_type __FIXME__tmp24 = 0;",
+      "original_line": "__auto_type __FIXME__tmp24 = 0;"
+    },
+    {
+      "line_number": 187,
+      "line_content": "  __auto_type __FIXME__tmp25 = (uint8_t*)&__FIXME__agg_2e_tmp45_2e_coerce;",
+      "original_line": "  __auto_type __FIXME__tmp25 = (uint8_t*)&__FIXME__agg_2e_tmp45_2e_coerce;"
+    },
+    {
+      "line_number": 188,
+      "line_content": "  __auto_type __FIXME__tmp26 = (uint8_t*)&__FIXME__agg_2e_tmp45;",
+      "original_line": "  __auto_type __FIXME__tmp26 = (uint8_t*)&__FIXME__agg_2e_tmp45;"
+    },
+    {
+      "line_number": 190,
+      "line_content": "  __auto_type __FIXME__tmp27 = (uint8_t*)&__FIXME__agg_2e_tmp47_2e_coerce;",
+      "original_line": "  __auto_type __FIXME__tmp27 = (uint8_t*)&__FIXME__agg_2e_tmp47_2e_coerce;"
+    },
+    {
+      "line_number": 191,
+      "line_content": "  __auto_type __FIXME__tmp28 = (uint8_t*)&__FIXME__agg_2e_tmp47;",
+      "original_line": "  __auto_type __FIXME__tmp28 = (uint8_t*)&__FIXME__agg_2e_tmp47;"
+    },
+    {
+      "line_number": 197,
+      "line_content": "__auto_type __FIXME__tmp29 = (double*)A;",
+      "original_line": "__auto_type __FIXME__tmp29 = (double*)A;"
+    },
+    {
+      "line_number": 198,
+      "line_content": "__auto_type __FIXME__tmp30 = (double*)x;",
+      "original_line": "__auto_type __FIXME__tmp30 = (double*)x;"
+    },
+    {
+      "line_number": 199,
+      "line_content": "__auto_type __FIXME__tmp31 = (double*)y;",
+      "original_line": "__auto_type __FIXME__tmp31 = (double*)y;"
+    },
+    {
+      "line_number": 200,
+      "line_content": "__auto_type __FIXME__tmp32 = (double*)tmp;",
+      "original_line": "__auto_type __FIXME__tmp32 = (double*)tmp;"
+    },
+    {
+      "line_number": 201,
+      "line_content": "__auto_type __FIXME__tmp33 = __FIXME__call46;",
+      "original_line": "__auto_type __FIXME__tmp33 = __FIXME__call46;"
+    },
+    {
+      "line_number": 202,
+      "line_content": "__auto_type __FIXME__tmp34 = 1;",
+      "original_line": "__auto_type __FIXME__tmp34 = 1;"
+    },
+    {
+      "line_number": 203,
+      "line_content": "__auto_type __FIXME__tmp35 = 1;",
+      "original_line": "__auto_type __FIXME__tmp35 = 1;"
+    },
+    {
+      "line_number": 204,
+      "line_content": "__auto_type __FIXME__tmp36 = THREADS_PER_BLOCK_X;",
+      "original_line": "__auto_type __FIXME__tmp36 = THREADS_PER_BLOCK_X;"
+    },
+    {
+      "line_number": 205,
+      "line_content": "__auto_type __FIXME__tmp37 = 1;",
+      "original_line": "__auto_type __FIXME__tmp37 = 1;"
+    },
+    {
+      "line_number": 206,
+      "line_content": "__auto_type __FIXME__tmp38 = 1;",
+      "original_line": "__auto_type __FIXME__tmp38 = 1;"
+    },
+    {
+      "line_number": 207,
+      "line_content": "__auto_type __FIXME__tmp39 = i;",
+      "original_line": "__auto_type __FIXME__tmp39 = i;"
+    },
+    {
+      "line_number": 208,
+      "line_content": "__auto_type __FIXME__tmp40 = 0;",
+      "original_line": "__auto_type __FIXME__tmp40 = 0;"
+    },
+    {
+      "line_number": 209,
+      "line_content": "__auto_type __FIXME__tmp41 = 0;",
+      "original_line": "__auto_type __FIXME__tmp41 = 0;"
+    },
+    {
+      "line_number": 210,
+      "line_content": "__auto_type __FIXME__tmp42 = j;",
+      "original_line": "__auto_type __FIXME__tmp42 = j;"
+    },
+    {
+      "line_number": 211,
+      "line_content": "__auto_type __FIXME__tmp43 = 0;",
+      "original_line": "__auto_type __FIXME__tmp43 = 0;"
+    },
+    {
+      "line_number": 212,
+      "line_content": "__auto_type __FIXME__tmp44 = 0;",
+      "original_line": "__auto_type __FIXME__tmp44 = 0;"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

@@ -1,0 +1,26 @@
+{
+  "suggestions_by_function": {
+    "kernel_stencil": [
+      {
+        "identifier": [
+          "interior-boundary guard for 3D stencil",
+          "coalesce i/j/k bounds checks (IFELSE MARKERs: entry IF, land.lhs.true IF, land.lhs.true18 IF)"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < (iter - 1)",
+          "j < (iter - 1)",
+          "k < (iter - 1)"
+        ],
+        "coalesced_condition": "i < (iter - 1) && j < (iter - 1) && k < (iter - 1)",
+        "line_numbers": [
+          -1,
+          -1,
+          -1
+        ],
+        "reasoning": "All three conditions are independent, side-effect-free bounds checks guarding the stencil update for interior points; there are no else branches and no variable modifications within the conditions. Combining them into a single if preserves semantics (short-circuit order is irrelevant due to no side effects) and reduces indentation, improving readability."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

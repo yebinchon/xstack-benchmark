@@ -1,0 +1,43 @@
+{
+  "suggestions_by_function": {
+    "kernel_tmp": [
+      {
+        "identifier": [
+          "outer_bounds_check_i_lt_m",
+          "inner_bounds_check_j_lt_n"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < m",
+          "j < n"
+        ],
+        "coalesced_condition": "i < m && j < n",
+        "line_numbers": [
+          165,
+          166
+        ],
+        "reasoning": "Both conditions are simple, side-effect-free bounds checks that do not modify shared state. Combining them with && preserves short-circuit behavior and semantics while reducing nesting, making the index bounds requirement clearer."
+      }
+    ],
+    "kernel_C": [
+      {
+        "identifier": [
+          "outer_bounds_check_i_lt_m",
+          "inner_bounds_check_j_lt_n"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < m",
+          "j < n"
+        ],
+        "coalesced_condition": "i < m && j < n",
+        "line_numbers": [
+          183,
+          184
+        ],
+        "reasoning": "The checks i < m and j < n are independent range guards with no side effects. Coalescing them using && maintains equivalent short-circuit evaluation, avoids an extra level of indentation, and communicates the combined bounds constraint more directly."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

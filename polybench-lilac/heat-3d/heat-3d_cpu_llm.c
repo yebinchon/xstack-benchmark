@@ -1,9 +1,24 @@
 /* Provide Declarations */
-#include <math.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
+/* Magic number constants */
+#define DOUBLE_SIZE_BYTES 8
+#define PRINTF_FMT_STR_LEN 8
+#define NEWLINE_STR_LEN 2
+#define DUMP_CODE_ENABLED 1
+#define HALO_WIDTH 1
+#define HALO_WIDTH_TIMES_2 2
+#define STENCIL_CENTER_WEIGHT 2
+#define STENCIL_AXIS_DIVISOR 8
+#define BLOCK_DIM_X 1
+#define BLOCK_DIM_Y 8
+#define BLOCK_DIM_Z 32
+#define DIM3_STRUCT_SIZE_BYTES 12
+#define BYTE_ARRAY20_LEN 20
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -13,96 +28,57 @@ typedef unsigned char bool;
 #endif
 
 #if defined(__GNUC__)
-#define __ATTRIBUTELIST__(x) __attribute__(x)
+#define  __ATTRIBUTELIST__(x) __attribute__(x)
 #else
-#define __ATTRIBUTELIST__(x)
+#define  __ATTRIBUTELIST__(x)  
 #endif
 
-#ifdef _MSC_VER /* Can only support "linkonce" vars with GCC */
+#ifdef _MSC_VER  /* Can only support "linkonce" vars with GCC */
 #define __attribute__(X)
 #endif
+
+
 
 /* Global Declarations */
 
 /* Types Declarations */
-struct IOFile;
 struct Dim3;
-struct Dim3Packed;
+struct Dim3Coerce;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array_1 {
+struct byte_array_1 {
   uint8_t array[1];
 };
-struct uint8_array_20 {
-  uint8_t array[20];
-};
-struct IOFile {
-  uint32_t io_flags;
-  uint8_t *buf_ptr0;
-  uint8_t *buf_ptr1;
-  uint8_t *buf_ptr2;
-  uint8_t *buf_ptr3;
-  uint8_t *buf_ptr4;
-  uint8_t *buf_ptr5;
-  uint8_t *buf_ptr6;
-  uint8_t *buf_ptr7;
-  uint8_t *buf_ptr8;
-  uint8_t *buf_ptr9;
-  uint8_t *buf_ptr10;
-  void *cookie;
-  struct IOFile *next;
-  uint32_t mode;
-  uint32_t fd;
-  uint64_t offset;
-  uint16_t state;
-  uint8_t char_last;
-  uint8_t small_buf[1];
-  uint8_t *buffer;
-  uint64_t timestamp;
-  void *lock;
-  void *lock2;
-  struct IOFile *prev;
-  uint8_t *tmp_ptr;
-  uint64_t size64;
-  uint32_t count32;
-  uint8_t small_array[20];
+struct byte_array_20 {
+  uint8_t array[BYTE_ARRAY20_LEN];
 };
 struct Dim3 {
-  uint32_t dim3_x;
-  uint32_t dim3_y;
-  uint32_t dim3_z;
+  uint32_t x;
+  uint32_t y;
+  uint32_t z;
 };
-struct Dim3Packed {
-  uint64_t dim3packed_field0;
-  uint32_t dim3packed_field1;
+struct Dim3Coerce {
+  uint64_t x;
+  uint32_t y;
 };
 
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t *, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t *);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
-void init_array(uint32_t, double *, double *)
-    __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t *, uint8_t *, uint64_t, uint32_t);
-void kernel(uint32_t, uint32_t, double *, double *)
-    __ATTRIBUTELIST__((noinline));
-void print_array(uint32_t, double *) __ATTRIBUTELIST__((noinline));
+void init_array(uint32_t, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
+void kernel(uint32_t, uint32_t, double*, double*) __ATTRIBUTELIST__((noinline));
+void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t,
-                           void *);
-uint32_t cudaMalloc(uint8_t **, uint64_t);
-void kernel_stencil(uint32_t, double *, double *, uint32_t, uint32_t, uint32_t,
-                    uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t,
-                    uint32_t, uint32_t, uint32_t)
-    __ATTRIBUTELIST__((noinline, nothrow));
+void kernel_stencil(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
+
 
 /* Global Variable Definitions and Initialization */
-uint8_t print_double_space[8] = {"%0.2lf "};
-uint8_t print_newline[2] = {"\n"};
+uint8_t double_print_format[PRINTF_FMT_STR_LEN] = { "%0.2lf " };
+uint8_t newline_string[NEWLINE_STR_LEN] = { "\n" };
+
 
 /* LLVM Intrinsic Builtin Function Bodies */
 static __forceinline uint32_t llvm_add_u32(uint32_t a, uint32_t b) {
@@ -134,102 +110,94 @@ static __forceinline uint32_t llvm_srem_u32(int32_t a, int32_t b) {
   return r;
 }
 
+
 /* Function Bodies */
-int main(int argc, char **argv) {
+int main(int argc, char ** argv) {
   int32_t dump_code;
   int32_t tsteps;
   int32_t n;
-  uint8_t *A;
-  uint8_t *B;
-  int32_t unused_var27;
-  int32_t unused_var37;
+  uint8_t* A;
+  uint8_t* B;
 
-  // INSERT COMMENT IFELSE: main::entry
-  // Parse command-line args: dump flag, number of timesteps and grid size n;
-  // then allocate two n^3 double arrays (8 bytes per double) for A and B
-  init_array(n, (double *)A, (double *)B);
-  ;
-  kernel(tsteps, n, (double *)A, (double *)B);
-  ;
-  if (dump_code == 1) { // IFELSE MARKER: entry IF
-    print_array(n, (double *)A);
+// Parse command-line args (dump flag, tsteps, n) and allocate A and B as n*n*n double buffers
+  dump_code = atoi(argv[1]);
+  tsteps = atoi(argv[2]);
+  n = atoi(argv[3]);
+  A = malloc(n * n * n * DOUBLE_SIZE_BYTES);
+  B = malloc(n * n * n * DOUBLE_SIZE_BYTES);
+  init_array(n, (double*)A, (double*)B);
+;
+  kernel(tsteps, n, (double*)A, (double*)B);
+;
+  if (dump_code == DUMP_CODE_ENABLED) {
+print_array(n, (double*)A);
   }
-  free((uint8_t *)((double *)A));
-  free((uint8_t *)((double *)B));
+free((uint8_t*)((double*)A));
+free((uint8_t*)((double*)B));
   return 0;
 }
-// Initialize two n x n x n 3D arrays A and B with their starting values
-// (prepare data for the stencil computation)
-void init_array(uint32_t n, double *A, double *B) {
+// Initialize the 3D arrays A and B for an n*n*n domain using nested loops to prepare input data for the stencil
+void init_array(uint32_t n, double* A, double* B) {
   int64_t i;
   uint64_t j;
   uint64_t k;
 
-  // Triple-nested loops over i,j,k to visit every element of the n^3 volume and
-  // initialize A and B
-  __auto_type idx_ijk = ((i * n + j) * n + k);
-  __auto_type sum_ijk = ((double)i + (double)j + (double)k);
-  __auto_type normalized_sum = sum_ijk / (double)n;
-  A[((i * n + j) * n + k)] = normalized_sum;
-  __auto_type idx_ijk_b = ((i * n + j) * n + k);
-  __auto_type sum_ijk_b = ((double)i + (double)j + (double)k);
-  __auto_type sum_plus_one = sum_ijk_b + 1.0;
-  __auto_type normalized_sum_plus_one = sum_plus_one / (double)n;
-  B[((i * n + j) * n + k)] = normalized_sum_plus_one;
+// Triple-nested loop over all 3D indices (i,j,k) in the n*n*n domain to initialize arrays A and B::for.cond
+for(int64_t i = 0; i < n;   i = i + 1){
+for(int64_t j = 0; j < n;   j = j + 1){
+for(int64_t k = 0; k < n;   k = k + 1){
+  int ij_index = i * n + j;
+  int ijk_index = ij_index * n + k;
+  double sum_ijk = (double)i + (double)j + (double)k;
+  double n_as_double = (double)n;
+  double value_a = sum_ijk / n_as_double;
+  A[((i * n + j) * n + k)] = value_a;
+  int ij_index_b = i * n + j;
+  int ijk_index_b = ij_index_b * n + k;
+  double sum_ijk_b = (double)i + (double)j + (double)k;
+  double n_as_double_b = (double)n;
+  double value_b = (sum_ijk_b + 1.0) / n_as_double_b;
+  B[((i * n + j) * n + k)] = value_b;
+}
+}
+}
   return;
 }
-// Compute the number of blocks required to cover 'num' elements with block size
-// 'factor' using ceiling division
+// Compute ceil(num / factor) to determine how many blocks of size 'factor' are needed to cover 'num' items
 uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
-// Perform a single-threaded 3D stencil update for the element at (i,j,k) using
-// arrays A and B and the provided grid/block/thread coordinates
-void kernel_stencil(uint32_t iter, double *A, double *B, uint32_t gridDim_x,
-                    uint32_t gridDim_y, uint32_t gridDim_z, uint32_t blockDim_x,
-                    uint32_t blockDim_y, uint32_t blockDim_z,
-                    uint32_t blockIdx_x, uint32_t blockIdx_y,
-                    uint32_t blockIdx_z, uint32_t threadIdx_x,
-                    uint32_t threadIdx_y, uint32_t threadIdx_z) {
+// CUDA-like 3D stencil kernel: compute global (i,j,k) from grid/block indices with a halo offset and update interior points, reading from A and writing to B
+void kernel_stencil(uint32_t iter, double* A, double* B, uint32_t gridDim_x, uint32_t gridDim_y, uint32_t gridDim_z, uint32_t blockDim_x, uint32_t blockDim_y, uint32_t blockDim_z, uint32_t blockIdx_x, uint32_t blockIdx_y, uint32_t blockIdx_z, uint32_t threadIdx_x, uint32_t threadIdx_y, uint32_t threadIdx_z) {
   int32_t i;
   int32_t j;
   int32_t k;
 
-  // INSERT COMMENT IFELSE: kernel_stencil::entry
-  // Compute global 1-based indices (i,j,k) for this thread from block/thread
-  // coordinates and check that i and j lie inside the valid update region
-  // (exclude halo/edges)
-  if (k < (iter - 1)) { // IFELSE MARKER: land.lhs.true18 IF
-    B[((i * iter + j) * iter + k)] =
-        ((((((A[(((i + 1) * iter + j) * iter + k)] -
-              (2 * A[((i * iter + j) * iter + k)])) +
-             A[(((i - 1) * iter + j) * iter + k)]) /
-            8) +
-           (((A[((i * iter + (j + 1)) * iter + k)] -
-              (2 * A[((i * iter + j) * iter + k)])) +
-             A[((i * iter + (j - 1)) * iter + k)]) /
-            8)) +
-          (((A[(((i * iter + j) * iter + k) + 1)] -
-             (2 * A[((i * iter + j) * iter + k)])) +
-            A[(((i * iter + j) * iter + k) - 1)]) /
-           8)) +
-         A[((i * iter + j) * iter + k)]);
+// Compute the thread's global 3D index with a halo offset, then process only if i and j lie within [HALO_WIDTH, iter - HALO_WIDTH); out-of-range threads do nothing
+  i = blockDim_x * blockIdx_x + threadIdx_x + HALO_WIDTH;
+  j = blockDim_y * blockIdx_y + threadIdx_y + HALO_WIDTH;
+  k = blockDim_z * blockIdx_z + threadIdx_z + HALO_WIDTH;
+  if (i < (iter - HALO_WIDTH)) {
+  if (j < (iter - HALO_WIDTH)) {
+  if (k < (iter - HALO_WIDTH)) {
+  B[((i * iter + j) * iter + k)] = ((((((A[(((i + HALO_WIDTH) * iter + j) * iter + k)] - STENCIL_CENTER_WEIGHT * A[((i * iter + j) * iter + k)]) + A[(((i - HALO_WIDTH) * iter + j) * iter + k)]) / STENCIL_AXIS_DIVISOR) + (((A[((i * iter + (j + HALO_WIDTH)) * iter + k)] - (STENCIL_CENTER_WEIGHT * A[((i * iter + j) * iter + k)])) + A[((i * iter + (j - HALO_WIDTH)) * iter + k)]) / STENCIL_AXIS_DIVISOR)) + (((A[(((i * iter + j) * iter + k) + 1)] - (STENCIL_CENTER_WEIGHT * A[((i * iter + j) * iter + k)])) + A[(((i * iter + j) * iter + k) - 1)]) / STENCIL_AXIS_DIVISOR)) + A[((i * iter + j) * iter + k)]);
+  }
+  }
   }
   return;
 }
-// Coordinate the time-stepping loop: configure grid/block dimensions, launch
-// the stencil kernel for each time step, and manage buffer swapping
-void kernel(uint32_t tsteps, uint32_t iter, double *A, double *B) {
-  struct Dim3 block;                    /* Address-exposed local */
-  struct Dim3 grid;                     /* Address-exposed local */
-  struct Dim3 grid_temp;                /* Address-exposed local */
-  struct Dim3 block_temp;               /* Address-exposed local */
-  struct Dim3Packed grid_packed_temp;   /* Address-exposed local */
-  struct Dim3Packed block_packed_temp;  /* Address-exposed local */
-  struct Dim3 grid_temp2;               /* Address-exposed local */
-  struct Dim3 block_temp2;              /* Address-exposed local */
-  struct Dim3Packed grid_packed_temp2;  /* Address-exposed local */
-  struct Dim3Packed block_packed_temp2; /* Address-exposed local */
+// Driver routine for the stencil: iterate for tsteps, configure grid/block dimensions, and launch kernel_stencil on arrays A and B
+void kernel(uint32_t tsteps, uint32_t iter, double* A, double* B) {
+  struct Dim3 block;    /* Address-exposed local */
+  struct Dim3 grid;    /* Address-exposed local */
+  struct Dim3 grid_tmp;    /* Address-exposed local */
+  struct Dim3 block_tmp;    /* Address-exposed local */
+  struct Dim3Coerce grid_tmp_coerce;    /* Address-exposed local */
+  struct Dim3Coerce block_tmp_coerce;    /* Address-exposed local */
+  struct Dim3 grid_tmp2;    /* Address-exposed local */
+  struct Dim3 block_tmp2;    /* Address-exposed local */
+  struct Dim3Coerce grid_tmp2_coerce;    /* Address-exposed local */
+  struct Dim3Coerce block_tmp2_coerce;    /* Address-exposed local */
   int32_t t;
   uint32_t j;
   uint32_t k;
@@ -237,67 +205,68 @@ void kernel(uint32_t tsteps, uint32_t iter, double *A, double *B) {
   uint32_t m;
   uint32_t n;
 
-  // INSERT COMMENT LOOP: kernel::for.cond
-  // Iterate time steps from 1..tsteps; for each step configure block dimensions
-  // and execute the stencil kernel for that timestep
-  block.dim3_z = 32;
-  uint32_t num_blocks_x = num_blocks(iter - 2, block.dim3_x);
-  uint32_t num_blocks_y = num_blocks(iter - 2, block.dim3_y);
-  uint32_t num_blocks_z = num_blocks(iter - 2, block.dim3_z);
-  grid.dim3_x = num_blocks_x;
-  grid.dim3_y = num_blocks_y;
-  grid.dim3_z = num_blocks_z;
-  memcpy((uint8_t *)(&grid_temp), (uint8_t *)(&grid), 12);
-  memcpy((uint8_t *)(&block_temp), (uint8_t *)(&block), 12);
-  memcpy((uint8_t *)(&grid_packed_temp), (uint8_t *)(&grid_temp), 12);
-  memcpy((uint8_t *)(&block_packed_temp), (uint8_t *)(&block_temp), 12);
+// Time-stepping loop: for each step, set execution parameters (e.g., block size/grid) and perform one stencil update::for.cond
+for(int32_t t = 1; t <= tsteps;   t = t + 1){
+  block.x = BLOCK_DIM_X;
+  block.y = BLOCK_DIM_Y;
+  block.z = BLOCK_DIM_Z;
+  uint32_t num_blocks_x = num_blocks(iter - HALO_WIDTH_TIMES_2, block.x);
+  uint32_t num_blocks_y = num_blocks(iter - HALO_WIDTH_TIMES_2, block.y);
+  uint32_t num_blocks_z = num_blocks(iter - HALO_WIDTH_TIMES_2, block.z);
+  grid.x = num_blocks_x;
+  grid.y = num_blocks_y;
+  grid.z = num_blocks_z;
+  memcpy(((uint8_t*)(&grid_tmp)), ((uint8_t*)(&grid)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&block_tmp)), ((uint8_t*)(&block)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&grid_tmp_coerce)), ((uint8_t*)(&grid_tmp)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&block_tmp_coerce)), ((uint8_t*)(&block_tmp)), DIM3_STRUCT_SIZE_BYTES);
 #pragma omp parallel for collapse(2)
-  for (int32_t j = 0; j < num_blocks_x; j = j + 1) {
-    for (int32_t k = 0; k < num_blocks_y; k = k + 1) {
-      for (int32_t l = 0; l < num_blocks_z; l = l + 1) {
-        for (int32_t m = 0; m < 8; m = m + 1) {
-          for (int32_t n = 0; n < 32; n = n + 1) {
-            kernel_stencil(iter, A, B, num_blocks_x, num_blocks_y, num_blocks_z,
-                           1, 8, 32, j, k, l, 0, m, n);
-          }
-        }
-      }
-    }
-  }
-  memcpy((uint8_t *)(&grid_temp2), (uint8_t *)(&grid), 12);
-  memcpy((uint8_t *)(&block_temp2), (uint8_t *)(&block), 12);
-  memcpy((uint8_t *)(&grid_packed_temp2), (uint8_t *)(&grid_temp2), 12);
-  memcpy((uint8_t *)(&block_packed_temp2), (uint8_t *)(&block_temp2), 12);
-#pragma omp parallel for collapse(2)
-  for (int32_t j = 0; j < num_blocks_x; j = j + 1) {
-    for (int32_t k = 0; k < num_blocks_y; k = k + 1) {
-      for (int32_t l = 0; l < num_blocks_z; l = l + 1) {
-        for (int32_t m = 0; m < 8; m = m + 1) {
-          for (int32_t n = 0; n < 32; n = n + 1) {
-            kernel_stencil(iter, B, A, num_blocks_x, num_blocks_y, num_blocks_z,
-                           1, 8, 32, j, k, l, 0, m, n);
-          }
-        }
-      }
-    }
-  }
-return;
+for(int32_t j = 0; j < num_blocks_x;   j = j + 1){
+for(int32_t k = 0; k < num_blocks_y;   k = k + 1){
+for(int32_t l = 0; l < num_blocks_z;   l = l + 1){
+for(int32_t m = 0; m < 8;   m = m + 1){
+for(int32_t n = 0; n < 32;   n = n + 1){
+kernel_stencil(iter, A, B, num_blocks_x, num_blocks_y, num_blocks_z, 1, 8, 32, j, k, l, 0, m, n);
 }
-// Walk the n x n x n array A and print its elements in a consistent order for
-// verification or debugging
-void print_array(uint32_t n, double *A) {
+}
+}
+}
+}
+  memcpy(((uint8_t*)(&grid_tmp2)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&block_tmp2)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&grid_tmp2_coerce)), ((uint8_t*)(&grid_tmp2)), 12);
+  memcpy(((uint8_t*)(&block_tmp2_coerce)), ((uint8_t*)(&block_tmp2)), 12);
+#pragma omp parallel for collapse(2)
+for(int32_t j = 0; j < num_blocks_x;   j = j + 1){
+for(int32_t k = 0; k < num_blocks_y;   k = k + 1){
+for(int32_t l = 0; l < num_blocks_z;   l = l + 1){
+for(int32_t m = 0; m < 8;   m = m + 1){
+for(int32_t n = 0; n < 32;   n = n + 1){
+kernel_stencil(iter, B, A, num_blocks_x, num_blocks_y, num_blocks_z, 1, 8, 32, j, k, l, 0, m, n);
+}
+}
+}
+}
+}
+}
+  return;
+}
+// Print all elements of 3D array A of size n*n*n in a consistent order for verification or debugging
+void print_array(uint32_t n, double* A) {
   int64_t i;
   uint64_t j;
   uint64_t k;
-  int32_t tmp_i32;
 
-  // INSERT COMMENT LOOP: print_array::for.cond
-  // Triple-nested loops over i,j,k to traverse every element of A and emit its
-  // value (controls output ordering)
-  fprintf(stderr, print_double_space, A[((i * n + j) * n + k)]);
-  if ((int)((i * n + j) * n + k) % (int)20 ==
-      0) { // IFELSE MARKER: for.body6 IF
-    fprintf(stderr, print_newline);
+// Triple-nested loop over all 3D indices (i,j,k) to output A's values in a deterministic order::for.cond
+for(int64_t i = 0; i < n;   i = i + 1){
+for(int64_t j = 0; j < n;   j = j + 1){
+for(int64_t k = 0; k < n;   k = k + 1){
+  fprintf(stderr, double_print_format, A[((i * n + j) * n + k)]);
+  if ((int)((i * n + j) * n + k) % (int)20 == 0) {
+  fprintf(stderr, newline_string);
   }
-fprintf(stderr, print_newline);
+}
+}
+}
+  fprintf(stderr, newline_string);
 }

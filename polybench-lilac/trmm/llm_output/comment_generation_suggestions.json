@@ -3,67 +3,67 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize scalar alpha and populate matrices A (m x m) and B (m x n) with deterministic values based on indices to prepare data for the computation."
+      "replacement": "// Initialize the scalar alpha and populate arrays A and B with deterministic values based on n and m to set up the computation"
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Return the number of blocks needed to cover 'num' items with block size 'factor' using ceiling division."
+      "replacement": "// Return ceil(num / factor): number of fixed-size blocks needed to cover num items"
     },
     {
       "id": "unknown_FUNCTION_kernel_contract",
       "original": "// INSERT COMMENT FUNCTION: kernel_contract",
-      "replacement": "// GPU-style kernel: each thread maps to a global column j and updates B(:,j) by accumulating A[k,i] * B[k,j] for k from i to m-1, performing a contraction over k for each row i."
+      "replacement": "// GPU-style kernel that updates B in place: for each column j, accumulate B[i,j] += sum_{k=i..m-1} A[k,i] * B[k,j] using the provided grid/block/thread indices"
     },
     {
       "id": "unknown_FUNCTION_kernel_alpha",
       "original": "// INSERT COMMENT FUNCTION: kernel_alpha",
-      "replacement": "// GPU-style kernel: compute global (i,j) from block/thread indices and, if in bounds, scale the single B[i,j] element by the scalar alpha."
+      "replacement": "// GPU-style kernel that scales each in-bounds element of B by alpha using a 2D thread grid"
     },
     {
       "id": "unknown_FUNCTION_kernel",
       "original": "// INSERT COMMENT FUNCTION: kernel",
-      "replacement": "// Host wrapper that configures grid/block dimensions and launches/emulates the two GPU kernels (alpha scaling and contraction), using OpenMP to parallelize on the CPU."
+      "replacement": "// Host driver that configures launch dimensions and invokes the contract and scaling kernels over A and B"
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the matrix B with m rows and n columns to stderr in row-major order using the predefined format string for verification/debugging."
+      "replacement": "// Print the m-by-n matrix B to stderr in row-major order using double_print_format"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over all i (0..n-1) and j (0..m-1) positions to compute a linear index and initialize corresponding entries of A and B."
+      "replacement": "// Iterate over all n rows and m columns, computing the row-major index a_index for element A[i,j]"
     },
     {
       "id": "unknown_LOOP_kernel",
-      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < blocks_m_blockx;   i = i + 1){\nfor(int32_t j = 0; j < blocks_n_blocky;   j = j + 1){",
-      "replacement": "// Parallel over 2D block-grid coordinates: iterate all block indices in the x/y dimensions (collapsed) to emulate launching work for each block."
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// OpenMP-parallel 2D iteration over the launch grid (alpha_grid_x x alpha_grid_y) to emulate GPU execution"
     },
     {
       "id": "unknown_LOOP_kernel",
-      "original": "#pragma omp parallel for collapse(2)\nfor(int32_t i = 0; i < blocks_m_blockx;   i = i + 1){\nfor(int32_t j = 0; j < blocks_n_blocky;   j = j + 1){",
-      "replacement": "// Parallel over 2D block-grid coordinates: iterate all block indices in the x/y dimensions (collapsed) to emulate launching work for each block."
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// OpenMP-parallel 2D iteration over the launch grid (alpha_grid_x x alpha_grid_y) to emulate GPU execution"
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Loop over rows i and columns j to print each element B[i*n + j] in row-major order to stderr using the format string."
+      "replacement": "// Walk B by rows (i = 0..m-1) and columns (j = 0..n-1), printing each element in order"
     },
     {
       "id": "unknown_IFELSE_main::entry",
       "original": "// INSERT COMMENT IFELSE: main::entry",
-      "replacement": "// Parse command-line arguments for dump_code, n and m, then allocate memory for arrays A and B (space for n*m doubles each) without additional validation."
+      "replacement": "// Parse n, m, and dump flag from argv, then allocate contiguous buffers for A (n*m) and B (m*n) as doubles"
     },
     {
       "id": "unknown_IFELSE_kernel_contract::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_contract::entry",
-      "replacement": "// Compute the global column index j for this thread; if j is within [0,n) perform nested loops over i and k to accumulate contributions A[k,i]*B[k,j] into B[i,j] (k from i to m-1)."
+      "replacement": "// Compute global column index j; if j < n, perform an upper-triangular accumulation B[i,j] += sum_{k=i..m-1} A[k,i] * B[k,j] for all rows i"
     },
     {
       "id": "unknown_IFELSE_kernel_alpha::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_alpha::entry",
-      "replacement": "// Compute global indices (i,j) from block/thread coordinates; if both indices are within bounds, multiply the element B[i*n + j] by alpha."
+      "replacement": "// Derive element coordinates (i,j) from thread/block indices; if within bounds, scale B[i,j] by alpha"
     }
   ]
 }

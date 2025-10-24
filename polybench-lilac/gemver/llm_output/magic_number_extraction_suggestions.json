@@ -1,49 +1,225 @@
 {
   "extractions": [
     {
-      "value": "8",
-      "name": "GEMVER_BLOCK_DIM3_F0_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
       "occurrences": [
-        300
+        {
+          "line": 119,
+          "context": "A = malloc(n * n * 8);"
+        },
+        {
+          "line": 120,
+          "context": "u1 = malloc(n * 8);"
+        },
+        {
+          "line": 121,
+          "context": "v1 = malloc(n * 8);"
+        },
+        {
+          "line": 122,
+          "context": "u2 = malloc(n * 8);"
+        },
+        {
+          "line": 123,
+          "context": "v2 = malloc(n * 8);"
+        },
+        {
+          "line": 124,
+          "context": "w = malloc(n * 8);"
+        },
+        {
+          "line": 125,
+          "context": "x = malloc(n * 8);"
+        },
+        {
+          "line": 126,
+          "context": "y = malloc(n * 8);"
+        },
+        {
+          "line": 127,
+          "context": "z = malloc(n * 8);"
+        }
       ],
-      "function": "main"
+      "reasoning": "8 is used as the size of double in bytes. Defining it once clarifies intent and avoids portability bugs; better yet, code can later be changed to sizeof(double) consistently."
     },
     {
-      "value": "32",
-      "name": "GEMVER_BLOCK_DIM3_F1_1",
-      "type": "define",
-      "scope": "file",
+      "value": 43532,
+      "macro_name": "KERNEL_ALPHA_DEFAULT",
       "occurrences": [
-        301
+        {
+          "line": 130,
+          "context": "kernel(n, 43532, 12313, ((double*)A), ((double*)u1),"
+        }
       ],
-      "function": "main"
+      "reasoning": "Algorithm parameter used to initialize the computation. Naming it documents its role and allows easy tuning."
     },
     {
-      "value": "12",
-      "name": "GEMVER_STRUCT_COPY_BYTES_1",
-      "type": "define",
-      "scope": "file",
+      "value": 12313,
+      "macro_name": "KERNEL_BETA_DEFAULT",
       "occurrences": [
-        309
+        {
+          "line": 130,
+          "context": "kernel(n, 43532, 12313, ((double*)A), ((double*)u1),"
+        }
       ],
-      "function": "main"
+      "reasoning": "Second algorithm-specific coefficient. A named constant clarifies meaning and allows configuration without hunting literals."
     },
     {
-      "value": "256",
-      "name": "GEMVER_BLOCK_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2,
+      "macro_name": "ARG_INDEX_INPUT_SIZE",
       "occurrences": [
-        323,
-        335,
-        339,
-        351,
-        355,
-        367
+        {
+          "line": 117,
+          "context": "n = atoi(argv[2]);"
+        }
       ],
-      "function": "main"
+      "reasoning": "Encodes positional CLI argument for problem size. A macro explains which argument is expected where and prevents off-by-one mistakes if CLI changes."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_INDEX_DUMP_FLAG",
+      "occurrences": [
+        {
+          "line": 118,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "Positional CLI index for the dump/print flag. Naming it avoids magic indexing and eases maintenance."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_PRINT_ENABLED_VALUE",
+      "occurrences": [
+        {
+          "line": 132,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "Documents the sentinel value that enables printing. Makes the condition self-explanatory and resilient to future changes (e.g., different flag values)."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINT_ELEM_FORMAT_LEN",
+      "occurrences": [
+        {
+          "line": 67,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "Array size for the print format string. Naming the length ties it to the intended format and prevents mismatch if the format changes."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_LEN",
+      "occurrences": [
+        {
+          "line": 68,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "Explicit size of \"\\n\" plus terminator. A named constant clarifies this is the newline token buffer size."
+    },
+    {
+      "value": 2,
+      "macro_name": "INIT_U2_DIVISOR",
+      "occurrences": [
+        {
+          "line": 154,
+          "context": "u2[i] = ((double)((i + 1) / n) / 2);"
+        }
+      ],
+      "reasoning": "Initialization scale factor specific to u2. Naming communicates algorithmic intent and eases experimentation."
+    },
+    {
+      "value": 4,
+      "macro_name": "INIT_V1_DIVISOR",
+      "occurrences": [
+        {
+          "line": 155,
+          "context": "v1[i] = ((double)((i + 1) / n) / 4);"
+        }
+      ],
+      "reasoning": "Initialization scale factor for v1. A macro highlights its role as a tunable/model parameter."
+    },
+    {
+      "value": 6,
+      "macro_name": "INIT_V2_DIVISOR",
+      "occurrences": [
+        {
+          "line": 156,
+          "context": "v2[i] = ((double)((i + 1) / n) / 6);"
+        }
+      ],
+      "reasoning": "Initialization scale factor for v2. Naming avoids unexplained numeric divisors scattered in code."
+    },
+    {
+      "value": 8,
+      "macro_name": "INIT_Y_DIVISOR",
+      "occurrences": [
+        {
+          "line": 157,
+          "context": "y[i] = ((double)((i + 1) / n) / 8);"
+        }
+      ],
+      "reasoning": "Initialization scale factor for y. Differentiates this use of 8 from unrelated meanings (bytes per double, block size)."
+    },
+    {
+      "value": 9,
+      "macro_name": "INIT_Z_DIVISOR",
+      "occurrences": [
+        {
+          "line": 158,
+          "context": "z[i] = ((double)((i + 1) / n) / 9);"
+        }
+      ],
+      "reasoning": "Initialization scale factor for z. Explicit naming conveys algorithm design rather than leaving a bare number."
+    },
+    {
+      "value": 8,
+      "macro_name": "KERNEL_A_BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 253,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;"
+        }
+      ],
+      "reasoning": "Block dimension for the x-axis in the kernel_A launch configuration. A macro makes the tuning knob obvious and consistent across uses."
+    },
+    {
+      "value": 32,
+      "macro_name": "KERNEL_A_BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 254,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;"
+        }
+      ],
+      "reasoning": "Block dimension for the y-axis in the kernel_A launch configuration. Naming improves readability and centralizes configuration."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 261,
+          "context": "memcpy(((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 262,
+          "context": "memcpy(((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 263,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 264,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp4)), 12);"
+        }
+      ],
+      "reasoning": "Represents the byte size of a dim3-like struct (3 x 32-bit fields). A named constant documents the assumption and makes it easier to replace with sizeof(...) later."
     }
-  ]
+  ],
+  "confidence": 0.86
 }

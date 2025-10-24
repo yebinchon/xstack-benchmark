@@ -27,7 +27,6 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct __FIXME__l_struct_struct_OC__IO_FILE;
 struct __FIXME__l_struct_struct_OC_dim3;
 struct __FIXME__l_unnamed_1;
 
@@ -39,37 +38,6 @@ struct __FIXME__l_array_1_uint8_t {
 };
 struct __FIXME__l_array_20_uint8_t {
   uint8_t array[20];
-};
-struct __FIXME__l_struct_struct_OC__IO_FILE {
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field0;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field1;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field2;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field3;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field4;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field5;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field6;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field7;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field8;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field9;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field10;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field11;
-  void* __FIXME__l_struct_struct_OC__IO_FILE_field12;
-  struct __FIXME__l_struct_struct_OC__IO_FILE* __FIXME__l_struct_struct_OC__IO_FILE_field13;
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field14;
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field15;
-  uint64_t __FIXME__l_struct_struct_OC__IO_FILE_field16;
-  uint16_t __FIXME__l_struct_struct_OC__IO_FILE_field17;
-  uint8_t __FIXME__l_struct_struct_OC__IO_FILE_field18;
-  uint8_t __FIXME__l_struct_struct_OC__IO_FILE_field19[1];
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field20;
-  uint64_t __FIXME__l_struct_struct_OC__IO_FILE_field21;
-  void* __FIXME__l_struct_struct_OC__IO_FILE_field22;
-  void* __FIXME__l_struct_struct_OC__IO_FILE_field23;
-  struct __FIXME__l_struct_struct_OC__IO_FILE* __FIXME__l_struct_struct_OC__IO_FILE_field24;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field25;
-  uint64_t __FIXME__l_struct_struct_OC__IO_FILE_field26;
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field27;
-  uint8_t __FIXME__l_struct_struct_OC__IO_FILE_field28[20];
 };
 struct __FIXME__l_struct_struct_OC_dim3 {
   uint32_t __FIXME__l_struct_struct_OC_dim3_field0;
@@ -84,16 +52,11 @@ struct __FIXME__l_unnamed_1 {
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, uint32_t, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel(uint32_t, uint32_t, double, double*, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel_contract(uint32_t, uint32_t, double, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void kernel_alpha(uint32_t, uint32_t, double, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
@@ -144,8 +107,6 @@ int main(int argc, char ** argv) {
   int32_t dump_code;
   uint8_t* A;
   uint8_t* B;
-  int32_t __FIXME__call22;
-  int32_t __FIXME__call30;
 
 // INSERT COMMENT IFELSE: main::entry
   n = atoi(argv[2]);
@@ -201,16 +162,10 @@ void kernel(uint32_t n, uint32_t m, double alpha, double* A, double* B) {
   struct __FIXME__l_unnamed_1 __FIXME__agg_2e_tmp5_2e_coerce;    /* Address-exposed local */
   struct __FIXME__l_unnamed_1 __FIXME__agg_2e_tmp6_2e_coerce;    /* Address-exposed local */
   int32_t __FIXME__call;
-  uint8_t* __FIXME__1;
-  uint8_t* __FIXME__2;
   uint32_t i;
   uint32_t j;
   int32_t __FIXME__call3;
   int32_t __FIXME__call4;
-  uint8_t* __FIXME__3;
-  uint8_t* __FIXME__4;
-  uint8_t* __FIXME__5;
-  uint8_t* __FIXME__6;
   uint32_t k;
   uint32_t l;
 
@@ -223,7 +178,7 @@ void kernel(uint32_t n, uint32_t m, double alpha, double* A, double* B) {
   __FIXME__agg_2e_tmp1.__FIXME__l_struct_struct_OC_dim3_field2 = 1;
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp1)), 12);
-// INSERT COMMENT LOOP: kernel::header.010
+// INSERT COMMENT LOOP: kernel::header.0
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < __FIXME__call;   i = i + 1){
 for(int32_t j = 0; j < 256;   j = j + 1){
@@ -242,7 +197,7 @@ kernel_contract(n, m, alpha, B, A, __FIXME__call, 1, 1, 256, 1, 1, i, 0, 0, j, 0
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp6)), ((uint8_t*)(&block)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp5)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp6)), 12);
-// INSERT COMMENT LOOP: kernel::header.0
+// INSERT COMMENT LOOP: kernel::header.010
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < __FIXME__call3;   i = i + 1){
 for(int32_t j = 0; j < __FIXME__call4;   j = j + 1){
@@ -263,7 +218,6 @@ kernel_alpha(n, m, alpha, B, A, __FIXME__call3, __FIXME__call4, 1, 8, 32, 1, i, 
 void print_array(uint32_t m, uint32_t n, double* B) {
   int64_t i;
   int64_t j;
-  int32_t __FIXME__call11;
 
 // INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < m;   i = i + 1){

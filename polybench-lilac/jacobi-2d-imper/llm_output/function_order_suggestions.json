@@ -7,6 +7,6 @@
     1,
     2
   ],
-  "reasoning": "I place 'main' first to follow the guideline that the entry point appears at top for quick overview. Immediately after main comes init_array (0) because it is the initialization/setup routine invoked by main. Next I put num_blocks (3) and kernel_stencil (4) before kernel so that kernel's callees appear before the caller, making dependencies explicit and improving readability when scanning the file. The core computation kernel (1) follows its helpers. Finally print_array (2) is placed last because it is an output/printing utility called only by main \u2014 printing/display helpers are typically grouped at the end. This ordering groups initialization, helper/utilities, core computation, and printing in a logical flow and respects call dependencies (called functions before callers where practical).",
+  "reasoning": "Main first for entry context. Place init_array early as setup. Respect dependency order by putting kernel\u2019s callees num_blocks (utility) and kernel_stencil (inner compute) before kernel. Keep kernel after its helpers to ease navigation and debugging. Print/display function last as output utility.",
   "confidence": 0.9
 }

@@ -1,122 +1,6 @@
 {
   "mappings": [
     {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field0",
-      "after": "file_field0"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field1",
-      "after": "file_field1"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field2",
-      "after": "file_field2"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field3",
-      "after": "file_field3"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field4",
-      "after": "file_field4"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field5",
-      "after": "file_field5"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field6",
-      "after": "file_field6"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field7",
-      "after": "file_field7"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field8",
-      "after": "file_field8"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field9",
-      "after": "file_field9"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field10",
-      "after": "file_field10"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field11",
-      "after": "file_field11"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field12",
-      "after": "file_field12"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field13",
-      "after": "file_field13"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field14",
-      "after": "file_field14"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field15",
-      "after": "file_field15"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field16",
-      "after": "file_field16"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field17",
-      "after": "file_field17"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field18",
-      "after": "file_field18"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field19",
-      "after": "file_field19"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field20",
-      "after": "file_field20"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field21",
-      "after": "file_field21"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field22",
-      "after": "file_field22"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field23",
-      "after": "file_field23"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field24",
-      "after": "file_field24"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field25",
-      "after": "file_field25"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field26",
-      "after": "file_field26"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field27",
-      "after": "file_field27"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field28",
-      "after": "file_field28"
-    },
-    {
       "before": "__FIXME__l_struct_struct_OC_dim3_field0",
       "after": "x"
     },
@@ -130,11 +14,11 @@
     },
     {
       "before": "__FIXME__l_unnamed_1_field0",
-      "after": "packedDim3_field0"
+      "after": "packed64"
     },
     {
       "before": "__FIXME__l_unnamed_1_field1",
-      "after": "packedDim3_field1"
+      "after": "packed32"
     },
     {
       "before": "__FIXME__blockDim_2e_x",
@@ -185,68 +69,44 @@
       "after": "threadIdx_z"
     },
     {
-      "before": "__FIXME__1",
-      "after": "bufA"
-    },
-    {
-      "before": "__FIXME__2",
-      "after": "buf2"
-    },
-    {
-      "before": "__FIXME__3",
-      "after": "buf3"
-    },
-    {
-      "before": "__FIXME__4",
-      "after": "buf4"
-    },
-    {
       "before": "__FIXME__agg_2e_tmp",
-      "after": "gridDimA"
+      "after": "grid_dim_k3"
     },
     {
       "before": "__FIXME__agg_2e_tmp43",
-      "after": "blockDimA"
+      "after": "block_dim_k3"
     },
     {
       "before": "__FIXME__agg_2e_tmp43_2e_coerce",
-      "after": "packedBlockDimA"
+      "after": "block_dim_k3_packed"
     },
     {
       "before": "__FIXME__agg_2e_tmp45",
-      "after": "gridDimB"
+      "after": "grid_dim_k4"
     },
     {
       "before": "__FIXME__agg_2e_tmp45_2e_coerce",
-      "after": "packedGridDimB"
+      "after": "grid_dim_k4_packed"
     },
     {
       "before": "__FIXME__agg_2e_tmp47",
-      "after": "blockDimB"
+      "after": "block_dim_k4"
     },
     {
       "before": "__FIXME__agg_2e_tmp47_2e_coerce",
-      "after": "packedBlockDimB"
+      "after": "block_dim_k4_packed"
     },
     {
       "before": "__FIXME__agg_2e_tmp_2e_coerce",
-      "after": "packedGridDimA"
-    },
-    {
-      "before": "__FIXME__call32",
-      "after": "call32_val"
+      "after": "grid_dim_k3_packed"
     },
     {
       "before": "__FIXME__call42",
-      "after": "numBlocksNx"
+      "after": "grid_dim_x_k3"
     },
     {
       "before": "__FIXME__call46",
-      "after": "numBlocksNy"
-    },
-    {
-      "before": "__FIXME__call54",
-      "after": "call54_val"
+      "after": "grid_dim_x_k4"
     },
     {
       "before": "__FIXME__tmp1",
@@ -265,76 +125,180 @@
       "after": "y_dbl"
     },
     {
+      "before": "__FIXME__tmp5",
+      "after": "grid_dim_k3_packed_bytes"
+    },
+    {
       "before": "__FIXME__tmp6",
-      "after": "A_dbl_k3"
+      "after": "grid_dim_k3_bytes"
     },
     {
       "before": "__FIXME__tmp7",
-      "after": "x_dbl_k3"
+      "after": "block_dim_k3_packed_bytes"
     },
     {
       "before": "__FIXME__tmp8",
-      "after": "y_dbl_k3"
+      "after": "block_dim_k3_bytes"
     },
     {
       "before": "__FIXME__tmp9",
-      "after": "tmp_dbl_k3"
+      "after": "A_dbl_k3"
     },
     {
       "before": "__FIXME__tmp10",
-      "after": "numBlocksA_k3"
+      "after": "x_dbl_k3"
     },
     {
       "before": "__FIXME__tmp11",
-      "after": "blockDimAx_k3"
+      "after": "y_dbl_k3"
+    },
+    {
+      "before": "__FIXME__tmp12",
+      "after": "tmp_dbl_k3"
     },
     {
       "before": "__FIXME__tmp13",
-      "after": "A_dbl_k4"
+      "after": "grid_dim_x_param_k3"
     },
     {
       "before": "__FIXME__tmp14",
-      "after": "x_dbl_k4"
+      "after": "grid_dim_y_param_k3"
     },
     {
       "before": "__FIXME__tmp15",
-      "after": "y_dbl_k4"
+      "after": "grid_dim_z_param_k3"
     },
     {
       "before": "__FIXME__tmp16",
-      "after": "tmp_dbl_k4"
+      "after": "block_dim_x_param_k3"
     },
     {
       "before": "__FIXME__tmp17",
-      "after": "numBlocksB_k4"
+      "after": "block_dim_y_param_k3"
     },
     {
       "before": "__FIXME__tmp18",
-      "after": "blockDimAx_k4"
+      "after": "block_dim_z_param_k3"
     },
     {
-      "before": "__FIXME__call3",
-      "after": "temp_i32"
+      "before": "__FIXME__tmp19",
+      "after": "block_idx_x_param_k3"
+    },
+    {
+      "before": "__FIXME__tmp20",
+      "after": "block_idx_y_param_k3"
+    },
+    {
+      "before": "__FIXME__tmp21",
+      "after": "block_idx_z_param_k3"
+    },
+    {
+      "before": "__FIXME__tmp22",
+      "after": "thread_idx_x_param_k3"
+    },
+    {
+      "before": "__FIXME__tmp23",
+      "after": "thread_idx_y_param_k3"
+    },
+    {
+      "before": "__FIXME__tmp24",
+      "after": "thread_idx_z_param_k3"
+    },
+    {
+      "before": "__FIXME__tmp25",
+      "after": "grid_dim_k4_packed_bytes"
+    },
+    {
+      "before": "__FIXME__tmp26",
+      "after": "grid_dim_k4_bytes"
+    },
+    {
+      "before": "__FIXME__tmp27",
+      "after": "block_dim_k4_packed_bytes"
+    },
+    {
+      "before": "__FIXME__tmp28",
+      "after": "block_dim_k4_bytes"
+    },
+    {
+      "before": "__FIXME__tmp29",
+      "after": "A_dbl_k4"
+    },
+    {
+      "before": "__FIXME__tmp30",
+      "after": "x_dbl_k4"
+    },
+    {
+      "before": "__FIXME__tmp31",
+      "after": "y_dbl_k4"
+    },
+    {
+      "before": "__FIXME__tmp32",
+      "after": "tmp_dbl_k4"
+    },
+    {
+      "before": "__FIXME__tmp33",
+      "after": "grid_dim_x_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp34",
+      "after": "grid_dim_y_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp35",
+      "after": "grid_dim_z_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp36",
+      "after": "block_dim_x_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp37",
+      "after": "block_dim_y_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp38",
+      "after": "block_dim_z_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp39",
+      "after": "block_idx_x_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp40",
+      "after": "block_idx_y_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp41",
+      "after": "block_idx_z_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp42",
+      "after": "thread_idx_x_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp43",
+      "after": "thread_idx_y_param_k4"
+    },
+    {
+      "before": "__FIXME__tmp44",
+      "after": "thread_idx_z_param_k4"
     },
     {
       "before": "__FIXME__l_array_1_uint8_t",
-      "after": "uint8_array_1"
+      "after": "Uint8Array1"
     },
     {
       "before": "__FIXME__l_array_20_uint8_t",
-      "after": "uint8_array_20"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE",
-      "after": "IO_FILE_struct_t"
+      "after": "Uint8Array20"
     },
     {
       "before": "__FIXME__l_struct_struct_OC_dim3",
-      "after": "dim3"
+      "after": "Dim3"
     },
     {
       "before": "__FIXME__l_unnamed_1",
-      "after": "PackedDim3"
+      "after": "Dim3Packed"
     }
   ]
 }

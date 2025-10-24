@@ -3,52 +3,52 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize arrays A and B of length n with deterministic test values: A[i]=(i+2)/n and B[i]=(i+3)/n"
+      "replacement": "// Initialize arrays A and B of length n with normalized index-based values to set up stencil initial conditions."
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Compute how many blocks of size 'factor' are needed to cover 'num' elements (ceiling division)"
+      "replacement": "// Compute ceil(num/factor): the number of blocks needed to cover num items with 'factor' threads per block."
     },
     {
       "id": "unknown_FUNCTION_kernel_stencil",
       "original": "// INSERT COMMENT FUNCTION: kernel_stencil",
-      "replacement": "// Per-thread CUDA-like kernel: compute the global index from block/thread coordinates and apply a stencil update from A into B for interior elements"
+      "replacement": "// 1D stencil compute kernel: uses grid/block/thread indices to process interior elements while skipping boundary points."
     },
     {
       "id": "unknown_FUNCTION_kernel",
       "original": "// INSERT COMMENT FUNCTION: kernel",
-      "replacement": "// Host-side driver that configures grid/block dimensions and runs the stencil kernel for tsteps iterations to update arrays A and B"
+      "replacement": "// Driver routine that runs tsteps stencil iterations, configuring grid/block sizes and launching the compute kernel each step."
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the contents of array A (length n) to stderr using the provided double format, with human-friendly line breaks"
+      "replacement": "// Print the n elements of array A with formatted output, inserting periodic line breaks for readability."
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Loop over all indices 0..n-1 and initialize A and B with fractional values derived from the index for predictable test data"
+      "replacement": "// Iterate i from 0 to n-1 to set A[i]=(i+2)/n and B[i]=(i+3)/n as increasing normalized values."
     },
     {
       "id": "unknown_LOOP_kernel",
       "original": "// INSERT COMMENT LOOP: kernel",
-      "replacement": "// Time-stepping loop: for each timestep compute the number of blocks needed (256 threads per block) to cover n and set up the grid for the kernel launch"
+      "replacement": "// Time-stepping loop: for each t, compute blocks for n elements at 256 threads/block and launch the stencil kernel."
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Iterate over array elements and print each value; insert a line break/spacing every 20 values to keep output readable"
+      "replacement": "// Traverse all n elements, printing each value and inserting a newline at regular intervals for formatting."
     },
     {
       "id": "unknown_IFELSE_main::entry",
       "original": "// INSERT COMMENT IFELSE: main::entry",
-      "replacement": "// Parse command-line arguments (dump_code, tsteps, n) and allocate two double arrays A and B of length n"
+      "replacement": "// Parse command-line args (dump flag, time steps, size) and allocate arrays A and B sized for n doubles."
     },
     {
       "id": "unknown_IFELSE_kernel_stencil::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_stencil::entry",
-      "replacement": "// Compute this thread's global index (shifted by +1) and execute the stencil only if the index lies in the interior range (1..n-2) to avoid boundaries"
+      "replacement": "// Compute the thread's global 1D index and guard work to interior indices (1 <= i <= n-2), skipping boundaries."
     }
   ]
 }

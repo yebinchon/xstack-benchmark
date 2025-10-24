@@ -1,49 +1,214 @@
 {
   "extractions": [
     {
-      "value": "3",
-      "name": "INIT_ARRAY_OFFSET_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
       "occurrences": [
-        173
+        {
+          "line": 111,
+          "context": "A = malloc(n * n * 8);"
+        },
+        {
+          "line": 112,
+          "context": "B = malloc(n * n * 8);"
+        }
       ],
-      "function": "init_array"
+      "reasoning": "8 is the byte-size of a double on the target; naming it clarifies allocation intent and avoids hard-coding a type size."
     },
     {
-      "value": "8",
-      "name": "BLOCK_ROWS_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "FORMAT_STR_BUF_SIZE",
       "occurrences": [
-        217,
-        232,
-        246
+        {
+          "line": 64,
+          "context": "nt8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
       ],
-      "function": "kernel_jacobi_2d_imper"
+      "reasoning": "Documents that the buffer is sized for the format string (including NUL), avoiding a mysterious array bound."
     },
     {
-      "value": "32",
-      "name": "BLOCK_COLS_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2,
+      "macro_name": "NEWLINE_STR_BUF_SIZE",
       "occurrences": [
-        218,
-        233,
-        247
+        {
+          "line": 65,
+          "context": "__FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
       ],
-      "function": "kernel_jacobi_2d_imper"
+      "reasoning": "Makes it explicit that the newline string buffer includes the NUL terminator."
     },
     {
-      "value": "12",
-      "name": "BLOCK_STRUCT_SIZE_BYTES_1",
-      "type": "define",
-      "scope": "file",
+      "value": 1,
+      "macro_name": "DUMP_CODE_ENABLED",
       "occurrences": [
-        226,
-        240
+        {
+          "line": 117,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
       ],
-      "function": "kernel_jacobi_2d_imper"
+      "reasoning": "Gives semantic meaning to the flag value that enables output dumping."
+    },
+    {
+      "value": 2,
+      "macro_name": "INIT_A_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 132,
+          "context": "(((double)(i) * (double)((j + 2))) + 2) / (double)(n));"
+        }
+      ],
+      "reasoning": "Clarifies the algorithm-specific offset applied to j when initializing A."
+    },
+    {
+      "value": 2,
+      "macro_name": "INIT_A_CONST_TERM",
+      "occurrences": [
+        {
+          "line": 132,
+          "context": "(((double)(i) * (double)((j + 2))) + 2) / (double)(n));"
+        }
+      ],
+      "reasoning": "Separately names the constant term added in A's initialization, which has different semantics from the j-offset."
+    },
+    {
+      "value": 3,
+      "macro_name": "INIT_B_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 133,
+          "context": "(((double)(i) * (double)((j + 3))) + 3) / (double)(n));"
+        }
+      ],
+      "reasoning": "Clarifies the algorithm-specific offset applied to j when initializing B."
+    },
+    {
+      "value": 3,
+      "macro_name": "INIT_B_CONST_TERM",
+      "occurrences": [
+        {
+          "line": 133,
+          "context": "(((double)(i) * (double)((j + 3))) + 3) / (double)(n));"
+        }
+      ],
+      "reasoning": "Separately names the constant term added in B's initialization, which has different semantics from the j-offset."
+    },
+    {
+      "value": 1,
+      "macro_name": "STENCIL_HALO_RADIUS",
+      "occurrences": [
+        {
+          "line": 148,
+          "context": "x + __FIXME__threadIdx_2e_x + 1;"
+        },
+        {
+          "line": 149,
+          "context": "y + __FIXME__threadIdx_2e_y + 1;"
+        },
+        {
+          "line": 150,
+          "context": "if (i < (n - 1)) { // IFELSE MARKER: entry I"
+        },
+        {
+          "line": 151,
+          "context": "if (j < (n - 1)) { // IFELSE MARKER: land.lh"
+        }
+      ],
+      "reasoning": "This 1 represents the one-cell halo/guard around the domain; naming it ties together index offsets and boundary checks."
+    },
+    {
+      "value": 5,
+      "macro_name": "STENCIL_DENOMINATOR_5PT",
+      "occurrences": [
+        {
+          "line": 152,
+          "context": "((i - 1) * n + j)]) / 5);"
+        }
+      ],
+      "reasoning": "5 is the normalization factor for a 5-point stencil; naming it makes the stencil order explicit."
+    },
+    {
+      "value": 2,
+      "macro_name": "STENCIL_BORDER_TOTAL",
+      "occurrences": [
+        {
+          "line": 180,
+          "context": "num_blocks((n - 2), block.__FIXME__l_struct_str"
+        },
+        {
+          "line": 181,
+          "context": "num_blocks((n - 2), block.__FIXME__l_struct_str"
+        }
+      ],
+      "reasoning": "Accounts for the total of one-cell halo on both sides (2); clarifies why the problem size is reduced before tiling."
+    },
+    {
+      "value": 8,
+      "macro_name": "BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 177,
+          "context": "truct_struct_OC_dim3_field0 = 8;"
+        },
+        {
+          "line": 192,
+          "context": "for(int32_t l = 0; l < 8;   l = l + 1){"
+        }
+      ],
+      "reasoning": "Defines the X dimension of the block/tiling and ties it to the loop bounds."
+    },
+    {
+      "value": 32,
+      "macro_name": "BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 178,
+          "context": "truct_struct_OC_dim3_field1 = 32;"
+        },
+        {
+          "line": 193,
+          "context": "for(int32_t m = 0; m < 32;   m = m + 1){"
+        }
+      ],
+      "reasoning": "Defines the Y dimension of the block/tiling and ties it to the loop bounds."
+    },
+    {
+      "value": 1,
+      "macro_name": "Z_DIM_SIZE",
+      "occurrences": [
+        {
+          "line": 179,
+          "context": "truct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 184,
+          "context": "truct_struct_OC_dim3_field2 = 1;"
+        }
+      ],
+      "reasoning": "Documents the single-layer Z dimension used for both block and grid."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 185,
+          "context": "e_tmp)), ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 186,
+          "context": "tmp3)), ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 187,
+          "context": "8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 188,
+          "context": "_t*)(&__FIXME__agg_2e_tmp3)), 12);"
+        }
+      ],
+      "reasoning": "12 is the byte size of the dim3-like struct (3 x uint32_t); naming it avoids a brittle magic memcpy size."
     }
-  ]
+  ],
+  "confidence": 0.9
 }

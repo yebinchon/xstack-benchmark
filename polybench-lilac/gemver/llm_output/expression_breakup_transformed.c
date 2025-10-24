@@ -4,6 +4,24 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/* Magic number constants */
+#define BYTES_PER_DOUBLE 8
+#define KERNEL_ALPHA_DEFAULT 43532
+#define KERNEL_BETA_DEFAULT 12313
+#define ARG_INDEX_INPUT_SIZE 2
+#define ARG_INDEX_DUMP_FLAG 1
+#define DUMP_PRINT_ENABLED_VALUE 1
+#define PRINT_ELEM_FORMAT_LEN 8
+#define NEWLINE_STR_LEN 2
+#define INIT_U2_DIVISOR 2
+#define INIT_V1_DIVISOR 4
+#define INIT_V2_DIVISOR 6
+#define INIT_Y_DIVISOR 8
+#define INIT_Z_DIVISOR 9
+#define KERNEL_A_BLOCK_DIM_X 8
+#define KERNEL_A_BLOCK_DIM_Y 32
+#define DIM3_STRUCT_SIZE_BYTES 12
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -27,7 +45,6 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct __FIXME__l_struct_struct_OC__IO_FILE;
 struct __FIXME__l_struct_struct_OC_dim3;
 struct __FIXME__l_unnamed_1;
 
@@ -39,37 +56,6 @@ struct __FIXME__l_array_1_uint8_t {
 };
 struct __FIXME__l_array_20_uint8_t {
   uint8_t array[20];
-};
-struct __FIXME__l_struct_struct_OC__IO_FILE {
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field0;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field1;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field2;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field3;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field4;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field5;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field6;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field7;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field8;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field9;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field10;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field11;
-  void* __FIXME__l_struct_struct_OC__IO_FILE_field12;
-  struct __FIXME__l_struct_struct_OC__IO_FILE* __FIXME__l_struct_struct_OC__IO_FILE_field13;
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field14;
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field15;
-  uint64_t __FIXME__l_struct_struct_OC__IO_FILE_field16;
-  uint16_t __FIXME__l_struct_struct_OC__IO_FILE_field17;
-  uint8_t __FIXME__l_struct_struct_OC__IO_FILE_field18;
-  uint8_t __FIXME__l_struct_struct_OC__IO_FILE_field19[1];
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field20;
-  uint64_t __FIXME__l_struct_struct_OC__IO_FILE_field21;
-  void* __FIXME__l_struct_struct_OC__IO_FILE_field22;
-  void* __FIXME__l_struct_struct_OC__IO_FILE_field23;
-  struct __FIXME__l_struct_struct_OC__IO_FILE* __FIXME__l_struct_struct_OC__IO_FILE_field24;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field25;
-  uint64_t __FIXME__l_struct_struct_OC__IO_FILE_field26;
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field27;
-  uint8_t __FIXME__l_struct_struct_OC__IO_FILE_field28[20];
 };
 struct __FIXME__l_struct_struct_OC_dim3 {
   uint32_t __FIXME__l_struct_struct_OC_dim3_field0;
@@ -86,7 +72,6 @@ struct __FIXME__l_unnamed_1 {
 /* Function Declarations */
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, double*, double*, double*, double*, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel(uint32_t, double, double, double*, double*, double*, double*, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
@@ -97,8 +82,8 @@ void kernel_w(uint32_t, double, double, double*, double*, double*, double*, doub
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t __FIXME_GLOBAL___OC_str[8] = { "%0.2lf " };
-uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { "\n" };
+uint8_t __FIXME_GLOBAL___OC_str[PRINT_ELEM_FORMAT_LEN] = { "%0.2lf " };
+uint8_t __FIXME_GLOBAL___OC_str_OC_1[NEWLINE_STR_LEN] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -145,21 +130,19 @@ int main(int argc, char ** argv) {
   uint8_t* x;
   uint8_t* y;
   uint8_t* z;
-  int32_t __FIXME__call62;
-  int32_t __FIXME__call89;
 
 // INSERT COMMENT IFELSE: main::entry
-  n = atoi(argv[2]);
-  dump_code = atoi(argv[1]);
-  A = malloc(n * n * 8);
-  u1 = malloc(n * 8);
-  v1 = malloc(n * 8);
-  u2 = malloc(n * 8);
-  v2 = malloc(n * 8);
-  w = malloc(n * 8);
-  x = malloc(n * 8);
-  y = malloc(n * 8);
-  z = malloc(n * 8);
+  n = atoi(argv[ARG_INDEX_INPUT_SIZE]);
+  dump_code = atoi(argv[ARG_INDEX_DUMP_FLAG]);
+  A = malloc(n * n * BYTES_PER_DOUBLE);
+  u1 = malloc(n * BYTES_PER_DOUBLE);
+  v1 = malloc(n * BYTES_PER_DOUBLE);
+  u2 = malloc(n * BYTES_PER_DOUBLE);
+  v2 = malloc(n * BYTES_PER_DOUBLE);
+  w = malloc(n * BYTES_PER_DOUBLE);
+  x = malloc(n * BYTES_PER_DOUBLE);
+  y = malloc(n * BYTES_PER_DOUBLE);
+  z = malloc(n * BYTES_PER_DOUBLE);
   __auto_type __FIXME__tmp1 = (double*)A;
   __auto_type __FIXME__tmp2 = (double*)u1;
   __auto_type __FIXME__tmp3 = (double*)v1;
@@ -171,18 +154,11 @@ int main(int argc, char ** argv) {
   __auto_type __FIXME__tmp9 = (double*)z;
   init_array(n, __FIXME__tmp1, __FIXME__tmp2, __FIXME__tmp3, __FIXME__tmp4, __FIXME__tmp5, __FIXME__tmp6, __FIXME__tmp7, __FIXME__tmp8, __FIXME__tmp9);
 ;
-  __auto_type __FIXME__tmp11 = (double*)A;
-  __auto_type __FIXME__tmp12 = (double*)u1;
-  __auto_type __FIXME__tmp13 = (double*)v1;
-  __auto_type __FIXME__tmp14 = (double*)u2;
-  __auto_type __FIXME__tmp15 = (double*)v2;
-  __auto_type __FIXME__tmp16 = (double*)w;
-  __auto_type __FIXME__tmp17 = (double*)x;
-  __auto_type __FIXME__tmp18 = (double*)y;
-  __auto_type __FIXME__tmp19 = (double*)z;
-  kernel(n, 43532, 12313, __FIXME__tmp11, __FIXME__tmp12, __FIXME__tmp13, __FIXME__tmp14, __FIXME__tmp15, __FIXME__tmp16, __FIXME__tmp17, __FIXME__tmp18, __FIXME__tmp19);
+  __auto_type __FIXME__tmp10 = KERNEL_ALPHA_DEFAULT;
+  __auto_type __FIXME__tmp11 = KERNEL_BETA_DEFAULT;
+  kernel(n, __FIXME__tmp10, __FIXME__tmp11, __FIXME__tmp1, __FIXME__tmp2, __FIXME__tmp3, __FIXME__tmp4, __FIXME__tmp5, __FIXME__tmp6, __FIXME__tmp7, __FIXME__tmp8, __FIXME__tmp9);
 ;
-  if (dump_code == 1) { // IFELSE MARKER: entry IF
+  if (dump_code == DUMP_PRINT_ENABLED_VALUE) { // IFELSE MARKER: entry IF
 print_array(n, ((double*)w));
   }
 free(((uint8_t*)((double*)A)));
@@ -204,11 +180,11 @@ void init_array(uint32_t n, double* A, double* u1, double* v1, double* u2, doubl
 // INSERT COMMENT LOOP: init_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
   u1[i] = (double)(i);
-  u2[i] = ((double)((i + 1) / n) / 2);
-  v1[i] = ((double)((i + 1) / n) / 4);
-  v2[i] = ((double)((i + 1) / n) / 6);
-  y[i] = ((double)((i + 1) / n) / 8);
-  z[i] = ((double)((i + 1) / n) / 9);
+  u2[i] = ((double)((i + 1) / n) / INIT_U2_DIVISOR);
+  v1[i] = ((double)((i + 1) / n) / INIT_V1_DIVISOR);
+  v2[i] = ((double)((i + 1) / n) / INIT_V2_DIVISOR);
+  y[i] = ((double)((i + 1) / n) / INIT_Y_DIVISOR);
+  z[i] = ((double)((i + 1) / n) / INIT_Z_DIVISOR);
   x[i] = 0;
   w[i] = 0;
 for(int64_t j = 0; j < n;   j = j + 1){
@@ -229,10 +205,8 @@ void kernel_A(uint32_t n, double alpha, double beta, double* A, double* u1, doub
 // INSERT COMMENT IFELSE: kernel_A::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;
   j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y;
-  if (i < n) { // IFELSE MARKER: entry IF
-  if (j < n) { // IFELSE MARKER: land.lhs.true IF
-  A[(i * n + j)] = (A[(i * n + j)] + ((u1[i] * v1[j]) + (u2[i] * v2[j])));
-  }
+  if (i < n && j < n) {
+A[(i * n + j)] = (A[(i * n + j)] + ((u1[i] * v1[j]) + (u2[i] * v2[j])));
   }
   return;
 }
@@ -297,36 +271,26 @@ void kernel(uint32_t n, double alpha, double beta, double* A, double* u1, double
   struct __FIXME__l_unnamed_1 __FIXME__agg_2e_tmp22_2e_coerce;    /* Address-exposed local */
   int32_t __FIXME__call;
   int32_t __FIXME__call3;
-  uint8_t* __FIXME__1;
-  uint8_t* __FIXME__2;
-  uint8_t* __FIXME__3;
-  uint8_t* __FIXME__4;
   uint32_t i;
   uint32_t j;
   uint32_t k;
   uint32_t l;
   int32_t __FIXME__call7;
-  uint8_t* __FIXME__5;
-  uint8_t* __FIXME__6;
   int32_t __FIXME__call14;
-  uint8_t* __FIXME__7;
-  uint8_t* __FIXME__8;
   int32_t __FIXME__call21;
-  uint8_t* __FIXME__9;
-  uint8_t* __FIXME__10;
 
-  block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;
-  block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;
+  block.__FIXME__l_struct_struct_OC_dim3_field0 = KERNEL_A_BLOCK_DIM_X;
+  block.__FIXME__l_struct_struct_OC_dim3_field1 = KERNEL_A_BLOCK_DIM_Y;
   block.__FIXME__l_struct_struct_OC_dim3_field2 = 1;
   __FIXME__call = num_blocks(n, block.__FIXME__l_struct_struct_OC_dim3_field0);
   __FIXME__call3 = num_blocks(n, block.__FIXME__l_struct_struct_OC_dim3_field1);
   grid.__FIXME__l_struct_struct_OC_dim3_field0 = __FIXME__call;
   grid.__FIXME__l_struct_struct_OC_dim3_field1 = __FIXME__call3;
   grid.__FIXME__l_struct_struct_OC_dim3_field2 = 1;
-  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp4)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);
-  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp4_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp4)), 12);
+  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), ((uint8_t*)(&grid)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp4)), ((uint8_t*)(&block)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp4_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp4)), DIM3_STRUCT_SIZE_BYTES);
 // INSERT COMMENT LOOP: kernel::header.0
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < __FIXME__call;   i = i + 1){

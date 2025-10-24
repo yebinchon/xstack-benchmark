@@ -1,0 +1,61 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 178,
+      "line_content": "  __auto_type __FIXME__tmp1 = (__FIXME__j < n);",
+      "original_line": "  __auto_type __FIXME__tmp1 = (__FIXME__j < n);"
+    },
+    {
+      "line_number": 179,
+      "line_content": "  __auto_type __FIXME__tmp2 = (__FIXME__j < i);",
+      "original_line": "  __auto_type __FIXME__tmp2 = (__FIXME__j < i);"
+    },
+    {
+      "line_number": 180,
+      "line_content": "  __auto_type __FIXME__tmp3 = (i < n);",
+      "original_line": "  __auto_type __FIXME__tmp3 = (i < n);"
+    },
+    {
+      "line_number": 181,
+      "line_content": "  __auto_type __FIXME__tmp4 = (__FIXME__j < k);",
+      "original_line": "  __auto_type __FIXME__tmp4 = (__FIXME__j < k);"
+    },
+    {
+      "line_number": 182,
+      "line_content": "  __auto_type __FIXME__tmp5 = (k <= i);",
+      "original_line": "  __auto_type __FIXME__tmp5 = (k <= i);"
+    },
+    {
+      "line_number": 183,
+      "line_content": "  __auto_type __FIXME__tmp6 = __FIXME__tmp1 & __FIXME__tmp2 & __FIXME__tmp3 & __FIXME__tmp4 & __FIXME__tmp5;",
+      "original_line": "  __auto_type __FIXME__tmp6 = __FIXME__tmp1 & __FIXME__tmp2 & __FIXME__tmp3 & __FIXME__tmp4 & __FIXME__tmp5;"
+    },
+    {
+      "line_number": 185,
+      "line_content": "  __auto_type __FIXME__tmp7 = i * n + k;",
+      "original_line": "  __auto_type __FIXME__tmp7 = i * n + k;"
+    },
+    {
+      "line_number": 186,
+      "line_content": "  __auto_type __FIXME__tmp8 = i * n + __FIXME__j;",
+      "original_line": "  __auto_type __FIXME__tmp8 = i * n + __FIXME__j;"
+    },
+    {
+      "line_number": 187,
+      "line_content": "  __auto_type __FIXME__tmp9 = k * n + __FIXME__j;",
+      "original_line": "  __auto_type __FIXME__tmp9 = k * n + __FIXME__j;"
+    },
+    {
+      "line_number": 188,
+      "line_content": "  __auto_type __FIXME__tmp10 = A[__FIXME__tmp8] * A[__FIXME__tmp9];",
+      "original_line": "  __auto_type __FIXME__tmp10 = A[__FIXME__tmp8] * A[__FIXME__tmp9];"
+    },
+    {
+      "line_number": 189,
+      "line_content": "  __auto_type __FIXME__tmp11 = A[__FIXME__tmp7] - __FIXME__tmp10;",
+      "original_line": "  __auto_type __FIXME__tmp11 = A[__FIXME__tmp7] - __FIXME__tmp10;"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

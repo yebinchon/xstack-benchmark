@@ -2,126 +2,136 @@
   "function_name": "kernel_stencil",
   "breakups": [
     {
-      "line_number": 187,
-      "original_expression": "A[(i * n + j)] = (((((((((A[(((i - 1) * n + j) - 1)] + A[((i - 1) * n + j)]) + A[(((i - 1) * n + j) + 1)]) + A[((i * n + j) - 1)]) + A[(i * n + j)]) + A[((i * n + j) + 1)]) + A[(((i + 1) * n + j) - 1)]) + A[((i + 1) * n + j)]) + A[(((i + 1) * n + j) + 1)]) / 9);",
+      "line_number": 166,
+      "original_expression": "((((((((A[(((i - STENCIL_HALO_RADIUS) * n + j) - STENCIL_HALO_RADIUS)] + A[((i - STENCIL_HALO_RADIUS) * n + j)]) + A[(((i - 1) * n + j) + 1)]) + A[((i * n + j) - 1)]) + A[(i * n + j)]) + A[((i * n + j) + 1)]) + A[(((i + 1) * n + j) - 1)]) + A[((i + 1) * n + j)]) + A[(((i + 1) * n + j) + 1)]) / STENCIL_NEIGHBOR_COUNT",
       "breakup_steps": [
         {
-          "temp_var": "row_im1",
-          "expression": "(i - 1) * n",
-          "description": "Compute the base index (start) of row i-1"
+          "temp_var": "center_idx",
+          "expression": "i * n + j",
+          "description": "Linear index of the center element"
         },
         {
-          "temp_var": "row_i",
-          "expression": "i * n",
-          "description": "Compute the base index (start) of row i"
+          "temp_var": "r",
+          "expression": "STENCIL_HALO_RADIUS",
+          "description": "Alias the stencil halo radius for readability"
         },
         {
-          "temp_var": "row_ip1",
-          "expression": "(i + 1) * n",
-          "description": "Compute the base index (start) of row i+1"
+          "temp_var": "i_mr",
+          "expression": "i - r",
+          "description": "Row index r steps above center"
         },
         {
-          "temp_var": "idx_im1_jm1",
-          "expression": "row_im1 + (j - 1)",
-          "description": "Index of element (i-1, j-1)"
+          "temp_var": "j_mr",
+          "expression": "j - r",
+          "description": "Column index r steps left of center"
         },
         {
-          "temp_var": "idx_im1_j",
-          "expression": "row_im1 + j",
-          "description": "Index of element (i-1, j)"
+          "temp_var": "i_m1",
+          "expression": "i - 1",
+          "description": "Row index one above center (matches original expression)"
         },
         {
-          "temp_var": "idx_im1_jp1",
-          "expression": "row_im1 + (j + 1)",
-          "description": "Index of element (i-1, j+1)"
+          "temp_var": "j_p1",
+          "expression": "j + 1",
+          "description": "Column index one right of center"
         },
         {
-          "temp_var": "idx_i_jm1",
-          "expression": "row_i + (j - 1)",
-          "description": "Index of element (i, j-1)"
+          "temp_var": "i_p1",
+          "expression": "i + 1",
+          "description": "Row index one below center"
         },
         {
-          "temp_var": "idx_i_j",
-          "expression": "row_i + j",
-          "description": "Index of element (i, j) (center)"
+          "temp_var": "j_m1",
+          "expression": "j - 1",
+          "description": "Column index one left of center"
         },
         {
-          "temp_var": "idx_i_jp1",
-          "expression": "row_i + (j + 1)",
-          "description": "Index of element (i, j+1)"
+          "temp_var": "nw_idx",
+          "expression": "i_mr * n + j_mr",
+          "description": "Northwest neighbor linear index"
         },
         {
-          "temp_var": "idx_ip1_jm1",
-          "expression": "row_ip1 + (j - 1)",
-          "description": "Index of element (i+1, j-1)"
+          "temp_var": "n_idx",
+          "expression": "i_mr * n + j",
+          "description": "North neighbor linear index"
         },
         {
-          "temp_var": "idx_ip1_j",
-          "expression": "row_ip1 + j",
-          "description": "Index of element (i+1, j)"
+          "temp_var": "ne_idx",
+          "expression": "i_m1 * n + j_p1",
+          "description": "Northeast neighbor linear index (uses +/-1 as in original)"
         },
         {
-          "temp_var": "idx_ip1_jp1",
-          "expression": "row_ip1 + (j + 1)",
-          "description": "Index of element (i+1, j+1)"
+          "temp_var": "w_idx",
+          "expression": "center_idx - 1",
+          "description": "West neighbor linear index"
         },
         {
-          "temp_var": "val_im1_jm1",
-          "expression": "A[idx_im1_jm1]",
-          "description": "Load value at (i-1, j-1)"
+          "temp_var": "e_idx",
+          "expression": "center_idx + 1",
+          "description": "East neighbor linear index"
         },
         {
-          "temp_var": "val_im1_j",
-          "expression": "A[idx_im1_j]",
-          "description": "Load value at (i-1, j)"
+          "temp_var": "sw_idx",
+          "expression": "i_p1 * n + j_m1",
+          "description": "Southwest neighbor linear index"
         },
         {
-          "temp_var": "val_im1_jp1",
-          "expression": "A[idx_im1_jp1]",
-          "description": "Load value at (i-1, j+1)"
+          "temp_var": "s_idx",
+          "expression": "i_p1 * n + j",
+          "description": "South neighbor linear index"
         },
         {
-          "temp_var": "val_i_jm1",
-          "expression": "A[idx_i_jm1]",
-          "description": "Load value at (i, j-1)"
+          "temp_var": "se_idx",
+          "expression": "i_p1 * n + j_p1",
+          "description": "Southeast neighbor linear index"
         },
         {
-          "temp_var": "val_i_j",
-          "expression": "A[idx_i_j]",
-          "description": "Load value at (i, j) (center)"
+          "temp_var": "sum0",
+          "expression": "A[nw_idx] + A[n_idx]",
+          "description": "Accumulate in original left-to-right order: NW + N"
         },
         {
-          "temp_var": "val_i_jp1",
-          "expression": "A[idx_i_jp1]",
-          "description": "Load value at (i, j+1)"
+          "temp_var": "sum1",
+          "expression": "sum0 + A[ne_idx]",
+          "description": "Add NE"
         },
         {
-          "temp_var": "val_ip1_jm1",
-          "expression": "A[idx_ip1_jm1]",
-          "description": "Load value at (i+1, j-1)"
+          "temp_var": "sum2",
+          "expression": "sum1 + A[w_idx]",
+          "description": "Add W"
         },
         {
-          "temp_var": "val_ip1_j",
-          "expression": "A[idx_ip1_j]",
-          "description": "Load value at (i+1, j)"
+          "temp_var": "sum3",
+          "expression": "sum2 + A[center_idx]",
+          "description": "Add center"
         },
         {
-          "temp_var": "val_ip1_jp1",
-          "expression": "A[idx_ip1_jp1]",
-          "description": "Load value at (i+1, j+1)"
+          "temp_var": "sum4",
+          "expression": "sum3 + A[e_idx]",
+          "description": "Add E"
         },
         {
-          "temp_var": "sum_neighbors",
-          "expression": "val_im1_jm1 + val_im1_j + val_im1_jp1 + val_i_jm1 + val_i_j + val_i_jp1 + val_ip1_jm1 + val_ip1_j + val_ip1_jp1",
-          "description": "Sum all nine neighbor values (3x3 window)"
+          "temp_var": "sum5",
+          "expression": "sum4 + A[sw_idx]",
+          "description": "Add SW"
         },
         {
-          "temp_var": "result",
-          "expression": "sum_neighbors / 9.0",
-          "description": "Average the sum by dividing by 9 (use 9.0 for floating-point division)"
+          "temp_var": "sum6",
+          "expression": "sum5 + A[s_idx]",
+          "description": "Add S"
+        },
+        {
+          "temp_var": "sum7",
+          "expression": "sum6 + A[se_idx]",
+          "description": "Add SE"
+        },
+        {
+          "temp_var": "stencil_avg",
+          "expression": "sum7 / STENCIL_NEIGHBOR_COUNT",
+          "description": "Divide by neighbor count to compute the average"
         }
       ],
-      "final_expression": "result"
+      "final_expression": "stencil_avg"
     }
   ]
 }

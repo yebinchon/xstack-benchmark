@@ -1,17 +1,167 @@
 {
   "extractions": [
     {
-      "value": "256",
-      "name": "ATAX_BLOCK_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
       "occurrences": [
-        172,
-        184,
-        188,
-        200
+        {
+          "line": 124,
+          "context": "A = malloc(nx * ny * 8);"
+        },
+        {
+          "line": 125,
+          "context": "x = malloc(ny * 8);"
+        },
+        {
+          "line": 126,
+          "context": "y = malloc(ny * 8);"
+        },
+        {
+          "line": 127,
+          "context": "tmp = malloc(nx * 8);"
+        }
       ],
-      "function": "__GLOBAL__"
+      "reasoning": "8 here encodes the size of a double in bytes. Replacing with a named constant (or sizeof(double)) removes the hidden type-size dependency and improves portability and clarity."
+    },
+    {
+      "value": 256,
+      "macro_name": "THREADS_PER_BLOCK_X",
+      "occurrences": [
+        {
+          "line": 129,
+          "context": "__FIXME__call42 = num_blocks(nx, 256);"
+        },
+        {
+          "line": 133,
+          "context": "__FIXME__agg_2e_tmp43.__..._field0 = 256;"
+        },
+        {
+          "line": 141,
+          "context": "for(int32_t j = 0; j < 256;   j = j + 1){"
+        },
+        {
+          "line": 142,
+          "context": "..., __FIXME__call42, 1, 1, 256, 1, 1, ..."
+        },
+        {
+          "line": 145,
+          "context": "__FIXME__call46 = num_blocks(ny, 256);"
+        },
+        {
+          "line": 149,
+          "context": "__FIXME__agg_2e_tmp47.__..._field0 = 256;"
+        },
+        {
+          "line": 157,
+          "context": "for(int32_t j = 0; j < 256;   j = j + 1){"
+        },
+        {
+          "line": 158,
+          "context": "..., __FIXME__call46, 1, 1, 256, 1, 1, ..."
+        }
+      ],
+      "reasoning": "256 is the CUDA-like block dimension (threads per block on X). Centralizing this ensures kernels, loops, and grid calculations stay consistent and are easy to tune."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 136,
+          "context": "memcpy((uint8_t*)(&...coerce), (uint8_t*)(&...tmp), 12);"
+        },
+        {
+          "line": 137,
+          "context": "memcpy((uint8_t*)(&...coerce), (uint8_t*)(&...tmp43), 12);"
+        },
+        {
+          "line": 152,
+          "context": "memcpy((uint8_t*)(&...coerce), (uint8_t*)(&...tmp45), 12);"
+        },
+        {
+          "line": 153,
+          "context": "memcpy((uint8_t*)(&...coerce), (uint8_t*)(&...tmp47), 12);"
+        }
+      ],
+      "reasoning": "12 is the byte size of the dim3-like struct (3 x uint32_t). Using a named constant (or preferably sizeof(struct)) prevents subtle bugs if the struct layout changes."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_IDX_NX",
+      "occurrences": [
+        {
+          "line": 121,
+          "context": "nx = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "Clarifies the command-line argument position for nx. Avoids scattering positional magic numbers across the code."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARG_IDX_NY",
+      "occurrences": [
+        {
+          "line": 122,
+          "context": "ny = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "Clarifies the command-line argument position for ny, improving readability and making reordering easier."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_IDX_DUMP_FLAG",
+      "occurrences": [
+        {
+          "line": 123,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "Gives semantic meaning to argv index 1 as the dump/print flag argument. This documents expected CLI layout."
+    },
+    {
+      "value": 3.141592653589793,
+      "macro_name": "PI",
+      "occurrences": [
+        {
+          "line": 178,
+          "context": "x[i] = ((double)(i) * 3.1415926535897931);"
+        }
+      ],
+      "reasoning": "This is the mathematical constant pi. Naming it improves readability and avoids precision mismatches if used elsewhere."
+    },
+    {
+      "value": 20,
+      "macro_name": "PRINT_VALUES_PER_LINE",
+      "occurrences": [
+        {
+          "line": 238,
+          "context": "if (i % 20 == 0) {"
+        }
+      ],
+      "reasoning": "20 controls output formatting (how many values per line). Extracting it makes the print layout easy to change and self-documenting."
+    },
+    {
+      "value": 8,
+      "macro_name": "FORMAT_STR_BUF_LEN",
+      "occurrences": [
+        {
+          "line": 64,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "8 is the buffer size for the printf format string. A named constant documents intent; alternatively, prefer letting the compiler size the array from the literal."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_LEN",
+      "occurrences": [
+        {
+          "line": 65,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "2 is the buffer size for the newline string including the NUL terminator. Naming it clarifies why 2 is used."
     }
-  ]
+  ],
+  "confidence": 0.88
 }

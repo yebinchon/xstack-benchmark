@@ -2,78 +2,88 @@
   "function_name": "init_array",
   "breakups": [
     {
-      "line_number": 172,
-      "original_expression": "A[(i * n + j)] = ((((double)(i) * (double)((j + 2))) + 2) / (double)(n));",
+      "line_number": 149,
+      "original_expression": "((((double)(i) * (double)((j + INIT_A_J_OFFSET))) + INIT_A_CONST_TERM) / (double)(n))",
       "breakup_steps": [
         {
-          "temp_var": "idx",
-          "expression": "i * n + j",
-          "description": "Compute the flat array index for row i and column j"
+          "temp_var": "j_offset_a",
+          "expression": "j + INIT_A_J_OFFSET",
+          "description": "Apply the A-specific offset to j"
         },
         {
-          "temp_var": "i_double",
-          "expression": "(double)i",
-          "description": "Convert loop index i to double for floating-point arithmetic"
+          "temp_var": "i_d",
+          "expression": "(double)(i)",
+          "description": "Cast i to double"
         },
         {
-          "temp_var": "j_plus2_double",
-          "expression": "(double)(j + 2)",
-          "description": "Compute j+2 and convert to double"
+          "temp_var": "j_offset_a_d",
+          "expression": "(double)(j_offset_a)",
+          "description": "Cast j_offset_a to double"
         },
         {
-          "temp_var": "product_term",
-          "expression": "i_double * j_plus2_double",
-          "description": "Multiply the converted i and (j+2)"
+          "temp_var": "product_a",
+          "expression": "i_d * j_offset_a_d",
+          "description": "Multiply the casted operands"
         },
         {
-          "temp_var": "numerator",
-          "expression": "product_term + 2.0",
-          "description": "Add the constant 2 to the product (as a double)"
+          "temp_var": "numerator_a",
+          "expression": "product_a + INIT_A_CONST_TERM",
+          "description": "Add the constant term to form the numerator"
         },
         {
-          "temp_var": "value",
-          "expression": "numerator / (double)n",
-          "description": "Divide by n (converted to double) to get the final value"
+          "temp_var": "denom_d",
+          "expression": "(double)(n)",
+          "description": "Cast n to double for division"
+        },
+        {
+          "temp_var": "a_value",
+          "expression": "numerator_a / denom_d",
+          "description": "Compute the final scaled value for A"
         }
       ],
-      "final_expression": "A[idx] = value"
+      "final_expression": "a_value"
     },
     {
-      "line_number": 173,
-      "original_expression": "B[(i * n + j)] = ((((double)(i) * (double)((j + 3))) + 3) / (double)(n));",
+      "line_number": 150,
+      "original_expression": "((((double)(i) * (double)((j + INIT_B_J_OFFSET))) + INIT_B_CONST_TERM) / (double)(n))",
       "breakup_steps": [
         {
-          "temp_var": "idx",
-          "expression": "i * n + j",
-          "description": "Compute the flat array index for row i and column j"
+          "temp_var": "j_offset_b",
+          "expression": "j + INIT_B_J_OFFSET",
+          "description": "Apply the B-specific offset to j"
         },
         {
-          "temp_var": "i_double",
-          "expression": "(double)i",
-          "description": "Convert loop index i to double for floating-point arithmetic"
+          "temp_var": "i_d",
+          "expression": "(double)(i)",
+          "description": "Cast i to double"
         },
         {
-          "temp_var": "j_plus3_double",
-          "expression": "(double)(j + 3)",
-          "description": "Compute j+3 and convert to double"
+          "temp_var": "j_offset_b_d",
+          "expression": "(double)(j_offset_b)",
+          "description": "Cast j_offset_b to double"
         },
         {
-          "temp_var": "product_term",
-          "expression": "i_double * j_plus3_double",
-          "description": "Multiply the converted i and (j+3)"
+          "temp_var": "product_b",
+          "expression": "i_d * j_offset_b_d",
+          "description": "Multiply the casted operands"
         },
         {
-          "temp_var": "numerator",
-          "expression": "product_term + 3.0",
-          "description": "Add the constant 3 to the product (as a double)"
+          "temp_var": "numerator_b",
+          "expression": "product_b + INIT_B_CONST_TERM",
+          "description": "Add the constant term to form the numerator"
         },
         {
-          "temp_var": "value",
-          "expression": "numerator / (double)n",
-          "description": "Divide by n (converted to double) to get the final value"
+          "temp_var": "denom_d",
+          "expression": "(double)(n)",
+          "description": "Cast n to double for division"
+        },
+        {
+          "temp_var": "b_value",
+          "expression": "numerator_b / denom_d",
+          "description": "Compute the final scaled value for B"
         }
       ],
-      "final_expression": "B[idx] = value"
+      "final_expression": "b_value"
     }
   ]
 }

@@ -1,0 +1,43 @@
+{
+  "suggestions_by_function": {
+    "kernel_reduce": [
+      {
+        "identifier": [
+          "entry_if_i_lt_n",
+          "land_lhs_true_if_j_lt_m"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < n",
+          "j < m"
+        ],
+        "coalesced_condition": "i < n && j < m",
+        "line_numbers": [
+          170,
+          171
+        ],
+        "reasoning": "Both conditions are pure bounds checks with no side effects or modifications. i and j are computed earlier and not mutated by either condition. Using short-circuiting (&&) preserves the original evaluation order (j < m only evaluated when i < n holds), making the transformation functionally equivalent while reducing nesting and improving readability."
+      }
+    ],
+    "kernel_cov": [
+      {
+        "identifier": [
+          "entry_if_i_lt_m",
+          "land_lhs_true_if_j_lt_m"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < m",
+          "j < m"
+        ],
+        "coalesced_condition": "i < m && j < m",
+        "line_numbers": [
+          186,
+          187
+        ],
+        "reasoning": "These are independent bounds checks with no side effects; neither condition mutates variables used by the other. Although j is computed from i earlier, the check j < m does not depend on the result of i < m and has no side effects. Short-circuit evaluation guarantees the same order as the nested form, making the coalesced condition equivalent and more readable."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

@@ -3,67 +3,67 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize the input vectors and matrix for size n: set up initial values for x1, x2 and prepare y_1, y_2 and A buffers used by the computation"
+      "replacement": "// Initialize problem data of size n; populate vectors (e.g., x1, x2) with deterministic values used by subsequent GEMV kernels"
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Compute the number of blocks required to cover 'num' items with 'factor' items per block (ceiling division)"
+      "replacement": "// Return ceil(num/factor): number of blocks of size 'factor' required to cover 'num' elements"
     },
     {
       "id": "unknown_FUNCTION_kernel_x1",
       "original": "// INSERT COMMENT FUNCTION: kernel_x1",
-      "replacement": "// Kernel that computes, for each global index i, the row-wise dot product x1[i] += sum_j A[i*n + j] * y_1[j]; thread/block indices map to the global element index i"
+      "replacement": "// CUDA-style kernel: for thread index i < n, accumulate x1[i] += dot(row i of A, y_1)"
     },
     {
       "id": "unknown_FUNCTION_kernel_x2",
       "original": "// INSERT COMMENT FUNCTION: kernel_x2",
-      "replacement": "// Kernel that computes, for each global index i, the column-wise dot product x2[i] += sum_j A[j*n + i] * y_2[j]; thread/block indices map to the global element index i"
+      "replacement": "// CUDA-style kernel: for thread index i < n, accumulate x2[i] += dot(column i of A, y_2)"
     },
     {
       "id": "unknown_FUNCTION_kernel",
       "original": "// INSERT COMMENT FUNCTION: kernel",
-      "replacement": "// Configure execution dimensions (grid and block) and orchestrate the tiled/blocked computation that launches/emulates the x1/x2 kernels over the matrix A and vectors"
+      "replacement": "// Host dispatcher: configure grid/block dimensions and run x1/x2 kernels over n\u00d7n matrix A and vectors"
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the contents of x1 and x2 for n elements to stderr using the configured double format (used for debugging or result dump)"
+      "replacement": "// Print the contents of result vectors x1 and x2 using the configured floating-point format"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate indices 0..n-1 and initialize x1[i] = i/n and x2[i] = (i+1)/n to set starting values for the computation"
+      "replacement": "// For each i in [0, n), initialize x1[i] = i/n and x2[i] = (i + X2_INIT_OFFSET)/n"
     },
     {
       "id": "unknown_LOOP_kernel",
       "original": "// INSERT COMMENT LOOP: kernel",
-      "replacement": "// Parallel nested loops (collapsed) over block-local indices: iterate i in [0,255] and j across num_blocks_256_2 to cover all tiles/blocks of the matrix for computation"
+      "replacement": "// OpenMP-parallel 2D sweep over block indices (256 \u00d7 numBlocks2) to execute work across the grid"
     },
     {
       "id": "unknown_LOOP_kernel",
       "original": "// INSERT COMMENT LOOP: kernel",
-      "replacement": "// Parallel nested loops (collapsed) over block-local indices: iterate i in [0,255] and j across num_blocks_256_2 to cover all tiles/blocks of the matrix for computation"
+      "replacement": "// OpenMP-parallel 2D sweep over block indices (256 \u00d7 numBlocks2) to execute work across the grid"
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// For each index from 0 to n-1, print the corresponding elements of x1 and x2 to stderr using the configured double_print_format"
+      "replacement": "// Iterate i from 0 to n-1 and emit x1[i] then x2[i] to stderr using double_format_str"
     },
     {
       "id": "unknown_IFELSE_main::entry",
       "original": "// INSERT COMMENT IFELSE: main::entry",
-      "replacement": "// Parse runtime flag from argv[1] into dump_code and allocate large buffers for the matrix A and vectors x1, x2, y_1 (no error checks shown)"
+      "replacement": "// Parse dump flag from argv and allocate host memory for A, x1, x2, and y_1"
     },
     {
       "id": "unknown_IFELSE_kernel_x1::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_x1::entry",
-      "replacement": "// Compute global index i from block/thread coordinates; if i < n perform the row-wise accumulation x1[i] += sum_j A[i*n + j] * y_1[j], otherwise do nothing"
+      "replacement": "// Compute CUDA-like thread index i; if i < n, update x1[i] with sum_j A[i*n + j] * y_1[j] (row-wise dot product)"
     },
     {
       "id": "unknown_IFELSE_kernel_x2::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_x2::entry",
-      "replacement": "// Compute global index i from block/thread coordinates; if i < n perform the column-wise accumulation x2[i] += sum_j A[j*n + i] * y_2[j], otherwise do nothing"
+      "replacement": "// Compute CUDA-like thread index i; if i < n, update x2[i] with sum_j A[j*n + i] * y_2[j] (column-wise dot product)"
     }
   ]
 }

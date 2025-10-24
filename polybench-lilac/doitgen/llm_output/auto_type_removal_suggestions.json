@@ -1,0 +1,76 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 183,
+      "line_content": "__auto_type __FIXME__tmp1 = r * nq + q;",
+      "original_line": "__auto_type __FIXME__tmp1 = r * nq + q;"
+    },
+    {
+      "line_number": 184,
+      "line_content": "__auto_type __FIXME__tmp2 = __FIXME__tmp1 * np;",
+      "original_line": "__auto_type __FIXME__tmp2 = __FIXME__tmp1 * np;"
+    },
+    {
+      "line_number": 185,
+      "line_content": "__auto_type __FIXME__tmp3 = __FIXME__tmp2 + p;",
+      "original_line": "__auto_type __FIXME__tmp3 = __FIXME__tmp2 + p;"
+    },
+    {
+      "line_number": 189,
+      "line_content": "__auto_type __FIXME__tmp4 = r * nq + q;",
+      "original_line": "__auto_type __FIXME__tmp4 = r * nq + q;"
+    },
+    {
+      "line_number": 190,
+      "line_content": "__auto_type __FIXME__tmp5 = __FIXME__tmp4 * np;",
+      "original_line": "__auto_type __FIXME__tmp5 = __FIXME__tmp4 * np;"
+    },
+    {
+      "line_number": 191,
+      "line_content": "__auto_type __FIXME__tmp6 = __FIXME__tmp5 + s;",
+      "original_line": "__auto_type __FIXME__tmp6 = __FIXME__tmp5 + s;"
+    },
+    {
+      "line_number": 192,
+      "line_content": "__auto_type __FIXME__tmp7 = s * np + p;",
+      "original_line": "__auto_type __FIXME__tmp7 = s * np + p;"
+    },
+    {
+      "line_number": 193,
+      "line_content": "__auto_type __FIXME__tmp8 = A[__FIXME__tmp6];",
+      "original_line": "__auto_type __FIXME__tmp8 = A[__FIXME__tmp6];"
+    },
+    {
+      "line_number": 194,
+      "line_content": "__auto_type __FIXME__tmp9 = C4[__FIXME__tmp7];",
+      "original_line": "__auto_type __FIXME__tmp9 = C4[__FIXME__tmp7];"
+    },
+    {
+      "line_number": 195,
+      "line_content": "__auto_type __FIXME__tmp10 = __FIXME__tmp8 * __FIXME__tmp9;",
+      "original_line": "__auto_type __FIXME__tmp10 = __FIXME__tmp8 * __FIXME__tmp9;"
+    },
+    {
+      "line_number": 196,
+      "line_content": "__auto_type __FIXME__tmp11 = dot + __FIXME__tmp10;",
+      "original_line": "__auto_type __FIXME__tmp11 = dot + __FIXME__tmp10;"
+    },
+    {
+      "line_number": 199,
+      "line_content": "__auto_type __FIXME__tmp12 = r * nq + q;",
+      "original_line": "__auto_type __FIXME__tmp12 = r * nq + q;"
+    },
+    {
+      "line_number": 200,
+      "line_content": "__auto_type __FIXME__tmp13 = __FIXME__tmp12 * np;",
+      "original_line": "__auto_type __FIXME__tmp13 = __FIXME__tmp12 * np;"
+    },
+    {
+      "line_number": 201,
+      "line_content": "__auto_type __FIXME__tmp14 = __FIXME__tmp13 + p;",
+      "original_line": "__auto_type __FIXME__tmp14 = __FIXME__tmp13 + p;"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

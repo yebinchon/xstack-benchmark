@@ -1,0 +1,24 @@
+{
+  "suggestions_by_function": {
+    "kernel_stencil": [
+      {
+        "identifier": [
+          "stencil_bounds_check_i_lt_n_minus_1",
+          "stencil_bounds_check_j_lt_n_minus_1"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < (n - 1)",
+          "j < (n - 1)"
+        ],
+        "coalesced_condition": "i < (n - 1) && j < (n - 1)",
+        "line_numbers": [
+          150,
+          151
+        ],
+        "reasoning": "Both conditions are independent index bounds checks with no side effects, and neither modifies variables used by the other. Coalescing preserves short-circuit semantics (j is only tested if i passes), is functionally equivalent, and reduces nesting to improve readability."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

@@ -1,63 +1,165 @@
 {
   "extractions": [
     {
-      "value": "256",
-      "name": "BLOCK_SIZE_NY_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
       "occurrences": [
-        284,
-        293
+        {
+          "line": 118,
+          "context": "ex = malloc(nx * ny * 8);"
+        },
+        {
+          "line": 119,
+          "context": "ey = malloc(nx * ny * 8);"
+        },
+        {
+          "line": 120,
+          "context": "hz = malloc(nx * ny * 8);"
+        },
+        {
+          "line": 121,
+          "context": "_fict_ = malloc(ny * 8);"
+        }
       ],
-      "function": "__GLOBAL__"
+      "reasoning": "8 is used as the size of a double in bytes; replacing with a named constant (or sizeof(double)) documents intent and prevents portability issues."
     },
     {
-      "value": "8",
-      "name": "TILE_DIM_L_1",
-      "type": "define",
-      "scope": "file",
+      "value": 0.5,
+      "macro_name": "FDTD_E_UPDATE_COEFF",
       "occurrences": [
-        296,
-        311,
-        313,
-        318,
-        333,
-        335,
-        340,
-        355,
-        357
+        {
+          "line": 178,
+          "context": "ey[(i * ny + j)] = (ey[(i * ny + j)] - (0.5 * (hz[(i * ny + j)] - ..."
+        },
+        {
+          "line": 191,
+          "context": "ex[(i * ny + j)] = (ex[(i * ny + j)] - (0.5 * (hz[(i * ny + j)] - ..."
+        }
       ],
-      "function": "__GLOBAL__"
+      "reasoning": "0.5 is the update coefficient in the FDTD E-field update; naming it clarifies algorithm tuning and eases experimentation."
     },
     {
-      "value": "32",
-      "name": "TILE_DIM_M_1",
-      "type": "define",
-      "scope": "file",
+      "value": 0.7,
+      "macro_name": "FDTD_HZ_UPDATE_COEFF",
       "occurrences": [
-        297,
-        312,
-        313,
-        319,
-        334,
-        335,
-        341,
-        356,
-        357
+        {
+          "line": 205,
+          "context": "hz[(i * ny + j)] = (hz[(i * ny + j)] - (0.69999999999999996 * (((ex[..."
+        }
       ],
-      "function": "__GLOBAL__"
+      "reasoning": "This is the H-field (hz) update coefficient (~0.7). A named constant explains the magic value and allows easy adjustment."
     },
     {
-      "value": "12",
-      "name": "BLOCK_STRUCT_SIZE_BYTES_1",
-      "type": "define",
-      "scope": "file",
+      "value": 256,
+      "macro_name": "SPLAT_BLOCK_DIM_X",
       "occurrences": [
-        305,
-        327,
-        349
+        {
+          "line": 238,
+          "context": "__FIXME__agg_2e_tmp.__FIXME__l_struct_struct_OC_dim3_field0 = 256;"
+        },
+        {
+          "line": 241,
+          "context": "uint32_t __FIXME__call = num_blocks(ny, 256);"
+        },
+        {
+          "line": 248,
+          "context": "for(int32_t j = 0; j < 256;   j = j + 1){"
+        }
       ],
-      "function": "__GLOBAL__"
+      "reasoning": "256 is the work-group/block size used for the splat stage; a named constant documents the chosen parallel granularity."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 245,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 246,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp1)), 12);"
+        }
+      ],
+      "reasoning": "12 is the byte size of the dim3-like struct (3 x uint32_t). Using a named size avoids brittle hard-coding of structure size."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_IDX_TMAX",
+      "occurrences": [
+        {
+          "line": 114,
+          "context": "tmax = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "Command-line position for tmax is a semantic constant; a macro clarifies argument order."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARG_IDX_NX",
+      "occurrences": [
+        {
+          "line": 115,
+          "context": "nx = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "Command-line position for nx; naming documents interface and reduces risk if positions change."
+    },
+    {
+      "value": 4,
+      "macro_name": "ARG_IDX_NY",
+      "occurrences": [
+        {
+          "line": 116,
+          "context": "ny = atoi(argv[4]);"
+        }
+      ],
+      "reasoning": "Command-line position for ny; naming documents interface and reduces risk if positions change."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_IDX_DUMP",
+      "occurrences": [
+        {
+          "line": 117,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "Command-line position for the dump/print flag has semantic meaning; a macro makes the mapping explicit."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_ENABLED_VALUE",
+      "occurrences": [
+        {
+          "line": 126,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "The sentinel value indicating that dumping is enabled; a named constant clarifies policy and allows changes without search/replace."
+    },
+    {
+      "value": 2,
+      "macro_name": "INIT_EY_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 148,
+          "context": "ey[(i * ny + j)] = (((double)(i) * (double)((j + 2))) / (double)(ny));"
+        }
+      ],
+      "reasoning": "Initializer uses a specific offset to seed ey; naming explains purpose and avoids confusion with loop increments."
+    },
+    {
+      "value": 3,
+      "macro_name": "INIT_HZ_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 149,
+          "context": "hz[(i * ny + j)] = (((double)(i) * (double)((j + 3))) / (double)(nx));"
+        }
+      ],
+      "reasoning": "Initializer uses a specific offset to seed hz; naming explains purpose and separates it from arbitrary constants."
     }
-  ]
+  ],
+  "confidence": 0.86
 }

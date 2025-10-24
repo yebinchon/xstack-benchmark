@@ -3,72 +3,72 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize the input matrix A and the vectors x, tmp and y with deterministic starting values used by the ATAX benchmark (fills A and sets up initial vectors)"
+      "replacement": "// Initialize test data: fill matrix A (nx-by-ny) and prepare vectors x, tmp, and y with deterministic values for subsequent kernels"
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Compute how many blocks of size 'factor' are required to cover 'num' items (ceiling integer division)"
+      "replacement": "// Compute ceil(num / factor) to get the number of blocks needed to cover 'num' items with block size 'factor'"
     },
     {
       "id": "unknown_FUNCTION_kernel3",
       "original": "// INSERT COMMENT FUNCTION: kernel3",
-      "replacement": "// Parallel kernel that computes tmp = A * x: each thread computes the dot product of one row i of A with vector x and stores the result in tmp[i]"
+      "replacement": "// CUDA-like row kernel: for each row i < m, compute tmp[i] as the dot product of A[i, 0..n-1] with x using 1D grid/block indices"
     },
     {
       "id": "unknown_FUNCTION_kernel4",
       "original": "// INSERT COMMENT FUNCTION: kernel4",
-      "replacement": "// Parallel kernel that computes y = A^T * tmp: each thread computes the dot product of one column j of A with vector tmp and writes the result to y[j]"
+      "replacement": "// CUDA-like column kernel: for each column j < n, compute y[j] = dot(A[0..m-1, j], tmp) (i.e., y = A^T * tmp) using 1D grid/block indices"
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the vector y of length nx to stderr using the provided format, with readable line breaks between groups of values"
+      "replacement": "// Print the nx elements of vector y in a fixed format, grouping outputs every PRINT_VALUES_PER_LINE values"
     },
     {
       "id": "unknown_LOOP_main",
       "original": "// INSERT COMMENT LOOP: main",
-      "replacement": "// Parallel nested loops over block-row index i and inner block index j that partition the computation into tiles; OpenMP collapse(2) distributes tiles across threads"
+      "replacement": "// OpenMP-parallel nested loops over blocks and threads to emulate a 1D GPU launch for kernel4 (grid_dim_x_k4 \u00d7 THREADS_PER_BLOCK_X)"
     },
     {
       "id": "unknown_LOOP_main",
       "original": "// INSERT COMMENT LOOP: main",
-      "replacement": "// Parallel nested loops over block-row index i and inner block index j that partition the computation into tiles; OpenMP collapse(2) distributes tiles across threads"
+      "replacement": "// OpenMP-parallel nested loops over blocks and threads to emulate a 1D GPU launch for kernel4 (grid_dim_x_k4 \u00d7 THREADS_PER_BLOCK_X)"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over all rows i and columns j of A to initialize each element with the test pattern A[i*ny + j] = (i * (j+1)) / nx"
+      "replacement": "// Iterate over all i in [0, nx) and j in [0, ny) to set A[i*ny + j] = i*(j+1)/nx (deterministic initialization pattern)"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over all rows i and columns j of A to initialize each element with the test pattern A[i*ny + j] = (i * (j+1)) / nx"
+      "replacement": "// Iterate over all i in [0, nx) and j in [0, ny) to set A[i*ny + j] = i*(j+1)/nx (deterministic initialization pattern)"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over all rows i and columns j of A to initialize each element with the test pattern A[i*ny + j] = (i * (j+1)) / nx"
+      "replacement": "// Iterate over all i in [0, nx) and j in [0, ny) to set A[i*ny + j] = i*(j+1)/nx (deterministic initialization pattern)"
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Iterate over the elements of y, printing each value and inserting a newline every 20 values to keep the output readable"
+      "replacement": "// Walk through y and print each element; start a new output line every PRINT_VALUES_PER_LINE entries"
     },
     {
       "id": "unknown_IFELSE_main::kcall.end51",
       "original": "// INSERT COMMENT IFELSE: main::kcall.end51",
-      "replacement": "// If the dump_code flag is set, print the result vector y for debugging/verification; then free heap allocations for A and x to avoid memory leaks"
+      "replacement": "// If dump_code is enabled, print the result vector y for verification; then proceed with memory cleanup"
     },
     {
       "id": "unknown_IFELSE_kernel3::entry",
       "original": "// INSERT COMMENT IFELSE: kernel3::entry",
-      "replacement": "// Compute global row index i from block/thread indices and, if it is within bounds (i < m), accumulate the dot product of row i of A with x into dot (guard prevents out-of-range threads from doing work)"
+      "replacement": "// Check that thread i maps to a valid row; if so, accumulate the dot product of row i of A with x to populate tmp[i]"
     },
     {
       "id": "unknown_IFELSE_kernel4::entry",
       "original": "// INSERT COMMENT IFELSE: kernel4::entry",
-      "replacement": "// Compute global column index j from block/thread indices and, if it is within bounds (j < n), initialize y[j] and accumulate the dot product of column j of A with tmp into y[j] (guard prevents out-of-range threads)"
+      "replacement": "// Check that thread j maps to a valid column; if so, accumulate y[j] as the dot product of column j of A with tmp"
     }
   ]
 }

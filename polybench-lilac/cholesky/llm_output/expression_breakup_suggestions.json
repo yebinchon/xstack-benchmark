@@ -2,88 +2,73 @@
   "function_name": "kernel2",
   "breakups": [
     {
-      "line_number": 200,
-      "original_expression": "__FIXME__j < n & __FIXME__j < i & i < n & __FIXME__j < k & k <= i",
+      "line_number": 178,
+      "original_expression": "(__FIXME__j < n & __FIXME__j < i & i < n & __FIXME__j < k & k <= i)",
       "breakup_steps": [
         {
-          "temp_var": "is_j_lt_n",
+          "temp_var": "cond_j_lt_n",
           "expression": "(__FIXME__j < n)",
-          "description": "Check that j is less than n"
+          "description": "j is less than n"
         },
         {
-          "temp_var": "is_j_lt_i",
+          "temp_var": "cond_j_lt_i",
           "expression": "(__FIXME__j < i)",
-          "description": "Check that j is less than i"
+          "description": "j is less than i"
         },
         {
-          "temp_var": "is_i_lt_n",
+          "temp_var": "cond_i_lt_n",
           "expression": "(i < n)",
-          "description": "Check that i is less than n"
+          "description": "i is less than n"
         },
         {
-          "temp_var": "is_j_lt_k",
+          "temp_var": "cond_j_lt_k",
           "expression": "(__FIXME__j < k)",
-          "description": "Check that j is less than k"
+          "description": "j is less than k"
         },
         {
-          "temp_var": "is_k_le_i",
+          "temp_var": "cond_k_le_i",
           "expression": "(k <= i)",
-          "description": "Check that k is less than or equal to i"
+          "description": "k is less than or equal to i"
         },
         {
           "temp_var": "combined_cond",
-          "expression": "is_j_lt_n & is_j_lt_i & is_i_lt_n & is_j_lt_k & is_k_le_i",
-          "description": "Combine the boolean tests using the same bitwise & operators as the original expression"
+          "expression": "cond_j_lt_n & cond_j_lt_i & cond_i_lt_n & cond_j_lt_k & cond_k_le_i",
+          "description": "Combine all conditions using bitwise AND to match original semantics"
         }
       ],
       "final_expression": "combined_cond"
     },
     {
-      "line_number": 201,
+      "line_number": 179,
       "original_expression": "A[(i * n + k)] = (A[(i * n + k)] - (A[(i * n + __FIXME__j)] * A[(k * n + __FIXME__j)]));",
       "breakup_steps": [
         {
-          "temp_var": "idx_i_k",
-          "expression": "(i * n + k)",
-          "description": "Compute the linear index for element A[i][k]"
+          "temp_var": "idx_ik",
+          "expression": "i * n + k",
+          "description": "Index for A[i, k]"
         },
         {
-          "temp_var": "idx_i_j",
-          "expression": "(i * n + __FIXME__j)",
-          "description": "Compute the linear index for element A[i][j]"
+          "temp_var": "idx_ij",
+          "expression": "i * n + __FIXME__j",
+          "description": "Index for A[i, j]"
         },
         {
-          "temp_var": "idx_k_j",
-          "expression": "(k * n + __FIXME__j)",
-          "description": "Compute the linear index for element A[k][j]"
+          "temp_var": "idx_kj",
+          "expression": "k * n + __FIXME__j",
+          "description": "Index for A[k, j]"
         },
         {
-          "temp_var": "val_i_k",
-          "expression": "A[idx_i_k]",
-          "description": "Load A[i][k] once into a temporary"
+          "temp_var": "product_term",
+          "expression": "A[idx_ij] * A[idx_kj]",
+          "description": "Product of A[i, j] and A[k, j]"
         },
         {
-          "temp_var": "val_i_j",
-          "expression": "A[idx_i_j]",
-          "description": "Load A[i][j] once into a temporary"
-        },
-        {
-          "temp_var": "val_k_j",
-          "expression": "A[idx_k_j]",
-          "description": "Load A[k][j] once into a temporary"
-        },
-        {
-          "temp_var": "product_ij_kj",
-          "expression": "val_i_j * val_k_j",
-          "description": "Compute the product of A[i][j] and A[k][j]"
-        },
-        {
-          "temp_var": "result",
-          "expression": "val_i_k - product_ij_kj",
-          "description": "Subtract the product from A[i][k]"
+          "temp_var": "updated_value",
+          "expression": "A[idx_ik] - product_term",
+          "description": "Subtract the product from A[i, k]"
         }
       ],
-      "final_expression": "A[idx_i_k] = result"
+      "final_expression": "A[idx_ik] = updated_value"
     }
   ]
 }

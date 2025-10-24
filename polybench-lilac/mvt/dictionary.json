@@ -1,0 +1,129 @@
+{
+  "globals": [
+    "__FIXME_GLOBAL___OC_str",
+    "__FIXME_GLOBAL___OC_str_OC_1"
+  ],
+  "struct_definitions": {
+    "__FIXME__l_array_1_uint8_t": [
+      "array"
+    ],
+    "__FIXME__l_array_20_uint8_t": [
+      "array"
+    ],
+    "__FIXME__l_struct_struct_OC_dim3": [
+      "__FIXME__l_struct_struct_OC_dim3_field0",
+      "__FIXME__l_struct_struct_OC_dim3_field1",
+      "__FIXME__l_struct_struct_OC_dim3_field2"
+    ],
+    "__FIXME__l_unnamed_1": [
+      "__FIXME__l_unnamed_1_field0",
+      "__FIXME__l_unnamed_1_field1"
+    ]
+  },
+  "functions": {
+    "init_array": [
+      "A",
+      "i",
+      "j",
+      "n",
+      "x1",
+      "x2",
+      "y_1",
+      "y_2"
+    ],
+    "kernel": [
+      "A",
+      "__FIXME__agg_2e_tmp",
+      "__FIXME__agg_2e_tmp1",
+      "__FIXME__agg_2e_tmp1_2e_coerce",
+      "__FIXME__agg_2e_tmp5",
+      "__FIXME__agg_2e_tmp5_2e_coerce",
+      "__FIXME__agg_2e_tmp7",
+      "__FIXME__agg_2e_tmp7_2e_coerce",
+      "__FIXME__agg_2e_tmp_2e_coerce",
+      "__FIXME__call",
+      "__FIXME__call9",
+      "i",
+      "j",
+      "n",
+      "x1",
+      "x2",
+      "y_1",
+      "y_2"
+    ],
+    "kernel_x1": [
+      "A",
+      "__FIXME__blockDim_2e_x",
+      "__FIXME__blockDim_2e_y",
+      "__FIXME__blockDim_2e_z",
+      "__FIXME__blockIdx_2e_x",
+      "__FIXME__blockIdx_2e_y",
+      "__FIXME__blockIdx_2e_z",
+      "__FIXME__gridDim_2e_x",
+      "__FIXME__gridDim_2e_y",
+      "__FIXME__gridDim_2e_z",
+      "__FIXME__threadIdx_2e_x",
+      "__FIXME__threadIdx_2e_y",
+      "__FIXME__threadIdx_2e_z",
+      "i",
+      "j",
+      "n",
+      "x1",
+      "x2",
+      "y_1",
+      "y_2"
+    ],
+    "kernel_x2": [
+      "A",
+      "__FIXME__blockDim_2e_x",
+      "__FIXME__blockDim_2e_y",
+      "__FIXME__blockDim_2e_z",
+      "__FIXME__blockIdx_2e_x",
+      "__FIXME__blockIdx_2e_y",
+      "__FIXME__blockIdx_2e_z",
+      "__FIXME__gridDim_2e_x",
+      "__FIXME__gridDim_2e_y",
+      "__FIXME__gridDim_2e_z",
+      "__FIXME__threadIdx_2e_x",
+      "__FIXME__threadIdx_2e_y",
+      "__FIXME__threadIdx_2e_z",
+      "i",
+      "j",
+      "n",
+      "x1",
+      "x2",
+      "y_1",
+      "y_2"
+    ],
+    "main": [
+      "A",
+      "argc",
+      "argv",
+      "dump_code",
+      "x1",
+      "x2",
+      "y_1",
+      "y_2",
+      "__FIXME__tmp1",
+      "__FIXME__tmp2",
+      "__FIXME__tmp3",
+      "__FIXME__tmp4",
+      "__FIXME__tmp5",
+      "__FIXME__tmp7",
+      "__FIXME__tmp8",
+      "__FIXME__tmp9",
+      "__FIXME__tmp10",
+      "__FIXME__tmp11"
+    ],
+    "num_blocks": [
+      "factor",
+      "num"
+    ],
+    "print_array": [
+      "i",
+      "n",
+      "x1",
+      "x2"
+    ]
+  }
+}

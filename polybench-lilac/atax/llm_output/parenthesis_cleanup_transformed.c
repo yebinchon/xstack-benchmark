@@ -1,11 +1,20 @@
-#define ATAX_BLOCK_SIZE_1 256
-
 /* Provide Declarations */
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/* Magic number constants */
+#define BYTES_PER_DOUBLE 8
+#define THREADS_PER_BLOCK_X 256
+#define DIM3_STRUCT_SIZE_BYTES 12
+#define ARG_IDX_NX 2
+#define ARG_IDX_NY 3
+#define ARG_IDX_DUMP_FLAG 1
+#define PRINT_VALUES_PER_LINE 20
+#define FORMAT_STR_BUF_LEN 8
+#define NEWLINE_STR_LEN 2
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -29,79 +38,42 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct IO_FILE_struct_t;
-struct dim3;
-struct PackedDim3;
+struct Dim3;
+struct Dim3Packed;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array_1 {
+struct Uint8Array1 {
   uint8_t array[1];
 };
-struct uint8_array_20 {
+struct Uint8Array20 {
   uint8_t array[20];
 };
-struct IO_FILE_struct_t {
-  uint32_t file_field0;
-  uint8_t* file_field1;
-  uint8_t* file_field2;
-  uint8_t* file_field3;
-  uint8_t* file_field4;
-  uint8_t* file_field5;
-  uint8_t* file_field6;
-  uint8_t* file_field7;
-  uint8_t* file_field8;
-  uint8_t* file_field9;
-  uint8_t* file_field10;
-  uint8_t* file_field11;
-  void* file_field12;
-  struct IO_FILE_struct_t* file_field13;
-  uint32_t file_field14;
-  uint32_t file_field15;
-  uint64_t file_field16;
-  uint16_t file_field17;
-  uint8_t file_field18;
-  uint8_t file_field19[1];
-  uint8_t* file_field20;
-  uint64_t file_field21;
-  void* file_field22;
-  void* file_field23;
-  struct IO_FILE_struct_t* file_field24;
-  uint8_t* file_field25;
-  uint64_t file_field26;
-  uint32_t file_field27;
-  uint8_t file_field28[20];
-};
-struct dim3 {
+struct Dim3 {
   uint32_t x;
   uint32_t y;
   uint32_t z;
 };
-struct PackedDim3 {
-  uint64_t packedDim3_field0;
-  uint32_t packedDim3_field1;
+struct Dim3Packed {
+  uint64_t packed64;
+  uint32_t packed32;
 };
 
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, uint32_t, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel3(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void kernel4(uint32_t, uint32_t, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t print_format_double[8] = { "%0.2lf " };
-uint8_t print_format_newline[2] = { "\n" };
+uint8_t double_format_str[FORMAT_STR_BUF_LEN] = { "%0.2lf " };
+uint8_t newline_str[NEWLINE_STR_LEN] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -137,14 +109,14 @@ static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
 
 /* Function Bodies */
 int main(int argc, char ** argv) {
-  struct dim3 gridDimA;    /* Address-exposed local */
-  struct dim3 blockDimA;    /* Address-exposed local */
-  struct PackedDim3 packedGridDimA;    /* Address-exposed local */
-  struct PackedDim3 packedBlockDimA;    /* Address-exposed local */
-  struct dim3 gridDimB;    /* Address-exposed local */
-  struct dim3 blockDimB;    /* Address-exposed local */
-  struct PackedDim3 packedGridDimB;    /* Address-exposed local */
-  struct PackedDim3 packedBlockDimB;    /* Address-exposed local */
+  struct Dim3 grid_dim_k3;    /* Address-exposed local */
+  struct Dim3 block_dim_k3;    /* Address-exposed local */
+  struct Dim3Packed grid_dim_k3_packed;    /* Address-exposed local */
+  struct Dim3Packed block_dim_k3_packed;    /* Address-exposed local */
+  struct Dim3 grid_dim_k4;    /* Address-exposed local */
+  struct Dim3 block_dim_k4;    /* Address-exposed local */
+  struct Dim3Packed grid_dim_k4_packed;    /* Address-exposed local */
+  struct Dim3Packed block_dim_k4_packed;    /* Address-exposed local */
   int32_t nx;
   int32_t ny;
   int32_t dump_code;
@@ -152,81 +124,103 @@ int main(int argc, char ** argv) {
   uint8_t* x;
   uint8_t* y;
   uint8_t* tmp;
-  int32_t call32_val;
-  int32_t numBlocksNx;
-  uint8_t* bufA;
-  uint8_t* buf2;
+  int32_t grid_dim_x_k3;
   uint32_t i;
   uint32_t j;
-  int32_t numBlocksNy;
-  uint8_t* buf3;
-  uint8_t* buf4;
-  int32_t call54_val;
+  int32_t grid_dim_x_k4;
 
-  nx = atoi(argv[2]);
-  ny = atoi(argv[3]);
-  dump_code = atoi(argv[1]);
-  A = malloc(nx * ny * 8);
-  x = malloc(ny * 8);
-  y = malloc(ny * 8);
-  tmp = malloc(nx * 8);
-__auto_type A_dbl = (double*)A;
-__auto_type x_dbl = (double*)x;
-__auto_type tmp_dbl = (double*)tmp;
-__auto_type y_dbl = (double*)y;
+  nx = atoi(argv[ARG_IDX_NX]);
+  ny = atoi(argv[ARG_IDX_NY]);
+  dump_code = atoi(argv[ARG_IDX_DUMP_FLAG]);
+  A = malloc(nx * ny * BYTES_PER_DOUBLE);
+  x = malloc(ny * BYTES_PER_DOUBLE);
+  y = malloc(ny * BYTES_PER_DOUBLE);
+  tmp = malloc(nx * BYTES_PER_DOUBLE);
+double* A_dbl = (double*)A;
+double* x_dbl = (double*)x;
+double* tmp_dbl = (double*)tmp;
+double* y_dbl = (double*)y;
 init_array(nx, ny, A_dbl, x_dbl, tmp_dbl, y_dbl);
-  numBlocksNx = num_blocks(nx, ATAX_BLOCK_SIZE_1);
-  gridDimA.x = numBlocksNx;
-  gridDimA.y = 1;
-  gridDimA.z = 1;
-  blockDimA.x = 256;
-  blockDimA.y = 1;
-  blockDimA.z = 1;
-  memcpy(((uint8_t*)(&packedGridDimA)), ((uint8_t*)(&gridDimA)), 12);
-  memcpy(((uint8_t*)(&packedBlockDimA)), ((uint8_t*)(&blockDimA)), 12);
+  grid_dim_x_k3 = num_blocks(nx, THREADS_PER_BLOCK_X);
+  grid_dim_k3.x = grid_dim_x_k3;
+  grid_dim_k3.y = 1;
+  grid_dim_k3.z = 1;
+  block_dim_k3.x = THREADS_PER_BLOCK_X;
+  block_dim_k3.y = 1;
+  block_dim_k3.z = 1;
+  uint8_t* grid_dim_k3_packed_bytes = (uint8_t*)&grid_dim_k3_packed;
+  uint8_t* grid_dim_k3_bytes = (uint8_t*)&grid_dim_k3;
+  memcpy(grid_dim_k3_packed_bytes, grid_dim_k3_bytes, DIM3_STRUCT_SIZE_BYTES);
+  uint8_t* block_dim_k3_packed_bytes = (uint8_t*)&block_dim_k3_packed;
+  uint8_t* block_dim_k3_bytes = (uint8_t*)&block_dim_k3;
+  memcpy(block_dim_k3_packed_bytes, block_dim_k3_bytes, DIM3_STRUCT_SIZE_BYTES);
 // INSERT COMMENT LOOP: main::header.014
 #pragma omp parallel for collapse(2)
-for(int32_t i = 0; i < numBlocksNx;   i = i + 1){
-for(int32_t j = 0; j < ATAX_BLOCK_SIZE_1;   j = j + 1){
-__auto_type A_dbl_k3 = (double*)A;
-__auto_type x_dbl_k3 = (double*)x;
-__auto_type y_dbl_k3 = (double*)y;
-__auto_type tmp_dbl_k3 = (double*)tmp;
-__auto_type numBlocksA_k3 = numBlocksNx;
-__auto_type blockDimAx_k3 = 256;
-kernel3(nx, ny, A_dbl_k3, x_dbl_k3, y_dbl_k3, tmp_dbl_k3, numBlocksA_k3, 1, 1, blockDimAx_k3, 1, 1, i, 0, 0, j, 0, 0);
+for(int32_t i = 0; i < grid_dim_x_k3;   i = i + 1){
+for(int32_t j = 0; j < THREADS_PER_BLOCK_X;   j = j + 1){
+double* A_dbl_k3 = (double*)A;
+double* x_dbl_k3 = (double*)x;
+double* y_dbl_k3 = (double*)y;
+double* tmp_dbl_k3 = (double*)tmp;
+__auto_type grid_dim_x_param_k3 = grid_dim_x_k3;
+int grid_dim_y_param_k3 = 1;
+int grid_dim_z_param_k3 = 1;
+__auto_type block_dim_x_param_k3 = THREADS_PER_BLOCK_X;
+int block_dim_y_param_k3 = 1;
+int block_dim_z_param_k3 = 1;
+int32_t block_idx_x_param_k3 = i;
+int block_idx_y_param_k3 = 0;
+int block_idx_z_param_k3 = 0;
+int32_t thread_idx_x_param_k3 = j;
+int thread_idx_y_param_k3 = 0;
+int thread_idx_z_param_k3 = 0;
+kernel3(nx, ny, A_dbl_k3, x_dbl_k3, y_dbl_k3, tmp_dbl_k3, grid_dim_x_param_k3, grid_dim_y_param_k3, grid_dim_z_param_k3, block_dim_x_param_k3, block_dim_y_param_k3, block_dim_z_param_k3, block_idx_x_param_k3, block_idx_y_param_k3, block_idx_z_param_k3, thread_idx_x_param_k3, thread_idx_y_param_k3, thread_idx_z_param_k3);
 }
 }
-  numBlocksNy = num_blocks(ny, ATAX_BLOCK_SIZE_1);
-  gridDimB.x = numBlocksNy;
-  gridDimB.y = 1;
-  gridDimB.z = 1;
-  blockDimB.x = 256;
-  blockDimB.y = 1;
-  blockDimB.z = 1;
-  memcpy(((uint8_t*)(&packedGridDimB)), ((uint8_t*)(&gridDimB)), 12);
-  memcpy(((uint8_t*)(&packedBlockDimB)), ((uint8_t*)(&blockDimB)), 12);
+  grid_dim_x_k4 = num_blocks(ny, THREADS_PER_BLOCK_X);
+  grid_dim_k4.x = grid_dim_x_k4;
+  grid_dim_k4.y = 1;
+  grid_dim_k4.z = 1;
+  block_dim_k4.x = THREADS_PER_BLOCK_X;
+  block_dim_k4.y = 1;
+  block_dim_k4.z = 1;
+  uint8_t* grid_dim_k4_packed_bytes = (uint8_t*)&grid_dim_k4_packed;
+  uint8_t* grid_dim_k4_bytes = (uint8_t*)&grid_dim_k4;
+  memcpy(grid_dim_k4_packed_bytes, grid_dim_k4_bytes, DIM3_STRUCT_SIZE_BYTES);
+  uint8_t* block_dim_k4_packed_bytes = (uint8_t*)&block_dim_k4_packed;
+  uint8_t* block_dim_k4_bytes = (uint8_t*)&block_dim_k4;
+  memcpy(block_dim_k4_packed_bytes, block_dim_k4_bytes, DIM3_STRUCT_SIZE_BYTES);
 // INSERT COMMENT LOOP: main::header.0
 #pragma omp parallel for collapse(2)
-for(int32_t i = 0; i < numBlocksNy;   i = i + 1){
-for(int32_t j = 0; j < ATAX_BLOCK_SIZE_1;   j = j + 1){
-__auto_type A_dbl_k4 = (double*)A;
-__auto_type x_dbl_k4 = (double*)x;
-__auto_type y_dbl_k4 = (double*)y;
-__auto_type tmp_dbl_k4 = (double*)tmp;
-__auto_type numBlocksB_k4 = numBlocksNy;
-__auto_type blockDimAx_k4 = 256;
-kernel4(nx, ny, A_dbl_k4, x_dbl_k4, y_dbl_k4, tmp_dbl_k4, numBlocksB_k4, 1, 1, blockDimAx_k4, 1, 1, i, 0, 0, j, 0, 0);
+for(int32_t i = 0; i < grid_dim_x_k4;   i = i + 1){
+for(int32_t j = 0; j < THREADS_PER_BLOCK_X;   j = j + 1){
+double* A_dbl_k4 = (double*)A;
+double* x_dbl_k4 = (double*)x;
+double* y_dbl_k4 = (double*)y;
+double* tmp_dbl_k4 = (double*)tmp;
+__auto_type grid_dim_x_param_k4 = grid_dim_x_k4;
+int grid_dim_y_param_k4 = 1;
+int grid_dim_z_param_k4 = 1;
+__auto_type block_dim_x_param_k4 = THREADS_PER_BLOCK_X;
+int block_dim_y_param_k4 = 1;
+int block_dim_z_param_k4 = 1;
+int32_t block_idx_x_param_k4 = i;
+int block_idx_y_param_k4 = 0;
+int block_idx_z_param_k4 = 0;
+int32_t thread_idx_x_param_k4 = j;
+int thread_idx_y_param_k4 = 0;
+int thread_idx_z_param_k4 = 0;
+kernel4(nx, ny, A_dbl_k4, x_dbl_k4, y_dbl_k4, tmp_dbl_k4, grid_dim_x_param_k4, grid_dim_y_param_k4, grid_dim_z_param_k4, block_dim_x_param_k4, block_dim_y_param_k4, block_dim_z_param_k4, block_idx_x_param_k4, block_idx_y_param_k4, block_idx_z_param_k4, thread_idx_x_param_k4, thread_idx_y_param_k4, thread_idx_z_param_k4);
 }
 }
 // INSERT COMMENT IFELSE: main::kcall.end51
   if (dump_code == 1) { // IFELSE MARKER: kcall.end51 IF
 print_array(nx, (double*)y);
   }
-free((uint8_t*)((double*)A));
-free((uint8_t*)((double*)x));
-free((uint8_t*)((double*)y));
-free((uint8_t*)((double*)tmp));
+free(((uint8_t*)((double*)A)));
+free(((uint8_t*)((double*)x)));
+free(((uint8_t*)((double*)y)));
+free(((uint8_t*)((double*)tmp)));
   return 0;
 }
 // INSERT COMMENT FUNCTION: init_array
@@ -292,14 +286,13 @@ for(int64_t i = 0; i < m;   i = i + 1){
 // INSERT COMMENT FUNCTION: print_array
 void print_array(uint32_t nx, double* y) {
   int64_t i;
-  int32_t temp_i32;
 
 // INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < nx;   i = i + 1){
-  fprintf(stderr, print_format_double, y[i]);
-  if (i % 20 == 0) { // IFELSE MARKER: for.body IF
-  fprintf(stderr, print_format_newline);
+  fprintf(stderr, double_format_str, y[i]);
+  if (i % PRINT_VALUES_PER_LINE == 0) { // IFELSE MARKER: for.body IF
+  fprintf(stderr, newline_str);
   }
 }
-  fprintf(stderr, print_format_newline);
+  fprintf(stderr, newline_str);
 }

@@ -1,0 +1,24 @@
+{
+  "suggestions_by_function": {
+    "kernel_sum": [
+      {
+        "identifier": [
+          "check_r_within_nr",
+          "check_q_within_nq"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "r < nr",
+          "q < nq"
+        ],
+        "coalesced_condition": "r < nr && q < nq",
+        "line_numbers": [
+          167,
+          168
+        ],
+        "reasoning": "Both conditions are pure bound checks on independent indices with no side effects. Neither condition modifies state or variables used by the other, and short-circuit evaluation ensures q < nq is only evaluated if r < nr is true, matching the original semantics. Coalescing reduces nesting and improves readability without changing behavior."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

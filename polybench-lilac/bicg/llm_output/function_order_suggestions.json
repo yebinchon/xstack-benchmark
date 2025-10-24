@@ -1,13 +1,13 @@
 {
   "recommended_order": [
     "main",
+    0,
     3,
     4,
     5,
-    0,
     1,
     2
   ],
-  "reasoning": "Placed 'main' first to respect the entry-function-first guideline. Next are low-level helpers and direct dependencies used by the core kernel: num_blocks (3) first because kernel (1) calls it; kernel_q (4) and kernel_s (5) are grouped together immediately after num_blocks because they are the worker routines invoked by kernel. Initialization (init_array, 0) follows so setup logic appears before the core orchestration. The core computation function kernel (1) is placed after its dependencies so callers it uses are already visible. Finally print_array (2) is placed last as it is purely a display routine and not needed by other helpers. This ordering improves logical flow (entry \u2192 helpers \u2192 init \u2192 core \u2192 output), groups related GPU kernels, and ensures most callees appear before their callers (kernel's callees are before kernel). Note: main remains first by requirement, so its direct callees appear after it despite the general preference for callee-before-caller.",
+  "reasoning": "Main first for entry clarity. Then initialization/setup (init_array) early. Place utility num_blocks before its caller (kernel). Put lower-level compute kernels (kernel_q, kernel_s) before the orchestrator (kernel) to respect dependencies and aid debugging. Keep print_array last as a display function. This ordering mirrors the runtime flow (init -> compute q -> compute s -> orchestration -> print) while keeping callees before callers where possible.",
   "confidence": 0.9
 }

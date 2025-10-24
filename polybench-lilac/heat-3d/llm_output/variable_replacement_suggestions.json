@@ -1,200 +1,96 @@
 {
   "mappings": [
     {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field0",
-      "after": "io_flags"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field1",
-      "after": "buf_ptr0"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field2",
-      "after": "buf_ptr1"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field3",
-      "after": "buf_ptr2"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field4",
-      "after": "buf_ptr3"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field5",
-      "after": "buf_ptr4"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field6",
-      "after": "buf_ptr5"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field7",
-      "after": "buf_ptr6"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field8",
-      "after": "buf_ptr7"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field9",
-      "after": "buf_ptr8"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field10",
-      "after": "buf_ptr9"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field11",
-      "after": "buf_ptr10"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field12",
-      "after": "cookie"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field13",
-      "after": "next"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field14",
-      "after": "mode"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field15",
-      "after": "fd"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field16",
-      "after": "offset"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field17",
-      "after": "state"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field18",
-      "after": "char_last"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field19",
-      "after": "small_buf"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field20",
-      "after": "buffer"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field21",
-      "after": "timestamp"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field22",
-      "after": "lock"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field23",
-      "after": "lock2"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field24",
-      "after": "prev"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field25",
-      "after": "tmp_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field26",
-      "after": "size64"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field27",
-      "after": "count32"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field28",
-      "after": "small_array"
-    },
-    {
       "before": "__FIXME__l_struct_struct_OC_dim3_field0",
-      "after": "dim3_x"
+      "after": "x"
     },
     {
       "before": "__FIXME__l_struct_struct_OC_dim3_field1",
-      "after": "dim3_y"
+      "after": "y"
     },
     {
       "before": "__FIXME__l_struct_struct_OC_dim3_field2",
-      "after": "dim3_z"
+      "after": "z"
     },
     {
       "before": "__FIXME__l_unnamed_1_field0",
-      "after": "dim3packed_field0"
+      "after": "x"
     },
     {
       "before": "__FIXME__l_unnamed_1_field1",
-      "after": "dim3packed_field1"
+      "after": "y"
     },
     {
       "before": "__FIXME__tmp1",
-      "after": "idx_ijk"
+      "after": "ij_index"
     },
     {
       "before": "__FIXME__tmp2",
-      "after": "sum_ijk"
+      "after": "ijk_index"
     },
     {
       "before": "__FIXME__tmp3",
-      "after": "normalized_sum"
+      "after": "sum_ijk"
     },
     {
       "before": "__FIXME__tmp4",
-      "after": "idx_ijk_b"
+      "after": "n_as_double"
     },
     {
       "before": "__FIXME__tmp5",
-      "after": "sum_ijk_b"
+      "after": "value_a"
     },
     {
       "before": "__FIXME__tmp6",
-      "after": "sum_plus_one"
+      "after": "ij_index_b"
     },
     {
       "before": "__FIXME__tmp7",
-      "after": "normalized_sum_plus_one"
+      "after": "ijk_index_b"
+    },
+    {
+      "before": "__FIXME__tmp8",
+      "after": "sum_ijk_b"
+    },
+    {
+      "before": "__FIXME__tmp9",
+      "after": "n_as_double_b"
+    },
+    {
+      "before": "__FIXME__tmp10",
+      "after": "value_b"
     },
     {
       "before": "__FIXME__agg_2e_tmp",
-      "after": "grid_temp"
+      "after": "grid_tmp"
     },
     {
       "before": "__FIXME__agg_2e_tmp5",
-      "after": "block_temp"
+      "after": "block_tmp"
     },
     {
       "before": "__FIXME__agg_2e_tmp5_2e_coerce",
-      "after": "block_packed_temp"
+      "after": "block_tmp_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp7",
-      "after": "grid_temp2"
+      "after": "grid_tmp2"
     },
     {
       "before": "__FIXME__agg_2e_tmp7_2e_coerce",
-      "after": "grid_packed_temp2"
+      "after": "grid_tmp2_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp8",
-      "after": "block_temp2"
+      "after": "block_tmp2"
     },
     {
       "before": "__FIXME__agg_2e_tmp8_2e_coerce",
-      "after": "block_packed_temp2"
+      "after": "block_tmp2_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp_2e_coerce",
-      "after": "grid_packed_temp"
+      "after": "grid_tmp_coerce"
     },
     {
       "before": "__FIXME__call",
@@ -257,28 +153,12 @@
       "after": "threadIdx_z"
     },
     {
-      "before": "__FIXME__call27",
-      "after": "unused_var27"
-    },
-    {
-      "before": "__FIXME__call37",
-      "after": "unused_var37"
-    },
-    {
-      "before": "__FIXME__call21",
-      "after": "tmp_i32"
-    },
-    {
       "before": "__FIXME__l_array_1_uint8_t",
-      "after": "uint8_array_1"
+      "after": "byte_array_1"
     },
     {
       "before": "__FIXME__l_array_20_uint8_t",
-      "after": "uint8_array_20"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE",
-      "after": "IOFile"
+      "after": "byte_array_20"
     },
     {
       "before": "__FIXME__l_struct_struct_OC_dim3",
@@ -286,7 +166,7 @@
     },
     {
       "before": "__FIXME__l_unnamed_1",
-      "after": "Dim3Packed"
+      "after": "Dim3Coerce"
     }
   ]
 }

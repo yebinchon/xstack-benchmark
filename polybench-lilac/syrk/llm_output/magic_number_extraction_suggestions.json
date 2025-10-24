@@ -1,0 +1,174 @@
+{
+  "extractions": [
+    {
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
+      "occurrences": [
+        {
+          "line": 112,
+          "context": "A = malloc(m * n * 8);"
+        },
+        {
+          "line": 113,
+          "context": "C = malloc(m * m * 8);"
+        }
+      ],
+      "reasoning": "Avoids hardcoding the size of double (8 bytes). Improves portability and readability; consider using sizeof(double) but a named constant also clarifies intent."
+    },
+    {
+      "value": 32412,
+      "macro_name": "DEFAULT_ALPHA",
+      "occurrences": [
+        {
+          "line": 116,
+          "context": "kernel(m, n, 32412, 2123, ((double*)C), ((double*)A));"
+        }
+      ],
+      "reasoning": "Represents an algorithm/configuration parameter passed to the kernel. Naming it clarifies its role and makes tuning easier."
+    },
+    {
+      "value": 2123,
+      "macro_name": "DEFAULT_BETA",
+      "occurrences": [
+        {
+          "line": 116,
+          "context": "kernel(m, n, 32412, 2123, ((double*)C), ((double*)A));"
+        }
+      ],
+      "reasoning": "Represents an algorithm/configuration parameter passed to the kernel. Naming it clarifies its role and makes tuning easier."
+    },
+    {
+      "value": 8,
+      "macro_name": "BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 198,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;"
+        },
+        {
+          "line": 214,
+          "context": "for(int32_t k = 0; k < 8;   k = k + 1){"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        },
+        {
+          "line": 221,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;"
+        }
+      ],
+      "reasoning": "Defines the thread block size in the X dimension. Centralizing this value ensures consistency between configuration, loops, and kernel-call parameters."
+    },
+    {
+      "value": 32,
+      "macro_name": "BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 199,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;"
+        },
+        {
+          "line": 215,
+          "context": "for(int32_t l = 0; l < 32;   l = l + 1){"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        },
+        {
+          "line": 222,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;"
+        }
+      ],
+      "reasoning": "Defines the thread block size in the Y dimension. A named constant keeps launch parameters and loop bounds synchronized and self-documenting."
+    },
+    {
+      "value": 1,
+      "macro_name": "BLOCK_DIM_Z",
+      "occurrences": [
+        {
+          "line": 200,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Explicitly documents that the Z dimension of the thread block is 1 (2D blocks). Improves clarity where 1 has special semantic meaning."
+    },
+    {
+      "value": 1,
+      "macro_name": "GRID_DIM_Z",
+      "occurrences": [
+        {
+          "line": 205,
+          "context": "grid.__FIXME__l_struct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Explicitly documents that the Z dimension of the grid is 1 (2D grid). Clarifies the launch configuration."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 206,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 207,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2)), ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 208,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 209,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp2)), 12);"
+        }
+      ],
+      "reasoning": "12 is the serialized byte size of dim3-like structs (3 x uint32_t). A named constant prevents size mismatches if the struct changes and documents the intent."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINTF_FMT_STR_SIZE",
+      "occurrences": [
+        {
+          "line": 65,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "Clarifies that the buffer size matches the format string length including the NUL terminator; avoids unexplained numeric literal."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_SIZE",
+      "occurrences": [
+        {
+          "line": 66,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "Documents that the newline string buffer includes the NUL terminator; avoids unexplained literal."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_CODE_ENABLED_VALUE",
+      "occurrences": [
+        {
+          "line": 118,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "Gives semantic meaning to the flag value used to enable output dumping, improving readability of the control flow."
+    }
+  ],
+  "confidence": 0.9
+}

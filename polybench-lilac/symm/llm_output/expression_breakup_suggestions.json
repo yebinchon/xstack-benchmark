@@ -1,0 +1,86 @@
+{
+  "function_name": "init_array",
+  "breakups": [
+    {
+      "line_number": 151,
+      "original_expression": "C[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "linear_index",
+          "expression": "i * nj + j",
+          "description": "Compute the linearized index for row-major access"
+        },
+        {
+          "temp_var": "ij_product",
+          "expression": "(double)i * (double)j",
+          "description": "Product of i and j as double"
+        },
+        {
+          "temp_var": "denominator",
+          "expression": "(double)ni",
+          "description": "Cast ni to double for division"
+        },
+        {
+          "temp_var": "ratio",
+          "expression": "ij_product / denominator",
+          "description": "Final scaled value for this element"
+        }
+      ],
+      "final_expression": "C[linear_index] = ratio"
+    },
+    {
+      "line_number": 152,
+      "original_expression": "B[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "linear_index",
+          "expression": "i * nj + j",
+          "description": "Compute the linearized index for row-major access"
+        },
+        {
+          "temp_var": "ij_product",
+          "expression": "(double)i * (double)j",
+          "description": "Product of i and j as double"
+        },
+        {
+          "temp_var": "denominator",
+          "expression": "(double)ni",
+          "description": "Cast ni to double for division"
+        },
+        {
+          "temp_var": "ratio",
+          "expression": "ij_product / denominator",
+          "description": "Final scaled value for this element"
+        }
+      ],
+      "final_expression": "B[linear_index] = ratio"
+    },
+    {
+      "line_number": 159,
+      "original_expression": "A[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "linear_index",
+          "expression": "i * nj + j",
+          "description": "Compute the linearized index for row-major access"
+        },
+        {
+          "temp_var": "ij_product",
+          "expression": "(double)i * (double)j",
+          "description": "Product of i and j as double"
+        },
+        {
+          "temp_var": "denominator",
+          "expression": "(double)ni",
+          "description": "Cast ni to double for division"
+        },
+        {
+          "temp_var": "ratio",
+          "expression": "ij_product / denominator",
+          "description": "Final scaled value for this element"
+        }
+      ],
+      "final_expression": "A[linear_index] = ratio"
+    }
+  ]
+}

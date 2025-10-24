@@ -1,17 +1,211 @@
 {
   "extractions": [
     {
-      "value": "256",
-      "name": "BLOCK_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "DOUBLE_SIZE_BYTES",
       "occurrences": [
-        205,
-        216,
-        220,
-        231
+        {
+          "line": 111,
+          "context": "A = malloc(n * 8);"
+        },
+        {
+          "line": 112,
+          "context": "B = malloc(n * 8);"
+        }
       ],
-      "function": "main"
+      "reasoning": "8 is the size of double in bytes on typical platforms. Naming it documents intent and avoids silent bugs on non-8-byte double targets; consider sizeof(double) instead."
+    },
+    {
+      "value": 256,
+      "macro_name": "THREADS_PER_BLOCK",
+      "occurrences": [
+        {
+          "line": 166,
+          "context": "__FIXME__call = num_blocks(n, 256);"
+        },
+        {
+          "line": 170,
+          "context": "__FIXME__l_struct_struct_OC_dim3_field0 = 256;"
+        },
+        {
+          "line": 177,
+          "context": "for(int32_t k = 0; k < 256;   k = k + 1){"
+        },
+        {
+          "line": 178,
+          "context": "kernel_stencil(..., 256, 1, 1, ...);"
+        },
+        {
+          "line": 181,
+          "context": "__FIXME__call4 = num_blocks(n, 256);"
+        },
+        {
+          "line": 185,
+          "context": "__FIXME__l_struct_struct_OC_dim3_field0 = 256;"
+        },
+        {
+          "line": 192,
+          "context": "for(int32_t k = 0; k < 256;   k = k + 1){"
+        },
+        {
+          "line": 193,
+          "context": "kernel_stencil(..., 256, 1, 1, ...);"
+        }
+      ],
+      "reasoning": "256 is the chosen X-dimension thread/block size and factor for grid sizing. Centralizing it makes tuning and portability easier."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_BYTES",
+      "occurrences": [
+        {
+          "line": 173,
+          "context": "memcpy(&__FIXME__agg_2e_tmp_2e_coerce, &__FIXME__agg_2e_tmp, 12);"
+        },
+        {
+          "line": 174,
+          "context": "memcpy(&__FIXME__agg_2e_tmp1_2e_coerce, &__FIXME__agg_2e_tmp1, 12);"
+        },
+        {
+          "line": 188,
+          "context": "memcpy(&__FIXME__agg_2e_tmp3_2e_coerce, &__FIXME__agg_2e_tmp3, 12);"
+        },
+        {
+          "line": 189,
+          "context": "memcpy(&__FIXME__agg_2e_tmp5_2e_coerce, &__FIXME__agg_2e_tmp5, 12);"
+        }
+      ],
+      "reasoning": "12 is the byte size of the dim3-like struct (3x uint32_t). Giving it a name clarifies intent; using sizeof(struct __FIXME__l_struct_struct_OC_dim3) would be safer."
+    },
+    {
+      "value": 3,
+      "macro_name": "STENCIL_WIDTH",
+      "occurrences": [
+        {
+          "line": 146,
+          "context": "B[i] = (((A[(i - 1)] + A[i]) + A[(i + 1)]) / 3);"
+        }
+      ],
+      "reasoning": "The divisor 3 encodes a 3-point stencil average. Naming it explains the algorithm and eases changes to stencil width."
+    },
+    {
+      "value": 1,
+      "macro_name": "HALO_RADIUS",
+      "occurrences": [
+        {
+          "line": 144,
+          "context": "__FIXME__threadIdx_2e_x + 1;"
+        },
+        {
+          "line": 145,
+          "context": "if (i < (n - 1)) {"
+        },
+        {
+          "line": 146,
+          "context": "A[(i - 1)] ... A[(i + 1)]"
+        }
+      ],
+      "reasoning": "All these \u00b11 and boundary checks represent a 1-cell halo for the stencil. A named constant conveys boundary semantics clearly."
+    },
+    {
+      "value": 2,
+      "macro_name": "INIT_A_OFFSET",
+      "occurrences": [
+        {
+          "line": 130,
+          "context": "A[i] = (((double)(i) + 2) / (double)(n));"
+        }
+      ],
+      "reasoning": "The +2 defines the initial condition for A. A named constant documents the chosen offset and makes it easy to tweak."
+    },
+    {
+      "value": 3,
+      "macro_name": "INIT_B_OFFSET",
+      "occurrences": [
+        {
+          "line": 131,
+          "context": "B[i] = (((double)(i) + 3) / (double)(n));"
+        }
+      ],
+      "reasoning": "The +3 defines the initial condition for B. Naming it clarifies that it is a deliberate configuration choice."
+    },
+    {
+      "value": 20,
+      "macro_name": "PRINT_WRAP_EVERY",
+      "occurrences": [
+        {
+          "line": 206,
+          "context": "if (i % 20 == 0) {"
+        }
+      ],
+      "reasoning": "20 is the chosen column width for printing. A macro conveys formatting intent and allows easy adjustment."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINT_FMT_STR_LEN",
+      "occurrences": [
+        {
+          "line": 64,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" }; "
+        }
+      ],
+      "reasoning": "8 is the buffer size for the format string (including NUL). Naming it avoids magic numbers; better yet, omit the size and let the compiler infer it."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_LEN",
+      "occurrences": [
+        {
+          "line": 65,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" }; "
+        }
+      ],
+      "reasoning": "2 is the size for \"\\n\" plus NUL terminator. A name clarifies intent; again, prefer leaving the size to the compiler."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARG_IDX_N",
+      "occurrences": [
+        {
+          "line": 108,
+          "context": "n = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "3 encodes the command-line position for n. A named constant documents the CLI contract."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_IDX_TSTEPS",
+      "occurrences": [
+        {
+          "line": 109,
+          "context": "tsteps = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "2 encodes the command-line position for tsteps. Naming avoids hidden assumptions about argv layout."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_IDX_DUMP",
+      "occurrences": [
+        {
+          "line": 110,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "1 encodes the command-line position for the dump flag. A named constant clarifies argument ordering."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_ENABLED_FLAG",
+      "occurrences": [
+        {
+          "line": 117,
+          "context": "if (dump_code == 1) {"
+        }
+      ],
+      "reasoning": "1 here is a sentinel meaning 'enable dumping'. Naming it makes the condition self-explanatory and future-proofs alternative encodings."
     }
-  ]
+  ],
+  "confidence": 0.9
 }

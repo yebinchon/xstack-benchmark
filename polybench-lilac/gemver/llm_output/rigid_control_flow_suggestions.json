@@ -1,0 +1,24 @@
+{
+  "suggestions_by_function": {
+    "kernel_A": [
+      {
+        "identifier": [
+          "entry",
+          "land.lhs.true"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < n",
+          "j < n"
+        ],
+        "coalesced_condition": "i < n && j < n",
+        "line_numbers": [
+          179,
+          180
+        ],
+        "reasoning": "Both conditions are independent bounds checks on i and j with no side effects or variable modifications. i and j are computed prior to the checks and are not altered between them. Coalescing to a single condition preserves short-circuit semantics and exact behavior while reducing indentation and improving readability."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

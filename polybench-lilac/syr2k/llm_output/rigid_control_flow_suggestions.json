@@ -1,0 +1,43 @@
+{
+  "suggestions_by_function": {
+    "kernel_beta": [
+      {
+        "identifier": [
+          "entry -> land.lhs.true",
+          "bounds_check_i_lt_n_then_triangular_check_j_le_i"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < n",
+          "j <= i"
+        ],
+        "coalesced_condition": "i < n && j <= i",
+        "line_numbers": [
+          160,
+          161
+        ],
+        "reasoning": "Both conditions are pure comparisons with no side effects and no variable modifications. i and j are computed prior to the checks and are not altered between them. Combining them with && preserves short-circuit behavior and semantics while reducing nesting and improving readability."
+      }
+    ],
+    "kernel_product": [
+      {
+        "identifier": [
+          "entry -> land.lhs.true",
+          "bounds_check_i_lt_n_then_triangular_check_j_le_i"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < n",
+          "j <= i"
+        ],
+        "coalesced_condition": "i < n && j <= i",
+        "line_numbers": [
+          176,
+          177
+        ],
+        "reasoning": "The checks are independent, side-effect free comparisons; neither modifies variables used by the other. Using && preserves evaluation order via short-circuiting and keeps the loop body guarded equivalently, while improving clarity by eliminating one indentation level."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

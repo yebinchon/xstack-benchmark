@@ -1,0 +1,208 @@
+{
+  "mappings": [
+    {
+      "before": "__FIXME__l_struct_struct_OC_dim3_field0",
+      "after": "x"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC_dim3_field1",
+      "after": "y"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC_dim3_field2",
+      "after": "z"
+    },
+    {
+      "before": "__FIXME__l_unnamed_1_field0",
+      "after": "value64"
+    },
+    {
+      "before": "__FIXME__l_unnamed_1_field1",
+      "after": "value32"
+    },
+    {
+      "before": "__FIXME__tmp1",
+      "after": "c_index"
+    },
+    {
+      "before": "__FIXME__tmp2",
+      "after": "c_ij_product"
+    },
+    {
+      "before": "__FIXME__tmp3",
+      "after": "c_ni_double"
+    },
+    {
+      "before": "__FIXME__tmp4",
+      "after": "c_value"
+    },
+    {
+      "before": "__FIXME__tmp5",
+      "after": "b_index"
+    },
+    {
+      "before": "__FIXME__tmp6",
+      "after": "b_ij_product"
+    },
+    {
+      "before": "__FIXME__tmp7",
+      "after": "b_ni_double"
+    },
+    {
+      "before": "__FIXME__tmp8",
+      "after": "b_value"
+    },
+    {
+      "before": "__FIXME__tmp9",
+      "after": "a_index"
+    },
+    {
+      "before": "__FIXME__tmp10",
+      "after": "a_ij_product"
+    },
+    {
+      "before": "__FIXME__tmp11",
+      "after": "a_ni_double"
+    },
+    {
+      "before": "__FIXME__tmp12",
+      "after": "a_value"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp",
+      "after": "grid_copy"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp10",
+      "after": "grid_copy2"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp10_2e_coerce",
+      "after": "grid_coerce2"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp11",
+      "after": "block_copy2"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp11_2e_coerce",
+      "after": "block_coerce2"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp2",
+      "after": "block_copy"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp22",
+      "after": "grid_copy3"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp22_2e_coerce",
+      "after": "grid_coerce3"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp23",
+      "after": "block_copy3"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp23_2e_coerce",
+      "after": "block_coerce3"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp2_2e_coerce",
+      "after": "block_coerce"
+    },
+    {
+      "before": "__FIXME__agg_2e_tmp_2e_coerce",
+      "after": "grid_coerce"
+    },
+    {
+      "before": "__FIXME__call",
+      "after": "grid_blocks_x"
+    },
+    {
+      "before": "__FIXME__call1",
+      "after": "grid_blocks_y"
+    },
+    {
+      "before": "__FIXME__call19",
+      "after": "grid_blocks_x3"
+    },
+    {
+      "before": "__FIXME__call21",
+      "after": "grid_blocks_y3"
+    },
+    {
+      "before": "__FIXME__call7",
+      "after": "grid_blocks_x2"
+    },
+    {
+      "before": "__FIXME__call9",
+      "after": "grid_blocks_y2"
+    },
+    {
+      "before": "__FIXME__blockDim_2e_x",
+      "after": "blockDim_x"
+    },
+    {
+      "before": "__FIXME__blockDim_2e_y",
+      "after": "blockDim_y"
+    },
+    {
+      "before": "__FIXME__blockDim_2e_z",
+      "after": "blockDim_z"
+    },
+    {
+      "before": "__FIXME__blockIdx_2e_x",
+      "after": "blockIdx_x"
+    },
+    {
+      "before": "__FIXME__blockIdx_2e_y",
+      "after": "blockIdx_y"
+    },
+    {
+      "before": "__FIXME__blockIdx_2e_z",
+      "after": "blockIdx_z"
+    },
+    {
+      "before": "__FIXME__gridDim_2e_x",
+      "after": "gridDim_x"
+    },
+    {
+      "before": "__FIXME__gridDim_2e_y",
+      "after": "gridDim_y"
+    },
+    {
+      "before": "__FIXME__gridDim_2e_z",
+      "after": "gridDim_z"
+    },
+    {
+      "before": "__FIXME__threadIdx_2e_x",
+      "after": "threadIdx_x"
+    },
+    {
+      "before": "__FIXME__threadIdx_2e_y",
+      "after": "threadIdx_y"
+    },
+    {
+      "before": "__FIXME__threadIdx_2e_z",
+      "after": "threadIdx_z"
+    },
+    {
+      "before": "__FIXME__l_array_1_uint8_t",
+      "after": "Uint8Array1"
+    },
+    {
+      "before": "__FIXME__l_array_20_uint8_t",
+      "after": "Uint8Array20"
+    },
+    {
+      "before": "__FIXME__l_struct_struct_OC_dim3",
+      "after": "Dim3"
+    },
+    {
+      "before": "__FIXME__l_unnamed_1",
+      "after": "Dim3Coerce"
+    }
+  ]
+}

@@ -3,57 +3,57 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize arrays A and C4 for the problem: set up deterministic starting values based on indices and the provided dimensions nr, nq, np"
+      "replacement": "// Initialize input arrays for the 3D problem; notably populate C4 with a normalized outer-product pattern based on np"
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Compute the number of blocks required to cover 'num' elements with blocks of size 'factor' (ceiling division)"
+      "replacement": "// Compute ceil(num / factor) to determine how many blocks of size 'factor' are required"
     },
     {
       "id": "unknown_FUNCTION_kernel_sum",
       "original": "// INSERT COMMENT FUNCTION: kernel_sum",
-      "replacement": "// Emulated CUDA kernel: derive global indices (r,q,p) from block/thread coordinates and perform per-element computation to update the sum array using A and C4"
+      "replacement": "// Thread-block\u2013style kernel that derives (r,q,p) from 3D block/thread indices and accumulates contributions into sum with bounds checks"
     },
     {
       "id": "unknown_FUNCTION_kernel",
       "original": "// INSERT COMMENT FUNCTION: kernel",
-      "replacement": "// Host-side launcher that configures grid and block dimensions (dim3-like structs) and dispatches the parallel kernel_sum computation"
+      "replacement": "// Configure grid and block dimensions and orchestrate parallel execution of the 3D reduction over A using C4"
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the contents of the 3D array A (dimensions nr x nq x np) in a readable order for verification or debugging"
+      "replacement": "// Traverse and print all elements of the 3D array A for verification"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over i and j (0..np-1) to initialize C4 as an np x np matrix where C4[i*np + j] = (double)i * (double)j / np"
+      "replacement": "// Initialize C4 as a symmetric coefficient matrix: C4[i*np + j] = (i*j)/np, a normalized outer product of indices"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Nested loops over i and j filling the C4 coefficient matrix with values proportional to the product of indices divided by np"
+      "replacement": "// Initialize C4 as a symmetric coefficient matrix: C4[i*np + j] = (i*j)/np, a normalized outer product of indices"
     },
     {
       "id": "unknown_LOOP_kernel",
       "original": "// INSERT COMMENT LOOP: kernel",
-      "replacement": "// Parallelize over the block-grid X and Y dimensions (collapse both loops) so each OpenMP thread handles one block coordinate (i,j) of the work"
+      "replacement": "// OpenMP-parallel iteration over 2D grid tiles (x,y); collapse(2) distributes the Cartesian product of blocks across threads"
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Triple nested loops over i (nr), j (nq), k (np) to visit every element of the 3D array A and emit its value for output"
+      "replacement": "// Iterate over every (r,q,p) index of A to output all elements in a consistent order"
     },
     {
       "id": "unknown_IFELSE_main::entry",
       "original": "// INSERT COMMENT IFELSE: main::entry",
-      "replacement": "// Parse command-line arguments into dump_code, nr, nq, np and allocate memory for A as a contiguous double array of size nr*nq*np"
+      "replacement": "// Parse command-line args (dump flag and dimensions) and allocate nr*nq*np doubles for array A"
     },
     {
       "id": "unknown_IFELSE_kernel_sum::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_sum::entry",
-      "replacement": "// Map block/thread indices to global coordinates r,q,p and check bounds (r<nr, q<nq) so only valid threads perform the per-element work"
+      "replacement": "// Compute global indices r,q,p from block and thread IDs; proceed only if r<nr, q<nq, and p<np to avoid out-of-bounds access"
     }
   ]
 }

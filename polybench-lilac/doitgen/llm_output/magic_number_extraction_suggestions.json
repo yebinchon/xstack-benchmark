@@ -1,34 +1,177 @@
 {
   "extractions": [
     {
-      "value": "8",
-      "name": "BLOCK_DIM3_FIELD1_DEFAULT_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "DOUBLE_SIZE_BYTES",
       "occurrences": [
-        242
+        {
+          "line": 114,
+          "context": "A = malloc(nr * nq * np * 8);"
+        },
+        {
+          "line": 115,
+          "context": "sum = malloc(nr * nq * np * 8);"
+        },
+        {
+          "line": 116,
+          "context": "C4 = malloc(np * np * 8);"
+        }
       ],
-      "function": "main"
+      "reasoning": "The literal 8 is the size in bytes of a double. Using a named constant clarifies intent and avoids hard-coding type sizes; consider replacing with sizeof(double) for portability."
     },
     {
-      "value": "32",
-      "name": "BLOCK_DIM3_FIELD2_DEFAULT_1",
-      "type": "define",
-      "scope": "file",
+      "value": 1,
+      "macro_name": "BLOCK_DIM_X",
       "occurrences": [
-        243
+        {
+          "line": 196,
+          "context": "truct_struct_OC_dim3_field0 = 1;"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__call2, 1, 8, 32, i, j, k, 0, l, m);"
+        }
       ],
-      "function": "main"
+      "reasoning": "This is the X dimension of the execution block. Naming it documents the launch configuration and ties together where it is used and passed into the kernel."
     },
     {
-      "value": "12",
-      "name": "BLOCK_BYTES_TO_COPY_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BLOCK_DIM_Y",
       "occurrences": [
-        251
+        {
+          "line": 197,
+          "context": "truct_struct_OC_dim3_field1 = 8;"
+        },
+        {
+          "line": 214,
+          "context": "for(int32_t l = 0; l < 8;   l = l + 1){"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__call2, 1, 8, 32, i, j, k, 0, l, m);"
+        }
       ],
-      "function": "main"
+      "reasoning": "Represents the Y dimension (threads per block in Y). Using a macro ensures loop bounds and parameter passing stay consistent with the configured block size."
+    },
+    {
+      "value": 32,
+      "macro_name": "BLOCK_DIM_Z",
+      "occurrences": [
+        {
+          "line": 198,
+          "context": "truct_struct_OC_dim3_field2 = 32;"
+        },
+        {
+          "line": 215,
+          "context": "for(int32_t m = 0; m < 32;   m = m + 1){"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__call2, 1, 8, 32, i, j, k, 0, l, m);"
+        }
+      ],
+      "reasoning": "Represents the Z dimension (threads per block in Z). Naming it improves readability and centralized configuration."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 205,
+          "context": "((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 206,
+          "context": "((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 207,
+          "context": "(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 208,
+          "context": "(&__FIXME__agg_2e_tmp3)), 12);"
+        }
+      ],
+      "reasoning": "The value 12 corresponds to sizeof(dim3-like struct) = 3 * sizeof(uint32_t). A named constant (or better, sizeof(struct __FIXME__l_struct_struct_OC_dim3)) documents intent and avoids errors if the struct layout changes."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINT_ELEM_FMT_LEN",
+      "occurrences": [
+        {
+          "line": 64,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "This is the buffer length for the element print format string (including NUL). Naming it clarifies the purpose; consider using sizeof(\"%0.2lf \") instead of a literal."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_FMT_LEN",
+      "occurrences": [
+        {
+          "line": 65,
+          "context": "__FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "This is the buffer length for the newline string (including NUL). A named constant makes the intent clear; consider using sizeof(\"\\n\")."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_CODE_PRINT",
+      "occurrences": [
+        {
+          "line": 121,
+          "context": "if (dump_code == 1) {"
+        }
+      ],
+      "reasoning": "Documents the specific dump_code value that enables printing. Using a named constant avoids a non-obvious sentinel value."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_IDX_DUMP_CODE",
+      "occurrences": [
+        {
+          "line": 110,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "Clarifies the command-line argument position for dump_code, avoiding implicit positional knowledge."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_IDX_NR",
+      "occurrences": [
+        {
+          "line": 111,
+          "context": "nr = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "Clarifies the command-line argument index for nr, improving readability and maintainability."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARG_IDX_NQ",
+      "occurrences": [
+        {
+          "line": 112,
+          "context": "nq = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "Clarifies the command-line argument index for nq, improving readability and maintainability."
+    },
+    {
+      "value": 4,
+      "macro_name": "ARG_IDX_NP",
+      "occurrences": [
+        {
+          "line": 113,
+          "context": "np = atoi(argv[4]);"
+        }
+      ],
+      "reasoning": "Clarifies the command-line argument index for np, improving readability and maintainability."
     }
-  ]
+  ],
+  "confidence": 0.9
 }

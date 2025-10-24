@@ -4,6 +4,25 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/* Magic number constants */
+#define FORMAT_SPEC_BUF_SIZE 8
+#define NEWLINE_STR_BUF_SIZE 2
+#define DOUBLE_SIZE_BYTES 8
+#define DEFAULT_ALPHA 32412
+#define DEFAULT_BETA 2123
+#define BLOCK_THREADS_TOTAL 256
+#define BLOCK_DIM_Y 32
+#define BLOCK_DIM_X 8
+#define GRID_DIM_Z 1
+#define BLOCK_DIM_Z 1
+#define DIM3_STRUCT_SIZE_BYTES 12
+#define LAUNCH_COERCE_STRUCT_SIZE_BYTES 12
+#define DUMP_FLAG_ENABLED 1
+#define ARG_IDX_DUMP_CODE 1
+#define ARG_IDX_NI 2
+#define ARG_IDX_NJ 3
+#define ARG_IDX_NK 4
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -27,79 +46,42 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct IOFile;
-struct dim3_t;
-struct dim3_packed_t;
+struct dim3;
+struct dim3_launch_coerce;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array_1_t {
+struct uint8_array_1 {
   uint8_t array[1];
 };
-struct uint8_array_20_t {
+struct uint8_array_20 {
   uint8_t array[20];
 };
-struct IOFile {
-  uint32_t flags;
-  uint8_t* read_ptr;
-  uint8_t* read_end;
-  uint8_t* write_base;
-  uint8_t* write_ptr;
-  uint8_t* write_end;
-  uint8_t* buf_base;
-  uint8_t* buf_end;
-  uint8_t* save_base;
-  uint8_t* save_end;
-  uint8_t* backup_base;
-  uint8_t* backup_end;
-  void* cookie;
-  struct IOFile* prev;
-  uint32_t fileno;
-  uint32_t mode;
-  uint64_t offset;
-  uint16_t orientation;
-  uint8_t unget_count;
-  uint8_t small_buffer[1];
-  uint8_t* tmp_buffer;
-  uint64_t sys_offset;
-  void* lock;
-  void* vtable;
-  struct IOFile* next;
-  uint8_t* alloc_buffer;
-  uint64_t cookie_size;
-  uint32_t line_count;
-  uint8_t name[20];
-};
-struct dim3_t {
+struct dim3 {
   uint32_t x;
   uint32_t y;
   uint32_t z;
 };
-struct dim3_packed_t {
-  uint64_t l_unnamed_1_field0;
-  uint32_t l_unnamed_1_field1;
+struct dim3_launch_coerce {
+  uint64_t val64;
+  uint32_t val32;
 };
 
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, uint32_t, uint32_t, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel(uint32_t, uint32_t, uint32_t, double, double, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel_dev(uint32_t, uint32_t, uint32_t, double, double, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t print_fmt_double[8] = { "%0.2lf " };
-uint8_t print_fmt_newline[2] = { "\n" };
+uint8_t print_double_format_str[FORMAT_SPEC_BUF_SIZE] = { "%0.2lf " };
+uint8_t newline_str[NEWLINE_STR_BUF_SIZE] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -146,157 +128,154 @@ int main(int argc, char ** argv) {
   uint8_t* A;
   uint8_t* B;
   uint8_t* C;
-  int32_t unused_call32;
-  int32_t unused_call44;
 
-// Parse command-line arguments (dump_code, ni, nj, nk) and allocate memory for A (ni * nk doubles); these values configure problem size and behavior
-  dump_code = atoi(argv[1]);
-  ni = atoi(argv[2]);
-  nj = atoi(argv[3]);
-  nk = atoi(argv[4]);
-  A = malloc(ni * nk * 8);
-  B = malloc(nk * nj * 8);
-  C = malloc(ni * nj * 8);
-  init_array(ni, nj, nk, ((double*)C), ((double*)A), ((double*)B));
+// Parse command-line args for dump flag and matrix sizes (ni, nj, nk), then allocate A (ni*nk doubles)
+  dump_code = atoi(argv[ARG_IDX_DUMP_CODE]);
+  ni = atoi(argv[ARG_IDX_NI]);
+  nj = atoi(argv[ARG_IDX_NJ]);
+  nk = atoi(argv[ARG_IDX_NK]);
+  A = malloc(ni * nk * DOUBLE_SIZE_BYTES);
+  B = malloc(nk * nj * DOUBLE_SIZE_BYTES);
+  C = malloc(ni * nj * DOUBLE_SIZE_BYTES);
+  init_array(ni, nj, nk, (double*)C, (double*)A, (double*)B);
 ;
-  kernel(ni, nj, nk, 32412, 2123, ((double*)C), ((double*)A), ((double*)B));
+  kernel(ni, nj, nk, DEFAULT_ALPHA, DEFAULT_BETA, (double*)C, (double*)A, (double*)B);
 ;
-  if (dump_code == 1) { // IFELSE MARKER: entry IF
-print_array(ni, nj, ((double*)C));
+  if (dump_code == DUMP_FLAG_ENABLED) {
+print_array(ni, nj, (double*)C);
   }
-free(((uint8_t*)((double*)C)));
-free(((uint8_t*)((double*)A)));
-free(((uint8_t*)((double*)B)));
+free((uint8_t*)((double*)C));
+free((uint8_t*)((double*)A));
+free((uint8_t*)((double*)B));
   return 0;
 }
-// Initialize the arrays A, B, and C with deterministic values based on their indices so the computation has a known starting state
+// Initializes matrices for GEMM: fills A (ni x nk), B (nk x nj), and C (ni x nj) with predictable index-based values for testing
 void init_array(uint32_t ni, uint32_t nj, uint32_t nk, double* C, double* A, double* B) {
   int64_t i;
   int64_t j;
 
-// Iterate over k (0..nk-1) and j (0..nj-1) to visit every element of B (nk x nj) and compute its linear index idx_B for access::for.cond
+// Fill B (nk x nj) in row-major order with (i*j)/ni to create a reproducible input matrix::for.cond
 for(int64_t i = 0; i < ni;   i = i + 1){
 for(int64_t j = 0; j < nj;   j = j + 1){
-  __auto_type idx_C = i * (int64_t)nj + j;
-  __auto_type i_double = (double)i;
-  __auto_type j_double = (double)j;
-  __auto_type ij_product = i_double * j_double;
-  __auto_type ni_double = (double)ni;
-  __auto_type c_val = ij_product / ni_double;
-  C[(i * nj + j)] = c_val;
+  C[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
-// Iterate over k (0..nk-1) and j (0..nj-1) to visit every element of B (nk x nj) and compute its linear index idx_B for access::for.cond10
+// Fill B (nk x nj) in row-major order with (i*j)/ni to create a reproducible input matrix::for.cond10
 for(int64_t i = 0; i < ni;   i = i + 1){
 for(int64_t j = 0; j < nk;   j = j + 1){
-  __auto_type idx_A = i * (int64_t)nk + j;
-  __auto_type i_double_a = (double)i;
-  __auto_type j_double_a = (double)j;
-  __auto_type ij_product_a = i_double_a * j_double_a;
-  __auto_type ni_double_a = (double)ni;
-  __auto_type a_val = ij_product_a / ni_double_a;
-  A[(i * nk + j)] = a_val;
+  A[(i * nk + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
-// Iterate over k (0..nk-1) and j (0..nj-1) to visit every element of B (nk x nj) and compute its linear index idx_B for access::for.cond31
+// Fill B (nk x nj) in row-major order with (i*j)/ni to create a reproducible input matrix::for.cond31
 for(int64_t i = 0; i < nk;   i = i + 1){
 for(int64_t j = 0; j < nj;   j = j + 1){
-  __auto_type idx_B = i * (int64_t)nj + j;
-  __auto_type i_double_b = (double)i;
-  __auto_type j_double_b = (double)j;
-  __auto_type ij_product_b = i_double_b * j_double_b;
-  __auto_type ni_double_b = (double)ni;
-  __auto_type b_val = ij_product_b / ni_double_b;
-  B[(i * nj + j)] = b_val;
+  B[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));
 }
 }
   return;
 }
-// GPU-style per-thread kernel: compute the global element indices i,j from block/thread ids, perform the dot-product over k to update C[i,j] as alpha * sum_k(A[i,k]*B[k,j]) + beta*C[i,j], with bounds checks
+// Returns ceil(num / factor): the number of blocks of size 'factor' needed to cover 'num' items
+uint32_t num_blocks(uint32_t num, uint32_t factor) {
+  return ((num + factor) - 1) / factor;
+}
+// Device-style kernel where each thread computes one C[i,j] = beta*C[i,j] + alpha*sum_k A[i,k]*B[k,j] using its block/thread indices
 void kernel_dev(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, double beta, double* C, double* A, double* B, uint32_t gridDim_x, uint32_t gridDim_y, uint32_t gridDim_z, uint32_t blockDim_x, uint32_t blockDim_y, uint32_t blockDim_z, uint32_t blockIdx_x, uint32_t blockIdx_y, uint32_t blockIdx_z, uint32_t threadIdx_x, uint32_t threadIdx_y, uint32_t threadIdx_z) {
   int32_t i;
   int32_t j;
   double dot;
   int64_t k;
 
-// Compute the global element coordinates i,j from block and thread indices; check bounds so only valid matrix positions execute, then initialize the accumulator 'dot' with beta * C[i,j]
+// Bounds-check the thread's (i,j); if within [0,ni) x [0,nj), initialize dot = beta*C[i,j] and loop over k to accumulate the A·B product
   i = blockDim_x * blockIdx_x + threadIdx_x;
   j = blockDim_y * blockIdx_y + threadIdx_y;
-  if (i < ni) { // IFELSE MARKER: entry IF
-  if (j < nj) { // IFELSE MARKER: land.lhs.true IF
-  dot = (C[(i * nj + j)] * beta);
+  if (i < ni && j < nj) {
+dot = (C[(i * nj + j)] * beta);
 for(int64_t k = 0; k < nk;   k = k + 1){
-  dot = (dot + ((alpha * A[(i * nk + k)]) * B[(k * nj + j)]));
+dot = (dot + ((alpha * A[(i * nk + k)]) * B[(k * nj + j)]));
 }
-  C[(i * nj + j)] = dot;
-  }
+C[(i * nj + j)] = dot;
   }
   return;
 }
-// Compute the number of blocks required to cover 'num' elements with blocks of size 'factor' (ceiling division)
-uint32_t num_blocks(uint32_t num, uint32_t factor) {
-  return ((num + factor) - 1) / factor;
-}
-// Host-side kernel launcher: configure grid and block dimensions and orchestrate parallel execution of the device kernel over the matrix tiles
+// Host wrapper that sets up grid/block dimensions and launches kernel_dev across a 2D grid to compute C = alpha*A*B + beta*C
 void kernel(uint32_t ni, uint32_t nj, uint32_t nk, double alpha, double beta, double* C, double* A, double* B) {
-  struct dim3_t block;    /* Address-exposed local */
-  struct dim3_t grid;    /* Address-exposed local */
-  struct dim3_t grid_copy;    /* Address-exposed local */
-  struct dim3_t block_copy;    /* Address-exposed local */
-  struct dim3_packed_t grid_packed;    /* Address-exposed local */
-  struct dim3_packed_t block_packed;    /* Address-exposed local */
-  uint32_t block_x_size;
-  int32_t num_blocks_x;
-  int32_t num_blocks_y;
-  uint8_t* byte_ptr1;
-  uint8_t* byte_ptr2;
-  uint8_t* byte_ptr3;
-  uint8_t* byte_ptr4;
+  struct dim3 block;    /* Address-exposed local */
+  struct dim3 grid;    /* Address-exposed local */
+  struct dim3 grid_agg_tmp;    /* Address-exposed local */
+  struct dim3 block_agg_tmp;    /* Address-exposed local */
+  struct dim3_launch_coerce grid_launch_coerce;    /* Address-exposed local */
+  struct dim3_launch_coerce block_launch_coerce;    /* Address-exposed local */
+  uint32_t block_dim_x;
+  int32_t grid_dim_x;
+  int32_t grid_dim_y;
   uint32_t i;
   uint32_t j;
   uint32_t k;
   uint32_t l;
 
-  block_x_size = (256 / 32);
-  block.x = block_x_size;
-  block.y = 32;
-  block.z = 1;
-  num_blocks_x = num_blocks(ni, block.x);
-  num_blocks_y = num_blocks(nj, block.y);
-  grid.x = num_blocks_x;
-  grid.y = num_blocks_y;
-  grid.z = 1;
-  memcpy(((uint8_t*)(&grid_copy)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&block_copy)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&grid_packed)), ((uint8_t*)(&grid_copy)), 12);
-  memcpy(((uint8_t*)(&block_packed)), ((uint8_t*)(&block_copy)), 12);
-// Parallelize over the 2D block grid: for each block index (i,j) in the x and y block dimensions run the block-level work (collapse(2) distributes both loops)::header.0
+  block_dim_x = (BLOCK_THREADS_TOTAL / BLOCK_DIM_Y);
+  block.x = block_dim_x;
+  block.y = BLOCK_DIM_Y;
+  block.z = BLOCK_DIM_Z;
+  grid_dim_x = num_blocks(ni, block.x);
+  grid_dim_y = num_blocks(nj, block.y);
+  grid.x = grid_dim_x;
+  grid.y = grid_dim_y;
+  grid.z = GRID_DIM_Z;
+  uint8_t* grid_bytes_dst = (uint8_t*)&grid_agg_tmp;
+  uint8_t* grid_bytes_src = (uint8_t*)&grid;
+  int dim3_size_bytes = DIM3_STRUCT_SIZE_BYTES;
+  memcpy(grid_bytes_dst, grid_bytes_src, dim3_size_bytes);
+  uint8_t* block_bytes_dst = (uint8_t*)&block_agg_tmp;
+  uint8_t* block_bytes_src = (uint8_t*)&block;
+  int dim3_size_bytes2 = DIM3_STRUCT_SIZE_BYTES;
+  memcpy(block_bytes_dst, block_bytes_src, dim3_size_bytes2);
+  uint8_t* grid_coerce_bytes_dst = (uint8_t*)&grid_launch_coerce;
+  uint8_t* grid_agg_bytes_src = (uint8_t*)&grid_agg_tmp;
+  int launch_coerce_size_bytes = LAUNCH_COERCE_STRUCT_SIZE_BYTES;
+  memcpy(grid_coerce_bytes_dst, grid_agg_bytes_src, launch_coerce_size_bytes);
+  uint8_t* block_coerce_bytes_dst = (uint8_t*)&block_launch_coerce;
+  uint8_t* block_agg_bytes_src = (uint8_t*)&block_agg_tmp;
+  int launch_coerce_size_bytes2 = LAUNCH_COERCE_STRUCT_SIZE_BYTES;
+  memcpy(block_coerce_bytes_dst, block_agg_bytes_src, launch_coerce_size_bytes2);
+// OpenMP-parallel nested loops over all grid blocks (grid_dim_x by grid_dim_y) to process each block of the computation::header.0
 #pragma omp parallel for collapse(2)
-for(int32_t i = 0; i < num_blocks_x;   i = i + 1){
-for(int32_t j = 0; j < num_blocks_y;   j = j + 1){
-for(int32_t k = 0; k < 8;   k = k + 1){
-for(int32_t l = 0; l < 32;   l = l + 1){
-kernel_dev(ni, nj, nk, alpha, beta, C, A, B, num_blocks_x, num_blocks_y, 1, block_x_size, 32, 1, i, j, 0, k, l, 0);
+for(int32_t i = 0; i < grid_dim_x;   i = i + 1){
+for(int32_t j = 0; j < grid_dim_y;   j = j + 1){
+for(int32_t k = 0; k < BLOCK_DIM_X;   k = k + 1){
+for(int32_t l = 0; l < BLOCK_DIM_Y;   l = l + 1){
+int32_t grid_dim_x_param = grid_dim_x;
+int32_t grid_dim_y_param = grid_dim_y;
+int32_t grid_dim_z_param = GRID_DIM_Z;
+uint32_t block_dim_x_param = block_dim_x;
+int block_dim_y_param = BLOCK_DIM_Y;
+int block_dim_z_param = BLOCK_DIM_Z;
+int32_t block_idx_x = i;
+int32_t block_idx_y = j;
+int block_idx_z = 0;
+int32_t thread_idx_x = k;
+int32_t thread_idx_y = l;
+int thread_idx_z = 0;
+kernel_dev(ni, nj, nk, alpha, beta, C, A, B, grid_dim_x_param, grid_dim_y_param, grid_dim_z_param, block_dim_x_param, block_dim_y_param, block_dim_z_param, block_idx_x, block_idx_y, block_idx_z, thread_idx_x, thread_idx_y, thread_idx_z);
 }
 }
 }
 }
   return;
 }
-// Print the contents of matrix C (size ni x nj) to stderr in row-major order using the specified formatting
+// Prints the ni-by-nj matrix C to stderr using a fixed floating-point format
 void print_array(uint32_t ni, uint32_t nj, double* C) {
   int64_t i;
   int64_t j;
-  int32_t tmp_index;
 
-// Loop over all rows i and columns j of C and print each element C[i*nj + j] in row-major order::for.cond
+// Iterate over all rows and columns of C and print each element in row-major order::for.cond
 for(int64_t i = 0; i < ni;   i = i + 1){
 for(int64_t j = 0; j < nj;   j = j + 1){
-  fprintf(stderr, (print_fmt_double), C[(i * nj + j)]);
-  if ((int)(i * ni + j) % (int)20 == 0) { // IFELSE MARKER: for.body3 IF
-  fprintf(stderr, (print_fmt_newline));
+  fprintf(stderr, print_double_format_str, C[(i * nj + j)]);
+  if ((int)(i * ni + j) % (int)20 == 0) {
+  fprintf(stderr, newline_str);
   }
 }
 }
-  fprintf(stderr, (print_fmt_newline));
+  fprintf(stderr, newline_str);
 }

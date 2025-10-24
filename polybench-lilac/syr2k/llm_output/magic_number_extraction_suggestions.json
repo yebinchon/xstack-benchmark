@@ -1,0 +1,207 @@
+{
+  "extractions": [
+    {
+      "value": 8,
+      "macro_name": "DOUBLE_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 113,
+          "context": "A = malloc(m * n * 8);"
+        },
+        {
+          "line": 114,
+          "context": "B = malloc(m * n * 8);"
+        },
+        {
+          "line": 115,
+          "context": "C = malloc(m * m * 8);"
+        }
+      ],
+      "reasoning": "Represents the size in bytes of a double; replacing the literal clarifies intent and avoids architecture assumptions. Prefer sizeof(double), but a named constant is still clearer than a raw 8."
+    },
+    {
+      "value": 32412,
+      "macro_name": "KERNEL_ALPHA_DEFAULT",
+      "occurrences": [
+        {
+          "line": 118,
+          "context": "kernel(m, n, 32412, 2123, ((double*)C), ((double*)A),"
+        }
+      ],
+      "reasoning": "Algorithm parameter (alpha) used to scale computation; naming makes its role explicit and centralizes configuration."
+    },
+    {
+      "value": 2123,
+      "macro_name": "KERNEL_BETA_DEFAULT",
+      "occurrences": [
+        {
+          "line": 118,
+          "context": "kernel(m, n, 32412, 2123, ((double*)C), ((double*)A),"
+        }
+      ],
+      "reasoning": "Algorithm parameter (beta) for scaling; a named constant documents its meaning and eases tuning."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARGV_IDX_DUMP_CODE",
+      "occurrences": [
+        {
+          "line": 110,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "Positional CLI argument index for the dump flag; naming prevents confusion and magic indexing."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARGV_IDX_M",
+      "occurrences": [
+        {
+          "line": 111,
+          "context": "m = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "Positional CLI argument index for matrix dimension m; makes argument mapping explicit."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARGV_IDX_N",
+      "occurrences": [
+        {
+          "line": 112,
+          "context": "n = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "Positional CLI argument index for matrix dimension n; improves readability and maintainability."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_CODE_ENABLED",
+      "occurrences": [
+        {
+          "line": 120,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "Semantic value indicating the dump/print mode is enabled; a named constant documents the flag meaning."
+    },
+    {
+      "value": 8,
+      "macro_name": "BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 202,
+          "context": "truct_struct_OC_dim3_field0 = 8;"
+        },
+        {
+          "line": 218,
+          "context": "for(int32_t k = 0; k < 8;   k = k + 1){"
+        },
+        {
+          "line": 220,
+          "context": "__FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        },
+        {
+          "line": 225,
+          "context": "truct_struct_OC_dim3_field0 = 8;"
+        }
+      ],
+      "reasoning": "Thread block size in X dimension (tiling width); centralizing this value ensures loops, launch parameters, and structure fields stay consistent."
+    },
+    {
+      "value": 32,
+      "macro_name": "BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 203,
+          "context": "truct_struct_OC_dim3_field1 = 32;"
+        },
+        {
+          "line": 219,
+          "context": "for(int32_t l = 0; l < 32;   l = l + 1){"
+        },
+        {
+          "line": 220,
+          "context": "__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Thread block size in Y dimension (tiling height); a named constant ensures coherence across the launch config and nested loops."
+    },
+    {
+      "value": 1,
+      "macro_name": "BLOCK_DIM_Z",
+      "occurrences": [
+        {
+          "line": 204,
+          "context": "truct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 220,
+          "context": "ll, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Thread block size in Z dimension; explicitly naming that the kernel is 2D (Z=1) clarifies intent and avoids scattered literals."
+    },
+    {
+      "value": 1,
+      "macro_name": "GRID_DIM_Z",
+      "occurrences": [
+        {
+          "line": 209,
+          "context": "truct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 220,
+          "context": "_FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Grid size in Z dimension; documenting it as 1 indicates a 2D launch grid and prevents confusion with other uses of 1."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 210,
+          "context": "e_tmp)), ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 211,
+          "context": "tmp2)), ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 212,
+          "context": "8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 213,
+          "context": "_t*)(&__FIXME__agg_2e_tmp2)), 12);"
+        }
+      ],
+      "reasoning": "Packed size of the dim3-like struct (3 x 32-bit fields). A named constant indicates the intent; consider using sizeof(struct __FIXME__l_struct_struct_OC_dim3) for safety."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINTF_FMT_STR_LEN",
+      "occurrences": [
+        {
+          "line": 65,
+          "context": "nt8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "Buffer length for the format string including null terminator; a named constant documents the size dependency on the format."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_LEN",
+      "occurrences": [
+        {
+          "line": 66,
+          "context": "__FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "Size for the newline string including null terminator; naming avoids a mysterious literal."
+    }
+  ],
+  "confidence": 0.9
+}

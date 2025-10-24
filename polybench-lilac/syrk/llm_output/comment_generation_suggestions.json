@@ -1,0 +1,74 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initializes matrices A (ni-by-nj) and C (ni-by-ni) with initial values for subsequent computation"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Computes ceil(num / factor) to determine how many blocks of size 'factor' are needed to cover 'num' items"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_beta",
+      "original": "// INSERT COMMENT FUNCTION: kernel_beta",
+      "replacement": "// GPU-style kernel: scales the lower-triangular part of C by beta using 2D grid/block thread indices"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_product",
+      "original": "// INSERT COMMENT FUNCTION: kernel_product",
+      "replacement": "// GPU-style kernel: accumulates alpha * A * A^T into the lower triangle of C via dot products over k (SYRK update)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Host orchestrator: sets grid/block dimensions and dispatches kernels to compute C = beta*C + alpha*A*A^T"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Prints the ni-by-ni matrix C to stderr in row-major order with fixed 2-decimal formatting"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Nested loops iterate over all ni-by-ni entries of C, computing each element\u2019s row-major linear index"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Nested loops iterate over all ni-by-ni entries of C, computing each element\u2019s row-major linear index"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// 2D OpenMP-parallel loop over grid tiles along x and y to emulate GPU block execution"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// 2D OpenMP-parallel loop over grid tiles along x and y to emulate GPU block execution"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Traverse C row by row (ni-by-ni) and print each element using the specified format string"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse CLI args (dump_code, m, n) and allocate matrices A (m-by-n) and C (m-by-m)"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_beta::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_beta::entry",
+      "replacement": "// Compute (i,j) from block/thread indices; if within bounds and j <= i, scale C[i,j] by beta"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_product::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_product::entry",
+      "replacement": "// Compute (i,j) from block/thread indices; if within bounds and lower triangle, accumulate C[i,j] += alpha * dot(A[i,*], A[j,*]) over k"
+    }
+  ]
+}

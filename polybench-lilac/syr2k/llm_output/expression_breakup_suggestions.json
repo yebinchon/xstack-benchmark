@@ -1,0 +1,71 @@
+{
+  "function_name": "init_array",
+  "breakups": [
+    {
+      "line_number": 152,
+      "original_expression": "A[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx_nj",
+          "expression": "i * (int64_t)nj + j",
+          "description": "Compute linear index for row i and column j in an nj-wide row-major array"
+        },
+        {
+          "temp_var": "ij_product",
+          "expression": "(double)i * (double)j",
+          "description": "Multiply i and j as doubles"
+        },
+        {
+          "temp_var": "a_value",
+          "expression": "ij_product / (double)ni",
+          "description": "Normalize the product by ni to get the stored value"
+        }
+      ],
+      "final_expression": "A[idx_nj] = a_value;"
+    },
+    {
+      "line_number": 153,
+      "original_expression": "B[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "idx_nj",
+          "expression": "i * (int64_t)nj + j",
+          "description": "Compute linear index for row i and column j in an nj-wide row-major array"
+        },
+        {
+          "temp_var": "ij_product",
+          "expression": "(double)i * (double)j",
+          "description": "Multiply i and j as doubles"
+        },
+        {
+          "temp_var": "b_value",
+          "expression": "ij_product / (double)ni",
+          "description": "Normalize the product by ni to get the stored value"
+        }
+      ],
+      "final_expression": "B[idx_nj] = b_value;"
+    },
+    {
+      "line_number": 159,
+      "original_expression": "C[(i * ni + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "c_index",
+          "expression": "i * (int64_t)ni + j",
+          "description": "Compute linear index for row i and column j in an ni-wide row-major array"
+        },
+        {
+          "temp_var": "ij_product",
+          "expression": "(double)i * (double)j",
+          "description": "Multiply i and j as doubles"
+        },
+        {
+          "temp_var": "c_value",
+          "expression": "ij_product / (double)ni",
+          "description": "Normalize the product by ni to get the stored value"
+        }
+      ],
+      "final_expression": "C[c_index] = c_value;"
+    }
+  ]
+}

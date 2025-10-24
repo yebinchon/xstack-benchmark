@@ -8,6 +8,6 @@
     2,
     3
   ],
-  "reasoning": "Keep the entry point first for immediate visibility (main). Place initialization/setup next (init_array, id 1) since main calls it early. Next provide small utility functions and kernel helpers that the core computation depends on: num_blocks (0) is used by the kernel, and the two per-tile computational kernels kernel_A_mul_B (4) and kernel_D_plus_tmp_mul_C (5) should appear before the higher-level kernel so callers appear after their callees. Then place the core kernel (2) which depends on the prior helpers. Finally put print_array (3) last as a display/utility function. This ordering improves logical flow, groups related helpers, and respects dependencies to aid readability and debugging.",
+  "reasoning": "Main placed first for entry-point clarity. init_array (1) follows to keep initialization/setup early. num_blocks (0) is a utility used by kernel, so it precedes kernel. The two kernel helpers (4: A_mul_B, then 5: D_plus_tmp_mul_C) are grouped before kernel (2) to respect dependencies and follow the logical execution order inside kernel. kernel (2) comes after its dependencies. print_array (3) is last as a display/IO routine. This ordering improves logical flow, keeps called functions before their caller where possible, and groups helpers for better comprehension and debugging.",
   "confidence": 0.9
 }

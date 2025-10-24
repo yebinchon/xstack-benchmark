@@ -7,6 +7,6 @@
     1,
     2
   ],
-  "reasoning": "Place the entry point first (\"main\") for immediate visibility. Follow with initialization/setup (init_array -> id 0) so setup code appears early. Next put low-level utilities that the core computation depends on: num_blocks (3) and kernel_A_mul_B (4). Having these before the kernel (1) honors dependencies and makes the kernel easier to read and debug because its callees are already visible. Then place the core computation (kernel -> 1). Finally place output/display functions (print_array -> 2) last. This ordering improves logical flow: entry -> setup -> helpers -> core -> output, and groups related helpers together while respecting dependency order.",
-  "confidence": 0.9
+  "reasoning": "Place main first as the entry point. Follow with init_array to keep initialization/setup early. Put kernel dependencies before the kernel to respect call order: num_blocks (utility for grid sizing) and kernel_A_mul_B (the inner compute routine) precede kernel. Finally, place print_array last as an output/display function. This ordering improves logical flow (init -> helpers -> core kernel -> output), respects dependencies for kernel, and aids debugging by grouping utilities before their caller.",
+  "confidence": 0.92
 }

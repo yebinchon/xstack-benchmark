@@ -1,122 +1,6 @@
 {
   "mappings": [
     {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field0",
-      "after": "flags"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field1",
-      "after": "read_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field2",
-      "after": "read_end"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field3",
-      "after": "write_base"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field4",
-      "after": "write_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field5",
-      "after": "write_end"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field6",
-      "after": "buf_base"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field7",
-      "after": "buf_end"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field8",
-      "after": "buf_size"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field9",
-      "after": "unget_buf"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field10",
-      "after": "tmp_buf"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field11",
-      "after": "get_buf"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field12",
-      "after": "cookie"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field13",
-      "after": "prev"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field14",
-      "after": "line_cnt"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field15",
-      "after": "max_line"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field16",
-      "after": "position"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field17",
-      "after": "shortbuf_len"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field18",
-      "after": "mode"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field19",
-      "after": "small_buf"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field20",
-      "after": "name"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field21",
-      "after": "seek_offset"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field22",
-      "after": "lock_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field23",
-      "after": "vtable"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field24",
-      "after": "next"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field25",
-      "after": "open_buf"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field26",
-      "after": "cookie_offset"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field27",
-      "after": "fd"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field28",
-      "after": "reserved"
-    },
-    {
       "before": "__FIXME__l_struct_struct_OC_dim3_field0",
       "after": "x"
     },
@@ -130,27 +14,27 @@
     },
     {
       "before": "__FIXME__l_unnamed_1_field0",
-      "after": "packed_dims"
+      "after": "value64"
     },
     {
       "before": "__FIXME__l_unnamed_1_field1",
-      "after": "padding"
+      "after": "value32"
     },
     {
       "before": "__FIXME__agg_2e_tmp",
-      "after": "dim3_grid_copy"
+      "after": "grid_tmp"
     },
     {
       "before": "__FIXME__agg_2e_tmp3",
-      "after": "dim3_block_copy"
+      "after": "block_tmp"
     },
     {
       "before": "__FIXME__agg_2e_tmp3_2e_coerce",
-      "after": "packed_block_copy"
+      "after": "block_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp_2e_coerce",
-      "after": "packed_grid_copy"
+      "after": "grid_coerce"
     },
     {
       "before": "__FIXME__call",
@@ -162,175 +46,167 @@
     },
     {
       "before": "__FIXME__blockDim_2e_x",
-      "after": "blockDim_x"
+      "after": "blockDimX"
     },
     {
       "before": "__FIXME__blockDim_2e_y",
-      "after": "blockDim_y"
+      "after": "blockDimY"
     },
     {
       "before": "__FIXME__blockDim_2e_z",
-      "after": "blockDim_z"
+      "after": "blockDimZ"
     },
     {
       "before": "__FIXME__blockIdx_2e_x",
-      "after": "blockIdx_x"
+      "after": "blockIdxX"
     },
     {
       "before": "__FIXME__blockIdx_2e_y",
-      "after": "blockIdx_y"
+      "after": "blockIdxY"
     },
     {
       "before": "__FIXME__blockIdx_2e_z",
-      "after": "blockIdx_z"
+      "after": "blockIdxZ"
     },
     {
       "before": "__FIXME__gridDim_2e_x",
-      "after": "gridDim_x"
+      "after": "gridDimX"
     },
     {
       "before": "__FIXME__gridDim_2e_y",
-      "after": "gridDim_y"
+      "after": "gridDimY"
     },
     {
       "before": "__FIXME__gridDim_2e_z",
-      "after": "gridDim_z"
+      "after": "gridDimZ"
     },
     {
       "before": "__FIXME__threadIdx_2e_x",
-      "after": "threadIdx_x"
+      "after": "threadIdxX"
     },
     {
       "before": "__FIXME__threadIdx_2e_y",
-      "after": "threadIdx_y"
+      "after": "threadIdxY"
     },
     {
       "before": "__FIXME__threadIdx_2e_z",
-      "after": "threadIdx_z"
+      "after": "threadIdxZ"
     },
     {
       "before": "__FIXME__tmp1",
-      "after": "row_im1"
+      "after": "centerIndex"
     },
     {
       "before": "__FIXME__tmp2",
-      "after": "row_i"
+      "after": "haloRadius"
     },
     {
       "before": "__FIXME__tmp3",
-      "after": "row_ip1"
+      "after": "iMinusRadius"
     },
     {
       "before": "__FIXME__tmp4",
-      "after": "idx_im1_jm1"
+      "after": "jMinusRadius"
     },
     {
       "before": "__FIXME__tmp5",
-      "after": "idx_im1_j"
+      "after": "iMinus1"
     },
     {
       "before": "__FIXME__tmp6",
-      "after": "idx_im1_jp1"
+      "after": "jPlus1"
     },
     {
       "before": "__FIXME__tmp7",
-      "after": "idx_i_jm1"
+      "after": "iPlus1"
     },
     {
       "before": "__FIXME__tmp8",
-      "after": "idx_i_j"
+      "after": "jMinus1"
     },
     {
       "before": "__FIXME__tmp9",
-      "after": "idx_i_jp1"
+      "after": "topLeftIndex"
     },
     {
       "before": "__FIXME__tmp10",
-      "after": "idx_ip1_jm1"
+      "after": "topIndex"
     },
     {
       "before": "__FIXME__tmp11",
-      "after": "idx_ip1_j"
+      "after": "topRightIndex"
     },
     {
       "before": "__FIXME__tmp12",
-      "after": "idx_ip1_jp1"
+      "after": "leftIndex"
     },
     {
       "before": "__FIXME__tmp13",
-      "after": "v_im1_jm1"
+      "after": "rightIndex"
     },
     {
       "before": "__FIXME__tmp14",
-      "after": "v_im1_j"
+      "after": "bottomLeftIndex"
     },
     {
       "before": "__FIXME__tmp15",
-      "after": "v_im1_jp1"
+      "after": "bottomIndex"
     },
     {
       "before": "__FIXME__tmp16",
-      "after": "v_i_jm1"
+      "after": "bottomRightIndex"
     },
     {
       "before": "__FIXME__tmp17",
-      "after": "v_i_j"
+      "after": "sum1"
     },
     {
       "before": "__FIXME__tmp18",
-      "after": "v_i_jp1"
+      "after": "sum2"
     },
     {
       "before": "__FIXME__tmp19",
-      "after": "v_ip1_jm1"
+      "after": "sum3"
     },
     {
       "before": "__FIXME__tmp20",
-      "after": "v_ip1_j"
+      "after": "sum4"
     },
     {
       "before": "__FIXME__tmp21",
-      "after": "v_ip1_jp1"
+      "after": "sum5"
     },
     {
       "before": "__FIXME__tmp22",
-      "after": "sum9"
+      "after": "sum6"
     },
     {
       "before": "__FIXME__tmp23",
-      "after": "avg9"
+      "after": "sum7"
     },
     {
-      "before": "__FIXME__call14",
-      "after": "unused_call14"
+      "before": "__FIXME__tmp24",
+      "after": "sum8"
     },
     {
-      "before": "__FIXME__call18",
-      "after": "unused_call18"
-    },
-    {
-      "before": "__FIXME__call11",
-      "after": "tmp_index"
+      "before": "__FIXME__tmp25",
+      "after": "average"
     },
     {
       "before": "__FIXME__l_array_1_uint8_t",
-      "after": "uint8_array_1_t"
+      "after": "uint8_array_1"
     },
     {
       "before": "__FIXME__l_array_20_uint8_t",
-      "after": "uint8_array_20_t"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE",
-      "after": "IOFile"
+      "after": "uint8_array_20"
     },
     {
       "before": "__FIXME__l_struct_struct_OC_dim3",
-      "after": "dim3"
+      "after": "Dim3"
     },
     {
       "before": "__FIXME__l_unnamed_1",
-      "after": "PackedDim3"
+      "after": "Dim3Coerce"
     }
   ]
 }

@@ -8,6 +8,6 @@
     1,
     2
   ],
-  "reasoning": "Placed 'main' first to follow the entry-first principle. init_array (0) is kept early because main calls it and it represents setup/initialization. num_blocks (3) is a small utility required by kernel, so it should appear before kernel. The two kernel helpers kernel_contract (4) and kernel_alpha (5) are placed before kernel (1) so the core computation function appears after its dependencies (improves dependency order and readability). The core kernel (1) follows its helpers so readers see the low-level building blocks before the high-level orchestration. print_array (2) is left last as a display/printing utility, grouped with other utilities and away from core computation. This ordering improves logical flow: entry \u2192 initialization \u2192 helpers \u2192 core compute \u2192 output.",
+  "reasoning": "Main first for entry/context. Place init_array early as setup. Put utility num_blocks before kernel to satisfy dependency ordering. Place low-level compute kernels (kernel_contract, kernel_alpha) before the orchestrator kernel so callees precede caller, aiding comprehension and debugging. Keep print_array last as a display routine.",
   "confidence": 0.9
 }

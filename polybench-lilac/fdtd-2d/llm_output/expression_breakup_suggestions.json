@@ -1,206 +1,131 @@
 {
-  "function_name": "kernel",
+  "function_name": "init_array",
   "breakups": [
     {
-      "line_number": 318,
-      "original_expression": "kernel_ey(tmax, nx, ny, ex, ey, hz, fict, t, __FIXME__call3, __FIXME__call4, 1, TILE_DIM_L_1, TILE_DIM_M_1, 1, j, k, 0, l, m, 0);",
+      "line_number": 160,
+      "original_expression": "ex[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));",
       "breakup_steps": [
         {
-          "temp_var": "grid_x",
-          "expression": "__FIXME__call3",
-          "description": "Number of grid blocks in X (precomputed earlier as __FIXME__call3)"
+          "temp_var": "idx",
+          "expression": "i * ny + j",
+          "description": "Compute the flattened 2D index into ex/ey/hz"
         },
         {
-          "temp_var": "grid_y",
-          "expression": "__FIXME__call4",
-          "description": "Number of grid blocks in Y (precomputed earlier as __FIXME__call4)"
+          "temp_var": "j_plus_1",
+          "expression": "j + 1",
+          "description": "Increment j by 1 for the offset term"
         },
         {
-          "temp_var": "grid_z",
-          "expression": "1",
-          "description": "Grid depth (z dimension) for the kernel launch"
+          "temp_var": "i_as_double",
+          "expression": "(double)i",
+          "description": "Convert i to double before multiplication"
         },
         {
-          "temp_var": "block_dim_l",
-          "expression": "TILE_DIM_L_1",
-          "description": "Block/tile dimension L"
+          "temp_var": "j_plus_1_as_double",
+          "expression": "(double)j_plus_1",
+          "description": "Convert j_plus_1 to double before multiplication"
         },
         {
-          "temp_var": "block_dim_m",
-          "expression": "TILE_DIM_M_1",
-          "description": "Block/tile dimension M"
+          "temp_var": "ex_numerator",
+          "expression": "i_as_double * j_plus_1_as_double",
+          "description": "Compute the numerator of the fraction"
         },
         {
-          "temp_var": "block_depth",
-          "expression": "1",
-          "description": "Block depth (z dimension) for the kernel launch"
+          "temp_var": "nx_as_double",
+          "expression": "(double)nx",
+          "description": "Convert nx to double for division"
         },
         {
-          "temp_var": "tile_i",
-          "expression": "j",
-          "description": "Outer loop index mapped to tile i"
-        },
-        {
-          "temp_var": "tile_j",
-          "expression": "k",
-          "description": "Outer loop index mapped to tile j"
-        },
-        {
-          "temp_var": "tile_i_offset",
-          "expression": "0",
-          "description": "Constant offset argument passed as 0"
-        },
-        {
-          "temp_var": "local_i",
-          "expression": "l",
-          "description": "Local index inside tile in L dimension"
-        },
-        {
-          "temp_var": "local_j",
-          "expression": "m",
-          "description": "Local index inside tile in M dimension"
-        },
-        {
-          "temp_var": "local_j_offset",
-          "expression": "0",
-          "description": "Constant offset argument passed as 0"
+          "temp_var": "ex_value",
+          "expression": "ex_numerator / nx_as_double",
+          "description": "Compute the final value to store in ex"
         }
       ],
-      "final_expression": "kernel_ey(tmax, nx, ny, ex, ey, hz, fict, t, grid_x, grid_y, grid_z, block_dim_l, block_dim_m, block_depth, tile_i, tile_j, tile_i_offset, local_i, local_j, local_j_offset);"
+      "final_expression": "ex[idx] = ex_value;"
     },
     {
-      "line_number": 340,
-      "original_expression": "kernel_ex(tmax, nx, ny, ex, ey, hz, fict, t, __FIXME__call14, __FIXME__call17, 1, TILE_DIM_L_1, TILE_DIM_M_1, 1, j, k, 0, l, m, 0);",
+      "line_number": 161,
+      "original_expression": "ey[(i * ny + j)] = (((double)(i) * (double)((j + INIT_EY_J_OFFSET))) / (double)(ny));",
       "breakup_steps": [
         {
-          "temp_var": "grid_x",
-          "expression": "__FIXME__call14",
-          "description": "Number of grid blocks in X (precomputed earlier as __FIXME__call14)"
+          "temp_var": "idx",
+          "expression": "i * ny + j",
+          "description": "Compute the flattened 2D index into ex/ey/hz"
         },
         {
-          "temp_var": "grid_y",
-          "expression": "__FIXME__call17",
-          "description": "Number of grid blocks in Y (precomputed earlier as __FIXME__call17)"
+          "temp_var": "j_ey_offset",
+          "expression": "j + INIT_EY_J_OFFSET",
+          "description": "Apply the EY-specific j offset"
         },
         {
-          "temp_var": "grid_z",
-          "expression": "1",
-          "description": "Grid depth (z dimension) for the kernel launch"
+          "temp_var": "i_as_double",
+          "expression": "(double)i",
+          "description": "Convert i to double before multiplication"
         },
         {
-          "temp_var": "block_dim_l",
-          "expression": "TILE_DIM_L_1",
-          "description": "Block/tile dimension L"
+          "temp_var": "j_ey_as_double",
+          "expression": "(double)j_ey_offset",
+          "description": "Convert the offset j term to double"
         },
         {
-          "temp_var": "block_dim_m",
-          "expression": "TILE_DIM_M_1",
-          "description": "Block/tile dimension M"
+          "temp_var": "ey_numerator",
+          "expression": "i_as_double * j_ey_as_double",
+          "description": "Compute the numerator of the fraction"
         },
         {
-          "temp_var": "block_depth",
-          "expression": "1",
-          "description": "Block depth (z dimension) for the kernel launch"
+          "temp_var": "ny_as_double",
+          "expression": "(double)ny",
+          "description": "Convert ny to double for division"
         },
         {
-          "temp_var": "tile_i",
-          "expression": "j",
-          "description": "Outer loop index mapped to tile i"
-        },
-        {
-          "temp_var": "tile_j",
-          "expression": "k",
-          "description": "Outer loop index mapped to tile j"
-        },
-        {
-          "temp_var": "tile_i_offset",
-          "expression": "0",
-          "description": "Constant offset argument passed as 0"
-        },
-        {
-          "temp_var": "local_i",
-          "expression": "l",
-          "description": "Local index inside tile in L dimension"
-        },
-        {
-          "temp_var": "local_j",
-          "expression": "m",
-          "description": "Local index inside tile in M dimension"
-        },
-        {
-          "temp_var": "local_j_offset",
-          "expression": "0",
-          "description": "Constant offset argument passed as 0"
+          "temp_var": "ey_value",
+          "expression": "ey_numerator / ny_as_double",
+          "description": "Compute the final value to store in ey"
         }
       ],
-      "final_expression": "kernel_ex(tmax, nx, ny, ex, ey, hz, fict, t, grid_x, grid_y, grid_z, block_dim_l, block_dim_m, block_depth, tile_i, tile_j, tile_i_offset, local_i, local_j, local_j_offset);"
+      "final_expression": "ey[idx] = ey_value;"
     },
     {
-      "line_number": 362,
-      "original_expression": "kernel_hz(tmax, nx, ny, ex, ey, hz, fict, t, __FIXME__call28, __FIXME__call31, 1, TILE_DIM_L_1, TILE_DIM_M_1, 1, j, k, 0, l, m, 0);",
+      "line_number": 162,
+      "original_expression": "hz[(i * ny + j)] = (((double)(i) * (double)((j + INIT_HZ_J_OFFSET))) / (double)(nx));",
       "breakup_steps": [
         {
-          "temp_var": "grid_x",
-          "expression": "__FIXME__call28",
-          "description": "Number of grid blocks in X (precomputed earlier as __FIXME__call28)"
+          "temp_var": "idx",
+          "expression": "i * ny + j",
+          "description": "Compute the flattened 2D index into ex/ey/hz"
         },
         {
-          "temp_var": "grid_y",
-          "expression": "__FIXME__call31",
-          "description": "Number of grid blocks in Y (precomputed earlier as __FIXME__call31)"
+          "temp_var": "j_hz_offset",
+          "expression": "j + INIT_HZ_J_OFFSET",
+          "description": "Apply the HZ-specific j offset"
         },
         {
-          "temp_var": "grid_z",
-          "expression": "1",
-          "description": "Grid depth (z dimension) for the kernel launch"
+          "temp_var": "i_as_double",
+          "expression": "(double)i",
+          "description": "Convert i to double before multiplication"
         },
         {
-          "temp_var": "block_dim_l",
-          "expression": "TILE_DIM_L_1",
-          "description": "Block/tile dimension L"
+          "temp_var": "j_hz_as_double",
+          "expression": "(double)j_hz_offset",
+          "description": "Convert the offset j term to double"
         },
         {
-          "temp_var": "block_dim_m",
-          "expression": "TILE_DIM_M_1",
-          "description": "Block/tile dimension M"
+          "temp_var": "hz_numerator",
+          "expression": "i_as_double * j_hz_as_double",
+          "description": "Compute the numerator of the fraction"
         },
         {
-          "temp_var": "block_depth",
-          "expression": "1",
-          "description": "Block depth (z dimension) for the kernel launch"
+          "temp_var": "nx_as_double",
+          "expression": "(double)nx",
+          "description": "Convert nx to double for division"
         },
         {
-          "temp_var": "tile_i",
-          "expression": "j",
-          "description": "Outer loop index mapped to tile i"
-        },
-        {
-          "temp_var": "tile_j",
-          "expression": "k",
-          "description": "Outer loop index mapped to tile j"
-        },
-        {
-          "temp_var": "tile_i_offset",
-          "expression": "0",
-          "description": "Constant offset argument passed as 0"
-        },
-        {
-          "temp_var": "local_i",
-          "expression": "l",
-          "description": "Local index inside tile in L dimension"
-        },
-        {
-          "temp_var": "local_j",
-          "expression": "m",
-          "description": "Local index inside tile in M dimension"
-        },
-        {
-          "temp_var": "local_j_offset",
-          "expression": "0",
-          "description": "Constant offset argument passed as 0"
+          "temp_var": "hz_value",
+          "expression": "hz_numerator / nx_as_double",
+          "description": "Compute the final value to store in hz"
         }
       ],
-      "final_expression": "kernel_hz(tmax, nx, ny, ex, ey, hz, fict, t, grid_x, grid_y, grid_z, block_dim_l, block_dim_m, block_depth, tile_i, tile_j, tile_i_offset, local_i, local_j, local_j_offset);"
+      "final_expression": "hz[idx] = hz_value;"
     }
   ]
 }

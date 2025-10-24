@@ -1,0 +1,56 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 149,
+      "line_content": "  __auto_type __FIXME__tmp1 = i * n + j;",
+      "original_line": "  __auto_type __FIXME__tmp1 = i * n + j;"
+    },
+    {
+      "line_number": 150,
+      "line_content": "  __auto_type __FIXME__tmp2 = __FIXME__tmp1 * n + k;",
+      "original_line": "  __auto_type __FIXME__tmp2 = __FIXME__tmp1 * n + k;"
+    },
+    {
+      "line_number": 151,
+      "line_content": "  __auto_type __FIXME__tmp3 = (double)i + (double)j + (double)k;",
+      "original_line": "  __auto_type __FIXME__tmp3 = (double)i + (double)j + (double)k;"
+    },
+    {
+      "line_number": 152,
+      "line_content": "  __auto_type __FIXME__tmp4 = (double)n;",
+      "original_line": "  __auto_type __FIXME__tmp4 = (double)n;"
+    },
+    {
+      "line_number": 153,
+      "line_content": "  __auto_type __FIXME__tmp5 = __FIXME__tmp3 / __FIXME__tmp4;",
+      "original_line": "  __auto_type __FIXME__tmp5 = __FIXME__tmp3 / __FIXME__tmp4;"
+    },
+    {
+      "line_number": 155,
+      "line_content": "  __auto_type __FIXME__tmp6 = i * n + j;",
+      "original_line": "  __auto_type __FIXME__tmp6 = i * n + j;"
+    },
+    {
+      "line_number": 156,
+      "line_content": "  __auto_type __FIXME__tmp7 = __FIXME__tmp6 * n + k;",
+      "original_line": "  __auto_type __FIXME__tmp7 = __FIXME__tmp6 * n + k;"
+    },
+    {
+      "line_number": 157,
+      "line_content": "  __auto_type __FIXME__tmp8 = (double)i + (double)j + (double)k;",
+      "original_line": "  __auto_type __FIXME__tmp8 = (double)i + (double)j + (double)k;"
+    },
+    {
+      "line_number": 158,
+      "line_content": "  __auto_type __FIXME__tmp9 = (double)n;",
+      "original_line": "  __auto_type __FIXME__tmp9 = (double)n;"
+    },
+    {
+      "line_number": 159,
+      "line_content": "  __auto_type __FIXME__tmp10 = (__FIXME__tmp8 + 1.0) / __FIXME__tmp9;",
+      "original_line": "  __auto_type __FIXME__tmp10 = (__FIXME__tmp8 + 1.0) / __FIXME__tmp9;"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

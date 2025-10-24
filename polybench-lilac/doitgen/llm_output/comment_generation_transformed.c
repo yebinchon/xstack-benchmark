@@ -4,6 +4,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/* Magic number constants */
+#define DOUBLE_SIZE_BYTES 8
+#define BLOCK_DIM_X 1
+#define BLOCK_DIM_Y 8
+#define BLOCK_DIM_Z 32
+#define DIM3_STRUCT_SIZE_BYTES 12
+#define PRINT_ELEM_FMT_LEN 8
+#define NEWLINE_FMT_LEN 2
+#define DUMP_CODE_PRINT 1
+#define ARG_IDX_DUMP_CODE 1
+#define ARG_IDX_NR 2
+#define ARG_IDX_NQ 3
+#define ARG_IDX_NP 4
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -27,79 +41,42 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct io_file_struct;
-struct dim3_t;
-struct dim3_coerce_t;
+struct Dim3;
+struct Dim3Coerce;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array1_t {
+struct Uint8Array1 {
   uint8_t array[1];
 };
-struct uint8_array20_t {
+struct Uint8Array20 {
   uint8_t array[20];
 };
-struct io_file_struct {
-  uint32_t field0;
-  uint8_t* field1;
-  uint8_t* field2;
-  uint8_t* field3;
-  uint8_t* field4;
-  uint8_t* field5;
-  uint8_t* field6;
-  uint8_t* field7;
-  uint8_t* field8;
-  uint8_t* field9;
-  uint8_t* field10;
-  uint8_t* field11;
-  void* field12;
-  struct io_file_struct* field13;
-  uint32_t field14;
-  uint32_t field15;
-  uint64_t field16;
-  uint16_t field17;
-  uint8_t field18;
-  uint8_t field19[1];
-  uint8_t* field20;
-  uint64_t field21;
-  void* field22;
-  void* field23;
-  struct io_file_struct* field24;
-  uint8_t* field25;
-  uint64_t field26;
-  uint32_t field27;
-  uint8_t field28[20];
-};
-struct dim3_t {
+struct Dim3 {
   uint32_t x;
   uint32_t y;
   uint32_t z;
 };
-struct dim3_coerce_t {
-  uint64_t batch;
-  uint32_t batch_extra;
+struct Dim3Coerce {
+  uint64_t dim0;
+  uint32_t dim1;
 };
 
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, uint32_t, uint32_t, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel(uint32_t, uint32_t, uint32_t, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel_sum(uint32_t, uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t double_fmt_space[8] = { "%0.2lf " };
-uint8_t newline_fmt[2] = { "\n" };
+uint8_t print_double_format[PRINT_ELEM_FMT_LEN] = { "%0.2lf " };
+uint8_t newline_string[NEWLINE_FMT_LEN] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -142,36 +119,34 @@ int main(int argc, char ** argv) {
   uint8_t* A;
   uint8_t* sum;
   uint8_t* C4;
-  int32_t init_array_ret;
-  int32_t kernel_ret;
 
-// Parse command-line arguments into dump_code, nr, nq, np and allocate memory for A as a contiguous double array of size nr*nq*np
-  dump_code = atoi(argv[1]);
-  nr = atoi(argv[2]);
-  nq = atoi(argv[3]);
-  np = atoi(argv[4]);
-  A = malloc(nr * nq * np * 8);
-  sum = malloc(nr * nq * np * 8);
-  C4 = malloc(np * np * 8);
-  init_array(nr, nq, np, ((double*)A), ((double*)C4));
+// Parse command-line args (dump flag and dimensions) and allocate nr*nq*np doubles for array A
+  dump_code = atoi(argv[ARG_IDX_DUMP_CODE]);
+  nr = atoi(argv[ARG_IDX_NR]);
+  nq = atoi(argv[ARG_IDX_NQ]);
+  np = atoi(argv[ARG_IDX_NP]);
+  A = malloc(nr * nq * np * DOUBLE_SIZE_BYTES);
+  sum = malloc(nr * nq * np * DOUBLE_SIZE_BYTES);
+  C4 = malloc(np * np * DOUBLE_SIZE_BYTES);
+  init_array(nr, nq, np, (double*)A, (double*)C4);
 ;
-  kernel(nr, nq, np, ((double*)A), ((double*)C4), ((double*)sum));
+  kernel(nr, nq, np, (double*)A, (double*)C4, (double*)sum);
 ;
-  if (dump_code == 1) { // IFELSE MARKER: entry IF
-print_array(nr, nq, np, ((double*)sum));
+  if (dump_code == DUMP_CODE_PRINT) { // IFELSE MARKER: entry IF
+print_array(nr, nq, np, (double*)sum);
   }
 free(((uint8_t*)((double*)A)));
 free(((uint8_t*)((double*)sum)));
 free(((uint8_t*)((double*)C4)));
   return 0;
 }
-// Initialize arrays A and C4 for the problem: set up deterministic starting values based on indices and the provided dimensions nr, nq, np
+// Initialize input arrays for the 3D problem; notably populate C4 with a normalized outer-product pattern based on np
 void init_array(uint32_t nr, uint32_t nq, uint32_t np, double* A, double* C4) {
   int64_t i;
   int64_t j;
   int64_t k;
 
-// Iterate over i and j (0..np-1) to initialize C4 as an np x np matrix where C4[i*np + j] = (double)i * (double)j / np::for.cond
+// Initialize C4 as a symmetric coefficient matrix: C4[i*np + j] = (i*j)/np, a normalized outer product of indices::for.cond
 for(int64_t i = 0; i < nr;   i = i + 1){
 for(int64_t j = 0; j < nq;   j = j + 1){
 for(int64_t k = 0; k < np;   k = k + 1){
@@ -179,7 +154,7 @@ for(int64_t k = 0; k < np;   k = k + 1){
 }
 }
 }
-// Nested loops over i and j filling the C4 coefficient matrix with values proportional to the product of indices divided by np::for.cond21
+// Initialize C4 as a symmetric coefficient matrix: C4[i*np + j] = (i*j)/np, a normalized outer product of indices::for.cond21
 for(int64_t i = 0; i < np;   i = i + 1){
 for(int64_t j = 0; j < np;   j = j + 1){
   C4[(i * np + j)] = (((double)(i) * (double)(j)) / (double)(np));
@@ -187,11 +162,11 @@ for(int64_t j = 0; j < np;   j = j + 1){
 }
   return;
 }
-// Compute the number of blocks required to cover 'num' elements with blocks of size 'factor' (ceiling division)
+// Compute ceil(num / factor) to determine how many blocks of size 'factor' are required
 uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
-// Emulated CUDA kernel: derive global indices (r,q,p) from block/thread coordinates and perform per-element computation to update the sum array using A and C4
+// Thread-block–style kernel that derives (r,q,p) from 3D block/thread indices and accumulates contributions into sum with bounds checks
 void kernel_sum(uint32_t nr, uint32_t nq, uint32_t np, double* A, double* C4, double* sum, uint32_t gridDim_x, uint32_t gridDim_y, uint32_t gridDim_z, uint32_t blockDim_x, uint32_t blockDim_y, uint32_t blockDim_z, uint32_t blockIdx_x, uint32_t blockIdx_y, uint32_t blockIdx_z, uint32_t threadIdx_x, uint32_t threadIdx_y, uint32_t threadIdx_z) {
   int32_t r;
   int32_t q;
@@ -199,82 +174,74 @@ void kernel_sum(uint32_t nr, uint32_t nq, uint32_t np, double* A, double* C4, do
   int64_t s;
   double dot;
 
-// Map block/thread indices to global coordinates r,q,p and check bounds (r<nr, q<nq) so only valid threads perform the per-element work
+// Compute global indices r,q,p from block and thread IDs; proceed only if r<nr, q<nq, and p<np to avoid out-of-bounds access
   r = blockDim_x * blockIdx_x + threadIdx_x;
   q = blockDim_y * blockIdx_y + threadIdx_y;
   p = blockDim_z * blockIdx_z + threadIdx_z;
-  if (r < nr) { // IFELSE MARKER: entry IF
-  if (q < nq) { // IFELSE MARKER: land.lhs.true IF
-  if (p < np) { // IFELSE MARKER: land.lhs.true14 IF
-  __auto_type idx_rq = r * nq + q;
-  __auto_type idx_rq_np = idx_rq * np;
-  __auto_type idx_rq_np_p = idx_rq_np + p;
-  __auto_type sum_zero_tmp = sum[idx_rq_np_p] = 0;;
-  sum[((r * nq + q) * np + p)] = 0;
-  dot = 0;
+  if (r < nr && q < nq) {
+if (p < np) { // IFELSE MARKER: land.lhs.true14 IF
+int rq_index0 = r * nq + q;
+int rq_times_np0 = rq_index0 * np;
+int rqp_index0 = rq_times_np0 + p;
+sum[((r * nq + q) * np + p)] = 0;
+dot = 0;
 for(int64_t s = 0; s < np;   s = s + 1){
-  __auto_type idx_rq_loop = r * nq + q;
-  __auto_type idx_rq_np_loop = idx_rq_loop * np;
-  __auto_type idx_rq_np_s = idx_rq_np_loop + s;
-  __auto_type idx_sp = s * np + p;
-  __auto_type aval = A[idx_rq_np_s];
-  __auto_type c4val = C4[idx_sp];
-  __auto_type prod = aval * c4val;
-  __auto_type dot_update = dot = dot + prod;
-  dot = dot + prod;
+int rq_index1 = r * nq + q;
+int rq_times_np1 = rq_index1 * np;
+int rqs_index = rq_times_np1 + s;
+int sp_index = s * np + p;
+double a_val = A[rqs_index];
+double c4_val = C4[sp_index];
+double prod = a_val * c4_val;
+double new_dot = dot + prod;
+dot = new_dot;
 }
-  __auto_type idx_rq_after = r * nq + q;
-  __auto_type idx_rq_np_after = idx_rq_after * np;
-  __auto_type idx_rq_np_p_after = idx_rq_np_after + p;
-  __auto_type sum_store = sum[idx_rq_np_p_after] = dot;;
-  sum[((r * nq + q) * np + p)] = dot;
-  }
-  }
+int rq_index2 = r * nq + q;
+int rq_times_np2 = rq_index2 * np;
+int rqp_index1 = rq_times_np2 + p;
+sum[((r * nq + q) * np + p)] = dot;
+}
   }
   return;
 }
-// Host-side launcher that configures grid and block dimensions (dim3-like structs) and dispatches the parallel kernel_sum computation
+// Configure grid and block dimensions and orchestrate parallel execution of the 3D reduction over A using C4
 void kernel(uint32_t nr, uint32_t nq, uint32_t np, double* A, double* C4, double* sum) {
-  struct dim3_t block;    /* Address-exposed local */
-  struct dim3_t grid;    /* Address-exposed local */
-  struct dim3_t grid_copy;    /* Address-exposed local */
-  struct dim3_t block_copy;    /* Address-exposed local */
-  struct dim3_coerce_t grid_copy_coerce;    /* Address-exposed local */
-  struct dim3_coerce_t block_copy_coerce;    /* Address-exposed local */
-  int32_t num_blocks_x;
-  int32_t num_blocks_y;
-  int32_t num_blocks_z;
-  uint8_t* byte_ptr1;
-  uint8_t* byte_ptr2;
-  uint8_t* byte_ptr3;
-  uint8_t* byte_ptr4;
+  struct Dim3 block;    /* Address-exposed local */
+  struct Dim3 grid;    /* Address-exposed local */
+  struct Dim3 grid_tmp;    /* Address-exposed local */
+  struct Dim3 block_tmp;    /* Address-exposed local */
+  struct Dim3Coerce grid_coerce;    /* Address-exposed local */
+  struct Dim3Coerce block_coerce;    /* Address-exposed local */
+  int32_t grid_blocks_x;
+  int32_t grid_blocks_y;
+  int32_t grid_blocks_z;
   uint32_t i;
   uint32_t j;
   uint32_t k;
   uint32_t l;
   uint32_t m;
 
-  block.x = 1;
-  block.y = 8;
-  block.z = 32;
-  num_blocks_x = num_blocks(nr, block.x);
-  num_blocks_y = num_blocks(nq, block.y);
-  num_blocks_z = num_blocks(np, block.z);
-  grid.x = num_blocks_x;
-  grid.y = num_blocks_y;
-  grid.z = num_blocks_z;
-  memcpy(((uint8_t*)(&grid_copy)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&block_copy)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&grid_copy_coerce)), ((uint8_t*)(&grid_copy)), 12);
-  memcpy(((uint8_t*)(&block_copy_coerce)), ((uint8_t*)(&block_copy)), 12);
-// Parallelize over the block-grid X and Y dimensions (collapse both loops) so each OpenMP thread handles one block coordinate (i,j) of the work::header.0
+  block.x = BLOCK_DIM_X;
+  block.y = BLOCK_DIM_Y;
+  block.z = BLOCK_DIM_Z;
+  grid_blocks_x = num_blocks(nr, block.x);
+  grid_blocks_y = num_blocks(nq, block.y);
+  grid_blocks_z = num_blocks(np, block.z);
+  grid.x = grid_blocks_x;
+  grid.y = grid_blocks_y;
+  grid.z = grid_blocks_z;
+  memcpy(((uint8_t*)(&grid_tmp)), ((uint8_t*)(&grid)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&block_tmp)), ((uint8_t*)(&block)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&grid_coerce)), ((uint8_t*)(&grid_tmp)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&block_coerce)), ((uint8_t*)(&block_tmp)), DIM3_STRUCT_SIZE_BYTES);
+// OpenMP-parallel iteration over 2D grid tiles (x,y); collapse(2) distributes the Cartesian product of blocks across threads::header.0
 #pragma omp parallel for collapse(2)
-for(int32_t i = 0; i < num_blocks_x;   i = i + 1){
-for(int32_t j = 0; j < num_blocks_y;   j = j + 1){
-for(int32_t k = 0; k < num_blocks_z;   k = k + 1){
-for(int32_t l = 0; l < 8;   l = l + 1){
-for(int32_t m = 0; m < 32;   m = m + 1){
-kernel_sum(nr, nq, np, A, C4, sum, num_blocks_x, num_blocks_y, num_blocks_z, 1, 8, 32, i, j, k, 0, l, m);
+for(int32_t i = 0; i < grid_blocks_x;   i = i + 1){
+for(int32_t j = 0; j < grid_blocks_y;   j = j + 1){
+for(int32_t k = 0; k < grid_blocks_z;   k = k + 1){
+for(int32_t l = 0; l < BLOCK_DIM_Y;   l = l + 1){
+for(int32_t m = 0; m < BLOCK_DIM_Z;   m = m + 1){
+kernel_sum(nr, nq, np, A, C4, sum, grid_blocks_x, grid_blocks_y, grid_blocks_z, BLOCK_DIM_X, BLOCK_DIM_Y, BLOCK_DIM_Z, i, j, k, 0, l, m);
 }
 }
 }
@@ -282,23 +249,22 @@ kernel_sum(nr, nq, np, A, C4, sum, num_blocks_x, num_blocks_y, num_blocks_z, 1, 
 }
   return;
 }
-// Print the contents of the 3D array A (dimensions nr x nq x np) in a readable order for verification or debugging
+// Traverse and print all elements of the 3D array A for verification
 void print_array(uint32_t nr, uint32_t nq, uint32_t np, double* A) {
   int64_t i;
   int64_t j;
   int64_t k;
-  int32_t unused_int;
 
-// Triple nested loops over i (nr), j (nq), k (np) to visit every element of the 3D array A and emit its value for output::for.cond
+// Iterate over every (r,q,p) index of A to output all elements in a consistent order::for.cond
 for(int64_t i = 0; i < nr;   i = i + 1){
 for(int64_t j = 0; j < nq;   j = j + 1){
 for(int64_t k = 0; k < np;   k = k + 1){
-  fprintf(stderr, (double_fmt_space), A[((i * nq * np + j * nq) + k)]);
+  fprintf(stderr, print_double_format, A[((i * nq * np + j * nq) + k)]);
   if (i % 20 == 0) { // IFELSE MARKER: for.body6 IF
-  fprintf(stderr, (newline_fmt));
+  fprintf(stderr, newline_string);
   }
 }
 }
 }
-  fprintf(stderr, (newline_fmt));
+  fprintf(stderr, newline_string);
 }

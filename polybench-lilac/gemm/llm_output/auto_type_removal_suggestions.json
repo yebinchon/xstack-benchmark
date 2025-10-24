@@ -1,0 +1,126 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 225,
+      "line_content": "  __auto_type __FIXME__tmp1 = (uint8_t*)&__FIXME__agg_2e_tmp;",
+      "original_line": "  __auto_type __FIXME__tmp1 = (uint8_t*)&__FIXME__agg_2e_tmp;"
+    },
+    {
+      "line_number": 226,
+      "line_content": "  __auto_type __FIXME__tmp2 = (uint8_t*)&grid;",
+      "original_line": "  __auto_type __FIXME__tmp2 = (uint8_t*)&grid;"
+    },
+    {
+      "line_number": 227,
+      "line_content": "  __auto_type __FIXME__tmp3 = DIM3_STRUCT_SIZE_BYTES;",
+      "original_line": "  __auto_type __FIXME__tmp3 = DIM3_STRUCT_SIZE_BYTES;"
+    },
+    {
+      "line_number": 229,
+      "line_content": "  __auto_type __FIXME__tmp5 = (uint8_t*)&__FIXME__agg_2e_tmp2;",
+      "original_line": "  __auto_type __FIXME__tmp5 = (uint8_t*)&__FIXME__agg_2e_tmp2;"
+    },
+    {
+      "line_number": 230,
+      "line_content": "  __auto_type __FIXME__tmp6 = (uint8_t*)&block;",
+      "original_line": "  __auto_type __FIXME__tmp6 = (uint8_t*)&block;"
+    },
+    {
+      "line_number": 231,
+      "line_content": "  __auto_type __FIXME__tmp7 = DIM3_STRUCT_SIZE_BYTES;",
+      "original_line": "  __auto_type __FIXME__tmp7 = DIM3_STRUCT_SIZE_BYTES;"
+    },
+    {
+      "line_number": 233,
+      "line_content": "  __auto_type __FIXME__tmp9 = (uint8_t*)&__FIXME__agg_2e_tmp_2e_coerce;",
+      "original_line": "  __auto_type __FIXME__tmp9 = (uint8_t*)&__FIXME__agg_2e_tmp_2e_coerce;"
+    },
+    {
+      "line_number": 234,
+      "line_content": "  __auto_type __FIXME__tmp10 = (uint8_t*)&__FIXME__agg_2e_tmp;",
+      "original_line": "  __auto_type __FIXME__tmp10 = (uint8_t*)&__FIXME__agg_2e_tmp;"
+    },
+    {
+      "line_number": 235,
+      "line_content": "  __auto_type __FIXME__tmp11 = LAUNCH_COERCE_STRUCT_SIZE_BYTES;",
+      "original_line": "  __auto_type __FIXME__tmp11 = LAUNCH_COERCE_STRUCT_SIZE_BYTES;"
+    },
+    {
+      "line_number": 237,
+      "line_content": "  __auto_type __FIXME__tmp13 = (uint8_t*)&__FIXME__agg_2e_tmp2_2e_coerce;",
+      "original_line": "  __auto_type __FIXME__tmp13 = (uint8_t*)&__FIXME__agg_2e_tmp2_2e_coerce;"
+    },
+    {
+      "line_number": 238,
+      "line_content": "  __auto_type __FIXME__tmp14 = (uint8_t*)&__FIXME__agg_2e_tmp2;",
+      "original_line": "  __auto_type __FIXME__tmp14 = (uint8_t*)&__FIXME__agg_2e_tmp2;"
+    },
+    {
+      "line_number": 239,
+      "line_content": "  __auto_type __FIXME__tmp15 = LAUNCH_COERCE_STRUCT_SIZE_BYTES;",
+      "original_line": "  __auto_type __FIXME__tmp15 = LAUNCH_COERCE_STRUCT_SIZE_BYTES;"
+    },
+    {
+      "line_number": 247,
+      "line_content": "__auto_type __FIXME__tmp17 = __FIXME__call;",
+      "original_line": "__auto_type __FIXME__tmp17 = __FIXME__call;"
+    },
+    {
+      "line_number": 248,
+      "line_content": "__auto_type __FIXME__tmp18 = __FIXME__call1;",
+      "original_line": "__auto_type __FIXME__tmp18 = __FIXME__call1;"
+    },
+    {
+      "line_number": 249,
+      "line_content": "__auto_type __FIXME__tmp19 = GRID_DIM_Z;",
+      "original_line": "__auto_type __FIXME__tmp19 = GRID_DIM_Z;"
+    },
+    {
+      "line_number": 250,
+      "line_content": "__auto_type __FIXME__tmp20 = __FIXME__div;",
+      "original_line": "__auto_type __FIXME__tmp20 = __FIXME__div;"
+    },
+    {
+      "line_number": 251,
+      "line_content": "__auto_type __FIXME__tmp21 = BLOCK_DIM_Y;",
+      "original_line": "__auto_type __FIXME__tmp21 = BLOCK_DIM_Y;"
+    },
+    {
+      "line_number": 252,
+      "line_content": "__auto_type __FIXME__tmp22 = BLOCK_DIM_Z;",
+      "original_line": "__auto_type __FIXME__tmp22 = BLOCK_DIM_Z;"
+    },
+    {
+      "line_number": 253,
+      "line_content": "__auto_type __FIXME__tmp23 = i;",
+      "original_line": "__auto_type __FIXME__tmp23 = i;"
+    },
+    {
+      "line_number": 254,
+      "line_content": "__auto_type __FIXME__tmp24 = j;",
+      "original_line": "__auto_type __FIXME__tmp24 = j;"
+    },
+    {
+      "line_number": 255,
+      "line_content": "__auto_type __FIXME__tmp25 = 0;",
+      "original_line": "__auto_type __FIXME__tmp25 = 0;"
+    },
+    {
+      "line_number": 256,
+      "line_content": "__auto_type __FIXME__tmp26 = k;",
+      "original_line": "__auto_type __FIXME__tmp26 = k;"
+    },
+    {
+      "line_number": 257,
+      "line_content": "__auto_type __FIXME__tmp27 = l;",
+      "original_line": "__auto_type __FIXME__tmp27 = l;"
+    },
+    {
+      "line_number": 258,
+      "line_content": "__auto_type __FIXME__tmp28 = 0;",
+      "original_line": "__auto_type __FIXME__tmp28 = 0;"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

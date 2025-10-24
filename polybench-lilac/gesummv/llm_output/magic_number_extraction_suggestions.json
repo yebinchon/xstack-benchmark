@@ -1,14 +1,147 @@
 {
   "extractions": [
     {
-      "value": "256",
-      "name": "GESUMMV_BLOCK_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
       "occurrences": [
-        165
+        {
+          "line": 117,
+          "context": "A = malloc(n * n * 8);"
+        },
+        {
+          "line": 118,
+          "context": "B = malloc(n * n * 8);"
+        },
+        {
+          "line": 119,
+          "context": "tmp = malloc(n * 8);"
+        },
+        {
+          "line": 120,
+          "context": "x = malloc(n * 8);"
+        },
+        {
+          "line": 121,
+          "context": "y = malloc(n * 8);"
+        }
       ],
-      "function": "main"
+      "reasoning": "8 is being used as the size of a double in bytes. Replacing raw 8 with a named constant clarifies intent and avoids portability issues; ideally sizeof(double) should be used."
+    },
+    {
+      "value": 256,
+      "macro_name": "THREADS_PER_BLOCK_X",
+      "occurrences": [
+        {
+          "line": 123,
+          "context": "__FIXME__call52 = num_blocks(n, 256);"
+        },
+        {
+          "line": 127,
+          "context": "__FIXME__agg_2e_tmp53.__FIXME__l_struct_struct_OC_dim3_field0 = 256;"
+        },
+        {
+          "line": 135,
+          "context": "for(int32_t j = 0; j < 256;   j = j + 1){"
+        },
+        {
+          "line": 136,
+          "context": "..., 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);"
+        }
+      ],
+      "reasoning": "256 is the CUDA/OpenMP-equivalent block/thread dimension in X. Using a named constant documents the launch configuration and consolidates changes in one place."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 130,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 131,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp53_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp53)), 12);"
+        }
+      ],
+      "reasoning": "12 is the size of the dim3-like struct (3 x uint32_t). A named constant (or preferably sizeof on the type) prevents errors if the struct layout changes."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINTF_FMT_STR_LEN",
+      "occurrences": [
+        {
+          "line": 63,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "8 is the buffer size for the format string including the NUL terminator. Naming it clarifies the reason for the size and avoids mismatch if the format changes."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_LEN",
+      "occurrences": [
+        {
+          "line": 64,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "2 is the length of the \"\\n\" string including the NUL terminator. A named constant makes the intent explicit."
+    },
+    {
+      "value": 43532,
+      "macro_name": "DEFAULT_ALPHA",
+      "occurrences": [
+        {
+          "line": 136,
+          "context": "kernel_y(n, 43532, 12313, ((double*)A), ((double*)B), ..."
+        }
+      ],
+      "reasoning": "43532 is an algorithm-specific scalar multiplier (alpha) passed to kernel_y. A named constant documents its role and allows easy tuning."
+    },
+    {
+      "value": 12313,
+      "macro_name": "DEFAULT_BETA",
+      "occurrences": [
+        {
+          "line": 136,
+          "context": "kernel_y(n, 43532, 12313, ((double*)A), ((double*)B), ..."
+        }
+      ],
+      "reasoning": "12313 is an algorithm-specific scalar multiplier (beta) passed to kernel_y. Naming it makes the computation clearer and configurable."
+    },
+    {
+      "value": 20,
+      "macro_name": "PRINT_ITEMS_PER_LINE",
+      "occurrences": [
+        {
+          "line": 194,
+          "context": "if (i % 20 == 0) { // IFELSE MARKER: for.body"
+        }
+      ],
+      "reasoning": "20 controls how many values are printed per line. Making it a named constant documents formatting intent and centralizes changes."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_IDX_N",
+      "occurrences": [
+        {
+          "line": 115,
+          "context": "n = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "2 encodes the command-line argument position for matrix/vector size n. A named constant clarifies CLI layout and prevents brittle magic indices."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_IDX_DUMP_CODE",
+      "occurrences": [
+        {
+          "line": 116,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "1 encodes the command-line argument position for the dump flag. Naming this special index improves readability and maintainability of argument parsing."
     }
-  ]
+  ],
+  "confidence": 0.9
 }

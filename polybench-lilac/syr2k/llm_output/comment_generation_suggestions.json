@@ -1,0 +1,74 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize C (ni x ni) and the factor matrices A and B (ni x nj) with deterministic values based on indices to create a reproducible starting state"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute ceil(num / factor): the number of blocks required to cover 'num' items with blocks of size 'factor'"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_beta",
+      "original": "// INSERT COMMENT FUNCTION: kernel_beta",
+      "replacement": "// CUDA-like kernel that scales the lower-triangular portion of C by beta using per-thread (i,j) computed from grid/block indices"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_product",
+      "original": "// INSERT COMMENT FUNCTION: kernel_product",
+      "replacement": "// CUDA-like kernel performing a symmetric rank-2 update: for j<=i, accumulate alpha*(A[j,*]\u00b7B[i,*] + B[j,*]\u00b7A[i,*]) into C(i,j) over m elements"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Configure grid/block dimensions and launch the beta-scaling and product kernels (via OpenMP/CUDA emulation) to update C symmetrically"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the ni-by-ni matrix C to stderr in row-major order using the predefined floating-point format"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Nested traversal of all (i,j) positions in an ni-by-ni grid to compute linear indices and initialize array elements"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Nested traversal of all (i,j) positions in an ni-by-ni grid to compute linear indices and initialize array elements"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// OpenMP-parallel 2D iteration over grid block coordinates, emulating a CUDA grid launch across tiles"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// OpenMP-parallel 2D iteration over grid block coordinates, emulating a CUDA grid launch across tiles"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over every element of C row by row and print each value"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line inputs (dump flag, m, n) and allocate matrices A and B sized m*n"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_beta::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_beta::entry",
+      "replacement": "// Compute (i,j) from thread/block indices; if in-bounds and in the lower triangle (j<=i), scale C[i,j] by beta"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_product::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_product::entry",
+      "replacement": "// Compute (i,j) from thread/block indices; if in-bounds and lower-triangular, sum over k=0..m-1 to add alpha*(A[j,k]*B[i,k] + B[j,k]*A[i,k]) to C[i,j]"
+    }
+  ]
+}

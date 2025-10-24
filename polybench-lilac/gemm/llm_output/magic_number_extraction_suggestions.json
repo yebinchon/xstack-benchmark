@@ -1,24 +1,228 @@
 {
   "extractions": [
     {
-      "value": "32",
-      "name": "GEMM_BLOCK_DIM3_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "FORMAT_SPEC_BUF_SIZE",
       "occurrences": [
-        244
+        {
+          "line": 64,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
       ],
-      "function": "main"
+      "reasoning": "Represents the buffer size for the printf format string (includes terminating NUL). Naming clarifies intent and avoids fragile literal sizes."
     },
     {
-      "value": "12",
-      "name": "GEMM_BLOCK_COPY_BYTES_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2,
+      "macro_name": "NEWLINE_STR_BUF_SIZE",
       "occurrences": [
-        252
+        {
+          "line": 65,
+          "context": "__FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
       ],
-      "function": "main"
+      "reasoning": "Capacity for the newline string including the terminating NUL. A named constant documents why the array length is 2."
+    },
+    {
+      "value": 8,
+      "macro_name": "DOUBLE_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 118,
+          "context": "A = malloc(ni * nk * 8);"
+        },
+        {
+          "line": 119,
+          "context": "B = malloc(nk * nj * 8);"
+        },
+        {
+          "line": 120,
+          "context": "C = malloc(ni * nj * 8);"
+        }
+      ],
+      "reasoning": "8 is the byte size of a double. Replacing with a named constant (or preferably sizeof(double)) prevents type-size assumptions and improves portability/readability."
+    },
+    {
+      "value": 32412,
+      "macro_name": "DEFAULT_ALPHA",
+      "occurrences": [
+        {
+          "line": 123,
+          "context": "kernel(ni, nj, nk, 32412, 2123, ((double*)C), ((double*)A),"
+        }
+      ],
+      "reasoning": "Algorithm/configuration scalar used to initialize the kernel. A descriptive name communicates purpose and allows easy tuning."
+    },
+    {
+      "value": 2123,
+      "macro_name": "DEFAULT_BETA",
+      "occurrences": [
+        {
+          "line": 123,
+          "context": "kernel(ni, nj, nk, 32412, 2123, ((double*)C), ((double*)A),"
+        }
+      ],
+      "reasoning": "Second algorithm/configuration scalar for the kernel. Naming clarifies its role and facilitates configuration."
+    },
+    {
+      "value": 256,
+      "macro_name": "BLOCK_THREADS_TOTAL",
+      "occurrences": [
+        {
+          "line": 197,
+          "context": "__FIXME__div = (256 / 32);"
+        }
+      ],
+      "reasoning": "Total threads per block used to derive block dimensions. Extracting prevents hidden assumptions and centralizes launch configuration."
+    },
+    {
+      "value": 32,
+      "macro_name": "BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 197,
+          "context": "__FIXME__div = (256 / 32);"
+        },
+        {
+          "line": 199,
+          "context": "truct_struct_OC_dim3_field1 = 32;"
+        },
+        {
+          "line": 215,
+          "context": "for(int32_t l = 0; l < 32;   l = l + 1){"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__div, 32, 1, i, j, 0, k, l, 0"
+        }
+      ],
+      "reasoning": "32 is the Y dimension of the block and the loop bound for threadIdx.y. A single named constant aligns the loop bounds and launch configuration."
+    },
+    {
+      "value": 8,
+      "macro_name": "BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 214,
+          "context": "for(int32_t k = 0; k < 8;   k = k + 1){"
+        }
+      ],
+      "reasoning": "8 is the X dimension of the block (derived from 256/32) and sets the loop bound for threadIdx.x. Naming ties loops to the launch configuration."
+    },
+    {
+      "value": 1,
+      "macro_name": "GRID_DIM_Z",
+      "occurrences": [
+        {
+          "line": 205,
+          "context": "truct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__call, __FIXME__call1, 1, __FIXME__div, 32, 1, ..."
+        }
+      ],
+      "reasoning": "Z dimension of the grid is fixed at 1. A named constant clarifies this is intentional (2D grid)."
+    },
+    {
+      "value": 1,
+      "macro_name": "BLOCK_DIM_Z",
+      "occurrences": [
+        {
+          "line": 200,
+          "context": "truct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 216,
+          "context": "..., __FIXME__div, 32, 1, i, j, 0, ..."
+        }
+      ],
+      "reasoning": "Z dimension of the block is fixed at 1. Naming communicates the 2D block layout."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 206,
+          "context": "..., ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 207,
+          "context": "..., ((uint8_t*)(&block)), 12);"
+        }
+      ],
+      "reasoning": "Size of struct holding three uint32_t (dim3). Using a named size avoids brittle hard-coding and ties to the actual struct layout."
+    },
+    {
+      "value": 12,
+      "macro_name": "LAUNCH_COERCE_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 208,
+          "context": "..., ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 209,
+          "context": "..., ((uint8_t*)(&__FIXME__agg_2e_tmp2)), 12);"
+        }
+      ],
+      "reasoning": "Size of the auxiliary launch/coercion struct (uint64_t + uint32_t). A separate name distinguishes it from dim3 despite equal byte size."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_FLAG_ENABLED",
+      "occurrences": [
+        {
+          "line": 125,
+          "context": "if (dump_code == 1) {"
+        }
+      ],
+      "reasoning": "Semantic flag value indicating dump is enabled. Naming documents the meaning of the comparison."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_IDX_DUMP_CODE",
+      "occurrences": [
+        {
+          "line": 114,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "Command-line argument index for the dump flag. A macro clarifies which argv slot holds which parameter."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_IDX_NI",
+      "occurrences": [
+        {
+          "line": 115,
+          "context": "ni = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "Command-line argument index for ni. Naming prevents confusion and magic indices."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARG_IDX_NJ",
+      "occurrences": [
+        {
+          "line": 116,
+          "context": "nj = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "Command-line argument index for nj. Naming improves readability."
+    },
+    {
+      "value": 4,
+      "macro_name": "ARG_IDX_NK",
+      "occurrences": [
+        {
+          "line": 117,
+          "context": "nk = atoi(argv[4]);"
+        }
+      ],
+      "reasoning": "Command-line argument index for nk. Naming reduces reliance on unexplained numeric indices."
     }
-  ]
+  ],
+  "confidence": 0.88
 }

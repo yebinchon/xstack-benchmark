@@ -7,6 +7,6 @@
     1,
     2
   ],
-  "reasoning": "Place the entry point first to follow the requested convention (main). After main, keep initialization/setup early so init_array (0) appears next. Kernel helper utilities that the core kernel depends on should appear before the kernel: num_blocks (3) and kernel_sum (4) are called by kernel, so they are placed prior to kernel (1) to respect dependency order and improve readability. The kernel (1) then follows as the core computation function. Print/display utilities (print_array, 2), which are generally less critical for understanding core flow and are only optionally invoked by main, are placed last. This ordering improves logical flow (main \u2192 setup \u2192 helpers \u2192 core \u2192 utilities), groups related helpers together, and aids debugging by putting callee functions before their callers when possible.",
+  "reasoning": "Main first for entry-point comprehension. Place initialization early (init_array). Put small utility dependency before its caller (num_blocks) and the core inner compute before the orchestrating kernel to respect dependencies when possible (kernel_sum before kernel). Keep the outer kernel after its helpers for clear dependency flow. Finish with output/printing (print_array) as it is typically last.",
   "confidence": 0.9
 }

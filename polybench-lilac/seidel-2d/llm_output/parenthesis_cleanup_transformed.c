@@ -4,6 +4,24 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/* Magic number constants */
+#define BYTES_PER_DOUBLE 8
+#define INIT_J_OFFSET 2
+#define INIT_CONST_TERM 2
+#define STENCIL_HALO_RADIUS 1
+#define STENCIL_BORDER_THICKNESS 2
+#define STENCIL_NEIGHBOR_COUNT 9
+#define BLOCK_DIM_X 8
+#define BLOCK_DIM_Y 32
+#define BLOCK_DIM_Z 1
+#define GRID_DIM_Z 1
+#define DIM3_BYTE_SIZE 12
+#define PRINT_FORMAT_BUF_SIZE 8
+#define NEWLINE_BUF_SIZE 2
+#define ARG_DUMP_INDEX 1
+#define ARG_N_INDEX 2
+#define ARG_TSTEPS_INDEX 3
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -27,79 +45,42 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct IOFile;
-struct dim3;
-struct PackedDim3;
+struct Dim3;
+struct Dim3Coerce;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array_1_t {
+struct uint8_array_1 {
   uint8_t array[1];
 };
-struct uint8_array_20_t {
+struct uint8_array_20 {
   uint8_t array[20];
 };
-struct IOFile {
-  uint32_t flags;
-  uint8_t* read_ptr;
-  uint8_t* read_end;
-  uint8_t* write_base;
-  uint8_t* write_ptr;
-  uint8_t* write_end;
-  uint8_t* buf_base;
-  uint8_t* buf_end;
-  uint8_t* buf_size;
-  uint8_t* unget_buf;
-  uint8_t* tmp_buf;
-  uint8_t* get_buf;
-  void* cookie;
-  struct IOFile* prev;
-  uint32_t line_cnt;
-  uint32_t max_line;
-  uint64_t position;
-  uint16_t shortbuf_len;
-  uint8_t mode;
-  uint8_t small_buf[1];
-  uint8_t* name;
-  uint64_t seek_offset;
-  void* lock_ptr;
-  void* vtable;
-  struct IOFile* next;
-  uint8_t* open_buf;
-  uint64_t cookie_offset;
-  uint32_t fd;
-  uint8_t reserved[20];
-};
-struct dim3 {
+struct Dim3 {
   uint32_t x;
   uint32_t y;
   uint32_t z;
 };
-struct PackedDim3 {
-  uint64_t packed_dims;
-  uint32_t padding;
+struct Dim3Coerce {
+  uint64_t value64;
+  uint32_t value32;
 };
 
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel_stencil(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t print_value_format[8] = { "%0.2lf " };
-uint8_t newline_format[2] = { "\n" };
+uint8_t print_format_str[PRINT_FORMAT_BUF_SIZE] = { "%0.2lf " };
+uint8_t newline_str[NEWLINE_BUF_SIZE] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -139,14 +120,12 @@ int main(int argc, char ** argv) {
   int32_t n;
   int32_t tsteps;
   uint8_t* A;
-  int32_t unused_call14;
-  int32_t unused_call18;
 
 // INSERT COMMENT IFELSE: main::entry
-  dump_code = atoi(argv[1]);
-  n = atoi(argv[2]);
-  tsteps = atoi(argv[3]);
-  A = malloc(n * n * 8);
+  dump_code = atoi(argv[ARG_DUMP_INDEX]);
+  n = atoi(argv[ARG_N_INDEX]);
+  tsteps = atoi(argv[ARG_TSTEPS_INDEX]);
+  A = malloc(n * n * BYTES_PER_DOUBLE);
   init_array(n, (double*)A);
 ;
   kernel(tsteps, n, (double*)A);
@@ -154,7 +133,7 @@ int main(int argc, char ** argv) {
   if (dump_code == 1) { // IFELSE MARKER: entry IF
 print_array(n, (double*)A);
   }
-free((uint8_t*)((double*)A));
+free(((uint8_t*)((double*)A)));
   return 0;
 }
 // INSERT COMMENT FUNCTION: init_array
@@ -165,7 +144,7 @@ void init_array(uint32_t n, double* A) {
 // INSERT COMMENT LOOP: init_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
-  A[(i * n + j)] = ((((double)(i) * (double)((j + 2))) + 2) / (double)(n));
+  A[(i * n + j)] = ((((double)(i) * (double)((j + INIT_J_OFFSET))) + INIT_CONST_TERM) / (double)(n));
 }
 }
   return;
@@ -175,51 +154,53 @@ uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
 // INSERT COMMENT FUNCTION: kernel_stencil
-void kernel_stencil(uint32_t tsteps, uint32_t n, double* A, uint32_t gridDim_x, uint32_t gridDim_y, uint32_t gridDim_z, uint32_t blockDim_x, uint32_t blockDim_y, uint32_t blockDim_z, uint32_t blockIdx_x, uint32_t blockIdx_y, uint32_t blockIdx_z, uint32_t threadIdx_x, uint32_t threadIdx_y, uint32_t threadIdx_z) {
+void kernel_stencil(uint32_t tsteps, uint32_t n, double* A, uint32_t gridDimX, uint32_t gridDimY, uint32_t gridDimZ, uint32_t blockDimX, uint32_t blockDimY, uint32_t blockDimZ, uint32_t blockIdxX, uint32_t blockIdxY, uint32_t blockIdxZ, uint32_t threadIdxX, uint32_t threadIdxY, uint32_t threadIdxZ) {
   int32_t i;
   int32_t j;
 
 // INSERT COMMENT IFELSE: kernel_stencil::entry
-  i = blockDim_x * blockIdx_x + threadIdx_x + 1;
-  j = blockDim_y * blockIdx_y + threadIdx_y + 1;
-  if (i < (n - 1)) { // IFELSE MARKER: entry IF
-  if (j < (n - 1)) { // IFELSE MARKER: land.lhs.true IF
-  __auto_type row_im1 = (i - 1) * n;
-  __auto_type row_i = i * n;
-  __auto_type row_ip1 = (i + 1) * n;
-  __auto_type idx_im1_jm1 = row_im1 + (j - 1);
-  __auto_type idx_im1_j = row_im1 + j;
-  __auto_type idx_im1_jp1 = row_im1 + (j + 1);
-  __auto_type idx_i_jm1 = row_i + (j - 1);
-  __auto_type idx_i_j = row_i + j;
-  __auto_type idx_i_jp1 = row_i + (j + 1);
-  __auto_type idx_ip1_jm1 = row_ip1 + (j - 1);
-  __auto_type idx_ip1_j = row_ip1 + j;
-  __auto_type idx_ip1_jp1 = row_ip1 + (j + 1);
-  __auto_type v_im1_jm1 = A[idx_im1_jm1];
-  __auto_type v_im1_j = A[idx_im1_j];
-  __auto_type v_im1_jp1 = A[idx_im1_jp1];
-  __auto_type v_i_jm1 = A[idx_i_jm1];
-  __auto_type v_i_j = A[idx_i_j];
-  __auto_type v_i_jp1 = A[idx_i_jp1];
-  __auto_type v_ip1_jm1 = A[idx_ip1_jm1];
-  __auto_type v_ip1_j = A[idx_ip1_j];
-  __auto_type v_ip1_jp1 = A[idx_ip1_jp1];
-  __auto_type sum9 = v_im1_jm1 + v_im1_j + v_im1_jp1 + v_i_jm1 + v_i_j + v_i_jp1 + v_ip1_jm1 + v_ip1_j + v_ip1_jp1;
-  __auto_type avg9 = sum9 / 9.0;
-  A[(i * n + j)] = avg9;
+  i = blockDimX * blockIdxX + threadIdxX + STENCIL_HALO_RADIUS;
+  j = blockDimY * blockIdxY + threadIdxY + STENCIL_HALO_RADIUS;
+  if (i < (n - STENCIL_HALO_RADIUS)) { // IFELSE MARKER: entry IF
+  if (j < (n - STENCIL_HALO_RADIUS)) { // IFELSE MARKER: land.lhs.true IF
+  int centerIndex = i * n + j;
+  __auto_type haloRadius = STENCIL_HALO_RADIUS;
+  int iMinusRadius = i - haloRadius;
+  int jMinusRadius = j - haloRadius;
+  int iMinus1 = i - 1;
+  int jPlus1 = j + 1;
+  int iPlus1 = i + 1;
+  int jMinus1 = j - 1;
+  int topLeftIndex = iMinusRadius * n + jMinusRadius;
+  int topIndex = iMinusRadius * n + j;
+  int topRightIndex = iMinus1 * n + jPlus1;
+  int leftIndex = centerIndex - 1;
+  int rightIndex = centerIndex + 1;
+  int bottomLeftIndex = iPlus1 * n + jMinus1;
+  int bottomIndex = iPlus1 * n + j;
+  int bottomRightIndex = iPlus1 * n + jPlus1;
+  double sum1 = A[topLeftIndex] + A[topIndex];
+  double sum2 = sum1 + A[topRightIndex];
+  double sum3 = sum2 + A[leftIndex];
+  double sum4 = sum3 + A[centerIndex];
+  double sum5 = sum4 + A[rightIndex];
+  double sum6 = sum5 + A[bottomLeftIndex];
+  double sum7 = sum6 + A[bottomIndex];
+  double sum8 = sum7 + A[bottomRightIndex];
+  double average = sum8 / STENCIL_NEIGHBOR_COUNT;
+  A[(i * n + j)] = average;
   }
   }
   return;
 }
 // INSERT COMMENT FUNCTION: kernel
 void kernel(uint32_t tsteps, uint32_t n, double* A) {
-  struct dim3 block;    /* Address-exposed local */
-  struct dim3 grid;    /* Address-exposed local */
-  struct dim3 dim3_grid_copy;    /* Address-exposed local */
-  struct dim3 dim3_block_copy;    /* Address-exposed local */
-  struct PackedDim3 packed_grid_copy;    /* Address-exposed local */
-  struct PackedDim3 packed_block_copy;    /* Address-exposed local */
+  struct Dim3 block;    /* Address-exposed local */
+  struct Dim3 grid;    /* Address-exposed local */
+  struct Dim3 grid_tmp;    /* Address-exposed local */
+  struct Dim3 block_tmp;    /* Address-exposed local */
+  struct Dim3Coerce grid_coerce;    /* Address-exposed local */
+  struct Dim3Coerce block_coerce;    /* Address-exposed local */
   int32_t t;
   uint32_t j;
   uint32_t k;
@@ -228,18 +209,18 @@ void kernel(uint32_t tsteps, uint32_t n, double* A) {
 
 // INSERT COMMENT LOOP: kernel::for.cond
 for(int32_t t = 1; t <= tsteps;   t = t + 1){
-  block.x = 8;
-  block.y = 32;
-  block.z = 1;
-  uint32_t num_blocks_x = num_blocks((n - 2), block.x);
-  uint32_t num_blocks_y = num_blocks((n - 2), block.y);
+  block.x = BLOCK_DIM_X;
+  block.y = BLOCK_DIM_Y;
+  block.z = BLOCK_DIM_Z;
+  uint32_t num_blocks_x = num_blocks(n - STENCIL_BORDER_THICKNESS, block.x);
+  uint32_t num_blocks_y = num_blocks(n - STENCIL_BORDER_THICKNESS, block.y);
   grid.x = num_blocks_x;
   grid.y = num_blocks_y;
-  grid.z = 1;
-  memcpy((uint8_t*)(&dim3_grid_copy), ((uint8_t*)(&grid)), 12);
-  memcpy((uint8_t*)(&dim3_block_copy), ((uint8_t*)(&block)), 12);
-  memcpy((uint8_t*)(&packed_grid_copy), ((uint8_t*)(&dim3_grid_copy)), 12);
-  memcpy((uint8_t*)(&packed_block_copy), ((uint8_t*)(&dim3_block_copy)), 12);
+  grid.z = GRID_DIM_Z;
+  memcpy(((uint8_t*)(&grid_tmp)), ((uint8_t*)(&grid)), DIM3_BYTE_SIZE);
+  memcpy(((uint8_t*)(&block_tmp)), ((uint8_t*)(&block)), DIM3_BYTE_SIZE);
+  memcpy(((uint8_t*)(&grid_coerce)), ((uint8_t*)(&grid_tmp)), DIM3_BYTE_SIZE);
+  memcpy(((uint8_t*)(&block_coerce)), ((uint8_t*)(&block_tmp)), DIM3_BYTE_SIZE);
 #pragma omp parallel for collapse(2)
 for(int32_t j = 0; j < num_blocks_x;   j = j + 1){
 for(int32_t k = 0; k < num_blocks_y;   k = k + 1){
@@ -257,16 +238,15 @@ kernel_stencil(tsteps, n, A, num_blocks_x, num_blocks_y, 1, 8, 32, 1, j, k, 0, l
 void print_array(uint32_t n, double* A) {
   int64_t i;
   uint64_t j;
-  int32_t tmp_index;
 
 // INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
-  fprintf(stderr, print_value_format, A[(i * n + j)]);
+  fprintf(stderr, print_format_str, A[(i * n + j)]);
   if ((int)(i * n + j) % (int)20 == 0) { // IFELSE MARKER: for.body3 IF
-  fprintf(stderr, newline_format);
+  fprintf(stderr, newline_str);
   }
 }
 }
-  fprintf(stderr, newline_format);
+  fprintf(stderr, newline_str);
 }

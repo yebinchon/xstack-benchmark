@@ -1,0 +1,163 @@
+{
+  "extractions": [
+    {
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
+      "occurrences": [
+        {
+          "line": 115,
+          "context": "A = malloc(nj * nj * 8);"
+        },
+        {
+          "line": 116,
+          "context": "B = malloc(ni * nj * 8);"
+        },
+        {
+          "line": 117,
+          "context": "C = malloc(ni * nj * 8);"
+        },
+        {
+          "line": 118,
+          "context": "tmp = malloc(ni * nj * 8);"
+        }
+      ],
+      "reasoning": "8 is the size in bytes of a double on typical platforms. Using a named constant (or better, sizeof(double)) prevents errors and documents the intended element size."
+    },
+    {
+      "value": 32412,
+      "macro_name": "ALPHA_DEFAULT",
+      "occurrences": [
+        {
+          "line": 121,
+          "context": "kernel(ni, nj, 32412, 2123, ((double*)C), ((double*)A),"
+        }
+      ],
+      "reasoning": "Algorithm parameter for scaling; a magic literal without context. Naming it clarifies that this is the default alpha value passed to the kernel."
+    },
+    {
+      "value": 2123,
+      "macro_name": "BETA_DEFAULT",
+      "occurrences": [
+        {
+          "line": 121,
+          "context": "kernel(ni, nj, 32412, 2123, ((double*)C), ((double*)A),"
+        }
+      ],
+      "reasoning": "Algorithm parameter for scaling; a magic literal without context. Naming it clarifies that this is the default beta value passed to the kernel."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINTF_FMT_BUF_LEN",
+      "occurrences": [
+        {
+          "line": 66,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "Array size for the printf format string, including the null terminator. A named constant documents that this is a buffer length and reduces risk if the format changes."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_BUF_LEN",
+      "occurrences": [
+        {
+          "line": 67,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "Array size for the newline string including the null terminator. A named constant clarifies intent and avoids a bare literal."
+    },
+    {
+      "value": 8,
+      "macro_name": "BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 232,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;"
+        },
+        {
+          "line": 248,
+          "context": "for(int32_t k = 0; k < 8;   k = k + 1){"
+        },
+        {
+          "line": 250,
+          "context": "..., __FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Thread block size in X dimension. The same value appears in loop bounds and kernel launch arguments; naming it ensures consistency and makes tuning easier."
+    },
+    {
+      "value": 32,
+      "macro_name": "BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 233,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;"
+        },
+        {
+          "line": 249,
+          "context": "for(int32_t l = 0; l < 32;   l = l + 1){"
+        },
+        {
+          "line": 250,
+          "context": "..., __FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Thread block size in Y dimension. The same value is used in loop bounds and kernel launch arguments; naming it prevents divergence and clarifies its role."
+    },
+    {
+      "value": 1,
+      "macro_name": "BLOCK_DIM_Z",
+      "occurrences": [
+        {
+          "line": 234,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 250,
+          "context": "..., __FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Thread block size in Z dimension. Although the value is 1, it has semantic meaning as a launch configuration parameter and should be named."
+    },
+    {
+      "value": 1,
+      "macro_name": "GRID_DIM_Z",
+      "occurrences": [
+        {
+          "line": 239,
+          "context": "grid.__FIXME__l_struct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 250,
+          "context": "..., __FIXME__call, __FIXME__call1, 1, 8, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Grid size in Z dimension. Even though it's 1, it's a configuration parameter distinct from block dimensions and should be named to express intent."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 240,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 241,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2)), ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 242,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 243,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp2)), 12);"
+        }
+      ],
+      "reasoning": "Hard-coded byte size of a dim3-like struct (3 x uint32_t). Using a named constant (ideally sizeof(struct __FIXME__l_struct_struct_OC_dim3)) prevents size mismatches if the type changes."
+    }
+  ],
+  "confidence": 0.9
+}

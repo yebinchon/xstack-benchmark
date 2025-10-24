@@ -1,38 +1,197 @@
 {
   "extractions": [
     {
-      "value": "32",
-      "name": "BLOCK_DIM3_FIELD1_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
       "occurrences": [
-        297,
-        313,
-        333
+        {
+          "line": 123,
+          "context": "A = malloc(__FIXME__call2 * __FIXME__call7 * 8);"
+        },
+        {
+          "line": 124,
+          "context": "B = malloc(__FIXME__call7 * __FIXME__call4 * 8);"
+        },
+        {
+          "line": 125,
+          "context": "C = malloc(__FIXME__call10 * __FIXME__call4 * 8);"
+        },
+        {
+          "line": 126,
+          "context": "D = malloc(__FIXME__call2 * __FIXME__call10 * 8);"
+        },
+        {
+          "line": 127,
+          "context": "tmp = malloc(__FIXME__call2 * __FIXME__call4 * 8);"
+        }
       ],
-      "function": "main"
+      "reasoning": "Represents the size in bytes of a double. Using a named constant (or sizeof(double)) documents intent and prevents type-size mismatches."
     },
     {
-      "value": "12",
-      "name": "BLOCK_STRUCT_COPY_BYTES_1",
-      "type": "define",
-      "scope": "file",
+      "value": 32412,
+      "macro_name": "DEFAULT_ALPHA",
       "occurrences": [
-        305,
-        325
+        {
+          "line": 130,
+          "context": "kernel(__FIXME__call2, __FIXME__call4, __FIXME__call7, __FIXME__call10, 32412, 2123, ((double*)tmp), ((double*)A), ((double*)B), ((double*)C), ((double*)D));"
+        }
       ],
-      "function": "main"
+      "reasoning": "Algorithm parameter used to scale computations; giving it a descriptive name clarifies its role and makes tuning easier."
     },
     {
-      "value": "8",
-      "name": "BLOCK_SUBDIM_K_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2123,
+      "macro_name": "DEFAULT_BETA",
       "occurrences": [
-        312,
-        332
+        {
+          "line": 130,
+          "context": "kernel(__FIXME__call2, __FIXME__call4, __FIXME__call7, __FIXME__call10, 32412, 2123, ((double*)tmp), ((double*)A), ((double*)B), ((double*)C), ((double*)D));"
+        }
       ],
-      "function": "main"
+      "reasoning": "Second algorithm parameter; naming it documents its purpose and allows centralized configuration."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_CODE_ENABLE_VALUE",
+      "occurrences": [
+        {
+          "line": 132,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "This literal has semantic meaning (enables output). A named constant clarifies the meaning of the flag value."
+    },
+    {
+      "value": 1,
+      "macro_name": "INIT_B_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 156,
+          "context": "(((double)(i) * (double)((j + 1))) / (double)(nj));"
+        }
+      ],
+      "reasoning": "Offset used in initialization formula for matrix B; naming documents the intended data pattern."
+    },
+    {
+      "value": 3,
+      "macro_name": "INIT_C_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 162,
+          "context": "(((double)(i) * (double)((j + 3))) / (double)(nl));"
+        }
+      ],
+      "reasoning": "Offset used in initialization formula for matrix C; naming documents the intended data pattern."
+    },
+    {
+      "value": 2,
+      "macro_name": "INIT_D_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 168,
+          "context": "(((double)(i) * (double)((j + 2))) / (double)(nk));"
+        }
+      ],
+      "reasoning": "Offset used in initialization formula for matrix D; naming documents the intended data pattern."
+    },
+    {
+      "value": 256,
+      "macro_name": "GPU_BLOCK_THREADS_TOTAL",
+      "occurrences": [
+        {
+          "line": 243,
+          "context": "__FIXME__div = (256 / 32);"
+        }
+      ],
+      "reasoning": "Total CUDA-like block size used to compute blockDim.x; naming makes the launch configuration explicit."
+    },
+    {
+      "value": 32,
+      "macro_name": "GPU_BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 243,
+          "context": "__FIXME__div = (256 / 32);"
+        }
+      ],
+      "reasoning": "Y dimension of the thread block; giving it a name improves readability and keeps launch parameters centralized."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINT_FORMAT_BUFFER_LEN",
+      "occurrences": [
+        {
+          "line": 65,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "Capacity for the printf-style format string including terminator; naming signals intent and prevents accidental mismatch if the format changes."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_LEN",
+      "occurrences": [
+        {
+          "line": 66,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "Buffer length for a newline string including NUL terminator; naming conveys purpose."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_IDX_DUMP_CODE",
+      "occurrences": [
+        {
+          "line": 118,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "Documents the position of the dump flag in argv; improves maintainability of CLI parsing."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_IDX_NI",
+      "occurrences": [
+        {
+          "line": 119,
+          "context": "__FIXME__call2 = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "Documents the argv index for ni; avoids scattering magic positions."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARG_IDX_NJ",
+      "occurrences": [
+        {
+          "line": 120,
+          "context": "__FIXME__call4 = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "Documents the argv index for nj; improves clarity of argument parsing."
+    },
+    {
+      "value": 4,
+      "macro_name": "ARG_IDX_NK",
+      "occurrences": [
+        {
+          "line": 121,
+          "context": "__FIXME__call7 = atoi(argv[4]);"
+        }
+      ],
+      "reasoning": "Documents the argv index for nk; improves clarity of argument parsing."
+    },
+    {
+      "value": 5,
+      "macro_name": "ARG_IDX_NL",
+      "occurrences": [
+        {
+          "line": 122,
+          "context": "__FIXME__call10 = atoi(argv[5]);"
+        }
+      ],
+      "reasoning": "Documents the argv index for nl; improves clarity of argument parsing."
     }
-  ]
+  ],
+  "confidence": 0.88
 }

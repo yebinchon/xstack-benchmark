@@ -1,0 +1,111 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 160,
+      "line_content": "  __auto_type __FIXME__tmp1 = i * ny + j;",
+      "original_line": "  __auto_type __FIXME__tmp1 = i * ny + j;"
+    },
+    {
+      "line_number": 161,
+      "line_content": "  __auto_type __FIXME__tmp2 = j + 1;",
+      "original_line": "  __auto_type __FIXME__tmp2 = j + 1;"
+    },
+    {
+      "line_number": 162,
+      "line_content": "  __auto_type __FIXME__tmp3 = (double)i;",
+      "original_line": "  __auto_type __FIXME__tmp3 = (double)i;"
+    },
+    {
+      "line_number": 163,
+      "line_content": "  __auto_type __FIXME__tmp4 = (double)__FIXME__tmp2;",
+      "original_line": "  __auto_type __FIXME__tmp4 = (double)__FIXME__tmp2;"
+    },
+    {
+      "line_number": 164,
+      "line_content": "  __auto_type __FIXME__tmp5 = __FIXME__tmp3 * __FIXME__tmp4;",
+      "original_line": "  __auto_type __FIXME__tmp5 = __FIXME__tmp3 * __FIXME__tmp4;"
+    },
+    {
+      "line_number": 165,
+      "line_content": "  __auto_type __FIXME__tmp6 = (double)nx;",
+      "original_line": "  __auto_type __FIXME__tmp6 = (double)nx;"
+    },
+    {
+      "line_number": 166,
+      "line_content": "  __auto_type __FIXME__tmp7 = __FIXME__tmp5 / __FIXME__tmp6;",
+      "original_line": "  __auto_type __FIXME__tmp7 = __FIXME__tmp5 / __FIXME__tmp6;"
+    },
+    {
+      "line_number": 168,
+      "line_content": "  __auto_type __FIXME__tmp8 = i * ny + j;",
+      "original_line": "  __auto_type __FIXME__tmp8 = i * ny + j;"
+    },
+    {
+      "line_number": 169,
+      "line_content": "  __auto_type __FIXME__tmp9 = j + INIT_EY_J_OFFSET;",
+      "original_line": "  __auto_type __FIXME__tmp9 = j + INIT_EY_J_OFFSET;"
+    },
+    {
+      "line_number": 170,
+      "line_content": "  __auto_type __FIXME__tmp10 = (double)i;",
+      "original_line": "  __auto_type __FIXME__tmp10 = (double)i;"
+    },
+    {
+      "line_number": 171,
+      "line_content": "  __auto_type __FIXME__tmp11 = (double)__FIXME__tmp9;",
+      "original_line": "  __auto_type __FIXME__tmp11 = (double)__FIXME__tmp9;"
+    },
+    {
+      "line_number": 172,
+      "line_content": "  __auto_type __FIXME__tmp12 = __FIXME__tmp10 * __FIXME__tmp11;",
+      "original_line": "  __auto_type __FIXME__tmp12 = __FIXME__tmp10 * __FIXME__tmp11;"
+    },
+    {
+      "line_number": 173,
+      "line_content": "  __auto_type __FIXME__tmp13 = (double)ny;",
+      "original_line": "  __auto_type __FIXME__tmp13 = (double)ny;"
+    },
+    {
+      "line_number": 174,
+      "line_content": "  __auto_type __FIXME__tmp14 = __FIXME__tmp12 / __FIXME__tmp13;",
+      "original_line": "  __auto_type __FIXME__tmp14 = __FIXME__tmp12 / __FIXME__tmp13;"
+    },
+    {
+      "line_number": 176,
+      "line_content": "  __auto_type __FIXME__tmp15 = i * ny + j;",
+      "original_line": "  __auto_type __FIXME__tmp15 = i * ny + j;"
+    },
+    {
+      "line_number": 177,
+      "line_content": "  __auto_type __FIXME__tmp16 = j + INIT_HZ_J_OFFSET;",
+      "original_line": "  __auto_type __FIXME__tmp16 = j + INIT_HZ_J_OFFSET;"
+    },
+    {
+      "line_number": 178,
+      "line_content": "  __auto_type __FIXME__tmp17 = (double)i;",
+      "original_line": "  __auto_type __FIXME__tmp17 = (double)i;"
+    },
+    {
+      "line_number": 179,
+      "line_content": "  __auto_type __FIXME__tmp18 = (double)__FIXME__tmp16;",
+      "original_line": "  __auto_type __FIXME__tmp18 = (double)__FIXME__tmp16;"
+    },
+    {
+      "line_number": 180,
+      "line_content": "  __auto_type __FIXME__tmp19 = __FIXME__tmp17 * __FIXME__tmp18;",
+      "original_line": "  __auto_type __FIXME__tmp19 = __FIXME__tmp17 * __FIXME__tmp18;"
+    },
+    {
+      "line_number": 181,
+      "line_content": "  __auto_type __FIXME__tmp20 = (double)nx;",
+      "original_line": "  __auto_type __FIXME__tmp20 = (double)nx;"
+    },
+    {
+      "line_number": 182,
+      "line_content": "  __auto_type __FIXME__tmp21 = __FIXME__tmp19 / __FIXME__tmp20;",
+      "original_line": "  __auto_type __FIXME__tmp21 = __FIXME__tmp19 / __FIXME__tmp20;"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

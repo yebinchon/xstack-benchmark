@@ -4,6 +4,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/* Magic number constants */
+#define BYTES_PER_DOUBLE 8
+#define DIM3_STRUCT_SIZE_BYTES 12
+#define KERNEL1_BLOCKDIM_X 256
+#define TILE_SIZE_X 8
+#define TILE_SIZE_Y 32
+#define PRINT_ELEMENTS_PER_LINE 20
+#define PRINTF_FORMAT_STR_LEN 8
+#define NEWLINE_STR_LEN 2
+#define ARG_IDX_N 2
+#define ARG_IDX_DUMP 1
+#define DUMP_CODE_ENABLED 1
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -27,56 +40,24 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct IOFile;
 struct dim3;
-struct dim3_coerce_t;
+struct dim3_coerce;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array1_t {
+struct uint8_array_1 {
   uint8_t array[1];
 };
-struct uint8_array20_t {
+struct uint8_array_20 {
   uint8_t array[20];
-};
-struct IOFile {
-  uint32_t flags;
-  uint8_t* read_ptr;
-  uint8_t* read_end;
-  uint8_t* read_base;
-  uint8_t* write_base;
-  uint8_t* write_ptr;
-  uint8_t* write_end;
-  uint8_t* buf_base;
-  uint8_t* buf_end;
-  uint8_t* save_base;
-  uint8_t* backup_base;
-  uint8_t* save_end;
-  void* markers;
-  struct IOFile* chain;
-  uint32_t fileno;
-  uint32_t flags2;
-  uint64_t old_offset;
-  uint16_t cur_column;
-  uint8_t vtable_offset;
-  uint8_t shortbuf[1];
-  uint8_t* lock;
-  uint64_t offset;
-  void* pad1;
-  void* pad2;
-  struct IOFile* freeres_list;
-  uint8_t* freeres_buf;
-  uint64_t pad5;
-  uint32_t mode;
-  uint8_t unused2[20];
 };
 struct dim3 {
   uint32_t x;
   uint32_t y;
   uint32_t z;
 };
-struct dim3_coerce_t {
+struct dim3_coerce {
   uint64_t x;
   uint32_t y;
 };
@@ -86,7 +67,6 @@ struct dim3_coerce_t {
 /* Function Declarations */
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel_polly(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
@@ -97,8 +77,8 @@ void kernel2(uint32_t, uint32_t, double*, uint32_t, uint32_t, uint32_t, uint32_t
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t print_format_str[8] = { "%0.2lf " };
-uint8_t newline_str[2] = { "\n" };
+uint8_t print_double_fmt[PRINTF_FORMAT_STR_LEN] = { "%0.2lf " };
+uint8_t newline_str[NEWLINE_STR_LEN] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -137,18 +117,16 @@ int main(int argc, char ** argv) {
   int32_t n;
   int32_t dump_code;
   uint8_t* A;
-  int32_t tmp_call12;
-  int32_t tmp_call16;
 
 // INSERT COMMENT IFELSE: main::entry
-  n = atoi(argv[2]);
-  dump_code = atoi(argv[1]);
-  A = malloc(n * n * 8);
+  n = atoi(argv[ARG_IDX_N]);
+  dump_code = atoi(argv[ARG_IDX_DUMP]);
+  A = malloc(n * n * BYTES_PER_DOUBLE);
   init_array(n, ((double*)A));
 ;
   kernel_polly(n, ((double*)A));
 ;
-  if (dump_code == 1) { // IFELSE MARKER: entry IF
+  if (dump_code == DUMP_CODE_ENABLED) { // IFELSE MARKER: entry IF
 print_array(n, ((double*)A));
   }
 free(((uint8_t*)((double*)A)));
@@ -173,10 +151,10 @@ uint32_t num_blocks(uint32_t num, uint32_t factor) {
 }
 // INSERT COMMENT FUNCTION: kernel0
 void kernel0(uint32_t n, uint32_t j, double* A, uint32_t gridDim_x, uint32_t gridDim_y, uint32_t gridDim_z, uint32_t blockDim_x, uint32_t blockDim_y, uint32_t blockDim_z, uint32_t blockIdx_x, uint32_t blockIdx_y, uint32_t blockIdx_z, uint32_t threadIdx_x, uint32_t threadIdx_y, uint32_t threadIdx_z) {
-  double diag_val;
+  double diag_sqrt;
 
-  diag_val = sqrt(A[(j * n + j)]);
-  A[(j * n + j)] = diag_val;
+  diag_sqrt = sqrt(A[(j * n + j)]);
+  A[(j * n + j)] = diag_sqrt;
 }
 // INSERT COMMENT FUNCTION: kernel1
 void kernel1(uint32_t n, uint32_t j, double* A, uint32_t gridDim_x, uint32_t gridDim_y, uint32_t gridDim_z, uint32_t blockDim_x, uint32_t blockDim_y, uint32_t blockDim_z, uint32_t blockIdx_x, uint32_t blockIdx_y, uint32_t blockIdx_z, uint32_t threadIdx_x, uint32_t threadIdx_y, uint32_t threadIdx_z) {
@@ -197,41 +175,38 @@ void kernel2(uint32_t n, uint32_t j, double* A, uint32_t gridDim_x, uint32_t gri
 // INSERT COMMENT IFELSE: kernel2::entry
   i = blockDim_x * blockIdx_x + threadIdx_x;
   k = blockDim_y * blockIdx_y + threadIdx_y;
-  __auto_type cond_j_lt_n = (j < n);
-  __auto_type cond_j_lt_i = (j < i);
-  __auto_type cond_i_lt_n = (i < n);
-  __auto_type cond_j_lt_k = (j < k);
-  __auto_type cond_k_le_i = (k <= i);
-  __auto_type cond_all = cond_j_lt_n & cond_j_lt_i & cond_i_lt_n & cond_j_lt_k & cond_k_le_i;
-  if (cond_all) { // IFELSE MARKER: entry IF
-  __auto_type index_i_n_k = (i * n + k);
-  __auto_type index_i_n_j = (i * n + j);
-  __auto_type index_k_n_j = (k * n + j);
-  __auto_type val_A_i_k = A[index_i_n_k];
-  __auto_type val_A_i_j = A[index_i_n_j];
-  __auto_type val_A_k_j = A[index_k_n_j];
-  __auto_type prod_A_i_j_A_k_j = val_A_i_j * val_A_k_j;
-  __auto_type updated_A_i_k = val_A_i_k - prod_A_i_j_A_k_j;
-  A[(i * n + k)] = updated_A_i_k;
+  int cond_j_lt_n = (j < n);
+  int cond_j_lt_i = (j < i);
+  int cond_i_lt_n = (i < n);
+  int cond_j_lt_k = (j < k);
+  int cond_k_le_i = (k <= i);
+  int combined_cond = cond_j_lt_n & cond_j_lt_i & cond_i_lt_n & cond_j_lt_k & cond_k_le_i;
+  if (combined_cond) { // IFELSE MARKER: entry IF
+  int index_ik = i * n + k;
+  int index_ij = i * n + j;
+  int index_kj = k * n + j;
+  double product_ij_kj = A[index_ij] * A[index_kj];
+  double updated_ik_value = A[index_ik] - product_ij_kj;
+  A[(i * n + k)] = updated_ik_value;
   }
   return;
 }
 // INSERT COMMENT FUNCTION: kernel_polly
 void kernel_polly(uint32_t n, double* dev_A) {
-  struct dim3 dim_temp_a;    /* Address-exposed local */
-  struct dim3 dim_temp_b;    /* Address-exposed local */
-  struct dim3_coerce_t dim_temp_a_coerce;    /* Address-exposed local */
-  struct dim3_coerce_t dim_temp_b_coerce;    /* Address-exposed local */
-  struct dim3 blocks_k1;    /* Address-exposed local */
-  struct dim3 threads_k1;    /* Address-exposed local */
-  struct dim3_coerce_t blocks_k1_coerce;    /* Address-exposed local */
-  struct dim3_coerce_t threads_k1_coerce;    /* Address-exposed local */
+  struct dim3 launch0_grid;    /* Address-exposed local */
+  struct dim3 launch0_block;    /* Address-exposed local */
+  struct dim3_coerce launch0_grid_coerce;    /* Address-exposed local */
+  struct dim3_coerce launch0_block_coerce;    /* Address-exposed local */
+  struct dim3 launch1_grid;    /* Address-exposed local */
+  struct dim3 launch1_block;    /* Address-exposed local */
+  struct dim3_coerce launch1_grid_coerce;    /* Address-exposed local */
+  struct dim3_coerce launch1_block_coerce;    /* Address-exposed local */
   struct dim3 block;    /* Address-exposed local */
   struct dim3 grid;    /* Address-exposed local */
-  struct dim3 block_copy;    /* Address-exposed local */
-  struct dim3 grid_copy;    /* Address-exposed local */
-  struct dim3_coerce_t block_copy_coerce;    /* Address-exposed local */
-  struct dim3_coerce_t grid_copy_coerce;    /* Address-exposed local */
+  struct dim3 launch2_block;    /* Address-exposed local */
+  struct dim3 launch2_grid;    /* Address-exposed local */
+  struct dim3_coerce launch2_block_coerce;    /* Address-exposed local */
+  struct dim3_coerce launch2_grid_coerce;    /* Address-exposed local */
   int32_t iter;
   uint32_t j;
   uint32_t k;
@@ -240,49 +215,49 @@ void kernel_polly(uint32_t n, double* dev_A) {
 
 // INSERT COMMENT LOOP: kernel_polly::for.cond
 for(int32_t iter = 0; iter < n;   iter = iter + 1){
-  dim_temp_a.x = 1;
-  dim_temp_a.y = 1;
-  dim_temp_a.z = 1;
-  dim_temp_b.x = 1;
-  dim_temp_b.y = 1;
-  dim_temp_b.z = 1;
-  memcpy(((uint8_t*)(&dim_temp_a_coerce)), ((uint8_t*)(&dim_temp_a)), 12);
-  memcpy(((uint8_t*)(&dim_temp_b_coerce)), ((uint8_t*)(&dim_temp_b)), 12);
+  launch0_grid.x = 1;
+  launch0_grid.y = 1;
+  launch0_grid.z = 1;
+  launch0_block.x = 1;
+  launch0_block.y = 1;
+  launch0_block.z = 1;
+  memcpy(((uint8_t*)(&launch0_grid_coerce)), ((uint8_t*)(&launch0_grid)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&launch0_block_coerce)), ((uint8_t*)(&launch0_block)), DIM3_STRUCT_SIZE_BYTES);
 kernel0(n, iter, dev_A, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0);
-  uint32_t num_blocks_256 = num_blocks(n, 256);
-  blocks_k1.x = num_blocks_256;
-  blocks_k1.y = 1;
-  blocks_k1.z = 1;
-  threads_k1.x = 256;
-  threads_k1.y = 1;
-  threads_k1.z = 1;
-  memcpy(((uint8_t*)(&blocks_k1_coerce)), ((uint8_t*)(&blocks_k1)), 12);
-  memcpy(((uint8_t*)(&threads_k1_coerce)), ((uint8_t*)(&threads_k1)), 12);
+  uint32_t grid1_x = num_blocks(n, KERNEL1_BLOCKDIM_X);
+  launch1_grid.x = grid1_x;
+  launch1_grid.y = 1;
+  launch1_grid.z = 1;
+  launch1_block.x = KERNEL1_BLOCKDIM_X;
+  launch1_block.y = 1;
+  launch1_block.z = 1;
+  memcpy(((uint8_t*)(&launch1_grid_coerce)), ((uint8_t*)(&launch1_grid)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&launch1_block_coerce)), ((uint8_t*)(&launch1_block)), DIM3_STRUCT_SIZE_BYTES);
 #pragma omp parallel for collapse(2)
-for(int32_t j = 0; j < num_blocks_256;   j = j + 1){
-for(int32_t k = 0; k < 256;   k = k + 1){
-  kernel1(n, iter, dev_A, num_blocks_256, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+for(int32_t j = 0; j < grid1_x;   j = j + 1){
+for(int32_t k = 0; k < KERNEL1_BLOCKDIM_X;   k = k + 1){
+  kernel1(n, iter, dev_A, grid1_x, 1, 1, KERNEL1_BLOCKDIM_X, 1, 1, j, 0, 0, k, 0, 0);
 ;
 }
 }
-  block.x = 8;
-  block.y = 32;
+  block.x = TILE_SIZE_X;
+  block.y = TILE_SIZE_Y;
   block.z = 1;
-  uint32_t num_blocks_x = num_blocks(n, block.x);
-  uint32_t num_blocks_y = num_blocks(n, block.y);
-  grid.x = num_blocks_x;
-  grid.y = num_blocks_y;
+  uint32_t grid2_x = num_blocks(n, block.x);
+  uint32_t grid2_y = num_blocks(n, block.y);
+  grid.x = grid2_x;
+  grid.y = grid2_y;
   grid.z = 1;
-  memcpy(((uint8_t*)(&block_copy)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&grid_copy)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&block_copy_coerce)), ((uint8_t*)(&block_copy)), 12);
-  memcpy(((uint8_t*)(&grid_copy_coerce)), ((uint8_t*)(&grid_copy)), 12);
+  memcpy(((uint8_t*)(&launch2_block)), ((uint8_t*)(&block)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&launch2_grid)), ((uint8_t*)(&grid)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&launch2_block_coerce)), ((uint8_t*)(&launch2_block)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&launch2_grid_coerce)), ((uint8_t*)(&launch2_grid)), DIM3_STRUCT_SIZE_BYTES);
 #pragma omp parallel for collapse(2)
-for(int32_t j = 0; j < 8;   j = j + 1){
-for(int32_t k = 0; k < 32;   k = k + 1){
-for(int32_t l = 0; l < num_blocks_x;   l = l + 1){
-for(int32_t m = 0; m < num_blocks_y;   m = m + 1){
-  kernel2(n, iter, dev_A, 8, 32, 1, num_blocks_x, num_blocks_y, 1, j, k, 0, l, m, 0);
+for(int32_t j = 0; j < TILE_SIZE_X;   j = j + 1){
+for(int32_t k = 0; k < TILE_SIZE_Y;   k = k + 1){
+for(int32_t l = 0; l < grid2_x;   l = l + 1){
+for(int32_t m = 0; m < grid2_y;   m = m + 1){
+  kernel2(n, iter, dev_A, TILE_SIZE_X, TILE_SIZE_Y, 1, grid2_x, grid2_y, 1, j, k, 0, l, m, 0);
 ;
 }
 }
@@ -299,8 +274,8 @@ void print_array(uint32_t n, double* A) {
 // INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
-  fprintf(stderr, (print_format_str), A[(i * n + j)]);
-  if ((int)(i * n + j) % (int)20 == 0) { // IFELSE MARKER: for.body3 IF
+  fprintf(stderr, (print_double_fmt), A[(i * n + j)]);
+  if ((int)(i * n + j) % (int)PRINT_ELEMENTS_PER_LINE == 0) { // IFELSE MARKER: for.body3 IF
   fprintf(stderr, (newline_str));
   }
 }

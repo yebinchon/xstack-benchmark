@@ -3,52 +3,52 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize the n-by-n arrays A and B: iterate over rows and columns to set up initial values for the computation"
+      "replacement": "// Initialize the n-by-n arrays A and B before computation, filling each element from its indices to form a reproducible setup"
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Return the number of blocks required to cover 'num' items with blocks of size 'factor' (ceiling division)"
+      "replacement": "// Return ceil(num/factor): the number of blocks needed to cover num items with a given block size"
     },
     {
       "id": "unknown_FUNCTION_kernel_stencil",
       "original": "// INSERT COMMENT FUNCTION: kernel_stencil",
-      "replacement": "// Compute a 5-point stencil for interior grid points: use block/grid/thread indices to get global i,j and update B from neighboring values in A"
+      "replacement": "// GPU-style 2D 5-point stencil kernel: each thread computes B(i,j) from A at (i,j) and its four neighbors using grid/block/thread indices with a halo"
     },
     {
       "id": "unknown_FUNCTION_kernel",
       "original": "// INSERT COMMENT FUNCTION: kernel",
-      "replacement": "// Manage and execute the time-stepping stencil kernel: configure block/grid dimensions and run the stencil for the given number of time steps, swapping buffers as needed"
+      "replacement": "// Orchestrate tsteps iterations of the stencil on n-by-n arrays by configuring launch geometry and invoking the compute kernel"
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the n-by-n array A to stderr in row-major order using the configured floating-point format"
+      "replacement": "// Print the n-by-n array A element-by-element to stderr using the configured floating-point format"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over all row (i) and column (j) indices of the n-by-n grid to compute the row-major element index used for initialization"
+      "replacement": "// Visit every (i,j) in the n-by-n grid to compute per-index offsets (e.g., a_j_offset) and initialize entries in A/B"
     },
     {
       "id": "unknown_LOOP_kernel",
       "original": "// INSERT COMMENT LOOP: kernel",
-      "replacement": "// Time-stepping loop: perform one stencil iteration per timestep (1..tsteps), configuring block dimensions and invoking the stencil computation each iteration"
+      "replacement": "// Iterate over time steps, configuring thread-block dimensions each step before launching the stencil computation"
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Iterate over every element of the n-by-n array and print each value (row-major order) to stderr"
+      "replacement": "// Traverse all rows and columns in row-major order and print each element of A"
     },
     {
       "id": "unknown_IFELSE_main::entry",
       "original": "// INSERT COMMENT IFELSE: main::entry",
-      "replacement": "// Parse command-line arguments for dump_code, n and tsteps, then allocate two n-by-n double buffers A and B (n*n*8 bytes each)"
+      "replacement": "// Parse command-line args (dump flag, n, tsteps) and allocate n-by-n double buffers A and B"
     },
     {
       "id": "unknown_IFELSE_kernel_stencil::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_stencil::entry",
-      "replacement": "// Compute global indices i,j from block/thread coordinates; if they are interior points (not on the boundary), compute the average of the center and its four neighbors from A and store it into B"
+      "replacement": "// Compute global indices (i,j); if inside the interior region (excluding halo), write B(i,j) as the 5-point average of A at (i,j) and its four axial neighbors"
     }
   ]
 }

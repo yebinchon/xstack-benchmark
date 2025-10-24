@@ -1,0 +1,59 @@
+{
+  "function_name": "init_array",
+  "breakups": [
+    {
+      "line_number": 146,
+      "original_expression": "A[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "a_index",
+          "expression": "i * nj + j",
+          "description": "Compute the row-major index into array A"
+        },
+        {
+          "temp_var": "product_ij",
+          "expression": "(double)i * (double)j",
+          "description": "Multiply loop indices in double precision"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)ni",
+          "description": "Cast ni to double for floating-point division"
+        },
+        {
+          "temp_var": "a_value",
+          "expression": "product_ij / denom",
+          "description": "Compute the final value to store into A"
+        }
+      ],
+      "final_expression": "A[a_index] = a_value"
+    },
+    {
+      "line_number": 152,
+      "original_expression": "C[(i * ni + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "breakup_steps": [
+        {
+          "temp_var": "c_index",
+          "expression": "i * ni + j",
+          "description": "Compute the row-major index into array C"
+        },
+        {
+          "temp_var": "product_ij",
+          "expression": "(double)i * (double)j",
+          "description": "Multiply loop indices in double precision"
+        },
+        {
+          "temp_var": "denom",
+          "expression": "(double)ni",
+          "description": "Cast ni to double for floating-point division"
+        },
+        {
+          "temp_var": "c_value",
+          "expression": "product_ij / denom",
+          "description": "Compute the final value to store into C"
+        }
+      ],
+      "final_expression": "C[c_index] = c_value"
+    }
+  ]
+}

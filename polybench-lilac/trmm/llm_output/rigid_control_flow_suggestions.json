@@ -1,0 +1,24 @@
+{
+  "suggestions_by_function": {
+    "kernel_alpha": [
+      {
+        "identifier": [
+          "merge_bounds_checks_for_i_and_j",
+          "coalesce_entry_and_land_lhs_true_markers"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < m",
+          "j < n"
+        ],
+        "coalesced_condition": "i < m && j < n",
+        "line_numbers": [
+          172,
+          173
+        ],
+        "reasoning": "Both conditions are simple, side-effect-free comparisons on independent variables (i and j) against their bounds (m and n). Neither condition modifies any state, and i/j are not changed between checks. Coalescing to a single if (i < m && j < n) preserves behavior (body executes only when both are true) and improves readability by removing unnecessary nesting and making the combined bounds guard explicit."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

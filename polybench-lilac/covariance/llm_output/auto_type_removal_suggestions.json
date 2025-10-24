@@ -1,0 +1,66 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 198,
+      "line_content": "__auto_type __FIXME__tmp1 = i * m + j;",
+      "original_line": "__auto_type __FIXME__tmp1 = i * m + j;"
+    },
+    {
+      "line_number": 199,
+      "line_content": "__auto_type __FIXME__tmp2 = k * m;",
+      "original_line": "__auto_type __FIXME__tmp2 = k * m;"
+    },
+    {
+      "line_number": 200,
+      "line_content": "__auto_type __FIXME__tmp3 = data[__FIXME__tmp2 + i];",
+      "original_line": "__auto_type __FIXME__tmp3 = data[__FIXME__tmp2 + i];"
+    },
+    {
+      "line_number": 201,
+      "line_content": "__auto_type __FIXME__tmp4 = data[__FIXME__tmp2 + j];",
+      "original_line": "__auto_type __FIXME__tmp4 = data[__FIXME__tmp2 + j];"
+    },
+    {
+      "line_number": 202,
+      "line_content": "__auto_type __FIXME__tmp5 = __FIXME__tmp3 * __FIXME__tmp4;",
+      "original_line": "__auto_type __FIXME__tmp5 = __FIXME__tmp3 * __FIXME__tmp4;"
+    },
+    {
+      "line_number": 203,
+      "line_content": "__auto_type __FIXME__tmp6 = cov[__FIXME__tmp1] + __FIXME__tmp5;",
+      "original_line": "__auto_type __FIXME__tmp6 = cov[__FIXME__tmp1] + __FIXME__tmp5;"
+    },
+    {
+      "line_number": 206,
+      "line_content": "__auto_type __FIXME__tmp7 = i * m + j;",
+      "original_line": "__auto_type __FIXME__tmp7 = i * m + j;"
+    },
+    {
+      "line_number": 207,
+      "line_content": "__auto_type __FIXME__tmp8 = (double)n - COV_BESSEL_CORRECTION;",
+      "original_line": "__auto_type __FIXME__tmp8 = (double)n - COV_BESSEL_CORRECTION;"
+    },
+    {
+      "line_number": 208,
+      "line_content": "__auto_type __FIXME__tmp9 = cov[__FIXME__tmp7] / __FIXME__tmp8;",
+      "original_line": "__auto_type __FIXME__tmp9 = cov[__FIXME__tmp7] / __FIXME__tmp8;"
+    },
+    {
+      "line_number": 210,
+      "line_content": "__auto_type __FIXME__tmp10 = i * m + j;",
+      "original_line": "__auto_type __FIXME__tmp10 = i * m + j;"
+    },
+    {
+      "line_number": 211,
+      "line_content": "__auto_type __FIXME__tmp11 = j * m + i;",
+      "original_line": "__auto_type __FIXME__tmp11 = j * m + i;"
+    },
+    {
+      "line_number": 212,
+      "line_content": "__auto_type __FIXME__tmp12 = cov[__FIXME__tmp10];",
+      "original_line": "__auto_type __FIXME__tmp12 = cov[__FIXME__tmp10];"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

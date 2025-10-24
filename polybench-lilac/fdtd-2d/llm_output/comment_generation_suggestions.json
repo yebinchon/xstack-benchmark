@@ -3,87 +3,87 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize the simulation arrays: populate ex, ey, hz and the time-dependent boundary array with deterministic values based on their indices to create reproducible initial conditions."
+      "replacement": "// Initialize the ex, ey, and hz arrays and the _fict_ boundary sequence for an nx-by-ny grid (setup for the FDTD simulation)"
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Return the number of blocks needed to cover 'num' items with 'factor' threads per block (ceiling division)."
+      "replacement": "// Compute ceil(num / factor): the number of blocks needed to cover num items with blocks of size factor"
     },
     {
       "id": "unknown_FUNCTION_kernel_splat",
       "original": "// INSERT COMMENT FUNCTION: kernel_splat",
-      "replacement": "// Kernel that applies the time-dependent boundary condition by writing fict[t] into the first row of ey (splat boundary update)."
-    },
-    {
-      "id": "unknown_IFELSE_kernel_splat::entry",
-      "original": "// INSERT COMMENT IFELSE: kernel_splat::entry",
-      "replacement": "// Compute the global column index j and, if it is inside the domain, set ey[0,j] = fict[t] to apply the boundary value for this time step."
+      "replacement": "// CUDA-like kernel that applies the time-dependent boundary condition Ey[0, j] = fict[t] across columns j"
     },
     {
       "id": "unknown_FUNCTION_kernel_ey",
       "original": "// INSERT COMMENT FUNCTION: kernel_ey",
-      "replacement": "// Kernel that updates the Ey field on interior grid points using a finite-difference in the x-direction: ey[i,j] -= 0.5*(hz[i,j] - hz[i-1,j])."
-    },
-    {
-      "id": "unknown_IFELSE_kernel_ey::entry",
-      "original": "// INSERT COMMENT IFELSE: kernel_ey::entry",
-      "replacement": "// Compute global indices (i,j); if within bounds update ey[i,j] by subtracting half the difference of adjacent hz values (hz[i,j] - hz[i-1,j])."
+      "replacement": "// CUDA-like kernel that updates Ey for interior rows (i >= 1) using the discrete dHz/di term scaled by FDTD_E_UPDATE_COEFF"
     },
     {
       "id": "unknown_FUNCTION_kernel_ex",
       "original": "// INSERT COMMENT FUNCTION: kernel_ex",
-      "replacement": "// Kernel that updates the Ex field on interior grid points using a finite-difference in the y-direction: ex[i,j] -= 0.5*(hz[i,j] - hz[i,j-1])."
-    },
-    {
-      "id": "unknown_IFELSE_kernel_ex::entry",
-      "original": "// INSERT COMMENT IFELSE: kernel_ex::entry",
-      "replacement": "// Compute global indices (i,j); if inside the domain update ex[i,j] by subtracting half the difference of adjacent hz values in y (hz[i,j] - hz[i,j-1])."
+      "replacement": "// CUDA-like kernel that updates Ex for interior columns (j >= 1) using the discrete dHz/dj term scaled by FDTD_E_UPDATE_COEFF"
     },
     {
       "id": "unknown_FUNCTION_kernel_hz",
       "original": "// INSERT COMMENT FUNCTION: kernel_hz",
-      "replacement": "// Kernel that updates the Hz field by computing the discrete curl of E (differences of Ex and Ey) and subtracting a scaled value to advance Hz."
-    },
-    {
-      "id": "unknown_IFELSE_kernel_hz::entry",
-      "original": "// INSERT COMMENT IFELSE: kernel_hz::entry",
-      "replacement": "// Compute global indices (i,j); if i < nx-1 and j < ny-1 update hz[i,j] using the discrete curl: hz -= 0.7*((ex[i,j+1]-ex[i,j]) + ey[i+1,j] - ey[i,j])."
+      "replacement": "// CUDA-like kernel that updates Hz on interior cells via the discrete curl of E (Ex, Ey) with a 0.7 update coefficient"
     },
     {
       "id": "unknown_FUNCTION_kernel",
       "original": "// INSERT COMMENT FUNCTION: kernel",
-      "replacement": "// Host-side driver that sets up grid/thread dimensions and iterates over time steps, launching the Ex, Ey, Hz and boundary update kernels in the correct order."
+      "replacement": "// Orchestrate the FDTD time stepping: configure launch dimensions and invoke boundary/field update kernels each timestep"
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the field arrays (ex, ey, hz) to stderr in row-major order for verification, using a counter to format the output."
+      "replacement": "// Print the field data over the nx-by-ny grid (e.g., for debugging/verification output)"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over all grid cells (i=0..nx-1, j=0..ny-1) and initialize ex[i,j] with a deterministic function of indices (i*(j+1)/nx) to set starting field values."
+      "replacement": "// Outer loop over grid rows i to initialize field values across the nx-by-ny domain"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over all grid cells (i=0..nx-1, j=0..ny-1) and initialize ex[i,j] with a deterministic function of indices (i*(j+1)/nx) to set starting field values."
+      "replacement": "// Inner loop over columns j within row i; compute linear index i*ny + j and initialize per-cell values"
     },
     {
       "id": "unknown_LOOP_kernel",
       "original": "// INSERT COMMENT LOOP: kernel",
-      "replacement": "// Time-stepping loop over t from 0 to tmax-1: for each step configure execution parameters and invoke the field-update and boundary kernels."
+      "replacement": "// Time-stepping loop (t = 0..tmax-1): set up block/grid sizes and launch the update kernels each step"
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Iterate over all grid cells and print each field value using the chosen format, advancing a print counter to control output layout."
+      "replacement": "// Traverse the grid in row-major order and emit ex[i*ny + j] for every cell"
     },
     {
       "id": "unknown_IFELSE_main::entry",
       "original": "// INSERT COMMENT IFELSE: main::entry",
-      "replacement": "// Parse command-line arguments to obtain dump_code, tmax, nx and ny, then allocate memory for the simulation field arrays sized nx*ny."
+      "replacement": "// Parse command-line args (tmax, nx, ny, dump flag) and allocate nx*ny-sized arrays for the fields"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_splat::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_splat::entry",
+      "replacement": "// Only threads with j < ny write the boundary Ey[0, j] = fict[t]; others exit without work"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_ey::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_ey::entry",
+      "replacement": "// Update only if inside domain (i < nx, j < ny, with i >= 1): Ey[i,j] -= FDTD_E_UPDATE_COEFF * (Hz[i,j] - Hz[i-1,j])"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_ex::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_ex::entry",
+      "replacement": "// Update only if inside domain (i < nx, j < ny, with j >= 1): Ex[i,j] -= FDTD_E_UPDATE_COEFF * (Hz[i,j] - Hz[i,j-1])"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_hz::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_hz::entry",
+      "replacement": "// Perform Hz update only for interior cells (i < nx-1, j < ny-1): Hz[i,j] -= 0.7 * ((Ex[i,j+1]-Ex[i,j]) + (Ey[i+1,j]-Ey[i,j]))"
     }
   ]
 }

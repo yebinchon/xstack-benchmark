@@ -1,0 +1,76 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 149,
+      "line_content": "  __auto_type __FIXME__tmp1 = j + INIT_A_J_OFFSET;",
+      "original_line": "  __auto_type __FIXME__tmp1 = j + INIT_A_J_OFFSET;"
+    },
+    {
+      "line_number": 150,
+      "line_content": "  __auto_type __FIXME__tmp2 = (double)(i);",
+      "original_line": "  __auto_type __FIXME__tmp2 = (double)(i);"
+    },
+    {
+      "line_number": 151,
+      "line_content": "  __auto_type __FIXME__tmp3 = (double)(__FIXME__tmp1);",
+      "original_line": "  __auto_type __FIXME__tmp3 = (double)(__FIXME__tmp1);"
+    },
+    {
+      "line_number": 152,
+      "line_content": "  __auto_type __FIXME__tmp4 = __FIXME__tmp2 * __FIXME__tmp3;",
+      "original_line": "  __auto_type __FIXME__tmp4 = __FIXME__tmp2 * __FIXME__tmp3;"
+    },
+    {
+      "line_number": 153,
+      "line_content": "  __auto_type __FIXME__tmp5 = __FIXME__tmp4 + INIT_A_CONST_TERM;",
+      "original_line": "  __auto_type __FIXME__tmp5 = __FIXME__tmp4 + INIT_A_CONST_TERM;"
+    },
+    {
+      "line_number": 154,
+      "line_content": "  __auto_type __FIXME__tmp6 = (double)(n);",
+      "original_line": "  __auto_type __FIXME__tmp6 = (double)(n);"
+    },
+    {
+      "line_number": 155,
+      "line_content": "  __auto_type __FIXME__tmp7 = __FIXME__tmp5 / __FIXME__tmp6;",
+      "original_line": "  __auto_type __FIXME__tmp7 = __FIXME__tmp5 / __FIXME__tmp6;"
+    },
+    {
+      "line_number": 157,
+      "line_content": "  __auto_type __FIXME__tmp8 = j + INIT_B_J_OFFSET;",
+      "original_line": "  __auto_type __FIXME__tmp8 = j + INIT_B_J_OFFSET;"
+    },
+    {
+      "line_number": 158,
+      "line_content": "  __auto_type __FIXME__tmp9 = (double)(i);",
+      "original_line": "  __auto_type __FIXME__tmp9 = (double)(i);"
+    },
+    {
+      "line_number": 159,
+      "line_content": "  __auto_type __FIXME__tmp10 = (double)(__FIXME__tmp8);",
+      "original_line": "  __auto_type __FIXME__tmp10 = (double)(__FIXME__tmp8);"
+    },
+    {
+      "line_number": 160,
+      "line_content": "  __auto_type __FIXME__tmp11 = __FIXME__tmp9 * __FIXME__tmp10;",
+      "original_line": "  __auto_type __FIXME__tmp11 = __FIXME__tmp9 * __FIXME__tmp10;"
+    },
+    {
+      "line_number": 161,
+      "line_content": "  __auto_type __FIXME__tmp12 = __FIXME__tmp11 + INIT_B_CONST_TERM;",
+      "original_line": "  __auto_type __FIXME__tmp12 = __FIXME__tmp11 + INIT_B_CONST_TERM;"
+    },
+    {
+      "line_number": 162,
+      "line_content": "  __auto_type __FIXME__tmp13 = (double)(n);",
+      "original_line": "  __auto_type __FIXME__tmp13 = (double)(n);"
+    },
+    {
+      "line_number": 163,
+      "line_content": "  __auto_type __FIXME__tmp14 = __FIXME__tmp12 / __FIXME__tmp13;",
+      "original_line": "  __auto_type __FIXME__tmp14 = __FIXME__tmp12 / __FIXME__tmp13;"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

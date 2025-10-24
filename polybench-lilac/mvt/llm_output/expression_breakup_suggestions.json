@@ -2,88 +2,85 @@
   "function_name": "main",
   "breakups": [
     {
-      "line_number": 155,
-      "original_expression": "init_array(15000, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));",
+      "line_number": 129,
+      "original_expression": "init_array(PROBLEM_SIZE_N, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));",
       "breakup_steps": [
         {
-          "temp_var": "n",
-          "expression": "15000",
-          "description": "Number of elements to initialize"
-        },
-        {
-          "temp_var": "x1_d",
+          "temp_var": "x1_dbl",
           "expression": "(double*)x1",
-          "description": "Cast x1 buffer to double* for element access"
+          "description": "Cast x1 buffer to a double pointer"
         },
         {
-          "temp_var": "x2_d",
+          "temp_var": "x2_dbl",
           "expression": "(double*)x2",
-          "description": "Cast x2 buffer to double* for element access"
+          "description": "Cast x2 buffer to a double pointer"
         },
         {
-          "temp_var": "y1_d",
+          "temp_var": "y1_dbl",
           "expression": "(double*)y_1",
-          "description": "Cast y_1 buffer to double* for element access"
+          "description": "Cast y_1 buffer to a double pointer"
         },
         {
-          "temp_var": "y2_d",
+          "temp_var": "y2_dbl",
           "expression": "(double*)y_2",
-          "description": "Cast y_2 buffer to double* for element access"
+          "description": "Cast y_2 buffer to a double pointer"
         },
         {
-          "temp_var": "A_d",
+          "temp_var": "A_dbl",
           "expression": "(double*)A",
-          "description": "Cast A buffer to double* for element access"
-        },
-        {
-          "temp_var": "init_call",
-          "expression": "init_array(n, x1_d, x2_d, y1_d, y2_d, A_d)",
-          "description": "Call init_array using the named temporaries"
+          "description": "Cast A buffer to a double pointer"
         }
       ],
-      "final_expression": "init_array(n, x1_d, x2_d, y1_d, y2_d, A_d)"
+      "final_expression": "init_array(PROBLEM_SIZE_N, x1_dbl, x2_dbl, y1_dbl, y2_dbl, A_dbl);"
     },
     {
-      "line_number": 157,
-      "original_expression": "kernel(15000, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));",
+      "line_number": 131,
+      "original_expression": "kernel(PROBLEM_SIZE_N, ((double*)x1), ((double*)x2), ((double*)y_1), ((double*)y_2), ((double*)A));",
       "breakup_steps": [
         {
-          "temp_var": "n",
-          "expression": "15000",
-          "description": "Number of elements to process"
-        },
-        {
-          "temp_var": "x1_d",
+          "temp_var": "x1_dbl",
           "expression": "(double*)x1",
-          "description": "Cast x1 buffer to double* for element access"
+          "description": "Cast x1 buffer to a double pointer"
         },
         {
-          "temp_var": "x2_d",
+          "temp_var": "x2_dbl",
           "expression": "(double*)x2",
-          "description": "Cast x2 buffer to double* for element access"
+          "description": "Cast x2 buffer to a double pointer"
         },
         {
-          "temp_var": "y1_d",
+          "temp_var": "y1_dbl",
           "expression": "(double*)y_1",
-          "description": "Cast y_1 buffer to double* for element access"
+          "description": "Cast y_1 buffer to a double pointer"
         },
         {
-          "temp_var": "y2_d",
+          "temp_var": "y2_dbl",
           "expression": "(double*)y_2",
-          "description": "Cast y_2 buffer to double* for element access"
+          "description": "Cast y_2 buffer to a double pointer"
         },
         {
-          "temp_var": "A_d",
+          "temp_var": "A_dbl",
           "expression": "(double*)A",
-          "description": "Cast A buffer to double* for element access"
-        },
-        {
-          "temp_var": "kernel_call",
-          "expression": "kernel(n, x1_d, x2_d, y1_d, y2_d, A_d)",
-          "description": "Call kernel using the named temporaries"
+          "description": "Cast A buffer to a double pointer"
         }
       ],
-      "final_expression": "kernel(n, x1_d, x2_d, y1_d, y2_d, A_d)"
+      "final_expression": "kernel(PROBLEM_SIZE_N, x1_dbl, x2_dbl, y1_dbl, y2_dbl, A_dbl);"
+    },
+    {
+      "line_number": 134,
+      "original_expression": "print_array(PROBLEM_SIZE_N, ((double*)x1), ((double*)x2));",
+      "breakup_steps": [
+        {
+          "temp_var": "x1_dbl",
+          "expression": "(double*)x1",
+          "description": "Cast x1 buffer to a double pointer"
+        },
+        {
+          "temp_var": "x2_dbl",
+          "expression": "(double*)x2",
+          "description": "Cast x2 buffer to a double pointer"
+        }
+      ],
+      "final_expression": "print_array(PROBLEM_SIZE_N, x1_dbl, x2_dbl);"
     }
   ]
 }

@@ -1,0 +1,24 @@
+{
+  "suggestions_by_function": {
+    "kernel_dev": [
+      {
+        "identifier": [
+          "bounds_check_i_lt_ni_entry_IF",
+          "bounds_check_j_lt_nj_land_lhs_true_IF"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < ni",
+          "j < nj"
+        ],
+        "coalesced_condition": "i < ni && j < nj",
+        "line_numbers": [
+          172,
+          173
+        ],
+        "reasoning": "Both conditions are simple bounds checks with no side effects and do not modify shared variables. Coalescing preserves short-circuit semantics (j < nj is only evaluated if i < ni) and maintains functional equivalence while reducing nesting and improving readability."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

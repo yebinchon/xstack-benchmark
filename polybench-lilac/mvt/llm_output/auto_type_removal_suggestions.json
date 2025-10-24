@@ -1,0 +1,31 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 129,
+      "line_content": "  __auto_type __FIXME__tmp1 = (double*)x1;",
+      "original_line": "  __auto_type __FIXME__tmp1 = (double*)x1;"
+    },
+    {
+      "line_number": 130,
+      "line_content": "  __auto_type __FIXME__tmp2 = (double*)x2;",
+      "original_line": "  __auto_type __FIXME__tmp2 = (double*)x2;"
+    },
+    {
+      "line_number": 131,
+      "line_content": "  __auto_type __FIXME__tmp3 = (double*)y_1;",
+      "original_line": "  __auto_type __FIXME__tmp3 = (double*)y_1;"
+    },
+    {
+      "line_number": 132,
+      "line_content": "  __auto_type __FIXME__tmp4 = (double*)y_2;",
+      "original_line": "  __auto_type __FIXME__tmp4 = (double*)y_2;"
+    },
+    {
+      "line_number": 133,
+      "line_content": "  __auto_type __FIXME__tmp5 = (double*)A;",
+      "original_line": "  __auto_type __FIXME__tmp5 = (double*)A;"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

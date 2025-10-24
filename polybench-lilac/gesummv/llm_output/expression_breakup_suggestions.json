@@ -2,90 +2,105 @@
   "function_name": "kernel_y",
   "breakups": [
     {
-      "line_number": 222,
+      "line_number": 187,
+      "original_expression": "i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;",
+      "breakup_steps": [
+        {
+          "temp_var": "block_offset_x",
+          "expression": "__FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x",
+          "description": "Compute the block offset along the x dimension"
+        },
+        {
+          "temp_var": "thread_offset_x",
+          "expression": "__FIXME__threadIdx_2e_x",
+          "description": "Read the local thread index along the x dimension"
+        },
+        {
+          "temp_var": "global_thread_x",
+          "expression": "block_offset_x + thread_offset_x",
+          "description": "Compute the global thread index along x"
+        },
+        {
+          "temp_var": "i_val",
+          "expression": "global_thread_x",
+          "description": "Prepare the final value to assign to i"
+        }
+      ],
+      "final_expression": "i = i_val;"
+    },
+    {
+      "line_number": 192,
       "original_expression": "tmp[i] = (tmp[i] + (A[(i * n + j)] * x[j]));",
       "breakup_steps": [
         {
-          "temp_var": "idx",
+          "temp_var": "index_ij",
           "expression": "i * n + j",
-          "description": "Compute the linear index for row-major access"
+          "description": "Flatten (i, j) into a linear index"
         },
         {
-          "temp_var": "a_val",
-          "expression": "A[idx]",
-          "description": "Load A at the computed index"
+          "temp_var": "a_ij",
+          "expression": "A[index_ij]",
+          "description": "Load A[i, j]"
         },
         {
           "temp_var": "x_j",
           "expression": "x[j]",
-          "description": "Load x at index j"
+          "description": "Load x[j]"
         },
         {
-          "temp_var": "prod_a",
-          "expression": "a_val * x_j",
-          "description": "Multiply the matrix element by the vector element"
+          "temp_var": "ax_prod",
+          "expression": "a_ij * x_j",
+          "description": "Multiply A[i, j] by x[j]"
         },
         {
-          "temp_var": "new_tmp_i",
-          "expression": "tmp[i] + prod_a",
-          "description": "Accumulate the product into the tmp[i] value"
+          "temp_var": "tmp_old",
+          "expression": "tmp[i]",
+          "description": "Read current accumulator tmp[i]"
+        },
+        {
+          "temp_var": "tmp_new",
+          "expression": "tmp_old + ax_prod",
+          "description": "Accumulate the product into tmp"
         }
       ],
-      "final_expression": "tmp[i] = new_tmp_i"
+      "final_expression": "tmp[i] = tmp_new;"
     },
     {
-      "line_number": 223,
+      "line_number": 193,
       "original_expression": "y[i] = (y[i] + (B[(i * n + j)] * x[j]));",
       "breakup_steps": [
         {
-          "temp_var": "idx",
+          "temp_var": "index_ij",
           "expression": "i * n + j",
-          "description": "Compute the linear index for row-major access (same as above)"
+          "description": "Flatten (i, j) into a linear index"
         },
         {
-          "temp_var": "b_val",
-          "expression": "B[idx]",
-          "description": "Load B at the computed index"
+          "temp_var": "b_ij",
+          "expression": "B[index_ij]",
+          "description": "Load B[i, j]"
         },
         {
           "temp_var": "x_j",
           "expression": "x[j]",
-          "description": "Load x at index j"
+          "description": "Load x[j]"
         },
         {
-          "temp_var": "prod_b",
-          "expression": "b_val * x_j",
-          "description": "Multiply the matrix element by the vector element"
+          "temp_var": "bx_prod",
+          "expression": "b_ij * x_j",
+          "description": "Multiply B[i, j] by x[j]"
         },
         {
-          "temp_var": "new_y_i",
-          "expression": "y[i] + prod_b",
-          "description": "Accumulate the product into the y[i] value"
+          "temp_var": "y_old",
+          "expression": "y[i]",
+          "description": "Read current accumulator y[i]"
+        },
+        {
+          "temp_var": "y_new",
+          "expression": "y_old + bx_prod",
+          "description": "Accumulate the product into y"
         }
       ],
-      "final_expression": "y[i] = new_y_i"
-    },
-    {
-      "line_number": 225,
-      "original_expression": "y[i] = ((alpha * tmp[i]) + (beta * y[i]));",
-      "breakup_steps": [
-        {
-          "temp_var": "scaled_tmp",
-          "expression": "alpha * tmp[i]",
-          "description": "Scale tmp[i] by alpha"
-        },
-        {
-          "temp_var": "scaled_y",
-          "expression": "beta * y[i]",
-          "description": "Scale y[i] by beta"
-        },
-        {
-          "temp_var": "result_y",
-          "expression": "scaled_tmp + scaled_y",
-          "description": "Combine the scaled terms"
-        }
-      ],
-      "final_expression": "y[i] = result_y"
+      "final_expression": "y[i] = y_new;"
     }
   ]
 }

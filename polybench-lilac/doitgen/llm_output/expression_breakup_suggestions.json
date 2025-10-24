@@ -2,105 +2,95 @@
   "function_name": "kernel_sum",
   "breakups": [
     {
-      "line_number": 209,
+      "line_number": 183,
       "original_expression": "sum[((r * nq + q) * np + p)] = 0;",
       "breakup_steps": [
         {
           "temp_var": "rq_index",
           "expression": "r * nq + q",
-          "description": "Combine r and q into a single row-like index (r * nq + q)"
+          "description": "Flatten r and q into a single index"
         },
         {
-          "temp_var": "base_index",
+          "temp_var": "row_offset",
           "expression": "rq_index * np",
-          "description": "Scale the combined r/q index by np to get the base offset for this r,q block"
+          "description": "Stride by np to get the start of the (r,q) row in the np dimension"
         },
         {
-          "temp_var": "sum_index",
-          "expression": "base_index + p",
-          "description": "Complete the full linearized index into the sum array by adding p"
-        },
-        {
-          "temp_var": "result",
-          "expression": "sum[sum_index] = 0;",
-          "description": "Assign zero to the sum element using the computed index"
+          "temp_var": "sum_idx",
+          "expression": "row_offset + p",
+          "description": "Compute the final index for sum at position p"
         }
       ],
-      "final_expression": "sum[sum_index] = 0;"
+      "final_expression": "sum[sum_idx] = 0;"
     },
     {
-      "line_number": 212,
+      "line_number": 186,
       "original_expression": "dot = (dot + (A[((r * nq + q) * np + s)] * C4[(s * np + p)]));",
       "breakup_steps": [
         {
           "temp_var": "rq_index",
           "expression": "r * nq + q",
-          "description": "Combine r and q into a single row-like index used for A indexing"
+          "description": "Flatten r and q into a single index"
         },
         {
-          "temp_var": "base_index",
+          "temp_var": "row_offset",
           "expression": "rq_index * np",
-          "description": "Scale the combined r/q index by np to get the base offset for this r,q block"
+          "description": "Stride by np to get the start of the (r,q) row in the np dimension"
         },
         {
-          "temp_var": "a_index",
-          "expression": "base_index + s",
-          "description": "Index inside A for the current s (A is indexed by (r,q,s) flattened)"
+          "temp_var": "a_idx",
+          "expression": "row_offset + s",
+          "description": "Index into A for current s"
         },
         {
-          "temp_var": "c4_index",
+          "temp_var": "c4_idx",
           "expression": "s * np + p",
-          "description": "Index inside C4 for the current s and p"
+          "description": "Index into C4 for (s, p)"
         },
         {
           "temp_var": "a_val",
-          "expression": "A[a_index]",
-          "description": "Load the A element used in the product"
+          "expression": "A[a_idx]",
+          "description": "Load value from A at computed index"
         },
         {
           "temp_var": "c4_val",
-          "expression": "C4[c4_index]",
-          "description": "Load the C4 element used in the product"
+          "expression": "C4[c4_idx]",
+          "description": "Load value from C4 at computed index"
         },
         {
-          "temp_var": "product",
+          "temp_var": "prod",
           "expression": "a_val * c4_val",
-          "description": "Compute the product of the two fetched values"
+          "description": "Multiply the two loaded values"
         },
         {
-          "temp_var": "result",
-          "expression": "dot = dot + product",
+          "temp_var": "dot_updated",
+          "expression": "dot + prod",
           "description": "Accumulate the product into dot"
         }
       ],
-      "final_expression": "dot = dot + product"
+      "final_expression": "dot = dot_updated;"
     },
     {
-      "line_number": 214,
+      "line_number": 188,
       "original_expression": "sum[((r * nq + q) * np + p)] = dot;",
       "breakup_steps": [
         {
           "temp_var": "rq_index",
           "expression": "r * nq + q",
-          "description": "Combine r and q into a single row-like index (r * nq + q)"
+          "description": "Flatten r and q into a single index"
         },
         {
-          "temp_var": "base_index",
+          "temp_var": "row_offset",
           "expression": "rq_index * np",
-          "description": "Scale the combined r/q index by np to get the base offset for this r,q block"
+          "description": "Stride by np to get the start of the (r,q) row in the np dimension"
         },
         {
-          "temp_var": "sum_index",
-          "expression": "base_index + p",
-          "description": "Complete the full linearized index into the sum array by adding p"
-        },
-        {
-          "temp_var": "result",
-          "expression": "sum[sum_index] = dot;",
-          "description": "Store the accumulated dot into the sum array at the computed index"
+          "temp_var": "sum_idx",
+          "expression": "row_offset + p",
+          "description": "Compute the final index for sum at position p"
         }
       ],
-      "final_expression": "sum[sum_index] = dot;"
+      "final_expression": "sum[sum_idx] = dot;"
     }
   ]
 }

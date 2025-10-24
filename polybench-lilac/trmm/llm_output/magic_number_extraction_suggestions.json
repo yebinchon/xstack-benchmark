@@ -1,44 +1,173 @@
 {
   "extractions": [
     {
-      "value": "256",
-      "name": "TRMM_BLOCK_SIZE_256_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "PRINTF_FMT_STR_LEN",
       "occurrences": [
-        244
+        {
+          "line": 65,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
       ],
-      "function": "main"
+      "reasoning": "Sizes the buffer for the printf format string. Naming this clarifies intent and prevents mismatches if the format changes."
     },
     {
-      "value": "8",
-      "name": "TRMM_MICRO_TILE_M_8_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2,
+      "macro_name": "NEWLINE_STR_LEN",
       "occurrences": [
-        260
+        {
+          "line": 66,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
       ],
-      "function": "main"
+      "reasoning": "Documents that the newline string buffer includes the NUL terminator; avoids magic length values."
     },
     {
-      "value": "32",
-      "name": "TRMM_MICRO_TILE_N_32_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2,
+      "macro_name": "ARG_IDX_N",
       "occurrences": [
-        261
+        {
+          "line": 110,
+          "context": "n = atoi(argv[2]);"
+        }
       ],
-      "function": "main"
+      "reasoning": "Encodes the command-line position for n, improving readability and maintainability of CLI parsing."
     },
     {
-      "value": "12",
-      "name": "TRMM_BLOCK_DESC_SIZE_12_1",
-      "type": "define",
-      "scope": "file",
+      "value": 3,
+      "macro_name": "ARG_IDX_M",
       "occurrences": [
-        269
+        {
+          "line": 111,
+          "context": "m = atoi(argv[3]);"
+        }
       ],
-      "function": "main"
+      "reasoning": "Encodes the command-line position for m, avoiding unexplained positional literals."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_IDX_DUMP",
+      "occurrences": [
+        {
+          "line": 112,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "Documents the command-line position for the dump flag; distinguishes this '1' from other unrelated uses of 1."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_ENABLED_FLAG",
+      "occurrences": [
+        {
+          "line": 119,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "Gives semantic meaning to the enabled state for output dumping; disambiguates the literal 1."
+    },
+    {
+      "value": 8,
+      "macro_name": "DOUBLE_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 113,
+          "context": "A = malloc(n * m * 8);"
+        },
+        {
+          "line": 114,
+          "context": "B = malloc(m * n * 8);"
+        }
+      ],
+      "reasoning": "Represents the byte size of double. Using a named constant (or sizeof(double)) avoids hardcoding type sizes."
+    },
+    {
+      "value": 32412,
+      "macro_name": "DEFAULT_ALPHA",
+      "occurrences": [
+        {
+          "line": 132,
+          "context": "*alpha = 32412;"
+        }
+      ],
+      "reasoning": "Algorithm-specific initialization of alpha; naming clarifies purpose and makes it easy to adjust."
+    },
+    {
+      "value": 256,
+      "macro_name": "CONTRACT_BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 197,
+          "context": "__FIXME__call = num_blocks(n, 256);"
+        },
+        {
+          "line": 201,
+          "context": "__FIXME__agg_2e_tmp1.__FIXME__l_struct_struct_OC_dim3_field0 = 256;"
+        },
+        {
+          "line": 209,
+          "context": "for(int32_t j = 0; j < 256;   j = j + 1){"
+        },
+        {
+          "line": 210,
+          "context": "kernel_contract(... __FIXME__call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);"
+        }
+      ],
+      "reasoning": "This is the CUDA/OpenMP-like block dimension for the contract phase along X. Centralizing it documents tuning and keeps related uses in sync."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_MEMCPY_SIZE",
+      "occurrences": [
+        {
+          "line": 204,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 205,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp1)), 12);"
+        },
+        {
+          "line": 221,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp5)), ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 222,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp6)), ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 223,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp5)), 12);"
+        },
+        {
+          "line": 224,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp6)), 12);"
+        }
+      ],
+      "reasoning": "Represents the byte size of the dim3-like struct being copied. Naming it (or using sizeof(struct)) prevents fragile assumptions if the struct layout changes."
+    },
+    {
+      "value": 8,
+      "macro_name": "ALPHA_BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 213,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;"
+        }
+      ],
+      "reasoning": "Block dimension for the alpha kernel along X. A named constant clarifies that this is a tuning parameter."
+    },
+    {
+      "value": 32,
+      "macro_name": "ALPHA_BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 214,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;"
+        }
+      ],
+      "reasoning": "Block dimension for the alpha kernel along Y. Centralizing it documents the chosen tile size and eases retuning."
     }
-  ]
+  ],
+  "confidence": 0.88
 }

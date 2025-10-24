@@ -3,47 +3,47 @@
     {
       "id": "unknown_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize input arrays for the problem: set up vector x and populate matrices A and B for size n"
+      "replacement": "// Initialize input data: set x to a normalized sequence and populate A and B for an n-by-n problem"
     },
     {
       "id": "unknown_FUNCTION_num_blocks",
       "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Compute how many blocks of size 'factor' are needed to cover 'num' elements (ceiling division)"
+      "replacement": "// Compute ceil(num / factor) to determine how many blocks of size 'factor' are needed"
     },
     {
       "id": "unknown_FUNCTION_kernel_y",
       "original": "// INSERT COMMENT FUNCTION: kernel_y",
-      "replacement": "// Kernel that computes per-row contributions using thread/block indices: updates tmp and y for row i based on matrices A, B and vector x with scalars alpha,beta"
+      "replacement": "// Emulated CUDA kernel that maps threads to row indices and computes elements of y from A, B, and x using scalars alpha and beta"
     },
     {
       "id": "unknown_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the vector y of length n to stderr using the specified format, organizing output for readability"
+      "replacement": "// Print the n elements of y in a fixed format, inserting line breaks at regular intervals"
     },
     {
       "id": "unknown_LOOP_main",
       "original": "// INSERT COMMENT LOOP: main",
-      "replacement": "// Parallel nested loops distributing work across OpenMP threads: outer loop over block index i (0..numBlocks-1), inner loop over 256 sub-blocks"
+      "replacement": "// OpenMP-parallel nested iteration over block and thread indices along x to simulate launching all GPU threads"
     },
     {
       "id": "unknown_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// For each row i in [0,n): initialize x[i] to i/n, then iterate over columns j to initialize the corresponding entries of A and B for that row"
+      "replacement": "// For each row i, set x[i] = i/n and iterate over all columns j to initialize corresponding A[i][j] and B[i][j]"
     },
     {
       "id": "unknown_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Iterate over all elements of y and print each value; insert a line break every 20 elements to keep output readable"
+      "replacement": "// Iterate through y and print each value, inserting a newline every PRINT_ITEMS_PER_LINE items"
     },
     {
       "id": "unknown_IFELSE_main::kcall.end",
       "original": "// INSERT COMMENT IFELSE: main::kcall.end",
-      "replacement": "// If dump_code is enabled, print the result vector y; afterwards free the allocated memory for A and B"
+      "replacement": "// If dump_code is enabled, print the computed vector y before proceeding to resource cleanup"
     },
     {
       "id": "unknown_IFELSE_kernel_y::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_y::entry",
-      "replacement": "// Compute global row index i from block/thread indices; if i is within bounds initialize tmp[i] and y[i] to zero and then accumulate over columns j"
+      "replacement": "// Compute the 1D global thread index from block and thread IDs and assign it to i for per-row processing"
     }
   ]
 }

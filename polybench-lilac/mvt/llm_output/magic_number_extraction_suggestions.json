@@ -1,17 +1,178 @@
 {
   "extractions": [
     {
-      "value": "256",
-      "name": "BLOCK_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 15000,
+      "macro_name": "PROBLEM_SIZE_N",
       "occurrences": [
-        240,
-        248,
-        256,
-        264
+        {
+          "line": 112,
+          "context": "x1 = malloc(8 * 15000);"
+        },
+        {
+          "line": 113,
+          "context": "x2 = malloc(8 * 15000);"
+        },
+        {
+          "line": 114,
+          "context": "y_1 = malloc(8 * 15000);"
+        },
+        {
+          "line": 115,
+          "context": "y_2 = malloc(8 * 15000);"
+        },
+        {
+          "line": 116,
+          "context": "init_array(15000, ((double*)x1), ((double*)x2)"
+        },
+        {
+          "line": 118,
+          "context": "kernel(15000, ((double*)x1), ((double*)x2)"
+        },
+        {
+          "line": 121,
+          "context": "print_array(15000, ((double*)x1), ((double*)x2)"
+        }
       ],
-      "function": "main"
+      "reasoning": "Represents the global problem size (n). Centralizing this avoids scattered literals and makes scaling the dataset straightforward."
+    },
+    {
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
+      "occurrences": [
+        {
+          "line": 112,
+          "context": "x1 = malloc(8 * 15000);"
+        },
+        {
+          "line": 113,
+          "context": "x2 = malloc(8 * 15000);"
+        },
+        {
+          "line": 114,
+          "context": "y_1 = malloc(8 * 15000);"
+        },
+        {
+          "line": 115,
+          "context": "y_2 = malloc(8 * 15000);"
+        }
+      ],
+      "reasoning": "8 is the size of a double in bytes. Naming it clarifies intent and highlights a portability concern (prefer sizeof(double) in code)."
+    },
+    {
+      "value": 1800000000,
+      "macro_name": "MATRIX_A_BYTES",
+      "occurrences": [
+        {
+          "line": 111,
+          "context": "A = malloc(1800000000);"
+        }
+      ],
+      "reasoning": "Size of the n\u00d7n double matrix A in bytes. A named constant documents that this is n*n*BYTES_PER_DOUBLE and avoids an opaque large literal."
+    },
+    {
+      "value": 256,
+      "macro_name": "CUDA_BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 194,
+          "context": "truct_struct_OC_dim3_field0 = 256;"
+        },
+        {
+          "line": 197,
+          "context": "__FIXME__call = num_blocks(n, 256);"
+        },
+        {
+          "line": 205,
+          "context": "for(int32_t i = 0; i < 256;   i = i + 1){"
+        },
+        {
+          "line": 207,
+          "context": "kernel_x1(n, x1, x2, y_1, y_2, A, 256, 1, 1, __FIXME__call, 1, 1, i"
+        }
+      ],
+      "reasoning": "Represents the block/thread dimension in X (and factor for grid sizing). A single macro ties together launch configuration and loop bounds."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 201,
+          "context": "8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 202,
+          "context": "_t*)(&__FIXME__agg_2e_tmp1)), 12);"
+        }
+      ],
+      "reasoning": "Size of the dim3-like structure (3\u00d7uint32_t). Naming it clarifies the memcpy size and reduces risk if the struct definition changes."
+    },
+    {
+      "value": 7,
+      "macro_name": "PRINTF_FMT_BUFFER_LEN",
+      "occurrences": [
+        {
+          "line": 65,
+          "context": "nt8_t __FIXME_GLOBAL___OC_str[7] = { \"%0.2lf\" };"
+        }
+      ],
+      "reasoning": "Buffer size for the format string including the null terminator. A named constant documents intent and avoids a mysterious array bound."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_BUFFER_LEN",
+      "occurrences": [
+        {
+          "line": 66,
+          "context": "__FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "Buffer size for the newline string including the null terminator. Improves clarity over a bare literal."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_CODE_ENABLED",
+      "occurrences": [
+        {
+          "line": 120,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "Sentinel value used to enable result dumping. Naming it documents the CLI contract and avoids a magic comparison."
+    },
+    {
+      "value": 1,
+      "macro_name": "X2_INIT_OFFSET",
+      "occurrences": [
+        {
+          "line": 138,
+          "context": "x2[i] = (((double)(i) + 1) / (double)(n));"
+        }
+      ],
+      "reasoning": "Algorithm-specific initialization offset for x2. Naming this captures the intended initialization pattern."
+    },
+    {
+      "value": 3,
+      "macro_name": "Y1_INIT_OFFSET",
+      "occurrences": [
+        {
+          "line": 139,
+          "context": "y_1[i] = (((double)(i) + 3) / (double)(n));"
+        }
+      ],
+      "reasoning": "Algorithm-specific initialization offset for y_1. A macro conveys intent better than a literal."
+    },
+    {
+      "value": 4,
+      "macro_name": "Y2_INIT_OFFSET",
+      "occurrences": [
+        {
+          "line": 140,
+          "context": "y_2[i] = (((double)(i) + 4) / (double)(n));"
+        }
+      ],
+      "reasoning": "Algorithm-specific initialization offset for y_2. Improves readability and discoverability."
     }
-  ]
+  ],
+  "confidence": 0.86
 }

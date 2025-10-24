@@ -1,0 +1,89 @@
+{
+  "replacements": [
+    {
+      "id": "unknown_FUNCTION_init_array",
+      "original": "// INSERT COMMENT FUNCTION: init_array",
+      "replacement": "// Initialize matrices A (nj x nj), B and C (ni x nj), and the tmp workspace with deterministic index-based values for the upcoming computation"
+    },
+    {
+      "id": "unknown_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Compute ceil(num / factor) to determine how many blocks of size 'factor' are needed to cover 'num' items"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_tmp",
+      "original": "// INSERT COMMENT FUNCTION: kernel_tmp",
+      "replacement": "// GPU-style kernel that, for each valid (i,j), accumulates tmp[i,j] = sum_{k<i} B[k,j] * A[i,k] using the lower-triangular part of A"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_C",
+      "original": "// INSERT COMMENT FUNCTION: kernel_C",
+      "replacement": "// GPU-style kernel that updates one element: C[i,j] = beta*C[i,j] + alpha*(B[i,j]*A[i,i] + tmp[i,j]) with bounds checks on (i,j)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel_sum",
+      "original": "// INSERT COMMENT FUNCTION: kernel_sum",
+      "replacement": "// GPU-style kernel that iterates over pivot k and column j to propagate contributions to rows i>k (forward accumulation in a triangular solve/product)"
+    },
+    {
+      "id": "unknown_FUNCTION_kernel",
+      "original": "// INSERT COMMENT FUNCTION: kernel",
+      "replacement": "// Host-side driver that configures grid/block dimensions and dispatches the compute kernels over a 2D grid (OpenMP-emulated CUDA execution)"
+    },
+    {
+      "id": "unknown_FUNCTION_print_array",
+      "original": "// INSERT COMMENT FUNCTION: print_array",
+      "replacement": "// Print the ni x nj matrix C to stderr in row-major order using the provided format"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Double loop over all A indices (nj x nj) in row-major order to compute a_index and assign initial values"
+    },
+    {
+      "id": "unknown_LOOP_init_array",
+      "original": "// INSERT COMMENT LOOP: init_array",
+      "replacement": "// Traverse the nj-by-nj grid of A to compute the linear index (a_index) and initialize each element deterministically"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// OpenMP-parallel 2D sweep over grid block indices to simulate launching a CUDA block per (i,j)"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Parallel nested loops over the 2D grid so each iteration handles one block pair (i,j) for this phase"
+    },
+    {
+      "id": "unknown_LOOP_kernel",
+      "original": "// INSERT COMMENT LOOP: kernel",
+      "replacement": "// Collapsed 2D loop distributing work over block tiles; each iteration processes a single grid block"
+    },
+    {
+      "id": "unknown_LOOP_print_array",
+      "original": "// INSERT COMMENT LOOP: print_array",
+      "replacement": "// Iterate over rows i and columns j to emit each C[i,j] element in order"
+    },
+    {
+      "id": "unknown_IFELSE_main::entry",
+      "original": "// INSERT COMMENT IFELSE: main::entry",
+      "replacement": "// Parse command-line args (dump flag, ni, nj) and allocate A (nj*nj) and B (ni*nj) buffers using BYTES_PER_DOUBLE"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_tmp::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_tmp::entry",
+      "replacement": "// Compute thread coordinates (i,j); if inside m x n, sum over k<i to accumulate tmp[i,j] += B[k,j] * A[i,k]"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_C::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_C::entry",
+      "replacement": "// Compute (i,j); if i<m and j<n, perform C[i,j] = beta*C[i,j] + alpha*(B[i,j]*A[i,i] + tmp[i,j])"
+    },
+    {
+      "id": "unknown_IFELSE_kernel_sum::entry",
+      "original": "// INSERT COMMENT IFELSE: kernel_sum::entry",
+      "replacement": "// Compute (k,j); if k<m-1 and j<n, set i = k+1 to begin updating rows below the pivot in this accumulation step"
+    }
+  ]
+}

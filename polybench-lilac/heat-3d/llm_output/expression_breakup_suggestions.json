@@ -2,53 +2,68 @@
   "function_name": "init_array",
   "breakups": [
     {
-      "line_number": 173,
+      "line_number": 149,
       "original_expression": "A[((i * n + j) * n + k)] = ((((double)(i) + (double)(j)) + (double)(k)) / (double)(n));",
       "breakup_steps": [
         {
-          "temp_var": "flat_index",
-          "expression": "((i * n + j) * n + k)",
-          "description": "Compute the flattened 1D index for the 3D indices (i, j, k)."
+          "temp_var": "plane_index",
+          "expression": "i * n + j",
+          "description": "Compute the row-major offset for (i, j)"
+        },
+        {
+          "temp_var": "idx",
+          "expression": "plane_index * n + k",
+          "description": "Compute the final linear index for (i, j, k)"
         },
         {
           "temp_var": "sum_ijk",
-          "expression": "((double)i + (double)j + (double)k)",
-          "description": "Convert i, j, k to double and compute their sum for the numerator."
+          "expression": "(double)i + (double)j + (double)k",
+          "description": "Sum i, j, k as double"
         },
         {
-          "temp_var": "normalized_value",
-          "expression": "sum_ijk / (double)n",
-          "description": "Divide the summed double value by n to get the normalized value."
+          "temp_var": "denom",
+          "expression": "(double)n",
+          "description": "Convert n to double for division"
+        },
+        {
+          "temp_var": "a_val",
+          "expression": "sum_ijk / denom",
+          "description": "Compute the value to assign to A at idx"
         }
       ],
-      "final_expression": "A[flat_index] = normalized_value;"
+      "final_expression": "A[idx] = a_val;"
     },
     {
-      "line_number": 174,
+      "line_number": 150,
       "original_expression": "B[((i * n + j) * n + k)] = (((((double)(i) + (double)(j)) + (double)(k)) + 1) / (double)(n));",
       "breakup_steps": [
         {
-          "temp_var": "flat_index",
-          "expression": "((i * n + j) * n + k)",
-          "description": "Compute the flattened 1D index for the 3D indices (i, j, k)."
+          "temp_var": "plane_index",
+          "expression": "i * n + j",
+          "description": "Compute the row-major offset for (i, j)"
+        },
+        {
+          "temp_var": "idx",
+          "expression": "plane_index * n + k",
+          "description": "Compute the final linear index for (i, j, k)"
         },
         {
           "temp_var": "sum_ijk",
-          "expression": "((double)i + (double)j + (double)k)",
-          "description": "Convert i, j, k to double and compute their sum."
+          "expression": "(double)i + (double)j + (double)k",
+          "description": "Sum i, j, k as double"
         },
         {
-          "temp_var": "numerator_plus_one",
-          "expression": "sum_ijk + 1.0",
-          "description": "Add 1 (as double) to the sum before normalization."
+          "temp_var": "denom",
+          "expression": "(double)n",
+          "description": "Convert n to double for division"
         },
         {
-          "temp_var": "normalized_value",
-          "expression": "numerator_plus_one / (double)n",
-          "description": "Divide the incremented numerator by n to get the normalized value."
+          "temp_var": "b_val",
+          "expression": "(sum_ijk + 1.0) / denom",
+          "description": "Compute the value to assign to B at idx"
         }
       ],
-      "final_expression": "B[flat_index] = normalized_value;"
+      "final_expression": "B[idx] = b_val;"
     }
   ]
 }

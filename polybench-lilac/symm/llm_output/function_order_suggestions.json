@@ -1,0 +1,14 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    3,
+    4,
+    5,
+    6,
+    1,
+    2
+  ],
+  "reasoning": "Main is placed first for entry-point clarity. The initialization routine (init_array: 0) comes early to emphasize setup before computation. For the core computation, we place kernel's dependencies before the orchestrator to respect call order: num_blocks (3) is a small utility used by kernel, followed by the helper kernels in the same sequence kernel invokes them (kernel_tmp: 4, kernel_C: 5, kernel_sum: 6). The orchestrating kernel (1) then appears, benefiting from its callees being defined above for easier debugging and navigation. Finally, the display function (print_array: 2) is last, as typical for output routines.",
+  "confidence": 0.9
+}

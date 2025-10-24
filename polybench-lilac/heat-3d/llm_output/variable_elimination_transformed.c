@@ -4,6 +4,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/* Magic number constants */
+#define DOUBLE_SIZE_BYTES 8
+#define PRINTF_FMT_STR_LEN 8
+#define NEWLINE_STR_LEN 2
+#define DUMP_CODE_ENABLED 1
+#define HALO_WIDTH 1
+#define HALO_WIDTH_TIMES_2 2
+#define STENCIL_CENTER_WEIGHT 2
+#define STENCIL_AXIS_DIVISOR 8
+#define BLOCK_DIM_X 1
+#define BLOCK_DIM_Y 8
+#define BLOCK_DIM_Z 32
+#define DIM3_STRUCT_SIZE_BYTES 12
+#define BYTE_ARRAY20_LEN 20
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -27,79 +42,42 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct IOFile;
 struct Dim3;
-struct Dim3Packed;
+struct Dim3Coerce;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array_1 {
+struct byte_array_1 {
   uint8_t array[1];
 };
-struct uint8_array_20 {
-  uint8_t array[20];
-};
-struct IOFile {
-  uint32_t io_flags;
-  uint8_t* buf_ptr0;
-  uint8_t* buf_ptr1;
-  uint8_t* buf_ptr2;
-  uint8_t* buf_ptr3;
-  uint8_t* buf_ptr4;
-  uint8_t* buf_ptr5;
-  uint8_t* buf_ptr6;
-  uint8_t* buf_ptr7;
-  uint8_t* buf_ptr8;
-  uint8_t* buf_ptr9;
-  uint8_t* buf_ptr10;
-  void* cookie;
-  struct IOFile* next;
-  uint32_t mode;
-  uint32_t fd;
-  uint64_t offset;
-  uint16_t state;
-  uint8_t char_last;
-  uint8_t small_buf[1];
-  uint8_t* buffer;
-  uint64_t timestamp;
-  void* lock;
-  void* lock2;
-  struct IOFile* prev;
-  uint8_t* tmp_ptr;
-  uint64_t size64;
-  uint32_t count32;
-  uint8_t small_array[20];
+struct byte_array_20 {
+  uint8_t array[BYTE_ARRAY20_LEN];
 };
 struct Dim3 {
-  uint32_t dim3_x;
-  uint32_t dim3_y;
-  uint32_t dim3_z;
+  uint32_t x;
+  uint32_t y;
+  uint32_t z;
 };
-struct Dim3Packed {
-  uint64_t dim3packed_field0;
-  uint32_t dim3packed_field1;
+struct Dim3Coerce {
+  uint64_t x;
+  uint32_t y;
 };
 
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel(uint32_t, uint32_t, double*, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel_stencil(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t print_double_space[8] = { "%0.2lf " };
-uint8_t print_newline[2] = { "\n" };
+uint8_t double_print_format[PRINTF_FMT_STR_LEN] = { "%0.2lf " };
+uint8_t newline_string[NEWLINE_STR_LEN] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -140,20 +118,18 @@ int main(int argc, char ** argv) {
   int32_t n;
   uint8_t* A;
   uint8_t* B;
-  int32_t unused_var27;
-  int32_t unused_var37;
 
 // INSERT COMMENT IFELSE: main::entry
   dump_code = atoi(argv[1]);
   tsteps = atoi(argv[2]);
   n = atoi(argv[3]);
-  A = malloc(n * n * n * 8);
-  B = malloc(n * n * n * 8);
+  A = malloc(n * n * n * DOUBLE_SIZE_BYTES);
+  B = malloc(n * n * n * DOUBLE_SIZE_BYTES);
   init_array(n, ((double*)A), ((double*)B));
 ;
   kernel(tsteps, n, ((double*)A), ((double*)B));
 ;
-  if (dump_code == 1) { // IFELSE MARKER: entry IF
+  if (dump_code == DUMP_CODE_ENABLED) { // IFELSE MARKER: entry IF
 print_array(n, ((double*)A));
   }
 free(((uint8_t*)((double*)A)));
@@ -170,15 +146,18 @@ void init_array(uint32_t n, double* A, double* B) {
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
 for(int64_t k = 0; k < n;   k = k + 1){
-  __auto_type idx_ijk = ((i * n + j) * n + k);
-  __auto_type sum_ijk = ((double)i + (double)j + (double)k);
-  __auto_type normalized_sum = sum_ijk / (double)n;
-  A[((i * n + j) * n + k)] = normalized_sum;
-  __auto_type idx_ijk_b = ((i * n + j) * n + k);
-  __auto_type sum_ijk_b = ((double)i + (double)j + (double)k);
-  __auto_type sum_plus_one = sum_ijk_b + 1.0;
-  __auto_type normalized_sum_plus_one = sum_plus_one / (double)n;
-  B[((i * n + j) * n + k)] = normalized_sum_plus_one;
+  int ij_index = i * n + j;
+  int ijk_index = ij_index * n + k;
+  double sum_ijk = (double)i + (double)j + (double)k;
+  double n_as_double = (double)n;
+  double value_a = sum_ijk / n_as_double;
+  A[((i * n + j) * n + k)] = value_a;
+  int ij_index_b = i * n + j;
+  int ijk_index_b = ij_index_b * n + k;
+  double sum_ijk_b = (double)i + (double)j + (double)k;
+  double n_as_double_b = (double)n;
+  double value_b = (sum_ijk_b + 1.0) / n_as_double_b;
+  B[((i * n + j) * n + k)] = value_b;
 }
 }
 }
@@ -195,13 +174,13 @@ void kernel_stencil(uint32_t iter, double* A, double* B, uint32_t gridDim_x, uin
   int32_t k;
 
 // INSERT COMMENT IFELSE: kernel_stencil::entry
-  i = blockDim_x * blockIdx_x + threadIdx_x + 1;
-  j = blockDim_y * blockIdx_y + threadIdx_y + 1;
-  k = blockDim_z * blockIdx_z + threadIdx_z + 1;
-  if (i < (iter - 1)) { // IFELSE MARKER: entry IF
-  if (j < (iter - 1)) { // IFELSE MARKER: land.lhs.true IF
-  if (k < (iter - 1)) { // IFELSE MARKER: land.lhs.true18 IF
-  B[((i * iter + j) * iter + k)] = ((((((A[(((i + 1) * iter + j) * iter + k)] - (2 * A[((i * iter + j) * iter + k)])) + A[(((i - 1) * iter + j) * iter + k)]) / 8) + (((A[((i * iter + (j + 1)) * iter + k)] - (2 * A[((i * iter + j) * iter + k)])) + A[((i * iter + (j - 1)) * iter + k)]) / 8)) + (((A[(((i * iter + j) * iter + k) + 1)] - (2 * A[((i * iter + j) * iter + k)])) + A[(((i * iter + j) * iter + k) - 1)]) / 8)) + A[((i * iter + j) * iter + k)]);
+  i = blockDim_x * blockIdx_x + threadIdx_x + HALO_WIDTH;
+  j = blockDim_y * blockIdx_y + threadIdx_y + HALO_WIDTH;
+  k = blockDim_z * blockIdx_z + threadIdx_z + HALO_WIDTH;
+  if (i < (iter - HALO_WIDTH)) { // IFELSE MARKER: entry IF
+  if (j < (iter - HALO_WIDTH)) { // IFELSE MARKER: land.lhs.true IF
+  if (k < (iter - HALO_WIDTH)) { // IFELSE MARKER: land.lhs.true18 IF
+  B[((i * iter + j) * iter + k)] = ((((((A[(((i + HALO_WIDTH) * iter + j) * iter + k)] - (STENCIL_CENTER_WEIGHT * A[((i * iter + j) * iter + k)])) + A[(((i - HALO_WIDTH) * iter + j) * iter + k)]) / STENCIL_AXIS_DIVISOR) + (((A[((i * iter + (j + HALO_WIDTH)) * iter + k)] - (STENCIL_CENTER_WEIGHT * A[((i * iter + j) * iter + k)])) + A[((i * iter + (j - HALO_WIDTH)) * iter + k)]) / STENCIL_AXIS_DIVISOR)) + (((A[(((i * iter + j) * iter + k) + 1)] - (STENCIL_CENTER_WEIGHT * A[((i * iter + j) * iter + k)])) + A[(((i * iter + j) * iter + k) - 1)]) / STENCIL_AXIS_DIVISOR)) + A[((i * iter + j) * iter + k)]);
   }
   }
   }
@@ -211,14 +190,14 @@ void kernel_stencil(uint32_t iter, double* A, double* B, uint32_t gridDim_x, uin
 void kernel(uint32_t tsteps, uint32_t iter, double* A, double* B) {
   struct Dim3 block;    /* Address-exposed local */
   struct Dim3 grid;    /* Address-exposed local */
-  struct Dim3 grid_temp;    /* Address-exposed local */
-  struct Dim3 block_temp;    /* Address-exposed local */
-  struct Dim3Packed grid_packed_temp;    /* Address-exposed local */
-  struct Dim3Packed block_packed_temp;    /* Address-exposed local */
-  struct Dim3 grid_temp2;    /* Address-exposed local */
-  struct Dim3 block_temp2;    /* Address-exposed local */
-  struct Dim3Packed grid_packed_temp2;    /* Address-exposed local */
-  struct Dim3Packed block_packed_temp2;    /* Address-exposed local */
+  struct Dim3 grid_tmp;    /* Address-exposed local */
+  struct Dim3 block_tmp;    /* Address-exposed local */
+  struct Dim3Coerce grid_tmp_coerce;    /* Address-exposed local */
+  struct Dim3Coerce block_tmp_coerce;    /* Address-exposed local */
+  struct Dim3 grid_tmp2;    /* Address-exposed local */
+  struct Dim3 block_tmp2;    /* Address-exposed local */
+  struct Dim3Coerce grid_tmp2_coerce;    /* Address-exposed local */
+  struct Dim3Coerce block_tmp2_coerce;    /* Address-exposed local */
   int32_t t;
   uint32_t j;
   uint32_t k;
@@ -228,19 +207,19 @@ void kernel(uint32_t tsteps, uint32_t iter, double* A, double* B) {
 
 // INSERT COMMENT LOOP: kernel::for.cond
 for(int32_t t = 1; t <= tsteps;   t = t + 1){
-  block.dim3_x = 1;
-  block.dim3_y = 8;
-  block.dim3_z = 32;
-  uint32_t num_blocks_x = num_blocks((iter - 2), block.dim3_x);
-  uint32_t num_blocks_y = num_blocks((iter - 2), block.dim3_y);
-  uint32_t num_blocks_z = num_blocks((iter - 2), block.dim3_z);
-  grid.dim3_x = num_blocks_x;
-  grid.dim3_y = num_blocks_y;
-  grid.dim3_z = num_blocks_z;
-  memcpy(((uint8_t*)(&grid_temp)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&block_temp)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&grid_packed_temp)), ((uint8_t*)(&grid_temp)), 12);
-  memcpy(((uint8_t*)(&block_packed_temp)), ((uint8_t*)(&block_temp)), 12);
+  block.x = BLOCK_DIM_X;
+  block.y = BLOCK_DIM_Y;
+  block.z = BLOCK_DIM_Z;
+  uint32_t num_blocks_x = num_blocks((iter - HALO_WIDTH_TIMES_2), block.x);
+  uint32_t num_blocks_y = num_blocks((iter - HALO_WIDTH_TIMES_2), block.y);
+  uint32_t num_blocks_z = num_blocks((iter - HALO_WIDTH_TIMES_2), block.z);
+  grid.x = num_blocks_x;
+  grid.y = num_blocks_y;
+  grid.z = num_blocks_z;
+  memcpy(((uint8_t*)(&grid_tmp)), ((uint8_t*)(&grid)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&block_tmp)), ((uint8_t*)(&block)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&grid_tmp_coerce)), ((uint8_t*)(&grid_tmp)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&block_tmp_coerce)), ((uint8_t*)(&block_tmp)), DIM3_STRUCT_SIZE_BYTES);
 #pragma omp parallel for collapse(2)
 for(int32_t j = 0; j < num_blocks_x;   j = j + 1){
 for(int32_t k = 0; k < num_blocks_y;   k = k + 1){
@@ -253,10 +232,10 @@ kernel_stencil(iter, A, B, num_blocks_x, num_blocks_y, num_blocks_z, 1, 8, 32, j
 }
 }
 }
-  memcpy(((uint8_t*)(&grid_temp2)), ((uint8_t*)(&grid)), 12);
-  memcpy(((uint8_t*)(&block_temp2)), ((uint8_t*)(&block)), 12);
-  memcpy(((uint8_t*)(&grid_packed_temp2)), ((uint8_t*)(&grid_temp2)), 12);
-  memcpy(((uint8_t*)(&block_packed_temp2)), ((uint8_t*)(&block_temp2)), 12);
+  memcpy(((uint8_t*)(&grid_tmp2)), ((uint8_t*)(&grid)), 12);
+  memcpy(((uint8_t*)(&block_tmp2)), ((uint8_t*)(&block)), 12);
+  memcpy(((uint8_t*)(&grid_tmp2_coerce)), ((uint8_t*)(&grid_tmp2)), 12);
+  memcpy(((uint8_t*)(&block_tmp2_coerce)), ((uint8_t*)(&block_tmp2)), 12);
 #pragma omp parallel for collapse(2)
 for(int32_t j = 0; j < num_blocks_x;   j = j + 1){
 for(int32_t k = 0; k < num_blocks_y;   k = k + 1){
@@ -277,18 +256,17 @@ void print_array(uint32_t n, double* A) {
   int64_t i;
   uint64_t j;
   uint64_t k;
-  int32_t tmp_i32;
 
 // INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < n;   j = j + 1){
 for(int64_t k = 0; k < n;   k = k + 1){
-  fprintf(stderr, (print_double_space), A[((i * n + j) * n + k)]);
+  fprintf(stderr, (double_print_format), A[((i * n + j) * n + k)]);
   if ((int)((i * n + j) * n + k) % (int)20 == 0) { // IFELSE MARKER: for.body6 IF
-  fprintf(stderr, (print_newline));
+  fprintf(stderr, (newline_string));
   }
 }
 }
 }
-  fprintf(stderr, (print_newline));
+  fprintf(stderr, (newline_string));
 }

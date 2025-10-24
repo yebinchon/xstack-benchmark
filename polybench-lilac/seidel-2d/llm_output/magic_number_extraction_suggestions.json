@@ -1,34 +1,221 @@
 {
   "extractions": [
     {
-      "value": "8",
-      "name": "BLOCK_DIM_X_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
       "occurrences": [
-        208
+        {
+          "line": 110,
+          "context": "A = malloc(n * n * 8);"
+        }
       ],
-      "function": "main"
+      "reasoning": "Clarifies that memory is allocated for doubles; avoids hard-coding the platform-dependent size of double."
     },
     {
-      "value": "32",
-      "name": "BLOCK_DIM_Y_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2,
+      "macro_name": "INIT_J_OFFSET",
       "occurrences": [
-        209
+        {
+          "line": 129,
+          "context": "(((double)(i) * (double)((j + 2))) + 2) / (double)(n));"
+        }
       ],
-      "function": "main"
+      "reasoning": "Makes the j-axis shift in the initialization formula explicit and self-documenting."
     },
     {
-      "value": "12",
-      "name": "DIM3_SIZE_BYTES_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2,
+      "macro_name": "INIT_CONST_TERM",
       "occurrences": [
-        217
+        {
+          "line": 129,
+          "context": "(((double)(i) * (double)((j + 2))) + 2) / (double)(n));"
+        }
       ],
-      "function": "main"
+      "reasoning": "Separates the constant term of the initialization formula from the j-shift to convey intent."
+    },
+    {
+      "value": 1,
+      "macro_name": "STENCIL_HALO_RADIUS",
+      "occurrences": [
+        {
+          "line": 144,
+          "context": "x + __FIXME__threadIdx_2e_x + 1;"
+        },
+        {
+          "line": 145,
+          "context": "y + __FIXME__threadIdx_2e_y + 1;"
+        },
+        {
+          "line": 146,
+          "context": "if (i < (n - 1)) {"
+        },
+        {
+          "line": 147,
+          "context": "if (j < (n - 1)) {"
+        },
+        {
+          "line": 148,
+          "context": "A[(((i - 1) * n + j) - 1] ..."
+        },
+        {
+          "line": 148,
+          "context": "A[(((i - 1) * n + j) + 1] ..."
+        },
+        {
+          "line": 148,
+          "context": "A[(((i + 1) * n + j) + 1] ..."
+        }
+      ],
+      "reasoning": "Captures the stencil's 1-cell halo/border radius used both for interior indexing offset and neighbor access."
+    },
+    {
+      "value": 2,
+      "macro_name": "STENCIL_BORDER_THICKNESS",
+      "occurrences": [
+        {
+          "line": 172,
+          "context": "num_blocks((n - 2), block.__FIXME__l_struct_struct_OC_dim3_field0)"
+        },
+        {
+          "line": 173,
+          "context": "num_blocks((n - 2), block.__FIXME__l_struct_struct_OC_dim3_field1)"
+        }
+      ],
+      "reasoning": "Documents that two layers (one per side) are excluded from computation when tiling the domain."
+    },
+    {
+      "value": 9,
+      "macro_name": "STENCIL_NEIGHBOR_COUNT",
+      "occurrences": [
+        {
+          "line": 148,
+          "context": "...) / 9);"
+        }
+      ],
+      "reasoning": "Explains the 3x3 average (nine-point stencil) rather than a mysterious divisor."
+    },
+    {
+      "value": 8,
+      "macro_name": "BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 169,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;"
+        }
+      ],
+      "reasoning": "Names the CUDA/OpenMP-like block size in X so launch configuration is centralized and easy to tune."
+    },
+    {
+      "value": 32,
+      "macro_name": "BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 170,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;"
+        }
+      ],
+      "reasoning": "Names the block size in Y; improves readability and supports consistent reuse across loops and kernel calls."
+    },
+    {
+      "value": 1,
+      "macro_name": "BLOCK_DIM_Z",
+      "occurrences": [
+        {
+          "line": 171,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field2 = 1;"
+        }
+      ],
+      "reasoning": "Documents that the computation is 2D (single layer in Z)."
+    },
+    {
+      "value": 1,
+      "macro_name": "GRID_DIM_Z",
+      "occurrences": [
+        {
+          "line": 176,
+          "context": "grid.__FIXME__l_struct_struct_OC_dim3_field2 = 1;"
+        }
+      ],
+      "reasoning": "Clarifies that the grid is 2D with a single slice in Z."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_BYTE_SIZE",
+      "occurrences": [
+        {
+          "line": 177,
+          "context": "..., ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 178,
+          "context": "..., ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 179,
+          "context": "..., ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 180,
+          "context": "..., ((uint8_t*)(&__FIXME__agg_2e_tmp3)), 12);"
+        }
+      ],
+      "reasoning": "Replaces hard-coded sizeof(dim3)-like value (3 x uint32_t) with a named size; safer and clearer."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINT_FORMAT_BUF_SIZE",
+      "occurrences": [
+        {
+          "line": 64,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "Explains the size of the format string buffer (including null terminator) and avoids a magic array bound."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_BUF_SIZE",
+      "occurrences": [
+        {
+          "line": 65,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "Documents the buffer length for the newline string (character + null)."
+    },
+    {
+      "value": 1,
+      "macro_name": "ARG_DUMP_INDEX",
+      "occurrences": [
+        {
+          "line": 107,
+          "context": "dump_code = atoi(argv[1]);"
+        }
+      ],
+      "reasoning": "Gives meaning to the command-line position for the dump flag, reducing reliance on positional knowledge."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_N_INDEX",
+      "occurrences": [
+        {
+          "line": 108,
+          "context": "n = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "Names the command-line argument position for problem size n."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARG_TSTEPS_INDEX",
+      "occurrences": [
+        {
+          "line": 109,
+          "context": "tsteps = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "Names the command-line argument position for the number of time steps."
     }
-  ]
+  ],
+  "confidence": 0.9
 }

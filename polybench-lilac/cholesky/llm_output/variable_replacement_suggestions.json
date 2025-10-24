@@ -1,122 +1,6 @@
 {
   "mappings": [
     {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field0",
-      "after": "flags"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field1",
-      "after": "read_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field2",
-      "after": "read_end"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field3",
-      "after": "read_base"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field4",
-      "after": "write_base"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field5",
-      "after": "write_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field6",
-      "after": "write_end"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field7",
-      "after": "buf_base"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field8",
-      "after": "buf_end"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field9",
-      "after": "save_base"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field10",
-      "after": "backup_base"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field11",
-      "after": "save_end"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field12",
-      "after": "markers"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field13",
-      "after": "chain"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field14",
-      "after": "fileno"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field15",
-      "after": "flags2"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field16",
-      "after": "old_offset"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field17",
-      "after": "cur_column"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field18",
-      "after": "vtable_offset"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field19",
-      "after": "shortbuf"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field20",
-      "after": "lock"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field21",
-      "after": "offset"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field22",
-      "after": "pad1"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field23",
-      "after": "pad2"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field24",
-      "after": "freeres_list"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field25",
-      "after": "freeres_buf"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field26",
-      "after": "pad5"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field27",
-      "after": "mode"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field28",
-      "after": "unused2"
-    },
-    {
       "before": "__FIXME__l_struct_struct_OC_dim3_field0",
       "after": "x"
     },
@@ -138,7 +22,7 @@
     },
     {
       "before": "__FIXME__1",
-      "after": "diag_val"
+      "after": "diag_sqrt"
     },
     {
       "before": "__FIXME__blockDim_2e_x",
@@ -214,119 +98,95 @@
     },
     {
       "before": "__FIXME__tmp6",
-      "after": "cond_all"
+      "after": "combined_cond"
     },
     {
       "before": "__FIXME__tmp7",
-      "after": "index_i_n_k"
+      "after": "index_ik"
     },
     {
       "before": "__FIXME__tmp8",
-      "after": "index_i_n_j"
+      "after": "index_ij"
     },
     {
       "before": "__FIXME__tmp9",
-      "after": "index_k_n_j"
+      "after": "index_kj"
     },
     {
       "before": "__FIXME__tmp10",
-      "after": "val_A_i_k"
+      "after": "product_ij_kj"
     },
     {
       "before": "__FIXME__tmp11",
-      "after": "val_A_i_j"
-    },
-    {
-      "before": "__FIXME__tmp12",
-      "after": "val_A_k_j"
-    },
-    {
-      "before": "__FIXME__tmp13",
-      "after": "prod_A_i_j_A_k_j"
-    },
-    {
-      "before": "__FIXME__tmp14",
-      "after": "updated_A_i_k"
+      "after": "updated_ik_value"
     },
     {
       "before": "__FIXME__agg_2e_tmp",
-      "after": "dim_temp_a"
+      "after": "launch0_grid"
     },
     {
       "before": "__FIXME__agg_2e_tmp1",
-      "after": "dim_temp_b"
+      "after": "launch0_block"
     },
     {
       "before": "__FIXME__agg_2e_tmp11",
-      "after": "block_copy"
+      "after": "launch2_block"
     },
     {
       "before": "__FIXME__agg_2e_tmp11_2e_coerce",
-      "after": "block_copy_coerce"
+      "after": "launch2_block_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp12",
-      "after": "grid_copy"
+      "after": "launch2_grid"
     },
     {
       "before": "__FIXME__agg_2e_tmp12_2e_coerce",
-      "after": "grid_copy_coerce"
+      "after": "launch2_grid_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp1_2e_coerce",
-      "after": "dim_temp_b_coerce"
+      "after": "launch0_block_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp2",
-      "after": "blocks_k1"
+      "after": "launch1_grid"
     },
     {
       "before": "__FIXME__agg_2e_tmp2_2e_coerce",
-      "after": "blocks_k1_coerce"
+      "after": "launch1_grid_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp4",
-      "after": "threads_k1"
+      "after": "launch1_block"
     },
     {
       "before": "__FIXME__agg_2e_tmp4_2e_coerce",
-      "after": "threads_k1_coerce"
+      "after": "launch1_block_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp_2e_coerce",
-      "after": "dim_temp_a_coerce"
+      "after": "launch0_grid_coerce"
     },
     {
       "before": "__FIXME__call10",
-      "after": "num_blocks_y"
+      "after": "grid2_y"
     },
     {
       "before": "__FIXME__call3",
-      "after": "num_blocks_256"
+      "after": "grid1_x"
     },
     {
       "before": "__FIXME__call9",
-      "after": "num_blocks_x"
-    },
-    {
-      "before": "__FIXME__call12",
-      "after": "tmp_call12"
-    },
-    {
-      "before": "__FIXME__call16",
-      "after": "tmp_call16"
+      "after": "grid2_x"
     },
     {
       "before": "__FIXME__l_array_1_uint8_t",
-      "after": "uint8_array1_t"
+      "after": "uint8_array_1"
     },
     {
       "before": "__FIXME__l_array_20_uint8_t",
-      "after": "uint8_array20_t"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE",
-      "after": "IOFile"
+      "after": "uint8_array_20"
     },
     {
       "before": "__FIXME__l_struct_struct_OC_dim3",
@@ -334,7 +194,7 @@
     },
     {
       "before": "__FIXME__l_unnamed_1",
-      "after": "dim3_coerce_t"
+      "after": "dim3_coerce"
     }
   ]
 }

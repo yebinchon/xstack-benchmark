@@ -4,6 +4,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/* Magic number constants */
+#define BYTES_PER_DOUBLE 8
+#define THREADS_PER_BLOCK_X 256
+#define DIM3_SIZE_BYTES 12
+#define PRINTF_FMT_STR_LEN 8
+#define NEWLINE_STR_LEN 2
+#define DEFAULT_ALPHA 43532
+#define DEFAULT_BETA 12313
+#define PRINT_ITEMS_PER_LINE 20
+#define ARG_IDX_N 2
+#define ARG_IDX_DUMP_CODE 1
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -27,79 +39,41 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct IOFileStruct;
-struct dim3_t;
-struct Dim3Packed;
+struct cuda_dim3;
+struct cuda_dim3_packed;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array1_t {
+struct array_1_uint8_t {
   uint8_t array[1];
 };
-struct uint8_array20_t {
+struct array_20_uint8_t {
   uint8_t array[20];
 };
-struct IOFileStruct {
-  uint32_t file_flags;
-  uint8_t* read_buffer;
-  uint8_t* write_buffer;
-  uint8_t* read_ptr;
-  uint8_t* write_ptr;
-  uint8_t* buf_end;
-  uint8_t* buf_base;
-  uint8_t* buf_last;
-  uint8_t* buf_mark;
-  uint8_t* buf_save;
-  uint8_t* buf_free;
-  uint8_t* buf_alloc;
-  void* file_cookie;
-  struct IOFileStruct* next;
-  uint32_t mode;
-  uint32_t fd;
-  uint64_t file_pos;
-  uint16_t orientation;
-  uint8_t unget;
-  uint8_t unget_buf[1];
-  uint8_t* wide_buf_ptr;
-  uint64_t file_size;
-  void* lock;
-  void* mutex;
-  struct IOFileStruct* prev;
-  uint8_t* ext_buf;
-  uint64_t last_sync;
-  uint32_t reserved;
-  uint8_t padding20[20];
-};
-struct dim3_t {
+struct cuda_dim3 {
   uint32_t x;
   uint32_t y;
   uint32_t z;
 };
-struct Dim3Packed {
-  uint64_t batch0;
-  uint32_t batch1;
+struct cuda_dim3_packed {
+  uint64_t xy;
+  uint32_t z;
 };
 
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
 void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
-uint32_t cudaFree(uint8_t*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel_y(uint32_t, double, double, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t fmt_double_space[8] = { "%0.2lf " };
-uint8_t fmt_newline[2] = { "\n" };
+uint8_t print_double_format[PRINTF_FMT_STR_LEN] = { "%0.2lf " };
+uint8_t newline_string[NEWLINE_STR_LEN] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -135,10 +109,10 @@ static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
 
 /* Function Bodies */
 int main(int argc, char ** argv) {
-  struct dim3_t gridDim;    /* Address-exposed local */
-  struct dim3_t blockDim;    /* Address-exposed local */
-  struct Dim3Packed gridDimPacked;    /* Address-exposed local */
-  struct Dim3Packed blockDimPacked;    /* Address-exposed local */
+  struct cuda_dim3 grid_dim;    /* Address-exposed local */
+  struct cuda_dim3 block_dim;    /* Address-exposed local */
+  struct cuda_dim3_packed grid_dim_packed;    /* Address-exposed local */
+  struct cuda_dim3_packed block_dim_packed;    /* Address-exposed local */
   int32_t n;
   int32_t dump_code;
   uint8_t* A;
@@ -146,36 +120,32 @@ int main(int argc, char ** argv) {
   uint8_t* tmp;
   uint8_t* x;
   uint8_t* y;
-  int32_t call38_result;
-  int32_t numBlocks;
-  uint8_t* unused_ptr1;
-  uint8_t* unused_ptr2;
+  int32_t num_blocks_x;
   uint32_t i;
   uint32_t j;
-  int32_t call57_result;
 
-  n = atoi(argv[2]);
-  dump_code = atoi(argv[1]);
-  A = malloc(n * n * 8);
-  B = malloc(n * n * 8);
-  tmp = malloc(n * 8);
-  x = malloc(n * 8);
-  y = malloc(n * 8);
+  n = atoi(argv[ARG_IDX_N]);
+  dump_code = atoi(argv[ARG_IDX_DUMP_CODE]);
+  A = malloc(n * n * BYTES_PER_DOUBLE);
+  B = malloc(n * n * BYTES_PER_DOUBLE);
+  tmp = malloc(n * BYTES_PER_DOUBLE);
+  x = malloc(n * BYTES_PER_DOUBLE);
+  y = malloc(n * BYTES_PER_DOUBLE);
 init_array(n, ((double*)A), ((double*)B), ((double*)x));
-  numBlocks = num_blocks(n, 256);
-  gridDim.x = numBlocks;
-  gridDim.y = 1;
-  gridDim.z = 1;
-  blockDim.x = 256;
-  blockDim.y = 1;
-  blockDim.z = 1;
-  memcpy(((uint8_t*)(&gridDimPacked)), ((uint8_t*)(&gridDim)), 12);
-  memcpy(((uint8_t*)(&blockDimPacked)), ((uint8_t*)(&blockDim)), 12);
+  num_blocks_x = num_blocks(n, THREADS_PER_BLOCK_X);
+  grid_dim.x = num_blocks_x;
+  grid_dim.y = 1;
+  grid_dim.z = 1;
+  block_dim.x = THREADS_PER_BLOCK_X;
+  block_dim.y = 1;
+  block_dim.z = 1;
+  memcpy(((uint8_t*)(&grid_dim_packed)), ((uint8_t*)(&grid_dim)), DIM3_SIZE_BYTES);
+  memcpy(((uint8_t*)(&block_dim_packed)), ((uint8_t*)(&block_dim)), DIM3_SIZE_BYTES);
 // INSERT COMMENT LOOP: main::header.0
 #pragma omp parallel for collapse(2)
-for(int32_t i = 0; i < numBlocks;   i = i + 1){
-for(int32_t j = 0; j < 256;   j = j + 1){
-kernel_y(n, 43532, 12313, ((double*)A), ((double*)B), ((double*)tmp), ((double*)x), ((double*)y), numBlocks, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
+for(int32_t i = 0; i < num_blocks_x;   i = i + 1){
+for(int32_t j = 0; j < THREADS_PER_BLOCK_X;   j = j + 1){
+kernel_y(n, DEFAULT_ALPHA, DEFAULT_BETA, ((double*)A), ((double*)B), ((double*)tmp), ((double*)x), ((double*)y), num_blocks_x, 1, 1, THREADS_PER_BLOCK_X, 1, 1, i, 0, 0, j, 0, 0);
 }
 }
 // INSERT COMMENT IFELSE: main::kcall.end
@@ -214,28 +184,31 @@ void kernel_y(uint32_t n, double alpha, double beta, double* A, double* B, doubl
   int64_t j;
 
 // INSERT COMMENT IFELSE: kernel_y::entry
-  i = blockDim_x * blockIdx_x + threadIdx_x;
+  int block_offset = blockDim_x * blockIdx_x;
+  uint32_t thread_index = threadIdx_x;
+  int global_index = block_offset + thread_index;
+  int linear_index = global_index;
+  i = linear_index;
   if (i < n) { // IFELSE MARKER: entry IF
   tmp[i] = 0;
   y[i] = 0;
 for(int64_t j = 0; j < n;   j = j + 1){
-  __auto_type idx_ij = i * n + j;
-  __auto_type a_val = A[idx_ij];
-  __auto_type x_j = x[j];
-  __auto_type prod_a_x = a_val * x_j;
-  __auto_type tmp_sum = tmp[i] + prod_a_x;
+  int a_index = i * n + j;
+  double a_val = A[a_index];
+  double x_val_a = x[j];
+  double prod_a = a_val * x_val_a;
+  double tmp_acc = tmp[i];
+  double tmp_sum = tmp_acc + prod_a;
   tmp[i] = tmp_sum;
-  __auto_type idx_ij2 = i * n + j;
-  __auto_type b_val = B[idx_ij2];
-  __auto_type x_j2 = x[j];
-  __auto_type prod_b_x = b_val * x_j2;
-  __auto_type y_sum = y[i] + prod_b_x;
+  int b_index = i * n + j;
+  double b_val = B[b_index];
+  double x_val_b = x[j];
+  double prod_b = b_val * x_val_b;
+  double y_acc = y[i];
+  double y_sum = y_acc + prod_b;
   y[i] = y_sum;
 }
-  __auto_type alpha_tmp = alpha * tmp[i];
-  __auto_type beta_y = beta * y[i];
-  __auto_type final_y = alpha_tmp + beta_y;
-  y[i] = final_y;
+  y[i] = ((alpha * tmp[i]) + (beta * y[i]));
   }
   return;
 }
@@ -245,9 +218,9 @@ void print_array(uint32_t n, double* y) {
 
 // INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
-  fprintf(stderr, (fmt_double_space), y[i]);
-  if (i % 20 == 0) { // IFELSE MARKER: for.body IF
-  fprintf(stderr, (fmt_newline));
+  fprintf(stderr, (print_double_format), y[i]);
+  if (i % PRINT_ITEMS_PER_LINE == 0) { // IFELSE MARKER: for.body IF
+  fprintf(stderr, (newline_string));
   }
 }
   return;

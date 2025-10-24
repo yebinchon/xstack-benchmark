@@ -1,122 +1,6 @@
 {
   "mappings": [
     {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field0",
-      "after": "flags"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field1",
-      "after": "read_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field2",
-      "after": "write_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field3",
-      "after": "buf_base"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field4",
-      "after": "buf_end"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field5",
-      "after": "save_base"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field6",
-      "after": "save_end"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field7",
-      "after": "marker"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field8",
-      "after": "chain"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field9",
-      "after": "lock_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field10",
-      "after": "cookie_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field11",
-      "after": "cookie_io_functions"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field12",
-      "after": "data_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field13",
-      "after": "next_file"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field14",
-      "after": "file_flags2"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field15",
-      "after": "orientation"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field16",
-      "after": "read_count"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field17",
-      "after": "mode"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field18",
-      "after": "ungetc_char"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field19",
-      "after": "small_buffer"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field20",
-      "after": "wide_data_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field21",
-      "after": "lock_owner"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field22",
-      "after": "codecvt_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field23",
-      "after": "locale_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field24",
-      "after": "prev_file"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field25",
-      "after": "buffer2_ptr"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field26",
-      "after": "cookie_size"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field27",
-      "after": "reserved32"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field28",
-      "after": "padding20"
-    },
-    {
       "before": "__FIXME__l_struct_struct_OC_dim3_field0",
       "after": "x"
     },
@@ -129,244 +13,188 @@
       "after": "z"
     },
     {
-      "before": "__FIXME__l_unnamed_1_field0",
-      "after": "packed_dim3_t_field0"
-    },
-    {
-      "before": "__FIXME__l_unnamed_1_field1",
-      "after": "packed_dim3_t_field1"
-    },
-    {
       "before": "__FIXME__tmp1",
-      "after": "i_d"
+      "after": "indexA"
     },
     {
       "before": "__FIXME__tmp2",
-      "after": "j_d"
+      "after": "di_a"
     },
     {
       "before": "__FIXME__tmp3",
-      "after": "prod_i_j"
+      "after": "dj_a"
     },
     {
       "before": "__FIXME__tmp4",
-      "after": "ni_d"
+      "after": "dni"
     },
     {
       "before": "__FIXME__tmp5",
-      "after": "normalized_prod1"
+      "after": "prod_a"
     },
     {
       "before": "__FIXME__tmp6",
-      "after": "idx_a"
+      "after": "valA"
     },
     {
       "before": "__FIXME__tmp7",
-      "after": "i_d2"
+      "after": "indexB"
     },
     {
       "before": "__FIXME__tmp8",
-      "after": "j_plus1"
+      "after": "j_offset_B"
     },
     {
       "before": "__FIXME__tmp9",
-      "after": "j1_d"
+      "after": "di_b"
     },
     {
       "before": "__FIXME__tmp10",
-      "after": "prod_i_j1"
+      "after": "dj_b"
     },
     {
       "before": "__FIXME__tmp11",
-      "after": "nj_d"
+      "after": "dnj"
     },
     {
       "before": "__FIXME__tmp12",
-      "after": "normalized_prod2"
+      "after": "prod_b"
     },
     {
       "before": "__FIXME__tmp13",
-      "after": "idx_b"
+      "after": "valB"
     },
     {
       "before": "__FIXME__tmp14",
-      "after": "i_d3"
+      "after": "indexC"
     },
     {
       "before": "__FIXME__tmp15",
-      "after": "j_plus3"
+      "after": "j_offset_C"
     },
     {
       "before": "__FIXME__tmp16",
-      "after": "j3_d"
+      "after": "di_c"
     },
     {
       "before": "__FIXME__tmp17",
-      "after": "prod_i_j3"
+      "after": "dj_c"
     },
     {
       "before": "__FIXME__tmp18",
-      "after": "nl_d"
+      "after": "dnl"
     },
     {
       "before": "__FIXME__tmp19",
-      "after": "normalized_prod3"
+      "after": "prod_c"
     },
     {
       "before": "__FIXME__tmp20",
-      "after": "idx_c"
+      "after": "valC"
     },
     {
       "before": "__FIXME__tmp21",
-      "after": "i_d4"
+      "after": "indexD"
     },
     {
       "before": "__FIXME__tmp22",
-      "after": "j_plus2"
+      "after": "j_offset_D"
     },
     {
       "before": "__FIXME__tmp23",
-      "after": "j2_d"
+      "after": "di_d"
     },
     {
       "before": "__FIXME__tmp24",
-      "after": "prod_i_j2"
+      "after": "dj_d"
     },
     {
       "before": "__FIXME__tmp25",
-      "after": "nk_d"
+      "after": "dnk"
     },
     {
       "before": "__FIXME__tmp26",
-      "after": "normalized_prod4"
+      "after": "prod_d"
     },
     {
       "before": "__FIXME__tmp27",
-      "after": "idx_d"
-    },
-    {
-      "before": "__FIXME__1",
-      "after": "byte_ptr1"
-    },
-    {
-      "before": "__FIXME__10",
-      "after": "byte_ptr10"
-    },
-    {
-      "before": "__FIXME__11",
-      "after": "byte_ptr11"
-    },
-    {
-      "before": "__FIXME__12",
-      "after": "byte_ptr12"
-    },
-    {
-      "before": "__FIXME__2",
-      "after": "byte_ptr2"
-    },
-    {
-      "before": "__FIXME__3",
-      "after": "byte_ptr3"
-    },
-    {
-      "before": "__FIXME__4",
-      "after": "byte_ptr4"
-    },
-    {
-      "before": "__FIXME__5",
-      "after": "byte_ptr5"
-    },
-    {
-      "before": "__FIXME__6",
-      "after": "byte_ptr6"
-    },
-    {
-      "before": "__FIXME__7",
-      "after": "byte_ptr7"
-    },
-    {
-      "before": "__FIXME__8",
-      "after": "byte_ptr8"
-    },
-    {
-      "before": "__FIXME__9",
-      "after": "byte_ptr9"
+      "after": "valD"
     },
     {
       "before": "__FIXME__agg_2e_tmp",
-      "after": "temp_grid_copy1"
+      "after": "grid_tmp1"
     },
     {
       "before": "__FIXME__agg_2e_tmp10",
-      "after": "temp_block_copy2"
+      "after": "block_tmp2"
     },
     {
       "before": "__FIXME__agg_2e_tmp10_2e_coerce",
-      "after": "packed_block_copy2"
+      "after": "block_tmp2_packed"
     },
     {
       "before": "__FIXME__agg_2e_tmp2",
-      "after": "temp_block_copy1"
+      "after": "block_tmp1"
     },
     {
       "before": "__FIXME__agg_2e_tmp20",
-      "after": "temp_grid_copy3"
+      "after": "grid_tmp3"
     },
     {
       "before": "__FIXME__agg_2e_tmp20_2e_coerce",
-      "after": "packed_grid_copy3"
+      "after": "grid_tmp3_packed"
     },
     {
       "before": "__FIXME__agg_2e_tmp21",
-      "after": "temp_block_copy3"
+      "after": "block_tmp3"
     },
     {
       "before": "__FIXME__agg_2e_tmp21_2e_coerce",
-      "after": "packed_block_copy3"
+      "after": "block_tmp3_packed"
     },
     {
       "before": "__FIXME__agg_2e_tmp2_2e_coerce",
-      "after": "packed_block_copy1"
+      "after": "block_tmp1_packed"
     },
     {
       "before": "__FIXME__agg_2e_tmp9",
-      "after": "temp_grid_copy2"
+      "after": "grid_tmp2"
     },
     {
       "before": "__FIXME__agg_2e_tmp9_2e_coerce",
-      "after": "packed_grid_copy2"
+      "after": "grid_tmp2_packed"
     },
     {
       "before": "__FIXME__agg_2e_tmp_2e_coerce",
-      "after": "packed_grid_copy1"
+      "after": "grid_tmp1_packed"
     },
     {
       "before": "__FIXME__call",
-      "after": "num_blocks_ni_by_blockx"
+      "after": "grid_x_blocks_1"
     },
     {
       "before": "__FIXME__call1",
-      "after": "num_blocks_nj_by_blocky"
+      "after": "grid_y_blocks_1"
     },
     {
       "before": "__FIXME__call17",
-      "after": "num_blocks_ni_by_blockx_2"
+      "after": "grid_x_blocks_3"
     },
     {
       "before": "__FIXME__call19",
-      "after": "num_blocks_nl_by_blocky_2"
+      "after": "grid_y_blocks_3"
     },
     {
       "before": "__FIXME__call6",
-      "after": "num_blocks_nj_by_blockx"
+      "after": "grid_x_blocks_2"
     },
     {
       "before": "__FIXME__call8",
-      "after": "num_blocks_nl_by_blocky"
+      "after": "grid_y_blocks_2"
     },
     {
       "before": "__FIXME__div",
-      "after": "warps_per_block"
+      "after": "block_threads_x"
     },
     {
       "before": "__FIXME__blockDim_2e_x",
@@ -417,36 +245,20 @@
       "after": "threadIdx_z"
     },
     {
-      "before": "__FIXME__call68",
-      "after": "tmp_call68"
-    },
-    {
-      "before": "__FIXME__call96",
-      "after": "tmp_call96"
-    },
-    {
-      "before": "__FIXME__call11",
-      "after": "tmp_i32"
-    },
-    {
       "before": "__FIXME__l_array_1_uint8_t",
-      "after": "uint8_array1_t"
+      "after": "uint8_array1"
     },
     {
       "before": "__FIXME__l_array_20_uint8_t",
-      "after": "uint8_array_20_t"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE",
-      "after": "io_file_t"
+      "after": "uint8_array20"
     },
     {
       "before": "__FIXME__l_struct_struct_OC_dim3",
-      "after": "dim3_t"
+      "after": "Dim3"
     },
     {
       "before": "__FIXME__l_unnamed_1",
-      "after": "packed_dim3_t"
+      "after": "Dim3Packed"
     }
   ]
 }

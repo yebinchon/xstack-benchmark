@@ -27,56 +27,24 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct IOFile;
-struct dim3_t;
-struct dim3_packed_t;
+struct dim3;
+struct dim3_coerce;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array_1_t {
+struct uint8_array_1 {
   uint8_t array[1];
 };
-struct uint8_array_20_t {
+struct uint8_array_20 {
   uint8_t array[20];
 };
-struct IOFile {
-  uint32_t io_file_field0;
-  uint8_t* io_file_field1;
-  uint8_t* io_file_field2;
-  uint8_t* io_file_field3;
-  uint8_t* io_file_field4;
-  uint8_t* io_file_field5;
-  uint8_t* io_file_field6;
-  uint8_t* io_file_field7;
-  uint8_t* io_file_field8;
-  uint8_t* io_file_field9;
-  uint8_t* io_file_field10;
-  uint8_t* io_file_field11;
-  void* io_file_field12;
-  struct IOFile* io_file_field13;
-  uint32_t io_file_field14;
-  uint32_t io_file_field15;
-  uint64_t io_file_field16;
-  uint16_t io_file_field17;
-  uint8_t io_file_field18;
-  uint8_t io_file_field19[1];
-  uint8_t* io_file_field20;
-  uint64_t io_file_field21;
-  void* io_file_field22;
-  void* io_file_field23;
-  struct IOFile* io_file_field24;
-  uint8_t* io_file_field25;
-  uint64_t io_file_field26;
-  uint32_t io_file_field27;
-  uint8_t io_file_field28[20];
-};
-struct dim3_t {
+struct dim3 {
   uint32_t x;
   uint32_t y;
   uint32_t z;
 };
-struct dim3_packed_t {
+struct dim3_coerce {
   uint64_t x;
   uint32_t y;
 };
@@ -84,22 +52,17 @@ struct dim3_packed_t {
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel(uint32_t, uint32_t, double*, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel_stencil(uint32_t, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t fmt_double_space[8] = { "%0.2lf " };
-uint8_t fmt_newline[2] = { "\n" };
+uint8_t fmt_double_2dp_space[8] = { "%0.2lf " };
+uint8_t newline_str[2] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -140,8 +103,6 @@ int main(int argc, char ** argv) {
   int32_t dump_code;
   uint8_t* A;
   uint8_t* B;
-  int32_t local17;
-  int32_t local23;
 
 // INSERT COMMENT IFELSE: main::entry
   n = atoi(argv[3]);
@@ -180,64 +141,65 @@ void kernel_stencil(uint32_t n, double* A, double* B, uint32_t gridDim_x, uint32
   int64_t i;
 
 // INSERT COMMENT IFELSE: kernel_stencil::entry
-  __auto_type block_base_x = blockDim_x * blockIdx_x;
-  __auto_type global_x = block_base_x + threadIdx_x;
-  __auto_type idx = global_x + 1;
-  i = idx;
+  int blockStartX = blockDim_x * blockIdx_x;
+  int threadGlobalX = blockStartX + threadIdx_x;
+  int computedIndex = threadGlobalX + 1;
+  i = computedIndex;
   if (i < (n - 1)) { // IFELSE MARKER: entry IF
-  __auto_type left_val = A[i - 1];
-  __auto_type center_val = A[i];
-  __auto_type right_val = A[i + 1];
-  __auto_type sum_val = left_val + center_val + right_val;
-  __auto_type avg_val = sum_val / 3.0;
-  B[i] = avg_val;
+  double leftVal = A[i - 1];
+  double centerVal = A[i];
+  double rightVal = A[i + 1];
+  double sumLeftCenter = leftVal + centerVal;
+  double sumAll = sumLeftCenter + rightVal;
+  double average = sumAll / 3;
+  B[i] = average;
   }
   return;
 }
 // INSERT COMMENT FUNCTION: kernel
 void kernel(uint32_t tsteps, uint32_t n, double* A, double* B) {
-  struct dim3_t gridA;    /* Address-exposed local */
-  struct dim3_t blockA;    /* Address-exposed local */
-  struct dim3_packed_t gridA_packed;    /* Address-exposed local */
-  struct dim3_packed_t blockA_packed;    /* Address-exposed local */
-  struct dim3_t gridB;    /* Address-exposed local */
-  struct dim3_t blockB;    /* Address-exposed local */
-  struct dim3_packed_t gridB_packed;    /* Address-exposed local */
-  struct dim3_packed_t blockB_packed;    /* Address-exposed local */
+  struct dim3 gridDim0;    /* Address-exposed local */
+  struct dim3 blockDim0;    /* Address-exposed local */
+  struct dim3_coerce gridDim0_coerce;    /* Address-exposed local */
+  struct dim3_coerce blockDim0_coerce;    /* Address-exposed local */
+  struct dim3 gridDim1;    /* Address-exposed local */
+  struct dim3 blockDim1;    /* Address-exposed local */
+  struct dim3_coerce gridDim1_coerce;    /* Address-exposed local */
+  struct dim3_coerce blockDim1_coerce;    /* Address-exposed local */
   int32_t t;
   uint32_t j;
   uint32_t k;
 
 // INSERT COMMENT LOOP: kernel::for.cond
 for(int32_t t = 1; t <= tsteps;   t = t + 1){
-  uint32_t numBlocksA = num_blocks(n, 256);
-  gridA.x = numBlocksA;
-  gridA.y = 1;
-  gridA.z = 1;
-  blockA.x = 256;
-  blockA.y = 1;
-  blockA.z = 1;
-  memcpy(((uint8_t*)(&gridA_packed)), ((uint8_t*)(&gridA)), 12);
-  memcpy(((uint8_t*)(&blockA_packed)), ((uint8_t*)(&blockA)), 12);
+  uint32_t numBlocks0 = num_blocks(n, 256);
+  gridDim0.x = numBlocks0;
+  gridDim0.y = 1;
+  gridDim0.z = 1;
+  blockDim0.x = 256;
+  blockDim0.y = 1;
+  blockDim0.z = 1;
+  memcpy(((uint8_t*)(&gridDim0_coerce)), ((uint8_t*)(&gridDim0)), 12);
+  memcpy(((uint8_t*)(&blockDim0_coerce)), ((uint8_t*)(&blockDim0)), 12);
 #pragma omp parallel for collapse(2)
-for(int32_t j = 0; j < numBlocksA;   j = j + 1){
+for(int32_t j = 0; j < numBlocks0;   j = j + 1){
 for(int32_t k = 0; k < 256;   k = k + 1){
-kernel_stencil(n, A, B, numBlocksA, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+kernel_stencil(n, A, B, numBlocks0, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
-  uint32_t numBlocksB = num_blocks(n, 256);
-  gridB.x = numBlocksB;
-  gridB.y = 1;
-  gridB.z = 1;
-  blockB.x = 256;
-  blockB.y = 1;
-  blockB.z = 1;
-  memcpy(((uint8_t*)(&gridB_packed)), ((uint8_t*)(&gridB)), 12);
-  memcpy(((uint8_t*)(&blockB_packed)), ((uint8_t*)(&blockB)), 12);
+  uint32_t numBlocks1 = num_blocks(n, 256);
+  gridDim1.x = numBlocks1;
+  gridDim1.y = 1;
+  gridDim1.z = 1;
+  blockDim1.x = 256;
+  blockDim1.y = 1;
+  blockDim1.z = 1;
+  memcpy(((uint8_t*)(&gridDim1_coerce)), ((uint8_t*)(&gridDim1)), 12);
+  memcpy(((uint8_t*)(&blockDim1_coerce)), ((uint8_t*)(&blockDim1)), 12);
 #pragma omp parallel for collapse(2)
-for(int32_t j = 0; j < numBlocksB;   j = j + 1){
+for(int32_t j = 0; j < numBlocks1;   j = j + 1){
 for(int32_t k = 0; k < 256;   k = k + 1){
-kernel_stencil(n, B, A, numBlocksB, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
+kernel_stencil(n, B, A, numBlocks1, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 }
 }
 }
@@ -246,14 +208,13 @@ kernel_stencil(n, B, A, numBlocksB, 1, 1, 256, 1, 1, j, 0, 0, k, 0, 0);
 // INSERT COMMENT FUNCTION: print_array
 void print_array(uint32_t n, double* A) {
   int64_t i;
-  int32_t tmp32;
 
 // INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
-  fprintf(stderr, (fmt_double_space), A[i]);
+  fprintf(stderr, (fmt_double_2dp_space), A[i]);
   if (i % 20 == 0) { // IFELSE MARKER: for.body IF
-  fprintf(stderr, (fmt_newline));
+  fprintf(stderr, (newline_str));
   }
 }
-  fprintf(stderr, (fmt_newline));
+  fprintf(stderr, (newline_str));
 }

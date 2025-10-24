@@ -7,6 +7,6 @@
     1,
     2
   ],
-  "reasoning": "Keep the entry point first (main) as requested. Immediately follow main with initialization/setup functions (init_array, id 0) since main calls it early. Next place small utility helpers that kernel depends on (num_blocks, id 3) and the core per-thread computation (kernel_stencil, id 4) so that the heavier orchestrator (kernel, id 1) can appear after its dependencies. Finally place the I/O/display helper (print_array, id 2) last. This ordering preserves logical flow: main \u2192 initialize \u2192 helpers \u2192 core compute \u2192 driver \u2192 print, and ensures callers generally appear after the main entry while dependencies for kernel are defined before kernel to improve readability and debugging.",
+  "reasoning": "Main first for entry and high-level flow. Place initialization next (init_array) to keep setup close to main. Then put kernel dependencies before their caller: num_blocks (utility helper) and kernel_stencil (compute helper). Follow with kernel which uses both. Finish with print_array as display/output typically comes last. This order respects dependencies, groups helpers, and improves logical flow and debugging.",
   "confidence": 0.9
 }

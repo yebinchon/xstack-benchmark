@@ -1,0 +1,13 @@
+{
+  "recommended_order": [
+    "main",
+    0,
+    3,
+    4,
+    5,
+    1,
+    2
+  ],
+  "reasoning": "Main first for entry-point clarity. Place init_array (0) early as setup/initialization. Put num_blocks (3) before kernel as a utility dependency. Group compute helpers kernel_beta (4) then kernel_product (5) in the same order they are invoked, and place them before the orchestrating kernel (1) to respect call dependencies and improve traceability. Keep print_array (2) last as a display/output routine.",
+  "confidence": 0.9
+}

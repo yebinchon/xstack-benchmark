@@ -1,0 +1,43 @@
+{
+  "suggestions_by_function": {
+    "kernel_beta": [
+      {
+        "identifier": [
+          "outer_if_entry_i_lt_n",
+          "inner_if_land_lhs_true_j_le_i"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < n",
+          "j <= i"
+        ],
+        "coalesced_condition": "i < n && j <= i",
+        "line_numbers": [
+          156,
+          157
+        ],
+        "reasoning": "Both conditions are pure comparisons with no side effects and do not modify shared variables. i and j are computed once before the checks and not changed between them. Coalescing preserves short-circuit behavior (j <= i is only evaluated when i < n) and removes an unnecessary nesting level, improving readability without altering semantics."
+      }
+    ],
+    "kernel_product": [
+      {
+        "identifier": [
+          "outer_if_entry_i_lt_n",
+          "inner_if_land_lhs_true_j_le_i"
+        ],
+        "control_flow_type": "nested_if_statements",
+        "conditions": [
+          "i < n",
+          "j <= i"
+        ],
+        "coalesced_condition": "i < n && j <= i",
+        "line_numbers": [
+          172,
+          173
+        ],
+        "reasoning": "Both checks are independent and side-effect free. The inner condition does not modify variables used by the outer. Using a single if with logical AND preserves the original control flow due to short-circuiting and simplifies the code by eliminating one nesting level."
+      }
+    ]
+  },
+  "confidence": 0.9
+}

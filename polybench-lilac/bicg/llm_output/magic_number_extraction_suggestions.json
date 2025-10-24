@@ -1,17 +1,118 @@
 {
   "extractions": [
     {
-      "value": "256",
-      "name": "BICG_BLOCK_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
       "occurrences": [
-        250,
-        262,
-        266,
-        278
+        {
+          "line": 115,
+          "context": "A = malloc(m * n * 8);"
+        },
+        {
+          "line": 116,
+          "context": "s = malloc(n * 8);"
+        },
+        {
+          "line": 117,
+          "context": "q = malloc(m * 8);"
+        },
+        {
+          "line": 118,
+          "context": "p = malloc(n * 8);"
+        },
+        {
+          "line": 119,
+          "context": "r = malloc(m * 8);"
+        }
       ],
-      "function": "num_blocks and kernel_bicg"
+      "reasoning": "8 is the size in bytes of a double. Naming it makes the allocation intent explicit and prevents errors if the element type changes."
+    },
+    {
+      "value": 3.141592653589793,
+      "macro_name": "PI",
+      "occurrences": [
+        {
+          "line": 141,
+          "context": "p[i] = ((double)(i) * 3.1415926535897931);"
+        },
+        {
+          "line": 145,
+          "context": "r[i] = ((double)(i) * 3.1415926535897931);"
+        }
+      ],
+      "reasoning": "This is the mathematical constant \u03c0. Giving it a named constant improves readability and avoids duplicated literals."
+    },
+    {
+      "value": 256,
+      "macro_name": "BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 207,
+          "context": "__FIXME__call = num_blocks(n, 256);"
+        },
+        {
+          "line": 211,
+          "context": "__FIXME__l_struct_struct_OC_dim3_field0 = 256;"
+        },
+        {
+          "line": 219,
+          "context": "for(int32_t j = 0; j < 256;   j = j + 1){"
+        },
+        {
+          "line": 220,
+          "context": "..., 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);"
+        }
+      ],
+      "reasoning": "256 is the configured block/thread dimension in X. Centralizing it as a macro documents tuning intent and allows easy experimentation."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 214,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 215,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp1)), 12);"
+        }
+      ],
+      "reasoning": "12 is the byte size of the dim3-like struct (3 x uint32_t). Using a named size clarifies intent and avoids silent breakage if the struct layout changes. Prefer sizeof(struct) in the actual code."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_IDX_M",
+      "occurrences": [
+        {
+          "line": 112,
+          "context": "m = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "Command-line argument index for m. Naming the position documents the expected CLI layout and prevents magic indices."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARG_IDX_N",
+      "occurrences": [
+        {
+          "line": 113,
+          "context": "n = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "Command-line argument index for n. A named constant makes the interface clearer and avoids hard-coded indices."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_CODE_ENABLED",
+      "occurrences": [
+        {
+          "line": 124,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "Here, 1 represents the enabled state of a dump flag. Naming the sentinel clarifies the intended semantics of the flag value."
     }
-  ]
+  ],
+  "confidence": 0.9
 }

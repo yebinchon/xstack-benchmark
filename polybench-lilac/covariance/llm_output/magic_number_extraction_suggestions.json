@@ -1,51 +1,128 @@
 {
   "extractions": [
     {
-      "value": "256",
-      "name": "COV_TILE_SIZE_256_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
       "occurrences": [
-        273
+        {
+          "line": 114,
+          "context": "data = malloc(n * m * 8);"
+        },
+        {
+          "line": 115,
+          "context": "mean = malloc(m * 8);"
+        },
+        {
+          "line": 116,
+          "context": "cov = malloc(m * m * 8);"
+        }
       ],
-      "function": "kernel_covariance"
+      "reasoning": "8 is the size in bytes of a double; using a named constant (or sizeof(double)) avoids brittle assumptions about type size and clarifies allocation intent."
     },
     {
-      "value": "8",
-      "name": "COV_BLOCK_DIM0_1",
-      "type": "define",
-      "scope": "file",
+      "value": 1000,
+      "macro_name": "INIT_SCALE_DIVISOR",
       "occurrences": [
-        289,
-        303,
-        312,
-        326
+        {
+          "line": 137,
+          "context": "((double)(i) * (double)(j)) / 1000);"
+        }
       ],
-      "function": "kernel_covariance"
+      "reasoning": "This scale factor determines how input data are initialized; naming it documents the initialization policy and eases tuning."
     },
     {
-      "value": "32",
-      "name": "COV_BLOCK_DIM1_1",
-      "type": "define",
-      "scope": "file",
+      "value": 1,
+      "macro_name": "COV_BESSEL_CORRECTION",
       "occurrences": [
-        290,
-        304,
-        313,
-        327
+        {
+          "line": 189,
+          "context": "cov[...] = cov[...] / ((double)(n) - 1));"
+        }
       ],
-      "function": "kernel_covariance"
+      "reasoning": "This is the Bessel's correction (n - 1) used for an unbiased covariance estimate; naming it conveys the statistical intent."
     },
     {
-      "value": "12",
-      "name": "COV_BLOCK_STRUCT_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 256,
+      "macro_name": "MEAN_BLOCK_DIM_X",
       "occurrences": [
-        297,
-        320
+        {
+          "line": 220,
+          "context": "__FIXME__call = num_blocks(m, 256);"
+        },
+        {
+          "line": 224,
+          "context": "__FIXME__l_struct_struct_OC_dim3_field0 = 256;"
+        },
+        {
+          "line": 232,
+          "context": "for(int32_t j = 0; j < 256;   j = j + 1){"
+        },
+        {
+          "line": 233,
+          "context": "..., __FIXME__call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);"
+        }
       ],
-      "function": "kernel_covariance"
+      "reasoning": "256 is the X-dimension (threads per block) used for the mean kernel launch and scheduling; a named constant documents the launch configuration and centralizes tuning."
+    },
+    {
+      "value": 8,
+      "macro_name": "REDUCE_BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 236,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;"
+        }
+      ],
+      "reasoning": "This is the X-dimension of the block used for the reduce/cov kernels; naming it clarifies the launch geometry and enables consistent updates."
+    },
+    {
+      "value": 32,
+      "macro_name": "REDUCE_BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 237,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;"
+        }
+      ],
+      "reasoning": "This is the Y-dimension of the block for reduce/cov kernels; a named constant explains its role and allows easy tuning."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 227,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), ..., 12);"
+        },
+        {
+          "line": 228,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp1)), ..., 12);"
+        }
+      ],
+      "reasoning": "12 is the byte size of the dim3-like struct (3 x uint32_t); naming it (or using sizeof) prevents errors if the struct changes and documents the copy size."
+    },
+    {
+      "value": 8,
+      "macro_name": "PRINTF_FMT_STR_LEN",
+      "occurrences": [
+        {
+          "line": 66,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
+      ],
+      "reasoning": "Defines the buffer size for the print format string; a named constant documents intent and avoids magic sizes tied to a literal."
+    },
+    {
+      "value": 2,
+      "macro_name": "NEWLINE_STR_LEN",
+      "occurrences": [
+        {
+          "line": 67,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
+      ],
+      "reasoning": "Defines the buffer size for the newline string (including terminator); naming clarifies why the array has length 2."
     }
-  ]
+  ],
+  "confidence": 0.86
 }

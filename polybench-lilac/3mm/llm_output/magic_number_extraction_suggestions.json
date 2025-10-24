@@ -1,41 +1,353 @@
 {
   "extractions": [
     {
-      "value": "32",
-      "name": "BLOCK_DIM3_FIELD1_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "FORMAT_SPEC_BUFSZ",
       "occurrences": [
-        304,
-        320,
-        340,
-        360
+        {
+          "line": 64,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
       ],
-      "function": "multiple_functions"
+      "reasoning": "Explicit buffer size for a format string duplicates the implicit string length (including NUL). A named constant documents the intent and prevents mismatches if the format changes."
     },
     {
-      "value": "12",
-      "name": "BLOCK_COPY_BYTES_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2,
+      "macro_name": "NEWLINE_BUFSZ",
       "occurrences": [
-        312,
-        332,
-        352
+        {
+          "line": 65,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
       ],
-      "function": "multiple_functions"
+      "reasoning": "Buffer size for the newline string (character + NUL) is a fixed size and merits a named constant to avoid magic numbers."
     },
     {
-      "value": "8",
-      "name": "BLOCK_SUBDIM_SIZE_1",
-      "type": "define",
-      "scope": "file",
+      "value": 1,
+      "macro_name": "ARG_IDX_DUMP_CODE",
       "occurrences": [
-        319,
-        339,
-        359
+        {
+          "line": 120,
+          "context": "dump_code = atoi(argv[1]);"
+        }
       ],
-      "function": "multiple_functions"
+      "reasoning": "Documents which argv index corresponds to the dump flag, improving readability and maintainability of command-line parsing."
+    },
+    {
+      "value": 2,
+      "macro_name": "ARG_IDX_NI",
+      "occurrences": [
+        {
+          "line": 121,
+          "context": "ni = atoi(argv[2]);"
+        }
+      ],
+      "reasoning": "Clarifies the position of ni in argv, avoiding unexplained positional constants."
+    },
+    {
+      "value": 3,
+      "macro_name": "ARG_IDX_NJ",
+      "occurrences": [
+        {
+          "line": 122,
+          "context": "nj = atoi(argv[3]);"
+        }
+      ],
+      "reasoning": "Clarifies the position of nj in argv, avoiding unexplained positional constants."
+    },
+    {
+      "value": 4,
+      "macro_name": "ARG_IDX_NK",
+      "occurrences": [
+        {
+          "line": 123,
+          "context": "nk = atoi(argv[4]);"
+        }
+      ],
+      "reasoning": "Clarifies the position of nk in argv, avoiding unexplained positional constants."
+    },
+    {
+      "value": 5,
+      "macro_name": "ARG_IDX_NL",
+      "occurrences": [
+        {
+          "line": 124,
+          "context": "nl = atoi(argv[5]);"
+        }
+      ],
+      "reasoning": "Clarifies the position of nl in argv, avoiding unexplained positional constants."
+    },
+    {
+      "value": 6,
+      "macro_name": "ARG_IDX_NM",
+      "occurrences": [
+        {
+          "line": 125,
+          "context": "nm = atoi(argv[6]);"
+        }
+      ],
+      "reasoning": "Clarifies the position of nm in argv, avoiding unexplained positional constants."
+    },
+    {
+      "value": 8,
+      "macro_name": "BYTES_PER_DOUBLE",
+      "occurrences": [
+        {
+          "line": 126,
+          "context": "A = malloc(ni * nk * 8);"
+        },
+        {
+          "line": 127,
+          "context": "B = malloc(nk * nj * 8);"
+        },
+        {
+          "line": 128,
+          "context": "C = malloc(nj * nm * 8);"
+        },
+        {
+          "line": 129,
+          "context": "D = malloc(nm * nl * 8);"
+        },
+        {
+          "line": 130,
+          "context": "E = malloc(ni * nj * 8);"
+        },
+        {
+          "line": 131,
+          "context": "F = malloc(nj * nl * 8);"
+        },
+        {
+          "line": 132,
+          "context": "G = malloc(ni * nl * 8);"
+        }
+      ],
+      "reasoning": "Using a literal 8 to represent the size of a double is brittle and obscures intent. A named constant (or sizeof(double)) conveys intent and prevents errors if type sizes change."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_CODE_ENABLED",
+      "occurrences": [
+        {
+          "line": 137,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "The numeric flag that enables printing is semantic configuration. A named constant makes the condition self-explanatory."
+    },
+    {
+      "value": 1,
+      "macro_name": "INIT_B_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 163,
+          "context": "B[(i * nk + j)] = (((double)(i) * (double)((j + 1))) / (double)(nj));"
+        }
+      ],
+      "reasoning": "Algorithm-specific offset used when initializing matrix B. A named constant documents the initialization formula."
+    },
+    {
+      "value": 3,
+      "macro_name": "INIT_C_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 169,
+          "context": "C[(i * nj + j)] = (((double)(i) * (double)((j + 3))) / (double)(nl));"
+        }
+      ],
+      "reasoning": "Algorithm-specific offset used when initializing matrix C. A named constant documents the initialization formula."
+    },
+    {
+      "value": 2,
+      "macro_name": "INIT_D_J_OFFSET",
+      "occurrences": [
+        {
+          "line": 175,
+          "context": "D[(i * nm + j)] = (((double)(i) * (double)((j + 2))) / (double)(nk));"
+        }
+      ],
+      "reasoning": "Algorithm-specific offset used when initializing matrix D. A named constant documents the initialization formula."
+    },
+    {
+      "value": 256,
+      "macro_name": "TOTAL_THREADS_PER_BLOCK",
+      "occurrences": [
+        {
+          "line": 249,
+          "context": "__FIXME__div = (256 / 32);"
+        }
+      ],
+      "reasoning": "Represents total threads per block. A named constant captures target execution configuration and centralizes tuning."
+    },
+    {
+      "value": 32,
+      "macro_name": "BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 249,
+          "context": "__FIXME__div = (256 / 32);"
+        },
+        {
+          "line": 251,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;"
+        },
+        {
+          "line": 267,
+          "context": "for(int32_t l = 0; l < 32;   l = l + 1){"
+        },
+        {
+          "line": 268,
+          "context": "kernel_A_mul_B(... __FIXME__div, 32, 1, i, j, 0, k, l, 0);"
+        },
+        {
+          "line": 287,
+          "context": "for(int32_t l = 0; l < 32;   l = l + 1){"
+        },
+        {
+          "line": 288,
+          "context": "kernel_A_mul_B(... __FIXME__div, 32, 1, i, j, 0, k, l, 0);"
+        },
+        {
+          "line": 307,
+          "context": "for(int32_t l = 0; l < 32;   l = l + 1){"
+        },
+        {
+          "line": 308,
+          "context": "kernel_A_mul_B(... __FIXME__div, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Thread block Y dimension appears multiple times (in setup, loops, and kernel launch). A macro ensures consistency and eases tuning."
+    },
+    {
+      "value": 8,
+      "macro_name": "BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 266,
+          "context": "for(int32_t k = 0; k < 8;   k = k + 1){"
+        },
+        {
+          "line": 286,
+          "context": "for(int32_t k = 0; k < 8;   k = k + 1){"
+        },
+        {
+          "line": 306,
+          "context": "for(int32_t k = 0; k < 8;   k = k + 1){"
+        }
+      ],
+      "reasoning": "Thread block X dimension (derived as 256/32) is hard-coded as 8 in loop bounds. A macro ties these sites to the configuration."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_BYTES",
+      "occurrences": [
+        {
+          "line": 258,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 259,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2)), ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 260,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 261,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp2)), 12);"
+        },
+        {
+          "line": 278,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp9)), ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 279,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp10)), ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 280,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp9_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp9)), 12);"
+        },
+        {
+          "line": 281,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp10_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp10)), 12);"
+        },
+        {
+          "line": 298,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp20)), ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 299,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp21)), ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 300,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp20_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp20)), 12);"
+        },
+        {
+          "line": 301,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp21_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp21)), 12);"
+        }
+      ],
+      "reasoning": "12 is the byte size of the dim3-like struct (3 x 32-bit fields). A named size avoids fragile, hard-coded struct sizes and highlights an ABI assumption."
+    },
+    {
+      "value": 1,
+      "macro_name": "GRID_DIM_Z",
+      "occurrences": [
+        {
+          "line": 257,
+          "context": "grid.__FIXME__l_struct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 268,
+          "context": "kernel_A_mul_B(... __FIXME__call, __FIXME__call1, 1, __FIXME__div, 32, 1, i, j, 0, k, l, 0);"
+        },
+        {
+          "line": 288,
+          "context": "kernel_A_mul_B(... __FIXME__call6, __FIXME__call8, 1, __FIXME__div, 32, 1, i, j, 0, k, l, 0);"
+        },
+        {
+          "line": 308,
+          "context": "kernel_A_mul_B(... __FIXME__call17, __FIXME__call19, 1, __FIXME__div, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Z grid dimension is fixed to 1, a configurational constant that should be named to reflect dimensionality assumptions."
+    },
+    {
+      "value": 1,
+      "macro_name": "BLOCK_DIM_Z",
+      "occurrences": [
+        {
+          "line": 252,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field2 = 1;"
+        },
+        {
+          "line": 268,
+          "context": "kernel_A_mul_B(... __FIXME__call, __FIXME__call1, 1, __FIXME__div, 32, 1, i, j, 0, k, l, 0);"
+        },
+        {
+          "line": 288,
+          "context": "kernel_A_mul_B(... __FIXME__call6, __FIXME__call8, 1, __FIXME__div, 32, 1, i, j, 0, k, l, 0);"
+        },
+        {
+          "line": 308,
+          "context": "kernel_A_mul_B(... __FIXME__call17, __FIXME__call19, 1, __FIXME__div, 32, 1, i, j, 0, k, l, 0);"
+        }
+      ],
+      "reasoning": "Z block dimension is fixed to 1. A named constant clarifies the 2D blocking assumption and consolidates configuration."
+    },
+    {
+      "value": 20,
+      "macro_name": "PRINT_ELEMS_PER_LINE",
+      "occurrences": [
+        {
+          "line": 324,
+          "context": "if ((int)(i * ni + j) % (int)20 == 0) { // IFELSE MARKER: for.body3 IF"
+        }
+      ],
+      "reasoning": "Controls how many elements are printed per line. A named constant makes the output formatting policy explicit and easy to change."
     }
-  ]
+  ],
+  "confidence": 0.9
 }

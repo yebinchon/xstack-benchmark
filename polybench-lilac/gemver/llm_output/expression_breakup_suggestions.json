@@ -2,118 +2,118 @@
   "function_name": "main",
   "breakups": [
     {
-      "line_number": 163,
+      "line_number": 146,
       "original_expression": "init_array(n, ((double*)A), ((double*)u1), ((double*)v1), ((double*)u2), ((double*)v2), ((double*)w), ((double*)x), ((double*)y), ((double*)z));",
       "breakup_steps": [
         {
-          "temp_var": "A_as_double",
+          "temp_var": "a_d",
           "expression": "(double*)A",
-          "description": "Cast A (uint8_t*) to double* for use by init_array"
+          "description": "Cast A to a double pointer once"
         },
         {
-          "temp_var": "u1_as_double",
+          "temp_var": "u1_d",
           "expression": "(double*)u1",
-          "description": "Cast u1 to double*"
+          "description": "Cast u1 to a double pointer"
         },
         {
-          "temp_var": "v1_as_double",
+          "temp_var": "v1_d",
           "expression": "(double*)v1",
-          "description": "Cast v1 to double*"
+          "description": "Cast v1 to a double pointer"
         },
         {
-          "temp_var": "u2_as_double",
+          "temp_var": "u2_d",
           "expression": "(double*)u2",
-          "description": "Cast u2 to double*"
+          "description": "Cast u2 to a double pointer"
         },
         {
-          "temp_var": "v2_as_double",
+          "temp_var": "v2_d",
           "expression": "(double*)v2",
-          "description": "Cast v2 to double*"
+          "description": "Cast v2 to a double pointer"
         },
         {
-          "temp_var": "w_as_double",
+          "temp_var": "w_d",
           "expression": "(double*)w",
-          "description": "Cast w to double*"
+          "description": "Cast w to a double pointer"
         },
         {
-          "temp_var": "x_as_double",
+          "temp_var": "x_d",
           "expression": "(double*)x",
-          "description": "Cast x to double*"
+          "description": "Cast x to a double pointer"
         },
         {
-          "temp_var": "y_as_double",
+          "temp_var": "y_d",
           "expression": "(double*)y",
-          "description": "Cast y to double*"
+          "description": "Cast y to a double pointer"
         },
         {
-          "temp_var": "z_as_double",
+          "temp_var": "z_d",
           "expression": "(double*)z",
-          "description": "Cast z to double*"
-        },
-        {
-          "temp_var": "result",
-          "expression": "init_array(n, A_as_double, u1_as_double, v1_as_double, u2_as_double, v2_as_double, w_as_double, x_as_double, y_as_double, z_as_double);",
-          "description": "Call init_array with the prepared double* pointers"
+          "description": "Cast z to a double pointer"
         }
       ],
-      "final_expression": "init_array(n, A_as_double, u1_as_double, v1_as_double, u2_as_double, v2_as_double, w_as_double, x_as_double, y_as_double, z_as_double);"
+      "final_expression": "init_array(n, a_d, u1_d, v1_d, u2_d, v2_d, w_d, x_d, y_d, z_d)"
     },
     {
-      "line_number": 165,
-      "original_expression": "kernel(n, 43532, 12313, ((double*)A), ((double*)u1), ((double*)v1), ((double*)u2), ((double*)v2), ((double*)w), ((double*)x), ((double*)y), ((double*)z));",
+      "line_number": 148,
+      "original_expression": "kernel(n, KERNEL_ALPHA_DEFAULT, KERNEL_BETA_DEFAULT, ((double*)A), ((double*)u1), ((double*)v1), ((double*)u2), ((double*)v2), ((double*)w), ((double*)x), ((double*)y), ((double*)z));",
       "breakup_steps": [
         {
-          "temp_var": "A_as_double",
+          "temp_var": "alpha",
+          "expression": "KERNEL_ALPHA_DEFAULT",
+          "description": "Name the alpha constant for clarity"
+        },
+        {
+          "temp_var": "beta",
+          "expression": "KERNEL_BETA_DEFAULT",
+          "description": "Name the beta constant for clarity"
+        },
+        {
+          "temp_var": "a_d",
           "expression": "(double*)A",
-          "description": "Cast A (uint8_t*) to double* for use by kernel"
+          "description": "Cast A to a double pointer once"
         },
         {
-          "temp_var": "u1_as_double",
+          "temp_var": "u1_d",
           "expression": "(double*)u1",
-          "description": "Cast u1 to double*"
+          "description": "Cast u1 to a double pointer"
         },
         {
-          "temp_var": "v1_as_double",
+          "temp_var": "v1_d",
           "expression": "(double*)v1",
-          "description": "Cast v1 to double*"
+          "description": "Cast v1 to a double pointer"
         },
         {
-          "temp_var": "u2_as_double",
+          "temp_var": "u2_d",
           "expression": "(double*)u2",
-          "description": "Cast u2 to double*"
+          "description": "Cast u2 to a double pointer"
         },
         {
-          "temp_var": "v2_as_double",
+          "temp_var": "v2_d",
           "expression": "(double*)v2",
-          "description": "Cast v2 to double*"
+          "description": "Cast v2 to a double pointer"
         },
         {
-          "temp_var": "w_as_double",
+          "temp_var": "w_d",
           "expression": "(double*)w",
-          "description": "Cast w to double*"
+          "description": "Cast w to a double pointer"
         },
         {
-          "temp_var": "x_as_double",
+          "temp_var": "x_d",
           "expression": "(double*)x",
-          "description": "Cast x to double*"
+          "description": "Cast x to a double pointer"
         },
         {
-          "temp_var": "y_as_double",
+          "temp_var": "y_d",
           "expression": "(double*)y",
-          "description": "Cast y to double*"
+          "description": "Cast y to a double pointer"
         },
         {
-          "temp_var": "z_as_double",
+          "temp_var": "z_d",
           "expression": "(double*)z",
-          "description": "Cast z to double*"
-        },
-        {
-          "temp_var": "kernel_call",
-          "expression": "kernel(n, 43532, 12313, A_as_double, u1_as_double, v1_as_double, u2_as_double, v2_as_double, w_as_double, x_as_double, y_as_double, z_as_double);",
-          "description": "Call kernel with prepared double* pointers and the numeric parameters"
+          "description": "Cast z to a double pointer"
         }
       ],
-      "final_expression": "kernel(n, 43532, 12313, A_as_double, u1_as_double, v1_as_double, u2_as_double, v2_as_double, w_as_double, x_as_double, y_as_double, z_as_double);"
+      "final_expression": "kernel(n, alpha, beta, a_d, u1_d, v1_d, u2_d, v2_d, w_d, x_d, y_d, z_d)"
     }
   ]
 }

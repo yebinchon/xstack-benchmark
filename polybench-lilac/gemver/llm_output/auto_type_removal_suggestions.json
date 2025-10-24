@@ -1,0 +1,61 @@
+{
+  "auto_type_lines": [
+    {
+      "line_number": 146,
+      "line_content": "  __auto_type __FIXME__tmp1 = (double*)A;",
+      "original_line": "  __auto_type __FIXME__tmp1 = (double*)A;"
+    },
+    {
+      "line_number": 147,
+      "line_content": "  __auto_type __FIXME__tmp2 = (double*)u1;",
+      "original_line": "  __auto_type __FIXME__tmp2 = (double*)u1;"
+    },
+    {
+      "line_number": 148,
+      "line_content": "  __auto_type __FIXME__tmp3 = (double*)v1;",
+      "original_line": "  __auto_type __FIXME__tmp3 = (double*)v1;"
+    },
+    {
+      "line_number": 149,
+      "line_content": "  __auto_type __FIXME__tmp4 = (double*)u2;",
+      "original_line": "  __auto_type __FIXME__tmp4 = (double*)u2;"
+    },
+    {
+      "line_number": 150,
+      "line_content": "  __auto_type __FIXME__tmp5 = (double*)v2;",
+      "original_line": "  __auto_type __FIXME__tmp5 = (double*)v2;"
+    },
+    {
+      "line_number": 151,
+      "line_content": "  __auto_type __FIXME__tmp6 = (double*)w;",
+      "original_line": "  __auto_type __FIXME__tmp6 = (double*)w;"
+    },
+    {
+      "line_number": 152,
+      "line_content": "  __auto_type __FIXME__tmp7 = (double*)x;",
+      "original_line": "  __auto_type __FIXME__tmp7 = (double*)x;"
+    },
+    {
+      "line_number": 153,
+      "line_content": "  __auto_type __FIXME__tmp8 = (double*)y;",
+      "original_line": "  __auto_type __FIXME__tmp8 = (double*)y;"
+    },
+    {
+      "line_number": 154,
+      "line_content": "  __auto_type __FIXME__tmp9 = (double*)z;",
+      "original_line": "  __auto_type __FIXME__tmp9 = (double*)z;"
+    },
+    {
+      "line_number": 157,
+      "line_content": "  __auto_type __FIXME__tmp10 = KERNEL_ALPHA_DEFAULT;",
+      "original_line": "  __auto_type __FIXME__tmp10 = KERNEL_ALPHA_DEFAULT;"
+    },
+    {
+      "line_number": 158,
+      "line_content": "  __auto_type __FIXME__tmp11 = KERNEL_BETA_DEFAULT;",
+      "original_line": "  __auto_type __FIXME__tmp11 = KERNEL_BETA_DEFAULT;"
+    }
+  ],
+  "symbol_table": {},
+  "parse_successful": false
+}

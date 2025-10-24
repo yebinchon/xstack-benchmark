@@ -2,120 +2,273 @@
   "function_name": "main",
   "breakups": [
     {
-      "line_number": 173,
+      "line_number": 139,
       "original_expression": "init_array(nx, ny, ((double*)A), ((double*)x), ((double*)tmp), ((double*)y));",
       "breakup_steps": [
         {
-          "temp_var": "a_double_ptr",
+          "temp_var": "A_d",
           "expression": "(double*)A",
-          "description": "Cast the raw uint8_t* buffer A to a double* for use by numerical routines"
+          "description": "Typed pointer alias for A"
         },
         {
-          "temp_var": "x_double_ptr",
+          "temp_var": "x_d",
           "expression": "(double*)x",
-          "description": "Cast the raw uint8_t* buffer x to a double*"
+          "description": "Typed pointer alias for x"
         },
         {
-          "temp_var": "tmp_double_ptr",
+          "temp_var": "tmp_d",
           "expression": "(double*)tmp",
-          "description": "Cast the raw uint8_t* buffer tmp to a double*"
+          "description": "Typed pointer alias for tmp"
         },
         {
-          "temp_var": "y_double_ptr",
+          "temp_var": "y_d",
           "expression": "(double*)y",
-          "description": "Cast the raw uint8_t* buffer y to a double*"
-        },
-        {
-          "temp_var": "call_expr",
-          "expression": "init_array(nx, ny, a_double_ptr, x_double_ptr, tmp_double_ptr, y_double_ptr)",
-          "description": "Call init_array with the clearly named double* pointers"
+          "description": "Typed pointer alias for y"
         }
       ],
-      "final_expression": "init_array(nx, ny, a_double_ptr, x_double_ptr, tmp_double_ptr, y_double_ptr);"
+      "final_expression": "init_array(nx, ny, A_d, x_d, tmp_d, y_d)"
     },
     {
-      "line_number": 187,
-      "original_expression": "kernel3(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), __FIXME__call42, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);",
+      "line_number": 147,
+      "original_expression": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), DIM3_STRUCT_SIZE_BYTES);",
       "breakup_steps": [
         {
-          "temp_var": "a_double_ptr",
+          "temp_var": "agg_tmp_coerce_bytes",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp_2e_coerce",
+          "description": "Destination buffer as byte pointer"
+        },
+        {
+          "temp_var": "agg_tmp_bytes",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp",
+          "description": "Source buffer as byte pointer"
+        }
+      ],
+      "final_expression": "memcpy(agg_tmp_coerce_bytes, agg_tmp_bytes, DIM3_STRUCT_SIZE_BYTES)"
+    },
+    {
+      "line_number": 148,
+      "original_expression": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp43_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp43)), DIM3_STRUCT_SIZE_BYTES);",
+      "breakup_steps": [
+        {
+          "temp_var": "agg_tmp43_coerce_bytes",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp43_2e_coerce",
+          "description": "Destination buffer as byte pointer"
+        },
+        {
+          "temp_var": "agg_tmp43_bytes",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp43",
+          "description": "Source buffer as byte pointer"
+        }
+      ],
+      "final_expression": "memcpy(agg_tmp43_coerce_bytes, agg_tmp43_bytes, DIM3_STRUCT_SIZE_BYTES)"
+    },
+    {
+      "line_number": 153,
+      "original_expression": "kernel3(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), __FIXME__call42, 1, 1, THREADS_PER_BLOCK_X, 1, 1, i, 0, 0, j, 0, 0);",
+      "breakup_steps": [
+        {
+          "temp_var": "A_d",
           "expression": "(double*)A",
-          "description": "Cast A to double* for kernel arguments"
+          "description": "Typed pointer alias for A"
         },
         {
-          "temp_var": "x_double_ptr",
+          "temp_var": "x_d",
           "expression": "(double*)x",
-          "description": "Cast x to double* for kernel arguments"
+          "description": "Typed pointer alias for x"
         },
         {
-          "temp_var": "y_double_ptr",
+          "temp_var": "y_d",
           "expression": "(double*)y",
-          "description": "Cast y to double* for kernel arguments"
+          "description": "Typed pointer alias for y"
         },
         {
-          "temp_var": "tmp_double_ptr",
+          "temp_var": "tmp_d",
           "expression": "(double*)tmp",
-          "description": "Cast tmp to double* for kernel arguments"
+          "description": "Typed pointer alias for tmp"
         },
         {
-          "temp_var": "grid_blocks_x",
+          "temp_var": "grid_dim_x",
           "expression": "__FIXME__call42",
-          "description": "Number of blocks in the x/grid dimension (precomputed earlier)"
+          "description": "Grid dimension X"
         },
         {
-          "temp_var": "threads_per_block",
-          "expression": "256",
-          "description": "Number of threads per block (use a named temp to make intent clear)"
+          "temp_var": "grid_dim_y",
+          "expression": "1",
+          "description": "Grid dimension Y"
         },
         {
-          "temp_var": "call_expr",
-          "expression": "kernel3(nx, ny, a_double_ptr, x_double_ptr, y_double_ptr, tmp_double_ptr, grid_blocks_x, 1, 1, threads_per_block, 1, 1, i, 0, 0, j, 0, 0)",
-          "description": "Call kernel3 with descriptive temporaries for pointer casts and block/grid parameters"
+          "temp_var": "grid_dim_z",
+          "expression": "1",
+          "description": "Grid dimension Z"
+        },
+        {
+          "temp_var": "block_dim_x",
+          "expression": "THREADS_PER_BLOCK_X",
+          "description": "Block dimension X"
+        },
+        {
+          "temp_var": "block_dim_y",
+          "expression": "1",
+          "description": "Block dimension Y"
+        },
+        {
+          "temp_var": "block_dim_z",
+          "expression": "1",
+          "description": "Block dimension Z"
+        },
+        {
+          "temp_var": "block_idx_x",
+          "expression": "i",
+          "description": "Block index X"
+        },
+        {
+          "temp_var": "block_idx_y",
+          "expression": "0",
+          "description": "Block index Y"
+        },
+        {
+          "temp_var": "block_idx_z",
+          "expression": "0",
+          "description": "Block index Z"
+        },
+        {
+          "temp_var": "thread_idx_x",
+          "expression": "j",
+          "description": "Thread index X"
+        },
+        {
+          "temp_var": "thread_idx_y",
+          "expression": "0",
+          "description": "Thread index Y"
+        },
+        {
+          "temp_var": "thread_idx_z",
+          "expression": "0",
+          "description": "Thread index Z"
         }
       ],
-      "final_expression": "kernel3(nx, ny, a_double_ptr, x_double_ptr, y_double_ptr, tmp_double_ptr, grid_blocks_x, 1, 1, threads_per_block, 1, 1, i, 0, 0, j, 0, 0);"
+      "final_expression": "kernel3(nx, ny, A_d, x_d, y_d, tmp_d, grid_dim_x, grid_dim_y, grid_dim_z, block_dim_x, block_dim_y, block_dim_z, block_idx_x, block_idx_y, block_idx_z, thread_idx_x, thread_idx_y, thread_idx_z)"
     },
     {
-      "line_number": 203,
-      "original_expression": "kernel4(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), __FIXME__call46, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);",
+      "line_number": 163,
+      "original_expression": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp45_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp45)), DIM3_STRUCT_SIZE_BYTES);",
       "breakup_steps": [
         {
-          "temp_var": "a_double_ptr",
-          "expression": "(double*)A",
-          "description": "Cast A to double* for kernel arguments"
+          "temp_var": "agg_tmp45_coerce_bytes",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp45_2e_coerce",
+          "description": "Destination buffer as byte pointer"
         },
         {
-          "temp_var": "x_double_ptr",
-          "expression": "(double*)x",
-          "description": "Cast x to double* for kernel arguments"
-        },
-        {
-          "temp_var": "y_double_ptr",
-          "expression": "(double*)y",
-          "description": "Cast y to double* for kernel arguments"
-        },
-        {
-          "temp_var": "tmp_double_ptr",
-          "expression": "(double*)tmp",
-          "description": "Cast tmp to double* for kernel arguments"
-        },
-        {
-          "temp_var": "grid_blocks_y",
-          "expression": "__FIXME__call46",
-          "description": "Number of blocks in the y/grid dimension (precomputed earlier)"
-        },
-        {
-          "temp_var": "threads_per_block",
-          "expression": "256",
-          "description": "Number of threads per block (named for clarity)"
-        },
-        {
-          "temp_var": "call_expr",
-          "expression": "kernel4(nx, ny, a_double_ptr, x_double_ptr, y_double_ptr, tmp_double_ptr, grid_blocks_y, 1, 1, threads_per_block, 1, 1, i, 0, 0, j, 0, 0)",
-          "description": "Call kernel4 with descriptive temporaries for pointer casts and block/grid parameters"
+          "temp_var": "agg_tmp45_bytes",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp45",
+          "description": "Source buffer as byte pointer"
         }
       ],
-      "final_expression": "kernel4(nx, ny, a_double_ptr, x_double_ptr, y_double_ptr, tmp_double_ptr, grid_blocks_y, 1, 1, threads_per_block, 1, 1, i, 0, 0, j, 0, 0);"
+      "final_expression": "memcpy(agg_tmp45_coerce_bytes, agg_tmp45_bytes, DIM3_STRUCT_SIZE_BYTES)"
+    },
+    {
+      "line_number": 164,
+      "original_expression": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp47_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp47)), DIM3_STRUCT_SIZE_BYTES);",
+      "breakup_steps": [
+        {
+          "temp_var": "agg_tmp47_coerce_bytes",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp47_2e_coerce",
+          "description": "Destination buffer as byte pointer"
+        },
+        {
+          "temp_var": "agg_tmp47_bytes",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp47",
+          "description": "Source buffer as byte pointer"
+        }
+      ],
+      "final_expression": "memcpy(agg_tmp47_coerce_bytes, agg_tmp47_bytes, DIM3_STRUCT_SIZE_BYTES)"
+    },
+    {
+      "line_number": 169,
+      "original_expression": "kernel4(nx, ny, ((double*)A), ((double*)x), ((double*)y), ((double*)tmp), __FIXME__call46, 1, 1, THREADS_PER_BLOCK_X, 1, 1, i, 0, 0, j, 0, 0);",
+      "breakup_steps": [
+        {
+          "temp_var": "A_d",
+          "expression": "(double*)A",
+          "description": "Typed pointer alias for A"
+        },
+        {
+          "temp_var": "x_d",
+          "expression": "(double*)x",
+          "description": "Typed pointer alias for x"
+        },
+        {
+          "temp_var": "y_d",
+          "expression": "(double*)y",
+          "description": "Typed pointer alias for y"
+        },
+        {
+          "temp_var": "tmp_d",
+          "expression": "(double*)tmp",
+          "description": "Typed pointer alias for tmp"
+        },
+        {
+          "temp_var": "grid_dim_x",
+          "expression": "__FIXME__call46",
+          "description": "Grid dimension X"
+        },
+        {
+          "temp_var": "grid_dim_y",
+          "expression": "1",
+          "description": "Grid dimension Y"
+        },
+        {
+          "temp_var": "grid_dim_z",
+          "expression": "1",
+          "description": "Grid dimension Z"
+        },
+        {
+          "temp_var": "block_dim_x",
+          "expression": "THREADS_PER_BLOCK_X",
+          "description": "Block dimension X"
+        },
+        {
+          "temp_var": "block_dim_y",
+          "expression": "1",
+          "description": "Block dimension Y"
+        },
+        {
+          "temp_var": "block_dim_z",
+          "expression": "1",
+          "description": "Block dimension Z"
+        },
+        {
+          "temp_var": "block_idx_x",
+          "expression": "i",
+          "description": "Block index X"
+        },
+        {
+          "temp_var": "block_idx_y",
+          "expression": "0",
+          "description": "Block index Y"
+        },
+        {
+          "temp_var": "block_idx_z",
+          "expression": "0",
+          "description": "Block index Z"
+        },
+        {
+          "temp_var": "thread_idx_x",
+          "expression": "j",
+          "description": "Thread index X"
+        },
+        {
+          "temp_var": "thread_idx_y",
+          "expression": "0",
+          "description": "Thread index Y"
+        },
+        {
+          "temp_var": "thread_idx_z",
+          "expression": "0",
+          "description": "Thread index Z"
+        }
+      ],
+      "final_expression": "kernel4(nx, ny, A_d, x_d, y_d, tmp_d, grid_dim_x, grid_dim_y, grid_dim_z, block_dim_x, block_dim_y, block_dim_z, block_idx_x, block_idx_y, block_idx_z, thread_idx_x, thread_idx_y, thread_idx_z)"
     }
   ]
 }

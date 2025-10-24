@@ -4,6 +4,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+/* Magic number constants */
+#define BYTES_PER_DOUBLE 8
+#define INIT_SCALE_DIVISOR 1000
+#define COV_BESSEL_CORRECTION 1
+#define MEAN_BLOCK_DIM_X 256
+#define REDUCE_BLOCK_DIM_X 8
+#define REDUCE_BLOCK_DIM_Y 32
+#define DIM3_STRUCT_SIZE_BYTES 12
+#define PRINTF_FMT_STR_LEN 8
+#define NEWLINE_STR_LEN 2
+
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
@@ -27,7 +38,6 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct __FIXME__l_struct_struct_OC__IO_FILE;
 struct __FIXME__l_struct_struct_OC_dim3;
 struct __FIXME__l_unnamed_1;
 
@@ -39,37 +49,6 @@ struct __FIXME__l_array_1_uint8_t {
 };
 struct __FIXME__l_array_20_uint8_t {
   uint8_t array[20];
-};
-struct __FIXME__l_struct_struct_OC__IO_FILE {
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field0;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field1;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field2;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field3;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field4;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field5;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field6;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field7;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field8;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field9;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field10;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field11;
-  void* __FIXME__l_struct_struct_OC__IO_FILE_field12;
-  struct __FIXME__l_struct_struct_OC__IO_FILE* __FIXME__l_struct_struct_OC__IO_FILE_field13;
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field14;
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field15;
-  uint64_t __FIXME__l_struct_struct_OC__IO_FILE_field16;
-  uint16_t __FIXME__l_struct_struct_OC__IO_FILE_field17;
-  uint8_t __FIXME__l_struct_struct_OC__IO_FILE_field18;
-  uint8_t __FIXME__l_struct_struct_OC__IO_FILE_field19[1];
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field20;
-  uint64_t __FIXME__l_struct_struct_OC__IO_FILE_field21;
-  void* __FIXME__l_struct_struct_OC__IO_FILE_field22;
-  void* __FIXME__l_struct_struct_OC__IO_FILE_field23;
-  struct __FIXME__l_struct_struct_OC__IO_FILE* __FIXME__l_struct_struct_OC__IO_FILE_field24;
-  uint8_t* __FIXME__l_struct_struct_OC__IO_FILE_field25;
-  uint64_t __FIXME__l_struct_struct_OC__IO_FILE_field26;
-  uint32_t __FIXME__l_struct_struct_OC__IO_FILE_field27;
-  uint8_t __FIXME__l_struct_struct_OC__IO_FILE_field28[20];
 };
 struct __FIXME__l_struct_struct_OC_dim3 {
   uint32_t __FIXME__l_struct_struct_OC_dim3_field0;
@@ -84,24 +63,19 @@ struct __FIXME__l_unnamed_1 {
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, uint32_t, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel(uint32_t, uint32_t, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel_mean(uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void kernel_reduce(uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void kernel_cov(uint32_t, uint32_t, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t __FIXME_GLOBAL___OC_str[8] = { "%0.2lf " };
-uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { "\n" };
+uint8_t __FIXME_GLOBAL___OC_str[PRINTF_FMT_STR_LEN] = { "%0.2lf " };
+uint8_t __FIXME_GLOBAL___OC_str_OC_1[NEWLINE_STR_LEN] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -143,16 +117,14 @@ int main(int argc, char ** argv) {
   uint8_t* data;
   uint8_t* mean;
   uint8_t* cov;
-  int32_t __FIXME__call28;
-  int32_t __FIXME__call39;
 
 // INSERT COMMENT IFELSE: main::entry
   dump_code = atoi(argv[1]);
   n = atoi(argv[2]);
   m = atoi(argv[3]);
-  data = malloc(n * m * 8);
-  mean = malloc(m * 8);
-  cov = malloc(m * m * 8);
+  data = malloc(n * m * BYTES_PER_DOUBLE);
+  mean = malloc(m * BYTES_PER_DOUBLE);
+  cov = malloc(m * m * BYTES_PER_DOUBLE);
   init_array(m, n, ((double*)data));
 ;
   kernel(m, n, ((double*)data), ((double*)cov), ((double*)mean));
@@ -173,10 +145,14 @@ void init_array(uint32_t m, uint32_t n, double* data) {
 // INSERT COMMENT LOOP: init_array::for.cond
 for(int64_t i = 0; i < n;   i = i + 1){
 for(int64_t j = 0; j < m;   j = j + 1){
-  data[(i * m + j)] = (((double)(i) * (double)(j)) / 1000);
+  data[(i * m + j)] = (((double)(i) * (double)(j)) / INIT_SCALE_DIVISOR);
 }
 }
   return;
+}
+// INSERT COMMENT FUNCTION: num_blocks
+uint32_t num_blocks(uint32_t num, uint32_t factor) {
+  return ((num + factor) - 1) / factor;
 }
 // INSERT COMMENT FUNCTION: kernel_mean
 void kernel_mean(uint32_t m, uint32_t n, double* data, double* cov, double* mean, uint32_t __FIXME__gridDim_2e_x, uint32_t __FIXME__gridDim_2e_y, uint32_t __FIXME__gridDim_2e_z, uint32_t __FIXME__blockDim_2e_x, uint32_t __FIXME__blockDim_2e_y, uint32_t __FIXME__blockDim_2e_z, uint32_t __FIXME__blockIdx_2e_x, uint32_t __FIXME__blockIdx_2e_y, uint32_t __FIXME__blockIdx_2e_z, uint32_t __FIXME__threadIdx_2e_x, uint32_t __FIXME__threadIdx_2e_y, uint32_t __FIXME__threadIdx_2e_z) {
@@ -202,10 +178,8 @@ void kernel_reduce(uint32_t m, uint32_t n, double* data, double* cov, double* me
 // INSERT COMMENT IFELSE: kernel_reduce::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;
   j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y;
-  if (i < n) { // IFELSE MARKER: entry IF
-  if (j < m) { // IFELSE MARKER: land.lhs.true IF
-  data[(i * m + j)] = (data[(i * m + j)] - mean[j]);
-  }
+  if (i < n && j < m) {
+data[(i * m + j)] = (data[(i * m + j)] - mean[j]);
   }
   return;
 }
@@ -218,36 +192,27 @@ void kernel_cov(uint32_t m, uint32_t n, double* data, double* cov, double* mean,
 // INSERT COMMENT IFELSE: kernel_cov::entry
   i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x;
   j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y + i;
-  if (i < m) { // IFELSE MARKER: entry IF
-  if (j < m) { // IFELSE MARKER: land.lhs.true IF
-  cov[(i * m + j)] = 0;
+  if (i < m && j < m) {
+cov[(i * m + j)] = 0;
 for(int64_t k = 0; k < n;   k = k + 1){
-  __auto_type __FIXME__tmp1 = i * m + j;
-  __auto_type __FIXME__tmp2 = k * m + i;
-  __auto_type __FIXME__tmp3 = k * m + j;
-  __auto_type __FIXME__tmp4 = data[__FIXME__tmp2];
-  __auto_type __FIXME__tmp5 = data[__FIXME__tmp3];
-  __auto_type __FIXME__tmp6 = __FIXME__tmp4 * __FIXME__tmp5;
-  __auto_type __FIXME__tmp7 = cov[__FIXME__tmp1] + __FIXME__tmp6;
-  __auto_type __FIXME__tmp8 = cov[__FIXME__tmp1] = __FIXME__tmp7;
-  cov[(i * m + j)] = __FIXME__tmp6;
+__auto_type __FIXME__tmp1 = i * m + j;
+__auto_type __FIXME__tmp2 = k * m;
+__auto_type __FIXME__tmp3 = data[__FIXME__tmp2 + i];
+__auto_type __FIXME__tmp4 = data[__FIXME__tmp2 + j];
+__auto_type __FIXME__tmp5 = __FIXME__tmp3 * __FIXME__tmp4;
+__auto_type __FIXME__tmp6 = cov[__FIXME__tmp1] + __FIXME__tmp5;
+cov[(i * m + j)] = __FIXME__tmp6;
 }
-  __auto_type __FIXME__tmp9 = i * m + j;
-  __auto_type __FIXME__tmp10 = (double)n - 1;
-  __auto_type __FIXME__tmp11 = cov[__FIXME__tmp9] / __FIXME__tmp10;
-  __auto_type __FIXME__tmp12 = cov[__FIXME__tmp9] = __FIXME__tmp11;
-  cov[(i * m + j)] = __FIXME__tmp10;
-  __auto_type __FIXME__tmp13 = j * m + i;
-  __auto_type __FIXME__tmp14 = i * m + j;
-  __auto_type __FIXME__tmp15 = cov[__FIXME__tmp13] = cov[__FIXME__tmp14];
-  cov[(j * m + i)] = cov[__FIXME__tmp14];
-  }
+__auto_type __FIXME__tmp7 = i * m + j;
+__auto_type __FIXME__tmp8 = (double)n - COV_BESSEL_CORRECTION;
+__auto_type __FIXME__tmp9 = cov[__FIXME__tmp7] / __FIXME__tmp8;
+cov[(i * m + j)] = __FIXME__tmp9;
+__auto_type __FIXME__tmp10 = i * m + j;
+__auto_type __FIXME__tmp11 = j * m + i;
+__auto_type __FIXME__tmp12 = cov[__FIXME__tmp10];
+cov[(j * m + i)] = __FIXME__tmp12;
   }
   return;
-}
-// INSERT COMMENT FUNCTION: num_blocks
-uint32_t num_blocks(uint32_t num, uint32_t factor) {
-  return ((num + factor) - 1) / factor;
 }
 // INSERT COMMENT FUNCTION: kernel
 void kernel(uint32_t m, uint32_t n, double* data, double* cov, double* mean) {
@@ -266,43 +231,33 @@ void kernel(uint32_t m, uint32_t n, double* data, double* cov, double* mean) {
   struct __FIXME__l_unnamed_1 __FIXME__agg_2e_tmp18_2e_coerce;    /* Address-exposed local */
   struct __FIXME__l_unnamed_1 __FIXME__agg_2e_tmp19_2e_coerce;    /* Address-exposed local */
   int32_t __FIXME__call;
-  uint8_t* __FIXME__1;
-  uint8_t* __FIXME__2;
   uint32_t i;
   uint32_t j;
   int32_t __FIXME__call3;
   int32_t __FIXME__call4;
-  uint8_t* __FIXME__3;
-  uint8_t* __FIXME__4;
-  uint8_t* __FIXME__5;
-  uint8_t* __FIXME__6;
   uint32_t k;
   uint32_t l;
   int32_t __FIXME__call14;
   int32_t __FIXME__call17;
-  uint8_t* __FIXME__7;
-  uint8_t* __FIXME__8;
-  uint8_t* __FIXME__9;
-  uint8_t* __FIXME__10;
 
-  __FIXME__call = num_blocks(m, 256);
+  __FIXME__call = num_blocks(m, MEAN_BLOCK_DIM_X);
   __FIXME__agg_2e_tmp.__FIXME__l_struct_struct_OC_dim3_field0 = __FIXME__call;
   __FIXME__agg_2e_tmp.__FIXME__l_struct_struct_OC_dim3_field1 = 1;
   __FIXME__agg_2e_tmp.__FIXME__l_struct_struct_OC_dim3_field2 = 1;
-  __FIXME__agg_2e_tmp1.__FIXME__l_struct_struct_OC_dim3_field0 = 256;
+  __FIXME__agg_2e_tmp1.__FIXME__l_struct_struct_OC_dim3_field0 = MEAN_BLOCK_DIM_X;
   __FIXME__agg_2e_tmp1.__FIXME__l_struct_struct_OC_dim3_field1 = 1;
   __FIXME__agg_2e_tmp1.__FIXME__l_struct_struct_OC_dim3_field2 = 1;
-  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);
-  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp1)), 12);
+  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), DIM3_STRUCT_SIZE_BYTES);
+  memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp1_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp1)), DIM3_STRUCT_SIZE_BYTES);
 // INSERT COMMENT LOOP: kernel::header.016
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < __FIXME__call;   i = i + 1){
-for(int32_t j = 0; j < 256;   j = j + 1){
-kernel_mean(m, n, data, cov, mean, __FIXME__call, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
+for(int32_t j = 0; j < MEAN_BLOCK_DIM_X;   j = j + 1){
+kernel_mean(m, n, data, cov, mean, __FIXME__call, 1, 1, MEAN_BLOCK_DIM_X, 1, 1, i, 0, 0, j, 0, 0);
 }
 }
-  block.__FIXME__l_struct_struct_OC_dim3_field0 = 8;
-  block.__FIXME__l_struct_struct_OC_dim3_field1 = 32;
+  block.__FIXME__l_struct_struct_OC_dim3_field0 = REDUCE_BLOCK_DIM_X;
+  block.__FIXME__l_struct_struct_OC_dim3_field1 = REDUCE_BLOCK_DIM_Y;
   block.__FIXME__l_struct_struct_OC_dim3_field2 = 1;
   __FIXME__call3 = num_blocks(n, block.__FIXME__l_struct_struct_OC_dim3_field0);
   __FIXME__call4 = num_blocks(m, block.__FIXME__l_struct_struct_OC_dim3_field1);
@@ -313,7 +268,7 @@ kernel_mean(m, n, data, cov, mean, __FIXME__call, 1, 1, 256, 1, 1, i, 0, 0, j, 0
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp6)), ((uint8_t*)(&grid)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp5)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp6_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp6)), 12);
-// INSERT COMMENT LOOP: kernel::header.0
+// INSERT COMMENT LOOP: kernel::header.026
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < 8;   i = i + 1){
 for(int32_t j = 0; j < 32;   j = j + 1){
@@ -336,7 +291,7 @@ kernel_reduce(m, n, data, cov, mean, 8, 32, 1, __FIXME__call3, __FIXME__call4, 1
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp19)), ((uint8_t*)(&grid)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp18_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp18)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp19_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp19)), 12);
-// INSERT COMMENT LOOP: kernel::header.026
+// INSERT COMMENT LOOP: kernel::header.0
 #pragma omp parallel for collapse(2)
 for(int32_t i = 0; i < 8;   i = i + 1){
 for(int32_t j = 0; j < 32;   j = j + 1){
@@ -353,7 +308,6 @@ kernel_cov(m, n, data, cov, mean, 8, 32, 1, __FIXME__call14, __FIXME__call17, 1,
 void print_array(uint32_t m, double* cov) {
   int64_t i;
   uint64_t j;
-  int32_t __FIXME__call11;
 
 // INSERT COMMENT LOOP: print_array::for.cond
 for(int64_t i = 0; i < m;   i = i + 1){

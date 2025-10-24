@@ -1,116 +1,185 @@
 {
-  "function_name": "init_array",
+  "function_name": "kernel",
   "breakups": [
     {
-      "line_number": 180,
-      "original_expression": "C[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "line_number": 225,
+      "original_expression": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), ((uint8_t*)(&grid)), DIM3_STRUCT_SIZE_BYTES);",
       "breakup_steps": [
         {
-          "temp_var": "c_index",
-          "expression": "i * (int64_t)nj + j",
-          "description": "Compute the linear row-major index into array C"
+          "temp_var": "agg_tmp_dst",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp",
+          "description": "Destination byte pointer to __FIXME__agg_2e_tmp"
         },
         {
-          "temp_var": "i_d",
-          "expression": "(double)i",
-          "description": "Cast loop index i to double"
+          "temp_var": "grid_src",
+          "expression": "(uint8_t*)&grid",
+          "description": "Source byte pointer to grid"
         },
         {
-          "temp_var": "j_d",
-          "expression": "(double)j",
-          "description": "Cast loop index j to double"
+          "temp_var": "dim3_bytes_1",
+          "expression": "DIM3_STRUCT_SIZE_BYTES",
+          "description": "Number of bytes to copy for a dim3 struct"
         },
         {
-          "temp_var": "prod_ij",
-          "expression": "i_d * j_d",
-          "description": "Multiply the two double values"
-        },
-        {
-          "temp_var": "ni_d",
-          "expression": "(double)ni",
-          "description": "Cast denominator ni to double"
-        },
-        {
-          "temp_var": "value",
-          "expression": "prod_ij / ni_d",
-          "description": "Compute the final value to store in C"
+          "temp_var": "memcpy_call",
+          "expression": "memcpy(agg_tmp_dst, grid_src, dim3_bytes_1)",
+          "description": "Perform the byte-wise copy"
         }
       ],
-      "final_expression": "C[c_index] = value;"
+      "final_expression": "memcpy(agg_tmp_dst, grid_src, dim3_bytes_1)"
     },
     {
-      "line_number": 186,
-      "original_expression": "A[(i * nk + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "line_number": 226,
+      "original_expression": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2)), ((uint8_t*)(&block)), DIM3_STRUCT_SIZE_BYTES);",
       "breakup_steps": [
         {
-          "temp_var": "a_index",
-          "expression": "i * (int64_t)nk + j",
-          "description": "Compute the linear row-major index into array A"
+          "temp_var": "agg_tmp2_dst",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp2",
+          "description": "Destination byte pointer to __FIXME__agg_2e_tmp2"
         },
         {
-          "temp_var": "i_d",
-          "expression": "(double)i",
-          "description": "Cast loop index i to double"
+          "temp_var": "block_src",
+          "expression": "(uint8_t*)&block",
+          "description": "Source byte pointer to block"
         },
         {
-          "temp_var": "j_d",
-          "expression": "(double)j",
-          "description": "Cast loop index j to double"
+          "temp_var": "dim3_bytes_2",
+          "expression": "DIM3_STRUCT_SIZE_BYTES",
+          "description": "Number of bytes to copy for a dim3 struct"
         },
         {
-          "temp_var": "prod_ij",
-          "expression": "i_d * j_d",
-          "description": "Multiply the two double values"
-        },
-        {
-          "temp_var": "ni_d",
-          "expression": "(double)ni",
-          "description": "Cast denominator ni to double"
-        },
-        {
-          "temp_var": "value",
-          "expression": "prod_ij / ni_d",
-          "description": "Compute the final value to store in A"
+          "temp_var": "memcpy_call",
+          "expression": "memcpy(agg_tmp2_dst, block_src, dim3_bytes_2)",
+          "description": "Perform the byte-wise copy"
         }
       ],
-      "final_expression": "A[a_index] = value;"
+      "final_expression": "memcpy(agg_tmp2_dst, block_src, dim3_bytes_2)"
     },
     {
-      "line_number": 192,
-      "original_expression": "B[(i * nj + j)] = (((double)(i) * (double)(j)) / (double)(ni));",
+      "line_number": 227,
+      "original_expression": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), LAUNCH_COERCE_STRUCT_SIZE_BYTES);",
       "breakup_steps": [
         {
-          "temp_var": "b_index",
-          "expression": "i * (int64_t)nj + j",
-          "description": "Compute the linear row-major index into array B"
+          "temp_var": "agg_tmp_coerce_dst",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp_2e_coerce",
+          "description": "Destination byte pointer to coerced temporary"
         },
         {
-          "temp_var": "i_d",
-          "expression": "(double)i",
-          "description": "Cast loop index i to double"
+          "temp_var": "agg_tmp_src",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp",
+          "description": "Source byte pointer to original temporary"
         },
         {
-          "temp_var": "j_d",
-          "expression": "(double)j",
-          "description": "Cast loop index j to double"
+          "temp_var": "coerce_bytes_1",
+          "expression": "LAUNCH_COERCE_STRUCT_SIZE_BYTES",
+          "description": "Number of bytes to copy for launch coercion"
         },
         {
-          "temp_var": "prod_ij",
-          "expression": "i_d * j_d",
-          "description": "Multiply the two double values"
-        },
-        {
-          "temp_var": "ni_d",
-          "expression": "(double)ni",
-          "description": "Cast denominator ni to double"
-        },
-        {
-          "temp_var": "value",
-          "expression": "prod_ij / ni_d",
-          "description": "Compute the final value to store in B"
+          "temp_var": "memcpy_call",
+          "expression": "memcpy(agg_tmp_coerce_dst, agg_tmp_src, coerce_bytes_1)",
+          "description": "Perform the byte-wise copy for coercion"
         }
       ],
-      "final_expression": "B[b_index] = value;"
+      "final_expression": "memcpy(agg_tmp_coerce_dst, agg_tmp_src, coerce_bytes_1)"
+    },
+    {
+      "line_number": 228,
+      "original_expression": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp2_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp2)), LAUNCH_COERCE_STRUCT_SIZE_BYTES);",
+      "breakup_steps": [
+        {
+          "temp_var": "agg_tmp2_coerce_dst",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp2_2e_coerce",
+          "description": "Destination byte pointer to coerced second temporary"
+        },
+        {
+          "temp_var": "agg_tmp2_src",
+          "expression": "(uint8_t*)&__FIXME__agg_2e_tmp2",
+          "description": "Source byte pointer to second temporary"
+        },
+        {
+          "temp_var": "coerce_bytes_2",
+          "expression": "LAUNCH_COERCE_STRUCT_SIZE_BYTES",
+          "description": "Number of bytes to copy for launch coercion"
+        },
+        {
+          "temp_var": "memcpy_call",
+          "expression": "memcpy(agg_tmp2_coerce_dst, agg_tmp2_src, coerce_bytes_2)",
+          "description": "Perform the byte-wise copy for coercion"
+        }
+      ],
+      "final_expression": "memcpy(agg_tmp2_coerce_dst, agg_tmp2_src, coerce_bytes_2)"
+    },
+    {
+      "line_number": 235,
+      "original_expression": "kernel_dev(ni, nj, nk, alpha, beta, C, A, B, __FIXME__call, __FIXME__call1, GRID_DIM_Z, __FIXME__div, BLOCK_DIM_Y, BLOCK_DIM_Z, i, j, 0, k, l, 0);",
+      "breakup_steps": [
+        {
+          "temp_var": "grid_dim_x",
+          "expression": "__FIXME__call",
+          "description": "Grid dimension X"
+        },
+        {
+          "temp_var": "grid_dim_y",
+          "expression": "__FIXME__call1",
+          "description": "Grid dimension Y"
+        },
+        {
+          "temp_var": "grid_dim_z",
+          "expression": "GRID_DIM_Z",
+          "description": "Grid dimension Z"
+        },
+        {
+          "temp_var": "block_dim_x",
+          "expression": "__FIXME__div",
+          "description": "Block dimension X"
+        },
+        {
+          "temp_var": "block_dim_y",
+          "expression": "BLOCK_DIM_Y",
+          "description": "Block dimension Y"
+        },
+        {
+          "temp_var": "block_dim_z",
+          "expression": "BLOCK_DIM_Z",
+          "description": "Block dimension Z"
+        },
+        {
+          "temp_var": "block_idx_x",
+          "expression": "i",
+          "description": "Block index X"
+        },
+        {
+          "temp_var": "block_idx_y",
+          "expression": "j",
+          "description": "Block index Y"
+        },
+        {
+          "temp_var": "block_idx_z",
+          "expression": "0",
+          "description": "Block index Z (constant)"
+        },
+        {
+          "temp_var": "thread_idx_x",
+          "expression": "k",
+          "description": "Thread index X"
+        },
+        {
+          "temp_var": "thread_idx_y",
+          "expression": "l",
+          "description": "Thread index Y"
+        },
+        {
+          "temp_var": "thread_idx_z",
+          "expression": "0",
+          "description": "Thread index Z (constant)"
+        },
+        {
+          "temp_var": "kernel_call",
+          "expression": "kernel_dev(ni, nj, nk, alpha, beta, C, A, B, grid_dim_x, grid_dim_y, grid_dim_z, block_dim_x, block_dim_y, block_dim_z, block_idx_x, block_idx_y, block_idx_z, thread_idx_x, thread_idx_y, thread_idx_z)",
+          "description": "Call kernel with named arguments for readability"
+        }
+      ],
+      "final_expression": "kernel_dev(ni, nj, nk, alpha, beta, C, A, B, grid_dim_x, grid_dim_y, grid_dim_z, block_dim_x, block_dim_y, block_dim_z, block_idx_x, block_idx_y, block_idx_z, thread_idx_x, thread_idx_y, thread_idx_z)"
     }
   ]
 }

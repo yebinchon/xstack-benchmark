@@ -27,80 +27,43 @@ typedef unsigned char bool;
 /* Global Declarations */
 
 /* Types Declarations */
-struct IO_FILE;
-struct cuda_dim3_t;
-struct cuda_dim3_coerce_t;
+struct dim3;
+struct dim3_coerce;
 
 /* Function definitions */
 
 /* Types Definitions */
-struct uint8_array_1_t {
+struct array_1_uint8_t {
   uint8_t array[1];
 };
-struct uint8_array_20_t {
+struct array_20_uint8_t {
   uint8_t array[20];
 };
-struct IO_FILE {
-  uint32_t field0;
-  uint8_t* field1;
-  uint8_t* field2;
-  uint8_t* field3;
-  uint8_t* field4;
-  uint8_t* field5;
-  uint8_t* field6;
-  uint8_t* field7;
-  uint8_t* field8;
-  uint8_t* field9;
-  uint8_t* field10;
-  uint8_t* field11;
-  void* field12;
-  struct IO_FILE* field13;
-  uint32_t field14;
-  uint32_t field15;
-  uint64_t field16;
-  uint16_t field17;
-  uint8_t field18;
-  uint8_t field19[1];
-  uint8_t* field20;
-  uint64_t field21;
-  void* field22;
-  void* field23;
-  struct IO_FILE* field24;
-  uint8_t* field25;
-  uint64_t field26;
-  uint32_t field27;
-  uint8_t field28[20];
-};
-struct cuda_dim3_t {
+struct dim3 {
   uint32_t x;
   uint32_t y;
   uint32_t z;
 };
-struct cuda_dim3_coerce_t {
-  uint64_t batch;
-  uint32_t batch_size;
+struct dim3_coerce {
+  uint64_t x;
+  uint32_t y;
 };
 
 /* External Global Variable Declarations */
 
 /* Function Declarations */
-uint32_t cudaSetupArgument(uint8_t*, uint64_t, uint64_t);
-uint32_t cudaLaunch(uint8_t*);
 int main(int, char **) __ATTRIBUTELIST__((noinline));
 void init_array(uint32_t, uint32_t, double*, double*, double*) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaMemcpy(uint8_t*, uint8_t*, uint64_t, uint32_t);
 void kernel(uint32_t, uint32_t, double*, double*, double*, double*, double*) __ATTRIBUTELIST__((noinline));
 void print_array(uint32_t, uint32_t, double*, double*) __ATTRIBUTELIST__((noinline));
 uint32_t num_blocks(uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t cudaConfigureCall(uint64_t, uint32_t, uint64_t, uint32_t, uint64_t, void*);
-uint32_t cudaMalloc(uint8_t**, uint64_t);
 void kernel_q(uint32_t, uint32_t, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 void kernel_s(uint32_t, uint32_t, double*, double*, double*, double*, double*, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
 /* Global Variable Definitions and Initialization */
-uint8_t format_double_space[8] = { "%0.2lf " };
-uint8_t format_newline[2] = { "\n" };
+uint8_t fmt_double_2dp_space[8] = { "%0.2lf " };
+uint8_t fmt_newline[2] = { "\n" };
 
 
 /* LLVM Intrinsic Builtin Function Bodies */
@@ -135,6 +98,8 @@ static __forceinline uint32_t llvm_urem_u32(uint32_t a, uint32_t b) {
 
 
 /* Function Bodies */
+
+// MAIN START
 int main(int argc, char ** argv) {
   int32_t m;
   int32_t n;
@@ -144,10 +109,8 @@ int main(int argc, char ** argv) {
   uint8_t* q;
   uint8_t* p;
   uint8_t* r;
-  int32_t call38_result;
-  int32_t call53_result;
 
-// Parse command-line arguments to get dump_code, m, and n, then allocate memory for the matrix A (m*n doubles) and vector s (n doubles).
+// Parse CLI arguments (dump flag, m, n) and allocate host buffers A and s sized to m×n and n, respectively
   m = atoi(argv[2]);
   n = atoi(argv[3]);
   dump_code = atoi(argv[1]);
@@ -156,53 +119,140 @@ int main(int argc, char ** argv) {
   q = malloc(m * 8);
   p = malloc(n * 8);
   r = malloc(m * 8);
-  __auto_type A_dbl1 = (double*)A;
-  __auto_type r_dbl1 = (double*)r;
-  __auto_type p_dbl1 = (double*)p;
-  init_array(m, n, A_dbl1, r_dbl1, p_dbl1);
+  init_array(m, n, (double*)A, (double*)r, (double*)p);
 ;
-  __auto_type A_dbl2 = (double*)A;
-  __auto_type s_dbl1 = (double*)s;
-  __auto_type q_dbl1 = (double*)q;
-  __auto_type p_dbl2 = (double*)p;
-  __auto_type r_dbl2 = (double*)r;
-  kernel(m, n, A_dbl2, s_dbl1, q_dbl1, p_dbl2, r_dbl2);
+  kernel(m, n, (double*)A, (double*)s, (double*)q, (double*)p, (double*)r);
 ;
-  if (dump_code == 1) { // IFELSE MARKER: entry IF
-__auto_type s_dbl2 = (double*)s;
-__auto_type q_dbl2 = (double*)q;
-print_array(m, n, s_dbl2, q_dbl2);
+  if (dump_code == 1) {
+print_array(m, n, (double*)s, (double*)q);
   }
-__auto_type A_dbl3 = (double*)A;
-__auto_type A_bytes = (uint8_t*)A_dbl3;
-free(A_bytes);
-__auto_type s_dbl3 = (double*)s;
-__auto_type s_bytes = (uint8_t*)s_dbl3;
-free(s_bytes);
-__auto_type q_dbl3 = (double*)q;
-__auto_type q_bytes = (uint8_t*)q_dbl3;
-free(q_bytes);
-__auto_type p_dbl3 = (double*)p;
-__auto_type p_bytes = (uint8_t*)p_dbl3;
-free(p_bytes);
-__auto_type r_dbl3 = (double*)r;
-__auto_type r_bytes = (uint8_t*)r_dbl3;
-free(r_bytes);
+free(((uint8_t*)((double*)A)));
+free(((uint8_t*)((double*)s)));
+free(((uint8_t*)((double*)q)));
+free(((uint8_t*)((double*)p)));
+free(((uint8_t*)((double*)r)));
   return 0;
 }
-// Return the number of blocks required to cover 'num' items with 'factor' items per block (ceiling division).
+// MAIN END
+
+
+// FUNCTION ORDER ID 0 START
+// Initialize input arrays: fill r[0..nx-1], p[0..ny-1], and the nx×ny matrix A with deterministic values for benchmarking
+void init_array(uint32_t nx, uint32_t ny, double* A, double* r, double* p) {
+  int64_t i;
+  int64_t j;
+
+// Loop over rows i (0..nx-1): set r[i] and initialize the i-th row of matrix A::for.cond
+for(int64_t i = 0; i < ny;   i = i + 1){
+  p[i] = ((double)(i) * 3.1415926535897931);
+}
+// For the current row i, iterate columns j (0..ny-1) to assign A[i, j] values (and any per-column init)::for.cond1
+for(int64_t i = 0; i < nx;   i = i + 1){
+  r[i] = ((double)(i) * 3.1415926535897931);
+for(int64_t j = 0; j < ny;   j = j + 1){
+  A[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));
+}
+}
+  return;
+}
+// FUNCTION ORDER ID 0 END
+
+
+// FUNCTION ORDER ID 1 START
+// Configure CUDA-like grid/block dimensions and drive the BiCG computation using OpenMP-parallel loops
+void kernel(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r) {
+  struct dim3 grid_n_dim;    /* Address-exposed local */
+  struct dim3 block_n_dim;    /* Address-exposed local */
+  struct dim3_coerce grid_n_dim_coerce;    /* Address-exposed local */
+  struct dim3_coerce block_n_dim_coerce;    /* Address-exposed local */
+  struct dim3 grid_m_dim;    /* Address-exposed local */
+  struct dim3 block_m_dim;    /* Address-exposed local */
+  struct dim3_coerce grid_m_dim_coerce;    /* Address-exposed local */
+  struct dim3_coerce block_m_dim_coerce;    /* Address-exposed local */
+  int32_t blocks_n;
+  uint32_t i;
+  uint32_t j;
+  int32_t blocks_m;
+
+  blocks_n = num_blocks(n, 256);
+  grid_n_dim.x = blocks_n;
+  grid_n_dim.y = 1;
+  grid_n_dim.z = 1;
+  block_n_dim.x = 256;
+  block_n_dim.y = 1;
+  block_n_dim.z = 1;
+  memcpy(((uint8_t*)(&grid_n_dim_coerce)), ((uint8_t*)(&grid_n_dim)), 12);
+  memcpy(((uint8_t*)(&block_n_dim_coerce)), ((uint8_t*)(&block_n_dim)), 12);
+// OpenMP-parallel iteration over CUDA-style blocks (i) and threads (j), covering all logical threads::header.0
+#pragma omp parallel for collapse(2)
+for(int32_t i = 0; i < blocks_n;   i = i + 1){
+for(int32_t j = 0; j < 256;   j = j + 1){
+kernel_q(m, n, A, s, q, p, r, blocks_n, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
+}
+}
+  blocks_m = num_blocks(m, 256);
+  grid_m_dim.x = blocks_m;
+  grid_m_dim.y = 1;
+  grid_m_dim.z = 1;
+  block_m_dim.x = 256;
+  block_m_dim.y = 1;
+  block_m_dim.z = 1;
+  memcpy(((uint8_t*)(&grid_m_dim_coerce)), ((uint8_t*)(&grid_m_dim)), 12);
+  memcpy(((uint8_t*)(&block_m_dim_coerce)), ((uint8_t*)(&block_m_dim)), 12);
+// For each block i, sweep 256 thread slots j to execute per-thread work within the block::header.010
+#pragma omp parallel for collapse(2)
+for(int32_t i = 0; i < blocks_m;   i = i + 1){
+for(int32_t j = 0; j < 256;   j = j + 1){
+kernel_s(m, n, A, s, q, p, r, blocks_m, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
+}
+}
+  return;
+}
+// FUNCTION ORDER ID 1 END
+
+
+// FUNCTION ORDER ID 2 START
+// Pretty-print the result vectors s (length ny) and q (length nx) with fixed formatting and periodic line breaks
+void print_array(uint32_t nx, uint32_t ny, double* s, double* q) {
+  int64_t i;
+
+// Iterate over q, printing each value and inserting a newline after every 20 elements for readability::for.cond
+for(int64_t i = 0; i < ny;   i = i + 1){
+  fprintf(stderr, fmt_double_2dp_space, s[i]);
+  if (i % 20 == 0) {
+  fprintf(stderr, fmt_newline);
+  }
+}
+// Walk through q and emit formatted output, breaking lines at a 20-value cadence::for.cond3
+for(int64_t i = 0; i < nx;   i = i + 1){
+  fprintf(stderr, fmt_double_2dp_space, q[i]);
+  if (i % 20 == 0) {
+  fprintf(stderr, fmt_newline);
+  }
+}
+  fprintf(stderr, fmt_newline);
+}
+// FUNCTION ORDER ID 2 END
+
+
+// FUNCTION ORDER ID 3 START
+// Return ceil(num / factor) to determine how many blocks are needed for a given block size
 uint32_t num_blocks(uint32_t num, uint32_t factor) {
   return ((num + factor) - 1) / factor;
 }
-// Compute q = A^T * r: each logical thread computes the dot product of column i of A with vector r and stores it in q[i].
+// FUNCTION ORDER ID 3 END
+
+
+// FUNCTION ORDER ID 4 START
+// Per-thread worker that computes one element of q as a dot product across the m dimension for index i
 void kernel_q(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r, uint32_t gridDim_x, uint32_t gridDim_y, uint32_t gridDim_z, uint32_t blockDim_x, uint32_t blockDim_y, uint32_t blockDim_z, uint32_t blockIdx_x, uint32_t blockIdx_y, uint32_t blockIdx_z, uint32_t threadIdx_x, uint32_t threadIdx_y, uint32_t threadIdx_z) {
   int64_t i;
   int64_t j;
   double dot;
 
-// Compute the global column index i for this thread; if i < n, initialize q[i] and compute the dot product of column i of A with r to produce q[i].
+// If global thread index i is within n, zero accumulators and compute q[i] via a dot product over m
   i = blockDim_x * blockIdx_x + threadIdx_x;
-  if (i < n) { // IFELSE MARKER: entry IF
+  if (i < n) {
   q[i] = 0;
   dot = 0;
 for(int64_t j = 0; j < m;   j = j + 1){
@@ -212,15 +262,19 @@ for(int64_t j = 0; j < m;   j = j + 1){
   }
   return;
 }
-// Compute s = A * p: each logical thread computes the dot product of row j of A with vector p and stores it in s[j].
+// FUNCTION ORDER ID 4 END
+
+
+// FUNCTION ORDER ID 5 START
+// Per-thread worker that computes one element of s as a dot product across the n dimension for index j
 void kernel_s(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r, uint32_t gridDim_x, uint32_t gridDim_y, uint32_t gridDim_z, uint32_t blockDim_x, uint32_t blockDim_y, uint32_t blockDim_z, uint32_t blockIdx_x, uint32_t blockIdx_y, uint32_t blockIdx_z, uint32_t threadIdx_x, uint32_t threadIdx_y, uint32_t threadIdx_z) {
   int64_t j;
   int64_t i;
   double dot;
 
-// Compute the global row index j for this thread; if j < m, initialize s[j] and compute the dot product of row j of A with p to produce s[j].
+// If global thread index j is within m, zero accumulators and compute s[j] via a dot product over n
   j = blockDim_x * blockIdx_x + threadIdx_x;
-  if (j < m) { // IFELSE MARKER: entry IF
+  if (j < m) {
   s[j] = 0;
   dot = 0;
 for(int64_t i = 0; i < n;   i = i + 1){
@@ -230,95 +284,5 @@ for(int64_t i = 0; i < n;   i = i + 1){
   }
   return;
 }
-// Initialize matrix A and vectors r and p with deterministic values for reproducible input (r uses i*pi; A and p are filled based on indices).
-void init_array(uint32_t nx, uint32_t ny, double* A, double* r, double* p) {
-  int64_t i;
-  int64_t j;
+// FUNCTION ORDER ID 5 END
 
-// Iterate over rows i (0..nx-1): initialize r[i] and then enter the inner loop to initialize the corresponding row of A (and related p entries).::for.cond
-for(int64_t i = 0; i < ny;   i = i + 1){
-  p[i] = ((double)(i) * 3.1415926535897931);
-}
-// Iterate over rows i (0..nx-1): initialize r[i] and then enter the inner loop to initialize the corresponding row of A (and related p entries).::for.cond1
-for(int64_t i = 0; i < nx;   i = i + 1){
-  r[i] = ((double)(i) * 3.1415926535897931);
-for(int64_t j = 0; j < ny;   j = j + 1){
-  A[(i * ny + j)] = (((double)(i) * (double)((j + 1))) / (double)(nx));
-}
-}
-  return;
-}
-// Set up grid/block parameters and run the parallel kernel computations (simulating CUDA kernels on the CPU using OpenMP) to produce s and q from A, p, and r.
-void kernel(uint32_t m, uint32_t n, double* A, double* s, double* q, double* p, double* r) {
-  struct cuda_dim3_t grid_dim_q;    /* Address-exposed local */
-  struct cuda_dim3_t block_dim_q;    /* Address-exposed local */
-  struct cuda_dim3_coerce_t grid_dim_q_coerce;    /* Address-exposed local */
-  struct cuda_dim3_coerce_t block_dim_q_coerce;    /* Address-exposed local */
-  struct cuda_dim3_t grid_dim_s;    /* Address-exposed local */
-  struct cuda_dim3_t block_dim_s;    /* Address-exposed local */
-  struct cuda_dim3_coerce_t grid_dim_s_coerce;    /* Address-exposed local */
-  struct cuda_dim3_coerce_t block_dim_s_coerce;    /* Address-exposed local */
-  int32_t blocks_n;
-  uint8_t* temp_ptr1;
-  uint8_t* temp_ptr2;
-  uint32_t i;
-  uint32_t j;
-  int32_t blocks_m;
-  uint8_t* temp_ptr3;
-  uint8_t* temp_ptr4;
-
-  blocks_n = num_blocks(n, 256);
-  grid_dim_q.x = blocks_n;
-  grid_dim_q.y = 1;
-  grid_dim_q.z = 1;
-  block_dim_q.x = 256;
-  block_dim_q.y = 1;
-  block_dim_q.z = 1;
-  memcpy(((uint8_t*)(&grid_dim_q_coerce)), ((uint8_t*)(&grid_dim_q)), 12);
-  memcpy(((uint8_t*)(&block_dim_q_coerce)), ((uint8_t*)(&block_dim_q)), 12);
-// Parallel nested loop over block index (0..blocks_m-1) and thread index (0..255): simulate CUDA's thread/block execution model by mapping each (i,j) to a logical thread.::header.0
-#pragma omp parallel for collapse(2)
-for(int32_t i = 0; i < blocks_n;   i = i + 1){
-for(int32_t j = 0; j < 256;   j = j + 1){
-kernel_q(m, n, A, s, q, p, r, blocks_n, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
-}
-}
-  blocks_m = num_blocks(m, 256);
-  grid_dim_s.x = blocks_m;
-  grid_dim_s.y = 1;
-  grid_dim_s.z = 1;
-  block_dim_s.x = 256;
-  block_dim_s.y = 1;
-  block_dim_s.z = 1;
-  memcpy(((uint8_t*)(&grid_dim_s_coerce)), ((uint8_t*)(&grid_dim_s)), 12);
-  memcpy(((uint8_t*)(&block_dim_s_coerce)), ((uint8_t*)(&block_dim_s)), 12);
-// Parallel nested loop over block index (0..blocks_m-1) and thread index (0..255): simulate CUDA's thread/block execution model by mapping each (i,j) to a logical thread.::header.010
-#pragma omp parallel for collapse(2)
-for(int32_t i = 0; i < blocks_m;   i = i + 1){
-for(int32_t j = 0; j < 256;   j = j + 1){
-kernel_s(m, n, A, s, q, p, r, blocks_m, 1, 1, 256, 1, 1, i, 0, 0, j, 0, 0);
-}
-}
-  return;
-}
-// Print the contents of the output array(s) in a human-readable format, breaking lines for readability (e.g., 20 values per line).
-void print_array(uint32_t nx, uint32_t ny, double* s, double* q) {
-  int64_t i;
-  int32_t unused_i32;
-
-// Iterate over elements of the output array and print each value; insert a line break periodically (every 20 elements) for formatted output.::for.cond
-for(int64_t i = 0; i < ny;   i = i + 1){
-  fprintf(stderr, format_double_space, s[i]);
-  if (i % 20 == 0) { // IFELSE MARKER: for.body IF
-  fprintf(stderr, format_newline);
-  }
-}
-// Iterate over elements of the output array and print each value; insert a line break periodically (every 20 elements) for formatted output.::for.cond3
-for(int64_t i = 0; i < nx;   i = i + 1){
-  fprintf(stderr, format_double_space, q[i]);
-  if (i % 20 == 0) { // IFELSE MARKER: for.body5 IF
-  fprintf(stderr, format_newline);
-  }
-}
-  fprintf(stderr, format_newline);
-}

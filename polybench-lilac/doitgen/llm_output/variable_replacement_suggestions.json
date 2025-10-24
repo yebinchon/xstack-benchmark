@@ -1,122 +1,6 @@
 {
   "mappings": [
     {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field0",
-      "after": "field0"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field1",
-      "after": "field1"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field2",
-      "after": "field2"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field3",
-      "after": "field3"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field4",
-      "after": "field4"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field5",
-      "after": "field5"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field6",
-      "after": "field6"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field7",
-      "after": "field7"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field8",
-      "after": "field8"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field9",
-      "after": "field9"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field10",
-      "after": "field10"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field11",
-      "after": "field11"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field12",
-      "after": "field12"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field13",
-      "after": "field13"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field14",
-      "after": "field14"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field15",
-      "after": "field15"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field16",
-      "after": "field16"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field17",
-      "after": "field17"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field18",
-      "after": "field18"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field19",
-      "after": "field19"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field20",
-      "after": "field20"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field21",
-      "after": "field21"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field22",
-      "after": "field22"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field23",
-      "after": "field23"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field24",
-      "after": "field24"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field25",
-      "after": "field25"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field26",
-      "after": "field26"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field27",
-      "after": "field27"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE_field28",
-      "after": "field28"
-    },
-    {
       "before": "__FIXME__l_struct_struct_OC_dim3_field0",
       "after": "x"
     },
@@ -130,55 +14,39 @@
     },
     {
       "before": "__FIXME__l_unnamed_1_field0",
-      "after": "batch"
+      "after": "dim0"
     },
     {
       "before": "__FIXME__l_unnamed_1_field1",
-      "after": "batch_extra"
-    },
-    {
-      "before": "__FIXME__1",
-      "after": "byte_ptr1"
-    },
-    {
-      "before": "__FIXME__2",
-      "after": "byte_ptr2"
-    },
-    {
-      "before": "__FIXME__3",
-      "after": "byte_ptr3"
-    },
-    {
-      "before": "__FIXME__4",
-      "after": "byte_ptr4"
+      "after": "dim1"
     },
     {
       "before": "__FIXME__agg_2e_tmp",
-      "after": "grid_copy"
+      "after": "grid_tmp"
     },
     {
       "before": "__FIXME__agg_2e_tmp3",
-      "after": "block_copy"
+      "after": "block_tmp"
     },
     {
       "before": "__FIXME__agg_2e_tmp3_2e_coerce",
-      "after": "block_copy_coerce"
+      "after": "block_coerce"
     },
     {
       "before": "__FIXME__agg_2e_tmp_2e_coerce",
-      "after": "grid_copy_coerce"
+      "after": "grid_coerce"
     },
     {
       "before": "__FIXME__call",
-      "after": "num_blocks_x"
+      "after": "grid_blocks_x"
     },
     {
       "before": "__FIXME__call1",
-      "after": "num_blocks_y"
+      "after": "grid_blocks_y"
     },
     {
       "before": "__FIXME__call2",
-      "after": "num_blocks_z"
+      "after": "grid_blocks_z"
     },
     {
       "before": "__FIXME__blockDim_2e_x",
@@ -230,99 +98,75 @@
     },
     {
       "before": "__FIXME__tmp1",
-      "after": "idx_rq"
+      "after": "rq_index0"
     },
     {
       "before": "__FIXME__tmp2",
-      "after": "idx_rq_np"
+      "after": "rq_times_np0"
     },
     {
       "before": "__FIXME__tmp3",
-      "after": "idx_rq_np_p"
+      "after": "rqp_index0"
     },
     {
       "before": "__FIXME__tmp4",
-      "after": "sum_zero_tmp"
+      "after": "rq_index1"
     },
     {
       "before": "__FIXME__tmp5",
-      "after": "idx_rq_loop"
+      "after": "rq_times_np1"
     },
     {
       "before": "__FIXME__tmp6",
-      "after": "idx_rq_np_loop"
+      "after": "rqs_index"
     },
     {
       "before": "__FIXME__tmp7",
-      "after": "idx_rq_np_s"
+      "after": "sp_index"
     },
     {
       "before": "__FIXME__tmp8",
-      "after": "idx_sp"
+      "after": "a_val"
     },
     {
       "before": "__FIXME__tmp9",
-      "after": "aval"
+      "after": "c4_val"
     },
     {
       "before": "__FIXME__tmp10",
-      "after": "c4val"
-    },
-    {
-      "before": "__FIXME__tmp11",
       "after": "prod"
     },
     {
+      "before": "__FIXME__tmp11",
+      "after": "new_dot"
+    },
+    {
       "before": "__FIXME__tmp12",
-      "after": "dot_update"
+      "after": "rq_index2"
     },
     {
       "before": "__FIXME__tmp13",
-      "after": "idx_rq_after"
+      "after": "rq_times_np2"
     },
     {
       "before": "__FIXME__tmp14",
-      "after": "idx_rq_np_after"
-    },
-    {
-      "before": "__FIXME__tmp15",
-      "after": "idx_rq_np_p_after"
-    },
-    {
-      "before": "__FIXME__tmp16",
-      "after": "sum_store"
-    },
-    {
-      "before": "__FIXME__call37",
-      "after": "init_array_ret"
-    },
-    {
-      "before": "__FIXME__call51",
-      "after": "kernel_ret"
-    },
-    {
-      "before": "__FIXME__call18",
-      "after": "unused_int"
+      "after": "rqp_index1"
     },
     {
       "before": "__FIXME__l_array_1_uint8_t",
-      "after": "uint8_array1_t"
+      "after": "Uint8Array1"
     },
     {
       "before": "__FIXME__l_array_20_uint8_t",
-      "after": "uint8_array20_t"
-    },
-    {
-      "before": "__FIXME__l_struct_struct_OC__IO_FILE",
-      "after": "io_file_struct"
+      "after": "Uint8Array20"
     },
     {
       "before": "__FIXME__l_struct_struct_OC_dim3",
-      "after": "dim3_t"
+      "after": "Dim3"
     },
     {
       "before": "__FIXME__l_unnamed_1",
-      "after": "dim3_coerce_t"
+      "after": "Dim3Coerce"
     }
   ]
 }

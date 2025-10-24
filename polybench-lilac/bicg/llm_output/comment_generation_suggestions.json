@@ -1,79 +1,79 @@
 {
   "replacements": [
     {
-      "id": "unknown_FUNCTION_num_blocks",
-      "original": "// INSERT COMMENT FUNCTION: num_blocks",
-      "replacement": "// Return the number of blocks required to cover 'num' items with 'factor' items per block (ceiling division)."
-    },
-    {
-      "id": "unknown_FUNCTION_kernel_q",
-      "original": "// INSERT COMMENT FUNCTION: kernel_q",
-      "replacement": "// Compute q = A^T * r: each logical thread computes the dot product of column i of A with vector r and stores it in q[i]."
-    },
-    {
-      "id": "unknown_FUNCTION_kernel_s",
-      "original": "// INSERT COMMENT FUNCTION: kernel_s",
-      "replacement": "// Compute s = A * p: each logical thread computes the dot product of row j of A with vector p and stores it in s[j]."
-    },
-    {
-      "id": "unknown_FUNCTION_init_array",
+      "id": "init_array_FUNCTION_init_array",
       "original": "// INSERT COMMENT FUNCTION: init_array",
-      "replacement": "// Initialize matrix A and vectors r and p with deterministic values for reproducible input (r uses i*pi; A and p are filled based on indices)."
+      "replacement": "// Initialize input arrays: fill r[0..nx-1], p[0..ny-1], and the nx\u00d7ny matrix A with deterministic values for benchmarking"
     },
     {
-      "id": "unknown_FUNCTION_kernel",
+      "id": "kernel_FUNCTION_kernel",
       "original": "// INSERT COMMENT FUNCTION: kernel",
-      "replacement": "// Set up grid/block parameters and run the parallel kernel computations (simulating CUDA kernels on the CPU using OpenMP) to produce s and q from A, p, and r."
+      "replacement": "// Configure CUDA-like grid/block dimensions and drive the BiCG computation using OpenMP-parallel loops"
     },
     {
-      "id": "unknown_FUNCTION_print_array",
+      "id": "print_array_FUNCTION_print_array",
       "original": "// INSERT COMMENT FUNCTION: print_array",
-      "replacement": "// Print the contents of the output array(s) in a human-readable format, breaking lines for readability (e.g., 20 values per line)."
+      "replacement": "// Pretty-print the result vectors s (length ny) and q (length nx) with fixed formatting and periodic line breaks"
     },
     {
-      "id": "unknown_LOOP_init_array",
+      "id": "num_blocks_FUNCTION_num_blocks",
+      "original": "// INSERT COMMENT FUNCTION: num_blocks",
+      "replacement": "// Return ceil(num / factor) to determine how many blocks are needed for a given block size"
+    },
+    {
+      "id": "kernel_q_FUNCTION_kernel_q",
+      "original": "// INSERT COMMENT FUNCTION: kernel_q",
+      "replacement": "// Per-thread worker that computes one element of q as a dot product across the m dimension for index i"
+    },
+    {
+      "id": "kernel_s_FUNCTION_kernel_s",
+      "original": "// INSERT COMMENT FUNCTION: kernel_s",
+      "replacement": "// Per-thread worker that computes one element of s as a dot product across the n dimension for index j"
+    },
+    {
+      "id": "init_array_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over rows i (0..nx-1): initialize r[i] and then enter the inner loop to initialize the corresponding row of A (and related p entries)."
+      "replacement": "// Loop over rows i (0..nx-1): set r[i] and initialize the i-th row of matrix A"
     },
     {
-      "id": "unknown_LOOP_init_array",
+      "id": "init_array_LOOP_init_array",
       "original": "// INSERT COMMENT LOOP: init_array",
-      "replacement": "// Iterate over rows i (0..nx-1): initialize r[i] and then enter the inner loop to initialize the corresponding row of A (and related p entries)."
+      "replacement": "// For the current row i, iterate columns j (0..ny-1) to assign A[i, j] values (and any per-column init)"
     },
     {
-      "id": "unknown_LOOP_kernel",
+      "id": "kernel_LOOP_kernel",
       "original": "// INSERT COMMENT LOOP: kernel",
-      "replacement": "// Parallel nested loop over block index (0..blocks_m-1) and thread index (0..255): simulate CUDA's thread/block execution model by mapping each (i,j) to a logical thread."
+      "replacement": "// OpenMP-parallel iteration over CUDA-style blocks (i) and threads (j), covering all logical threads"
     },
     {
-      "id": "unknown_LOOP_kernel",
+      "id": "kernel_LOOP_kernel",
       "original": "// INSERT COMMENT LOOP: kernel",
-      "replacement": "// Parallel nested loop over block index (0..blocks_m-1) and thread index (0..255): simulate CUDA's thread/block execution model by mapping each (i,j) to a logical thread."
+      "replacement": "// For each block i, sweep 256 thread slots j to execute per-thread work within the block"
     },
     {
-      "id": "unknown_LOOP_print_array",
+      "id": "print_array_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Iterate over elements of the output array and print each value; insert a line break periodically (every 20 elements) for formatted output."
+      "replacement": "// Iterate over q, printing each value and inserting a newline after every 20 elements for readability"
     },
     {
-      "id": "unknown_LOOP_print_array",
+      "id": "print_array_LOOP_print_array",
       "original": "// INSERT COMMENT LOOP: print_array",
-      "replacement": "// Iterate over elements of the output array and print each value; insert a line break periodically (every 20 elements) for formatted output."
+      "replacement": "// Walk through q and emit formatted output, breaking lines at a 20-value cadence"
     },
     {
       "id": "unknown_IFELSE_main::entry",
       "original": "// INSERT COMMENT IFELSE: main::entry",
-      "replacement": "// Parse command-line arguments to get dump_code, m, and n, then allocate memory for the matrix A (m*n doubles) and vector s (n doubles)."
+      "replacement": "// Parse CLI arguments (dump flag, m, n) and allocate host buffers A and s sized to m\u00d7n and n, respectively"
     },
     {
-      "id": "unknown_IFELSE_kernel_q::entry",
+      "id": "kernel_q_IFELSE_kernel_q::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_q::entry",
-      "replacement": "// Compute the global column index i for this thread; if i < n, initialize q[i] and compute the dot product of column i of A with r to produce q[i]."
+      "replacement": "// If global thread index i is within n, zero accumulators and compute q[i] via a dot product over m"
     },
     {
-      "id": "unknown_IFELSE_kernel_s::entry",
+      "id": "kernel_s_IFELSE_kernel_s::entry",
       "original": "// INSERT COMMENT IFELSE: kernel_s::entry",
-      "replacement": "// Compute the global row index j for this thread; if j < m, initialize s[j] and compute the dot product of row j of A with p to produce s[j]."
+      "replacement": "// If global thread index j is within m, zero accumulators and compute s[j] via a dot product over n"
     }
   ]
 }

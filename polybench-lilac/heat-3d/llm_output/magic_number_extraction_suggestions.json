@@ -1,40 +1,224 @@
 {
   "extractions": [
     {
-      "value": "8",
-      "name": "HEAT3D_BLOCK_DEPTH_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "DOUBLE_SIZE_BYTES",
       "occurrences": [
-        197,
-        225,
-        241,
-        257
+        {
+          "line": 111,
+          "context": "A = malloc(n * n * n * 8);"
+        },
+        {
+          "line": 112,
+          "context": "B = malloc(n * n * n * 8);"
+        }
       ],
-      "function": "kernel_heat_3d / main"
+      "reasoning": "8 is the size of a double in bytes; naming it makes allocation portable and self-explanatory."
     },
     {
-      "value": "32",
-      "name": "HEAT3D_BLOCK_HEIGHT_1",
-      "type": "define",
-      "scope": "file",
+      "value": 8,
+      "macro_name": "PRINTF_FMT_STR_LEN",
       "occurrences": [
-        226,
-        242,
-        258
+        {
+          "line": 64,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str[8] = { \"%0.2lf \" };"
+        }
       ],
-      "function": "kernel_heat_3d / main"
+      "reasoning": "Documents the buffer size for the format string (includes the NUL terminator), avoiding a magic array bound."
     },
     {
-      "value": "12",
-      "name": "HEAT3D_BLOCK_BYTES_1",
-      "type": "define",
-      "scope": "file",
+      "value": 2,
+      "macro_name": "NEWLINE_STR_LEN",
       "occurrences": [
-        234,
-        250
+        {
+          "line": 65,
+          "context": "uint8_t __FIXME_GLOBAL___OC_str_OC_1[2] = { \"\\n\" };"
+        }
       ],
-      "function": "main"
+      "reasoning": "Clarifies why the newline buffer is length 2 (newline plus NUL)."
+    },
+    {
+      "value": 1,
+      "macro_name": "DUMP_CODE_ENABLED",
+      "occurrences": [
+        {
+          "line": 117,
+          "context": "if (dump_code == 1) { // IFELSE MARKER: entry IF"
+        }
+      ],
+      "reasoning": "Gives semantic meaning to the CLI flag value used to enable output."
+    },
+    {
+      "value": 1,
+      "macro_name": "HALO_WIDTH",
+      "occurrences": [
+        {
+          "line": 152,
+          "context": "i = __FIXME__blockDim_2e_x * __FIXME__blockIdx_2e_x + __FIXME__threadIdx_2e_x + 1;"
+        },
+        {
+          "line": 153,
+          "context": "j = __FIXME__blockDim_2e_y * __FIXME__blockIdx_2e_y + __FIXME__threadIdx_2e_y + 1;"
+        },
+        {
+          "line": 154,
+          "context": "k = __FIXME__blockDim_2e_z * __FIXME__blockIdx_2e_z + __FIXME__threadIdx_2e_z + 1;"
+        },
+        {
+          "line": 155,
+          "context": "if (i < (iter - 1)) { // IFELSE MARKER: entry IF"
+        },
+        {
+          "line": 156,
+          "context": "if (j < (iter - 1)) { // IFELSE MARKER: land.lh"
+        },
+        {
+          "line": 157,
+          "context": "if (k < (iter - 1)) { // IFELSE MARKER: land.lh"
+        },
+        {
+          "line": 158,
+          "context": "A[(((i + 1) * iter + j) * iter + k)]"
+        },
+        {
+          "line": 158,
+          "context": "A[(((i - 1) * iter + j) * iter + k)]"
+        },
+        {
+          "line": 158,
+          "context": "A[(((i * iter + j) * iter + k) + 1)]"
+        },
+        {
+          "line": 158,
+          "context": "A[(((i * iter + j) * iter + k) - 1)]"
+        }
+      ],
+      "reasoning": "In the stencil, 1 represents the 1-cell halo/neighbor offset and boundary margin; naming it prevents confusion with incidental +1 increments."
+    },
+    {
+      "value": 2,
+      "macro_name": "HALO_WIDTH_TIMES_2",
+      "occurrences": [
+        {
+          "line": 188,
+          "context": "num_blocks((iter - 2), block.__FIXME__l_struct_struct_OC_dim3_field0)"
+        },
+        {
+          "line": 189,
+          "context": "num_blocks((iter - 2), block.__FIXME__l_struct_struct_OC_dim3_field1)"
+        },
+        {
+          "line": 190,
+          "context": "num_blocks((iter - 2), block.__FIXME__l_struct_struct_OC_dim3_field2)"
+        }
+      ],
+      "reasoning": "The interior domain excludes one-cell halos on both sides (2 total); naming clarifies the domain reduction."
+    },
+    {
+      "value": 2,
+      "macro_name": "STENCIL_CENTER_WEIGHT",
+      "occurrences": [
+        {
+          "line": 158,
+          "context": "(2 * A[((i * iter + j) * iter + k)])"
+        },
+        {
+          "line": 158,
+          "context": "(2 * A[((i * iter + j) * iter + k)])"
+        },
+        {
+          "line": 158,
+          "context": "(2 * A[((i * iter + j) * iter + k)])"
+        }
+      ],
+      "reasoning": "The Laplacian central-difference uses a -2 coefficient for the center point; making it a named constant documents the scheme."
+    },
+    {
+      "value": 8,
+      "macro_name": "STENCIL_AXIS_DIVISOR",
+      "occurrences": [
+        {
+          "line": 158,
+          "context": "/ 8) + (("
+        },
+        {
+          "line": 158,
+          "context": "/ 8)) + (("
+        },
+        {
+          "line": 158,
+          "context": "/ 8)) + A["
+        }
+      ],
+      "reasoning": "Each second-derivative contribution is scaled by 1/8; making this explicit improves readability and eases tuning."
+    },
+    {
+      "value": 1,
+      "macro_name": "BLOCK_DIM_X",
+      "occurrences": [
+        {
+          "line": 185,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field0 = 1;"
+        }
+      ],
+      "reasoning": "Documents the chosen X-dimension of the block configuration."
+    },
+    {
+      "value": 8,
+      "macro_name": "BLOCK_DIM_Y",
+      "occurrences": [
+        {
+          "line": 186,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field1 = 8;"
+        }
+      ],
+      "reasoning": "Documents the chosen Y-dimension of the block configuration and ties to related loops."
+    },
+    {
+      "value": 32,
+      "macro_name": "BLOCK_DIM_Z",
+      "occurrences": [
+        {
+          "line": 187,
+          "context": "block.__FIXME__l_struct_struct_OC_dim3_field2 = 32;"
+        }
+      ],
+      "reasoning": "Documents the chosen Z-dimension of the block configuration and ties to related loops."
+    },
+    {
+      "value": 12,
+      "macro_name": "DIM3_STRUCT_SIZE_BYTES",
+      "occurrences": [
+        {
+          "line": 194,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp)), ((uint8_t*)(&grid)), 12);"
+        },
+        {
+          "line": 195,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp5)), ((uint8_t*)(&block)), 12);"
+        },
+        {
+          "line": 196,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);"
+        },
+        {
+          "line": 197,
+          "context": "memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp5_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp5)), 12);"
+        }
+      ],
+      "reasoning": "12 encodes the sizeof(dim3-like struct) in bytes; using a named size avoids brittle hard-coding."
+    },
+    {
+      "value": 20,
+      "macro_name": "BYTE_ARRAY20_LEN",
+      "occurrences": [
+        {
+          "line": 40,
+          "context": "uint8_t array[20];"
+        }
+      ],
+      "reasoning": "Makes the opaque generated byte-array length explicit; if this relates to print chunking, a named constant clarifies intent and eases change."
     }
-  ]
+  ],
+  "confidence": 0.86
 }
