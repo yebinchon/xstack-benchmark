@@ -71,11 +71,11 @@ uint32_t parseCommandline(uint32_t, uint8_t**, uint8_t*, uint32_t*, float*, floa
 void printUsage(void) __ATTRIBUTELIST__((noinline));
 uint32_t loadData(uint8_t*, struct __FIXME__l_struct_struct_OC_record*, struct __FIXME__l_struct_struct_OC_latLong*) __ATTRIBUTELIST__((noinline));
 void findLowest(struct __FIXME__l_struct_struct_OC_record*, float*, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
-uint32_t feof(FILE*) __ATTRIBUTELIST__((nothrow));
-uint8_t* fgets(uint8_t*, uint32_t, FILE*);
-double atof(uint8_t*) __ATTRIBUTELIST__((nothrow, pure));
-uint8_t* strncpy(uint8_t*, uint8_t*, uint64_t) __ATTRIBUTELIST__((nothrow));
-float sqrt(float);
+//uint32_t feof(FILE*) __ATTRIBUTELIST__((nothrow));
+//uint8_t* fgets(uint8_t*, uint32_t, FILE*);
+//double atof(uint8_t*) __ATTRIBUTELIST__((nothrow, pure));
+//uint8_t* strncpy(uint8_t*, uint8_t*, uint64_t) __ATTRIBUTELIST__((nothrow));
+//float sqrt(float);
 void euclid(struct __FIXME__l_struct_struct_OC_latLong*, float*, uint32_t, float, float, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t) __ATTRIBUTELIST__((noinline, nothrow));
 
 
@@ -182,12 +182,14 @@ int main(int argc, char ** argv) {
   __FIXME__call2 = parseCommandline(argc, argv, filename, (&resultsCount), (&lat), (&lng), (&quiet), (&timing), (&platform), (&device));
   if (__FIXME__call2 != 0) { // IFELSE MARKER: entry IF
 printUsage();
+return 0;
   }
 // INSERT COMMENT IFELSE: main::if.end
   numRecords = loadData(filename, ((struct __FIXME__l_struct_struct_OC_record*)records), ((struct __FIXME__l_struct_struct_OC_latLong*)locations));
   if (resultsCount > numRecords) { // IFELSE MARKER: if.end IF
   resultsCount = numRecords;
   }
+  printf("Loaded %d records\n", numRecords);
   blocks = (((numRecords + 256) - 1) / 256);
   gridY = (((blocks + 65535) - 1) / 65535);
   gridDim.__FIXME__l_struct_struct_OC_dim3_field0 = (((blocks + gridY) - 1) / gridY);
@@ -201,7 +203,7 @@ printUsage();
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp)), 12);
   memcpy(((uint8_t*)(&__FIXME__agg_2e_tmp26_2e_coerce)), ((uint8_t*)(&__FIXME__agg_2e_tmp26)), 12);
 // INSERT COMMENT LOOP: main::header.0
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for collapse(3)
 for(int32_t i = 0; i < (((blocks + gridY) - 1) / gridY);   i = i + 1) {
 for(int32_t j = 0; j < gridY;   j = j + 1) {
 for(int32_t k = 0; k < 256;   k = k + 1) {
@@ -212,12 +214,12 @@ euclid(((struct __FIXME__l_struct_struct_OC_latLong*)locations), ((float*)distan
 // INSERT COMMENT IFELSE: main::kcall.end
   findLowest(((struct __FIXME__l_struct_struct_OC_record*)records), ((float*)distances), numRecords, resultsCount);
 ;
-  if (quiet != 0) { // IFELSE MARKER: kcall.end IF
-  }
+  if (quiet == 0) { // IFELSE MARKER: kcall.end IF
 // INSERT COMMENT LOOP: main::for.cond
 for(int64_t i = 0; i < resultsCount;   i = i + 1) {
   printf((_OC_str), (((struct __FIXME__l_struct_struct_OC_record*)records)+i)->__FIXME__l_struct_struct_OC_record_field0, ((double)(((struct __FIXME__l_struct_struct_OC_record*)records)+i)->__FIXME__l_struct_struct_OC_record_field1));
 }
+  }
 free(((uint8_t*)((float*)distances)));
   return 0;
 }
@@ -233,7 +235,7 @@ uint32_t parseCommandline(uint32_t argc, uint8_t** argv, uint8_t* filename, uint
 
 // INSERT COMMENT IFELSE: parseCommandline::entry
   if (argc < 2) { // IFELSE MARKER: entry IF
-  __FIXME__retval_2e_0 = 1;
+  return 1;
   }
   strncpy(filename, argv[1], 100);
   i = 1;
@@ -249,7 +251,12 @@ while (i < argc) {
     break;
   case 108:
   double __FIXME__call22 = atof(argv[(i + 1)]);
+  if(argv[i][2] == 'a') {
   *lat = ((float)__FIXME__call22);
+  }
+  else {
+  *lng = ((float)__FIXME__call22);
+  }
   i = i + 1;
     break;
   case 104:
@@ -274,8 +281,8 @@ while (i < argc) {
   default:
     break;
   }
-
   }
+  i = i + 1;
 }
 // INSERT COMMENT IFELSE: parseCommandline::for.end
   if (*d >= 0) { // IFELSE MARKER: for.end IF
@@ -364,35 +371,35 @@ uint32_t loadData(uint8_t* filename, struct __FIXME__l_struct_struct_OC_record* 
   flist = fopen(filename, (_OC_str_OC_1));
   recNum = 0;
 // INSERT COMMENT LOOP: loadData::while.cond
-  uint32_t __FIXME__call1 = feof(flist);
-  __FIXME__call1 = feof(flist);
-while (~(__FIXME__call1 != 0)) {
+while (!feof(flist)) {
   uint32_t __FIXME__call2 = fscanf(flist, (_OC_str_OC_2), dbname);
   if (__FIXME__call2 != 1) { // IFELSE MARKER: while.body IF
   fprintf(stderr, (_OC_str_OC_3));
 exit(0);
   }
   FILE* fp = fopen(dbname, (_OC_str_OC_1));
-  if (fp != ((FILE*)0)) { // IFELSE MARKER: if.end IF
-  } else { // IFELSE MARKER: if.end ELSE
+  if (fp == ((FILE*)0)) { // IFELSE MARKER: if.end IF
   printf((_OC_str_OC_4));
 exit(1);
   }
-  uint32_t __FIXME__call11 = feof(fp);
-  __FIXME__call11 = feof(fp);
-while (~(__FIXME__call11 != 0)) {
+while (!feof(fp)) {
   fgets(record.__FIXME__l_struct_struct_OC_record_field0, 49, fp);
   fgetc(fp);
 for(int64_t i = 0; i < 5;   i = i + 1) {
-  substr[i] = (&record.__FIXME__l_struct_struct_OC_record_field0)[0][i][28];
+  substr[i] = (&record.__FIXME__l_struct_struct_OC_record_field0)[0][i+28];
 }
   substr[5] = 0;
   double __FIXME__call24 = atof(substr);
   latLong.__FIXME__l_struct_struct_OC_latLong_field0 = ((float)__FIXME__call24);
 for(int64_t i = 0; i < 5;   i = i + 1) {
-  substr[i] = (&record.__FIXME__l_struct_struct_OC_record_field0)[0][i][33];
+  substr[i] = (&record.__FIXME__l_struct_struct_OC_record_field0)[0][i+33];
 }
+  substr[5] = 0;
+  double __FIXME__call27 = atof(substr);
+  latLong.__FIXME__l_struct_struct_OC_latLong_field1 = ((float)__FIXME__call27);
+  recNum = recNum + 1;
 }
+fclose(fp);
 }
   fclose(flist);
   return recNum;
@@ -406,19 +413,23 @@ void findLowest(struct __FIXME__l_struct_struct_OC_record* records, float* dista
   int64_t i;
   int64_t j;
   int64_t __FIXME__minLoc_2e_0;
-  uint32_t minLoc;
   int64_t __FIXME__minLoc_2e_0_2e_lcssa;
+  float tempDist;
+  struct __FIXME__l_struct_struct_OC_record tempRec;
 
 // INSERT COMMENT LOOP: findLowest::for.cond
-for(int64_t i = 0; i < topN;   minLoc = i + 1) {
-for(int64_t j = i__PHI_TEMPORARY; j < numRecords;   minLoc = j + 1) {
-  if (llvm_fcmp_olt(distances[j], distances[__FIXME__minLoc_2e_0_2e_lcssa])) { // IFELSE MARKER: for.body3 IF
+for(int64_t i = 0; i < topN;   i = i + 1) {
+  __FIXME__minLoc_2e_0 = i;
+for(int64_t j = i; j < numRecords;   j = j + 1) {
+  if (llvm_fcmp_olt(distances[j], distances[__FIXME__minLoc_2e_0])) { // IFELSE MARKER: for.body3 IF
   }
 }
-  memcpy(((uint8_t*)(records+i)), ((uint8_t*)(records+__FIXME__minLoc_2e_0_2e_lcssa)), 60);
-  memcpy(((uint8_t*)(records+__FIXME__minLoc_2e_0_2e_lcssa)), ((uint8_t*)(records+i)), 60);
-  distances[i] = distances[__FIXME__minLoc_2e_0_2e_lcssa];
-  distances[__FIXME__minLoc_2e_0_2e_lcssa] = distances[i];
+  memcpy(((uint8_t*)(&tempRec)), ((uint8_t*)(records+i)), 60);
+  memcpy(((uint8_t*)(records+i)), ((uint8_t*)(records+__FIXME__minLoc_2e_0)), 60);
+  memcpy(((uint8_t*)(records+__FIXME__minLoc_2e_0)), ((uint8_t*)(&tempRec)), 60);
+  tempDist = distances[i];
+  distances[i] = distances[__FIXME__minLoc_2e_0];
+  distances[__FIXME__minLoc_2e_0] = tempDist;
   (records+i)->__FIXME__l_struct_struct_OC_record_field1 = distances[i];
 }
   return;
