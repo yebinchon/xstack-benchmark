@@ -173,16 +173,18 @@ void BFSGraph(uint32_t argc, uint8_t **argv) {
   printf((_OC_str_OC_1));
   __FIXME__call1 = fopen(argv[1], (_OC_str_OC_2));
   fp = __FIXME__call1;
-  if (fp != ((FILE *)0)) { // IFELSE MARKER: if.end IF
-  } else {                 // IFELSE MARKER: if.end ELSE
+  if (fp == ((FILE *)0)) { // IFELSE MARKER: if.end IF
     printf((_OC_str_OC_3));
+    return;
   }
   // INSERT COMMENT IFELSE: BFSGraph::if.end4
   source = 0;
   fscanf(fp, (_OC_str_OC_4), (&no_of_nodes));
+  num_of_blocks = 1;
+  num_of_threads_per_block = no_of_nodes;
   if (no_of_nodes > 512) { // IFELSE MARKER: if.end4 IF
-    __FIXME__1 = /*__FIXME__INTRINSIC_CALL__*/ llvm_OC_ceil_OC_f64(
-        ((double)(no_of_nodes) / 512));
+    num_of_blocks = /*__FIXME__INTRINSIC_CALL__*/ llvm_OC_ceil_OC_f64(
+        ((double)(no_of_nodes) / (double)512));
     num_of_threads_per_block = 512;
   }
   h_graph_nodes = malloc(8 * no_of_nodes);
@@ -231,6 +233,7 @@ void BFSGraph(uint32_t argc, uint8_t **argv) {
   threads.__FIXME__l_struct_struct_OC_dim3_field1 = 1;
   threads.__FIXME__l_struct_struct_OC_dim3_field2 = 1;
   printf((_OC_str_OC_8));
+  k = 0;
   stop = malloc(1);
   // INSERT COMMENT LOOP: BFSGraph::do.body
   do {
@@ -241,7 +244,7 @@ void BFSGraph(uint32_t argc, uint8_t **argv) {
            ((uint8_t *)(&__FIXME__agg_2e_tmp)), 12);
     memcpy(((uint8_t *)(&__FIXME__agg_2e_tmp112_2e_coerce)),
            ((uint8_t *)(&__FIXME__agg_2e_tmp112)), 12);
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for// collapse(2)
     for (int32_t j = 0; j < num_of_blocks; j = j + 1) {
       for (int32_t k = 0; k < num_of_threads_per_block; k = k + 1) {
         Kernel(((struct __FIXME__l_struct_struct_OC_Node *)h_graph_nodes),
@@ -257,7 +260,7 @@ void BFSGraph(uint32_t argc, uint8_t **argv) {
            ((uint8_t *)(&__FIXME__agg_2e_tmp115)), 12);
     memcpy(((uint8_t *)(&__FIXME__agg_2e_tmp116_2e_coerce)),
            ((uint8_t *)(&__FIXME__agg_2e_tmp116)), 12);
-#pragma omp parallel for collapse(2)
+#pragma omp parallel for //collapse(2)
     for (int32_t j = 0; j < num_of_blocks; j = j + 1) {
       for (int32_t k = 0; k < num_of_threads_per_block; k = k + 1) {
         Kernel2(h_graph_mask, h_updating_graph_mask, h_graph_visited, stop,
@@ -265,8 +268,10 @@ void BFSGraph(uint32_t argc, uint8_t **argv) {
                 1, j, 0, 0, k, 0, 0);
       }
     }
+    k = k + 1;
+    printf("%d\n", *stop);
   } while (*stop);
-  printf((_OC_str_OC_9), __FIXME__inc122_2e_lcssa);
+  printf((_OC_str_OC_9), k);
   fpo = fopen((_OC_str_OC_10), (_OC_str_OC_11));
   // INSERT COMMENT LOOP: BFSGraph::for.cond130
   for (int64_t i = 0; i < no_of_nodes; i = i + 1) {
@@ -311,10 +316,8 @@ void Kernel(struct __FIXME__l_struct_struct_OC_Node *g_graph_nodes,
   // INSERT COMMENT IFELSE: Kernel::entry
   tid = __FIXME__blockIdx_2e_x * 512 + __FIXME__threadIdx_2e_x;
   if (tid < no_of_nodes) { // IFELSE MARKER: entry IF
-  }
   // INSERT COMMENT IFELSE: Kernel::land.lhs.true
   if (g_graph_mask[tid]) { // IFELSE MARKER: land.lhs.true IF
-  }
   g_graph_mask[tid] = 0;
   // INSERT COMMENT LOOP: Kernel::for.cond
   for (int64_t i =
@@ -322,11 +325,12 @@ void Kernel(struct __FIXME__l_struct_struct_OC_Node *g_graph_nodes,
        i < (g_graph_nodes + tid)->__FIXME__l_struct_struct_OC_Node_field1 +
                (g_graph_nodes + tid)->__FIXME__l_struct_struct_OC_Node_field0;
        i = i + 1) {
-    if (g_graph_visited[g_graph_edges[i]]) { // IFELSE MARKER: for.body IF
-    } else {                                 // IFELSE MARKER: for.body ELSE
+    if (!g_graph_visited[g_graph_edges[i]]) { // IFELSE MARKER: for.body IF
       g_cost[g_graph_edges[i]] = g_cost[tid] + 1;
       g_updating_graph_mask[g_graph_edges[i]] = 1;
     }
+  }
+  }
   }
   return;
 }
@@ -348,13 +352,13 @@ void Kernel2(uint8_t *g_graph_mask, uint8_t *g_updating_graph_mask,
   // INSERT COMMENT IFELSE: Kernel2::entry
   tid = __FIXME__blockIdx_2e_x * 512 + __FIXME__threadIdx_2e_x;
   if (tid < no_of_nodes) { // IFELSE MARKER: entry IF
-  }
   // INSERT COMMENT IFELSE: Kernel2::land.lhs.true
   if (g_updating_graph_mask[tid]) { // IFELSE MARKER: land.lhs.true IF
     g_graph_mask[tid] = 1;
     g_graph_visited[tid] = 1;
     *g_over = 1;
     g_updating_graph_mask[tid] = 0;
+  }
   }
   return;
 }
