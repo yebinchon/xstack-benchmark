@@ -10,20 +10,6 @@
 #include <vector>
 #include "cuda.h"
 
-#ifdef TIMING
-#include "timing.h"
-
-struct timeval tv;
-struct timeval tv_total_start, tv_total_end;
-struct timeval tv_h2d_start, tv_h2d_end;
-struct timeval tv_d2h_start, tv_d2h_end;
-struct timeval tv_kernel_start, tv_kernel_end;
-struct timeval tv_mem_alloc_start, tv_mem_alloc_end;
-struct timeval tv_close_start, tv_close_end;
-float init_time = 0, mem_alloc_time = 0, h2d_time = 0, kernel_time = 0,
-      d2h_time = 0, close_time = 0, total_time = 0;
-#endif
-
 #define min( a, b )			a > b ? b : a
 #define ceilDiv( a, b )		( a + b - 1 ) / b
 #define print( x )			printf( #x ": %lu\n", (unsigned long) x )
@@ -35,6 +21,8 @@ float init_time = 0, mem_alloc_time = 0, h2d_time = 0, kernel_time = 0,
 #define REC_LENGTH 53 // size of a record in db
 #define LATITUDE_POS 28	// character position of the latitude value in each record
 #define OPEN 10000	// initial value of nearest neighbors
+#define MAX_RECORDS 1000000 // max number of records to process
+#define MAX_GRID_DIM 65535 // max grid dimension size
 
 
 typedef struct latLong
@@ -49,8 +37,8 @@ typedef struct record
   float distance;
 } Record;
 
-int loadData(char *filename,std::vector<Record> &records,std::vector<LatLong> &locations);
-void findLowest(std::vector<Record> &records,float *distances,int numRecords,int topN);
+int loadData(char *filename,Record *records,LatLong *locations);
+void findLowest(Record *records,float *distances,int numRecords,int topN);
 void printUsage();
 int parseCommandline(int argc, char *argv[], char* filename,int *r,float *lat,float *lng,
                      int *q, int *t, int *p, int *d);
@@ -81,8 +69,8 @@ int main(int argc, char* argv[])
 	float lat, lng;
 	int quiet=0,timing=0,platform=0,device=0;
 
-    std::vector<Record> records;
-	std::vector<LatLong> locations;
+    Record* records = (Record *)malloc(sizeof(Record) * MAX_RECORDS);
+	LatLong* locations = (LatLong *)malloc(sizeof(LatLong) * MAX_RECORDS);
 	char filename[100];
 	int resultsCount=10;
 
@@ -108,41 +96,15 @@ int main(int argc, char* argv[])
 
 
 	// Scaling calculations - added by Sam Kauffman
-	cudaDeviceProp deviceProp;
-	cudaGetDeviceProperties( &deviceProp, 0 );
-	cudaThreadSynchronize();
-	unsigned long maxGridX = deviceProp.maxGridSize[0];
-	unsigned long threadsPerBlock = min( deviceProp.maxThreadsPerBlock, DEFAULT_THREADS_PER_BLOCK );
+	//unsigned long maxGridX = 
+	unsigned long threadsPerBlock = DEFAULT_THREADS_PER_BLOCK;
 	size_t totalDeviceMemory;
 	size_t freeDeviceMemory;
-	cudaMemGetInfo(  &freeDeviceMemory, &totalDeviceMemory );
-	cudaThreadSynchronize();
-	unsigned long usableDeviceMemory = freeDeviceMemory * 85 / 100; // 85% arbitrary throttle to compensate for known CUDA bug
-	unsigned long maxThreads = usableDeviceMemory / 12; // 4 bytes in 3 vectors per thread
-	if ( numRecords > maxThreads )
-	{
-		fprintf( stderr, "Error: Input too large.\n" );
-		exit( 1 );
-	}
 	unsigned long blocks = ceilDiv( numRecords, threadsPerBlock ); // extra threads will do nothing
-	unsigned long gridY = ceilDiv( blocks, maxGridX );
+	unsigned long gridY = ceilDiv( blocks,  MAX_GRID_DIM);
 	unsigned long gridX = ceilDiv( blocks, gridY );
 	// There will be no more than (gridY - 1) extra blocks
 	dim3 gridDim( gridX, gridY );
-
-	if ( DEBUG )
-	{
-		print( totalDeviceMemory ); // 804454400
-		print( freeDeviceMemory );
-		print( usableDeviceMemory );
-		print( maxGridX ); // 65535
-		print( deviceProp.maxThreadsPerBlock ); // 1024
-		print( threadsPerBlock );
-		print( maxThreads );
-		print( blocks ); // 130933
-		print( gridY );
-		print( gridX );
-	}
 
 	/**
 	* Allocate memory on host and device
@@ -154,24 +116,13 @@ int main(int argc, char* argv[])
    /**
     * Transfer data from host to device
     */
-    cudaMemcpy( d_locations, &locations[0], sizeof(LatLong) * numRecords, cudaMemcpyHostToDevice);
+    cudaMemcpy( d_locations, locations, sizeof(LatLong) * numRecords, cudaMemcpyHostToDevice);
 
     /**
     * Execute kernel
     */
 
-#ifdef  TIMING
-  gettimeofday(&tv_kernel_start, NULL);
-#endif
-
     euclid<<< gridDim, threadsPerBlock >>>(d_locations,d_distances,numRecords,lat,lng);
-    cudaThreadSynchronize();
-
-#ifdef  TIMING
-    gettimeofday(&tv_kernel_end, NULL);
-    tvsub(&tv_kernel_end, &tv_kernel_start, &tv);
-    kernel_time += tv.tv_sec * 1000.0 + (float) tv.tv_usec / 1000.0;
-#endif
 
     //Copy data from device memory to host memory
     cudaMemcpy( distances, d_distances, sizeof(float)*numRecords, cudaMemcpyDeviceToHost );
@@ -188,13 +139,9 @@ int main(int argc, char* argv[])
     //Free memory
 	cudaFree(d_locations);
 	cudaFree(d_distances);
-
-#ifdef  TIMING
-    printf("Exec: %f\n", kernel_time);
-#endif
 }
 
-int loadData(char *filename,std::vector<Record> &records,std::vector<LatLong> &locations){
+int loadData(char *filename,Record *records,LatLong *locations){
     FILE   *flist,*fp;
 	int    i=0;
 	char dbname[64];
@@ -224,7 +171,7 @@ int loadData(char *filename,std::vector<Record> &records,std::vector<LatLong> &l
             LatLong latLong;
             fgets(record.recString,49,fp);
             fgetc(fp); // newline
-            if (feof(fp)) break;
+            //if (feof(fp)) break;
 
             // parse for lat and long
             char substr[6];
@@ -237,18 +184,17 @@ int loadData(char *filename,std::vector<Record> &records,std::vector<LatLong> &l
             substr[5] = '\0';
             latLong.lng = atof(substr);
 
-            locations.push_back(latLong);
-            records.push_back(record);
+            locations[recNum]= latLong;
+            records[recNum] = record;
             recNum++;
         }
         fclose(fp);
     }
     fclose(flist);
-//    for(i=0;i<rec_count*REC_LENGTH;i++) printf("%c",sandbox[i]);
     return recNum;
 }
 
-void findLowest(std::vector<Record> &records,float *distances,int numRecords,int topN){
+void findLowest(Record *records,float *distances,int numRecords,int topN){
   int i,j;
   float val;
   int minLoc;
@@ -281,6 +227,7 @@ int parseCommandline(int argc, char *argv[], char* filename,int *r,float *lat,fl
     if (argc < 2) return 1; // error
     strncpy(filename,argv[1],100);
     char flag;
+    bool help = false;
 
     for(i=1;i<argc;i++) {
       if (argv[i][0]=='-') {// flag
@@ -300,7 +247,9 @@ int parseCommandline(int argc, char *argv[], char* filename,int *r,float *lat,fl
               i++;
               break;
             case 'h': // help
-              return 1;
+              help = true;
+              break;
+              //return 1;
             case 'q': // quiet
               *q = 1;
               break;
@@ -318,7 +267,7 @@ int parseCommandline(int argc, char *argv[], char* filename,int *r,float *lat,fl
         }
       }
     }
-    if ((*d >= 0 && *p<0) || (*p>=0 && *d<0)) // both p and d must be specified if either are specified
+    if ((*d >= 0 && *p<0) || (*p>=0 && *d<0) || help) // both p and d must be specified if either are specified
       return 1;
     return 0;
 }
