@@ -1,0 +1,130 @@
+{
+"globals": [
+	"_OC_str", 
+	"_OC_str_OC_1", 
+	"_OC_str_OC_10", 
+	"_OC_str_OC_11", 
+	"_OC_str_OC_12", 
+	"_OC_str_OC_13", 
+	"_OC_str_OC_2", 
+	"_OC_str_OC_3", 
+	"_OC_str_OC_4", 
+	"_OC_str_OC_5", 
+	"_OC_str_OC_6", 
+	"_OC_str_OC_7", 
+	"_OC_str_OC_8", 
+	"_OC_str_OC_9", 
+	"edge_list_size", 
+	"fp", 
+	"no_of_nodes"
+],
+"struct_definitions": {
+"__FIXME__l_array_1_uint8_t": [
+	"array"
+],
+"__FIXME__l_array_20_uint8_t": [
+	"array"
+],
+"__FIXME__l_struct_struct_OC_Node": [
+	"__FIXME__l_struct_struct_OC_Node_field0", 
+	"__FIXME__l_struct_struct_OC_Node_field1"
+],
+"__FIXME__l_struct_struct_OC_dim3": [
+	"__FIXME__l_struct_struct_OC_dim3_field0", 
+	"__FIXME__l_struct_struct_OC_dim3_field1", 
+	"__FIXME__l_struct_struct_OC_dim3_field2"
+],
+"__FIXME__l_unnamed_1": [
+	"__FIXME__l_unnamed_1_field0", 
+	"__FIXME__l_unnamed_1_field1"
+]
+},
+"functions": {
+"BFSGraph": [
+	"__FIXME__1", 
+	"__FIXME__agg_2e_tmp", 
+	"__FIXME__agg_2e_tmp112", 
+	"__FIXME__agg_2e_tmp112_2e_coerce", 
+	"__FIXME__agg_2e_tmp115", 
+	"__FIXME__agg_2e_tmp115_2e_coerce", 
+	"__FIXME__agg_2e_tmp116", 
+	"__FIXME__agg_2e_tmp116_2e_coerce", 
+	"__FIXME__agg_2e_tmp_2e_coerce", 
+	"__FIXME__call1", 
+	"__FIXME__inc122_2e_lcssa", 
+	"argc", 
+	"argv", 
+	"cost", 
+	"edgeno", 
+	"fpo", 
+	"grid", 
+	"h_cost", 
+	"h_graph_edges", 
+	"h_graph_mask", 
+	"h_graph_nodes", 
+	"h_graph_visited", 
+	"h_updating_graph_mask", 
+	"i", 
+	"id", 
+	"j", 
+	"k", 
+	"num_of_blocks", 
+	"num_of_threads_per_block", 
+	"source", 
+	"start", 
+	"stop", 
+	"threads"
+], 
+"Kernel": [
+	"__FIXME__blockDim_2e_x", 
+	"__FIXME__blockDim_2e_y", 
+	"__FIXME__blockDim_2e_z", 
+	"__FIXME__blockIdx_2e_x", 
+	"__FIXME__blockIdx_2e_y", 
+	"__FIXME__blockIdx_2e_z", 
+	"__FIXME__gridDim_2e_x", 
+	"__FIXME__gridDim_2e_y", 
+	"__FIXME__gridDim_2e_z", 
+	"__FIXME__threadIdx_2e_x", 
+	"__FIXME__threadIdx_2e_y", 
+	"__FIXME__threadIdx_2e_z", 
+	"g_cost", 
+	"g_graph_edges", 
+	"g_graph_mask", 
+	"g_graph_nodes", 
+	"g_graph_visited", 
+	"g_updating_graph_mask", 
+	"i", 
+	"no_of_nodes", 
+	"tid"
+], 
+"Kernel2": [
+	"__FIXME__blockDim_2e_x", 
+	"__FIXME__blockDim_2e_y", 
+	"__FIXME__blockDim_2e_z", 
+	"__FIXME__blockIdx_2e_x", 
+	"__FIXME__blockIdx_2e_y", 
+	"__FIXME__blockIdx_2e_z", 
+	"__FIXME__gridDim_2e_x", 
+	"__FIXME__gridDim_2e_y", 
+	"__FIXME__gridDim_2e_z", 
+	"__FIXME__threadIdx_2e_x", 
+	"__FIXME__threadIdx_2e_y", 
+	"__FIXME__threadIdx_2e_z", 
+	"g_graph_mask", 
+	"g_graph_visited", 
+	"g_over", 
+	"g_updating_graph_mask", 
+	"no_of_nodes", 
+	"tid"
+], 
+"Usage": [
+	"argc", 
+	"argv"
+], 
+"main": [
+	"argc", 
+	"argv"
+]
+}
+}
