@@ -1,0 +1,147 @@
+{
+"globals": [
+	"_OC_str", 
+	"_OC_str_OC_1", 
+	"_OC_str_OC_10", 
+	"_OC_str_OC_11", 
+	"_OC_str_OC_12", 
+	"_OC_str_OC_13", 
+	"_OC_str_OC_14", 
+	"_OC_str_OC_15", 
+	"_OC_str_OC_16", 
+	"_OC_str_OC_17", 
+	"_OC_str_OC_18", 
+	"_OC_str_OC_19", 
+	"_OC_str_OC_2", 
+	"_OC_str_OC_20", 
+	"_OC_str_OC_21", 
+	"_OC_str_OC_3", 
+	"_OC_str_OC_4", 
+	"_OC_str_OC_5", 
+	"_OC_str_OC_6", 
+	"_OC_str_OC_7", 
+	"_OC_str_OC_8", 
+	"_OC_str_OC_9"
+],
+"struct_definitions": {
+"__FIXME__l_array_1_uint8_t": [
+	"array"
+],
+"__FIXME__l_array_20_uint8_t": [
+	"array"
+],
+"__FIXME__l_array_53_uint8_t": [
+	"array"
+],
+"__FIXME__l_struct_struct_OC_dim3": [
+	"__FIXME__l_struct_struct_OC_dim3_field0", 
+	"__FIXME__l_struct_struct_OC_dim3_field1", 
+	"__FIXME__l_struct_struct_OC_dim3_field2"
+],
+"__FIXME__l_struct_struct_OC_latLong": [
+	"__FIXME__l_struct_struct_OC_latLong_field0", 
+	"__FIXME__l_struct_struct_OC_latLong_field1"
+],
+"__FIXME__l_struct_struct_OC_record": [
+	"__FIXME__l_struct_struct_OC_record_field0", 
+	"__FIXME__l_struct_struct_OC_record_field1"
+],
+"__FIXME__l_unnamed_1": [
+	"__FIXME__l_unnamed_1_field0", 
+	"__FIXME__l_unnamed_1_field1"
+]
+},
+"functions": {
+"euclid": [
+	"__FIXME__4", 
+	"__FIXME__blockDim_2e_x", 
+	"__FIXME__blockDim_2e_y", 
+	"__FIXME__blockDim_2e_z", 
+	"__FIXME__blockIdx_2e_x", 
+	"__FIXME__blockIdx_2e_y", 
+	"__FIXME__blockIdx_2e_z", 
+	"__FIXME__gridDim_2e_x", 
+	"__FIXME__gridDim_2e_y", 
+	"__FIXME__gridDim_2e_z", 
+	"__FIXME__threadIdx_2e_x", 
+	"__FIXME__threadIdx_2e_y", 
+	"__FIXME__threadIdx_2e_z", 
+	"d_distances", 
+	"d_locations", 
+	"globalId", 
+	"lat", 
+	"lng", 
+	"numRecords"
+], 
+"findLowest": [
+	"__FIXME__minLoc_2e_0", 
+	"distances", 
+	"i", 
+	"j", 
+	"numRecords", 
+	"records", 
+	"topN",
+  "tempRec",
+  "tempDist"
+], 
+"loadData": [
+	"__FIXME__call24", 
+	"dbname", 
+	"filename", 
+	"flist", 
+	"i", 
+	"latLong", 
+	"locations", 
+	"recNum", 
+	"record", 
+	"records", 
+	"substr"
+], 
+"main": [
+	"__FIXME__agg_2e_tmp", 
+	"__FIXME__agg_2e_tmp26", 
+	"__FIXME__agg_2e_tmp26_2e_coerce", 
+	"__FIXME__agg_2e_tmp_2e_coerce", 
+	"__FIXME__call2", 
+	"argc", 
+	"argv", 
+	"blocks", 
+	"device", 
+	"distances", 
+	"filename", 
+	"gridDim", 
+	"gridY", 
+	"i", 
+	"j", 
+	"k", 
+	"lat", 
+	"lng", 
+	"locations", 
+	"numRecords", 
+	"platform", 
+	"quiet", 
+	"records", 
+	"resultsCount", 
+	"timing"
+], 
+"parseCommandline": [
+	"__FIXME__call12", 
+	"__FIXME__call22", 
+	"__FIXME__call38", 
+	"__FIXME__call43", 
+	"__FIXME__retval_2e_0", 
+	"argc", 
+	"argv", 
+	"d", 
+	"filename", 
+	"help", 
+	"i", 
+	"lat", 
+	"lng", 
+	"p", 
+	"q", 
+	"r", 
+	"t"
+]
+}
+}
