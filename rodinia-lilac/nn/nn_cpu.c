@@ -232,6 +232,10 @@ uint32_t parseCommandline(uint32_t argc, uint8_t** argv, uint8_t* filename, uint
   int64_t i;
   uint8_t help;
   uint32_t __FIXME__retval_2e_0;
+  uint32_t __FIXME__call12;
+  double __FIXME__call22;
+  uint32_t __FIXME__call38;
+  uint32_t __FIXME__call43;
 
 // INSERT COMMENT IFELSE: parseCommandline::entry
   if (argc < 2) { // IFELSE MARKER: entry IF
@@ -246,11 +250,11 @@ while (i < argc) {
   switch (argv[i][1]) {
   case 114:
   i = i + 1;
-  uint32_t __FIXME__call12 = atoi(argv[i]);
+  __FIXME__call12 = atoi(argv[i]);
   *r = __FIXME__call12;
     break;
   case 108:
-  double __FIXME__call22 = atof(argv[(i + 1)]);
+  __FIXME__call22 = atof(argv[(i + 1)]);
   if(argv[i][2] == 'a') {
   *lat = ((float)__FIXME__call22);
   }
@@ -270,12 +274,12 @@ while (i < argc) {
     break;
   case 112:
   i = i + 1;
-  uint32_t __FIXME__call38 = atoi(argv[i]);
+  __FIXME__call38 = atoi(argv[i]);
   *p = __FIXME__call38;
     break;
   case 100:
   i = i + 1;
-  uint32_t __FIXME__call43 = atoi(argv[i]);
+  __FIXME__call43 = atoi(argv[i]);
   *d = __FIXME__call43;
     break;
   default:
