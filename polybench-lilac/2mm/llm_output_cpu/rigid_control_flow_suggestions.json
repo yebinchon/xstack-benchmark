@@ -1,0 +1,21 @@
+{
+  "transformations": [
+    {
+      "target_node_id": "IfStmt_303_3",
+      "replacement_code": "if (i < ni && j < nj) {\n  dot = 0;\n  for (int64_t k = 0; k < nk; k = k + 1) {\n    dot = (dot + ((alpha * A[(i * nk + k)]) * B[(k * nj + j)]));\n  }\n  tmp[(i * nj + j)] = dot;\n}",
+      "description": "Coalesce nested bounds checks in kernel_A_mul_B into a single if with logical AND.",
+      "reasoning": "Equivalent semantics: the original executes the body only when (i < ni) and (j < nj) are both true, with no else branches. Combining into (i < ni && j < nj) preserves short-circuit evaluation (j < nj is only evaluated if i < ni is true) and neither condition has side effects.",
+      "start_offset": 12278,
+      "end_offset": 12521
+    },
+    {
+      "target_node_id": "IfStmt_328_3",
+      "replacement_code": "if (i < ni && l < nl) {\n  dot = (D[(i * nj + l)] * beta);\n  for (int64_t j = 0; j < nj; j = j + 1) {\n    dot = (dot + (tmp[(i * nj + j)] * C[(j * nl + l)]));\n  }\n  D[(i * nl + l)] = dot;\n}",
+      "description": "Coalesce nested bounds checks in kernel_D_plus_tmp_mul_C into a single if with logical AND.",
+      "reasoning": "Same behavior: body runs only when both (i < ni) and (l < nl) are true. No else branches and conditions have no side effects. Short-circuiting ensures the evaluation order matches the original nested ifs.",
+      "start_offset": 13482,
+      "end_offset": 13738
+    }
+  ],
+  "confidence": 0.9
+}
