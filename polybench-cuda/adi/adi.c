@@ -85,7 +85,7 @@ static void kernel(
     // Row Sweep
     for (int i = 1; i < n - 1; i++) {
     u[i * n + 0] = 1;
-    p[i + n + 0] = 0;
+    p[i * n + 0] = 0;
     q[i * n + 0] = u[i * n + 0];
     for (int j = 1; j < n - 1; j++) {
       p[i * n + j] = -f / (d * p[i * n + j - 1] + e);
